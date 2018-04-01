@@ -6,6 +6,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {routing} from './routing';
 import { HomeComponent } from './components/home/home.component';
 import {FacebookModule} from 'ngx-facebook';
+import {UserService} from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,9 @@ import {FacebookModule} from 'ngx-facebook';
       routing,
       FacebookModule.forRoot()
   ],
-  providers: [],
+  providers: [
+      UserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FacebookService, InitParams, LoginResponse, LoginStatus} from 'ngx-facebook';
+import {UserService} from '../../services/user.service';
 
 @Component({
     selector: 'app-home',
@@ -8,34 +8,14 @@ import {FacebookService, InitParams, LoginResponse, LoginStatus} from 'ngx-faceb
 })
 export class HomeComponent implements OnInit {
 
-    constructor(private fb: FacebookService) {
+    constructor(private userService: UserService) {
     }
 
     ngOnInit() {
-        this.initFacebook();
-    }
-
-    initFacebook() {
-        let initParams: InitParams = {
-            appId: '1788186814836142',
-            xfbml: true,
-            cookie     : true,
-            version: 'v2.8'
-        };
-
-        this.fb.init(initParams);
-        this.fb.getLoginStatus().then((response: LoginStatus) => console.log(response));
     }
 
     loginWithFacebook() {
-        this.fb.login()
-            .then((response: LoginResponse) => {
-                console.log(response);
-                this.fb.api('/me').then(graphResponse => console.log(graphResponse));
-            })
-            .catch((error: any) => {
-                console.log(error);
-            });
+        this.userService.login();
     }
 
 }
