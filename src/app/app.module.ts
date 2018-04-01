@@ -11,13 +11,15 @@ import { LoginComponent } from './components/login/login.component';
 import {AuthenticationService} from "./services/authentication.service";
 import {CanActivateViaAuthGuardService} from "./services/can-activate-via-auth-guard.service";
 import { PostCardComponent } from './components/post-card/post-card.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    PostCardComponent
+    PostCardComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

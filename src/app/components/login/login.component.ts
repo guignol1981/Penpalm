@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from "../../services/user.service";
-import {Router} from "@angular/router";
-import {supportsState} from "@angular/platform-browser/src/browser/location/history";
+import {UserService} from '../../services/user.service';
+import {Router} from '@angular/router';
+import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
     selector: 'app-login',
@@ -11,6 +11,7 @@ import {supportsState} from "@angular/platform-browser/src/browser/location/hist
 export class LoginComponent implements OnInit {
 
     constructor(private userService: UserService,
+                private authenticationService: AuthenticationService,
                 private router: Router) {
     }
 
@@ -18,10 +19,12 @@ export class LoginComponent implements OnInit {
     }
 
     loginWithFacebook() {
-        this.userService.login().then(success => {
-            if (success) {
-                this.router.navigate(['/home']);
-            }
+        this.authenticationService.login().then(fbToken => {
+            this.userService.signIn(fbToken).then(success => {
+                if (success) {
+                    this.router.navigate(['/home']);
+                }
+            });
         });
     }
 

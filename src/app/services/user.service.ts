@@ -24,18 +24,7 @@ export class UserService {
         return new User(data['_id'], data['email']);
     }
 
-    login(): Promise<boolean> {
-        return this.fb.login()
-            .then((response: LoginResponse) => {
-                let token = response.authResponse.accessToken;
-                return this.signInToApp(token);
-            })
-            .catch((error: any) => {
-                return false;
-            });
-    }
-
-    signInToApp(fbToken): Promise<boolean> {
+    signIn(fbToken): Promise<boolean> {
         return this.http.post('api/auth/facebook?access_token=' + fbToken, {})
             .toPromise()
             .then((response: Response) => {
