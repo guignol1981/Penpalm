@@ -1,14 +1,21 @@
 .container {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+	height: 100vh;
+	display: grid;
+	grid-template-rows: 1fr 3fr 2fr;
+	grid-template-columns: 1fr 3fr 1fr;
+	grid-gap: 3rem;
+
+	grid-template-areas:
+			". . ."
+			". mailbox ."
+			". . .";
+
+	justify-items: center;
+	align-items: center;
+
 }
 
-.logo {
-  height: 10rem;
-  width: auto;
-
-  transform: translateY(-3rem);
+.mailbox {
+	grid-area: mailbox;
+	width: 100%;
 }

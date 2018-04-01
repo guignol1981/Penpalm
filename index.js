@@ -42,4 +42,4 @@ app.use(function (err, req, res) {
 app.set('port', port);
 let server = http.createServer(app);
 
-server.listen(port, () => console.log(`Meeting-helper api running on localhost:${port}`));
+server.listen(port, () => console.log(`PenPalm api running on localhost:${port}`));

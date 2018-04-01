@@ -7,11 +7,17 @@ import {routing} from './routing';
 import { HomeComponent } from './components/home/home.component';
 import {FacebookModule} from 'ngx-facebook';
 import {UserService} from './services/user.service';
+import { LoginComponent } from './components/login/login.component';
+import {AuthenticationService} from "./services/authentication.service";
+import {CanActivateViaAuthGuardService} from "./services/can-activate-via-auth-guard.service";
+import { PostCardComponent } from './components/post-card/post-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent,
+    PostCardComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +27,9 @@ import {UserService} from './services/user.service';
       FacebookModule.forRoot()
   ],
   providers: [
-      UserService
+      UserService,
+      AuthenticationService,
+      CanActivateViaAuthGuardService
   ],
   bootstrap: [AppComponent]
 })

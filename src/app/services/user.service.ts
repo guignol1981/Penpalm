@@ -1,11 +1,15 @@
 import {Injectable} from '@angular/core';
-import {Headers, Http} from '@angular/http';
+import {Headers, Http, Response} from '@angular/http';
 import {FacebookService, InitParams, LoginResponse, LoginStatus} from 'ngx-facebook';
+import {AuthenticationService} from "./authentication.service";
+import {User} from "../models/user/user";
 
 @Injectable()
 export class UserService {
 
-    constructor(private http: Http, private fb: FacebookService) {
+    constructor(private http: Http,
+                private fb: FacebookService,
+                private authenticationService: AuthenticationService) {
         let initParams: InitParams = {
             appId: '1788186814836142',
             xfbml: true,
@@ -16,51 +20,46 @@ export class UserService {
         this.fb.init(initParams);
     }
 
-    login() {
-        this.fb.login()
+    public static deserializeUser(data: any): User {
+        return new User(data['_id'], data['email']);
+    }
+
+    login(): Promise<boolean> {
+        return this.fb.login()
             .then((response: LoginResponse) => {
                 let token = response.authResponse.accessToken;
-                this.signInToApp(token);
+                return this.signInToApp(token);
             })
             .catch((error: any) => {
-                console.log(error);
+                return false;
             });
     }
 
-    signInToApp(fbToken) {
+    signInToApp(fbToken): Promise<boolean> {
         return this.http.post('api/auth/facebook?access_token=' + fbToken, {})
             .toPromise()
-            .then(response => {
+            .then((response: Response) => {
                 let token = response.headers.get('x-auth-token');
                 if (token) {
-                    localStorage.setItem('id_token', token);
+                    this.authenticationService.saveToken(token);
+                    return true;
                 }
-                console.log(response.json());
-                this.getCurrentUser();
             })
-            .catch(() => {});
-    }
-
-    logout() {
-        localStorage.removeItem('id_token');
-    }
-
-    isLoggedIn() {
-        return new Promise((resolve, reject) => {
-            this.getCurrentUser().then(() => resolve(true)).catch(() => reject(false));
-        });
+            .catch(() => {
+                return false;
+            });
     }
 
     getCurrentUser(): Promise<any> {
         let headers = new Headers({
             'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + localStorage.getItem('id_token')
+            Authorization: 'Bearer ' + this.authenticationService.getToken()
         });
 
         return this.http.get(`api/users`, {headers: headers})
             .toPromise()
-            .then(response => {
-                return response.json();
+            .then((response: Response) => {
+                return UserService.deserializeUser(response.json().data);
             })
             .catch(() => {
             });
