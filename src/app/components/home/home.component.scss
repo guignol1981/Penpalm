@@ -12,10 +12,10 @@
 
 	justify-items: center;
 	align-items: center;
-
 }
 
 .mailbox {
 	grid-area: mailbox;
+	align-self: stretch;
 	width: 100%;
 }

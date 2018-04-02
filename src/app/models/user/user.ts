@@ -1,7 +1,8 @@
 export class User {
 
-    constructor(public _id: string,
-                public email: string) {
+    constructor(public _id?: string,
+                public email?: string,
+                public penPal?: User) {
     }
 
 }

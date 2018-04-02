@@ -1,5 +1,12 @@
 .postcard {
   height: 100%;
-  width: auto;
   background-color: #F8ECC2;
+
+  &__body {
+    padding: 2rem 3rem;
+    font-family: 'Homemade Apple', cursive;
+    font-size: 6rem;
+    grid-area: body;
+  }
+
 }

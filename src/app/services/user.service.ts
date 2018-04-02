@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Headers, Http, Response} from '@angular/http';
 import {FacebookService, InitParams, LoginResponse, LoginStatus} from 'ngx-facebook';
-import {AuthenticationService} from "./authentication.service";
-import {User} from "../models/user/user";
+import {AuthenticationService} from './authentication.service';
+import {User} from '../models/user/user';
 
 @Injectable()
 export class UserService {
@@ -21,7 +21,18 @@ export class UserService {
     }
 
     public static deserializeUser(data: any): User {
-        return new User(data['_id'], data['email']);
+        let penPal = new User();
+
+        if (data['penPal']) {
+            let penPalData = data['penPal'];
+            penPal._id = penPalData['_id'];
+        }
+
+        return new User(
+            data['_id'],
+            data['email'],
+            penPal
+        );
     }
 
     signIn(fbToken): Promise<boolean> {
