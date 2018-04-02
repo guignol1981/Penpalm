@@ -1,15 +1,15 @@
 <div class="container">
     <div class="actions">
-        <a (click)="showInbox()" class="btn btn--action">
+        <a (click)="setTab('inbox')" class="btn btn--action">
             <i class="fas fa-arrow-down"></i>
         </a>
-        <a (click)="showOutbox()" class="btn btn--action">
+        <a (click)="setTab('outbox')" class="btn btn--action">
             <i class="fas fa-arrow-up"></i>
         </a>
-        <a (click)="compose()" class="btn btn--action">
+        <a (click)="setTab('compose')" class="btn btn--action">
             <i class="fas fa-pencil-alt"></i>
         </a>
-        <a (click)="showAccount()" class="btn btn--image">
+        <a (click)="setTab('account')" class="btn btn--image">
             <img [src]="user.photoUrl" alt="">
         </a>
         <a (click)="logout()" class="btn btn--action">

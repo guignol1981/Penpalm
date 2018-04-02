@@ -23,20 +23,8 @@ export class HomeComponent implements OnInit {
         });
     }
 
-    showInbox() {
-
-    }
-
-    showOutbox() {
-
-    }
-
-    compose() {
-
-    }
-
-    showAccount() {
-
+    setTab(tab) {
+        this.activeTabs = tab;
     }
 
     logout() {
