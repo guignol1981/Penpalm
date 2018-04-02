@@ -12,6 +12,18 @@ import {AuthenticationService} from "./services/authentication.service";
 import {CanActivateViaAuthGuardService} from "./services/can-activate-via-auth-guard.service";
 import { PostCardComponent } from './components/post-card/post-card.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import {AuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider, SocialLoginModule} from 'angular4-social-login';
+
+let config = new AuthServiceConfig([
+    {
+        id: GoogleLoginProvider.PROVIDER_ID,
+        provider: new GoogleLoginProvider('591045054488-nug10r1poru3a20birl1ddetkdkq53b6.apps.googleusercontent.com')
+    },
+    {
+        id: FacebookLoginProvider.PROVIDER_ID,
+        provider: new FacebookLoginProvider('1788186814836142')
+    }
+]);
 
 @NgModule({
   declarations: [
@@ -26,7 +38,7 @@ import { LogoutComponent } from './components/logout/logout.component';
       HttpModule,
       ReactiveFormsModule,
       routing,
-      FacebookModule.forRoot()
+      SocialLoginModule.initialize(config)
   ],
   providers: [
       UserService,

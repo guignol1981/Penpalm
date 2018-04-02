@@ -4,13 +4,14 @@ let Schema = mongoose.Schema;
 let UserSchema = new Schema({
     email: {
         type: String, required: true,
-        trim: true, unique: true,
+        trim: true,
         match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     },
-    facebookProvider: {
+    provider: {
         type: {
             id: String,
-            token: String
+            token: String,
+            source: String
         },
         select: false
     },
@@ -19,18 +20,19 @@ let UserSchema = new Schema({
 
 UserSchema.statics.upsertFbUser = function (accessToken, refreshToken, profile, cb) {
     let that = this;
+
     return this.findOne({
-        'facebookProvider.id': profile.id
+        'provider.id': profile.id
     }, function (err, user) {
         if (!user) {
             let newUser = new that({
                 email: profile.emails[0].value,
-                facebookProvider: {
+                provider: {
                     id: profile.id,
-                    token: accessToken
+                    token: accessToken,
+                    source: profile.provider
                 }
             });
-
             newUser.matchPenPal((user) => {
                 user.save(function (error, savedUser) {
                     if (error) {
@@ -52,11 +54,15 @@ UserSchema.methods.matchPenPal = function (callback) {
         .eq(null)
         .exec()
         .then(penPal => {
-            this.penPal = penPal;
-            penPal.penPal = this;
-            penPal.save().then(() => {
+            if (penPal) {
+                this.penPal = penPal;
+                penPal.penPal = this;
+                penPal.save().then(() => {
+                    callback(this);
+                });
+            } else {
                 callback(this);
-            });
+            }
         });
 };
 

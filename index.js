@@ -8,7 +8,16 @@ let port = process.env.PORT || '3000';
 let api = require('./server/routes/api');
 let passport = require('passport');
 
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+    done(null, user);
+});
+
 require('./server/passport/facebook-strategy');
+require('./server/passport/google-strategy');
 
 if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'dev';

@@ -1,23 +1,14 @@
 import {Injectable} from '@angular/core';
 import {Headers, Http, Response} from '@angular/http';
-import {FacebookService, InitParams, LoginResponse, LoginStatus} from 'ngx-facebook';
 import {AuthenticationService} from './authentication.service';
 import {User} from '../models/user/user';
+import {SocialUser} from 'angular4-social-login';
 
 @Injectable()
 export class UserService {
 
     constructor(private http: Http,
-                private fb: FacebookService,
                 private authenticationService: AuthenticationService) {
-        let initParams: InitParams = {
-            appId: '1788186814836142',
-            xfbml: true,
-            cookie: true,
-            version: 'v2.8'
-        };
-
-        this.fb.init(initParams);
     }
 
     public static deserializeUser(data: any): User {
@@ -35,8 +26,9 @@ export class UserService {
         );
     }
 
-    signIn(fbToken): Promise<boolean> {
-        return this.http.post('api/auth/facebook?access_token=' + fbToken, {})
+    signIn(socialUser: SocialUser): Promise<boolean> {
+        return this.http.post(`api/auth/${socialUser.provider.toLowerCase()}?access_token=${socialUser.authToken}`,
+            {socialUser: socialUser})
             .toPromise()
             .then((response: Response) => {
                 let token = response.headers.get('x-auth-token');

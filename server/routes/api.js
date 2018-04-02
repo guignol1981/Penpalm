@@ -15,6 +15,12 @@ router.post('/auth/facebook',
     authenticatorController.generateToken,
     authenticatorController.sendToken);
 
+router.post('/auth/google',
+    passport.authenticate('google-token'),
+    authenticatorController.prepareReqForToken,
+    authenticatorController.generateToken,
+    authenticatorController.sendToken);
+
 router.get('/users', authenticate, userController.get);
 
 module.exports = router;
