@@ -7,6 +7,7 @@ let UserSchema = new Schema({
         trim: true,
         match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     },
+    photoUrl: {type: String},
     provider: {
         type: {
             id: String,
@@ -25,8 +26,10 @@ UserSchema.statics.upsertFbUser = function (accessToken, refreshToken, profile, 
         'provider.id': profile.id
     }, function (err, user) {
         if (!user) {
+            console.log(profile);
             let newUser = new that({
                 email: profile.emails[0].value,
+                photoUrl: profile.photos? profile.photos[0].value : profile._json.picture,
                 provider: {
                     id: profile.id,
                     token: accessToken,

@@ -1,23 +1,17 @@
 .container {
 	height: 100vh;
 	display: grid;
-	grid-template-rows: 1fr 2fr 1fr;
+	grid-template-rows: 20vh 60vh 20vh;
 	grid-template-columns: 1fr 3fr 1fr;
 	grid-gap: 3rem;
 
 	grid-template-areas:
 			". actions ."
-			". postcard ."
-			". . .";
+			". main ."
+			". footer .";
 
 	justify-items: center;
 	align-items: center;
-}
-
-.postcard {
-	grid-area: postcard;
-	align-self: stretch;
-	width: 100%;
 }
 
 .actions {
@@ -26,3 +20,15 @@
 	display: flex;
 	justify-content: space-evenly;
 }
+
+.main {
+	grid-area: main;
+	align-self: stretch;
+	width: 100%;
+}
+
+.footer {
+	grid-area: footer;
+	width: 100%;
+}
+

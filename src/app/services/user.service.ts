@@ -22,6 +22,7 @@ export class UserService {
         return new User(
             data['_id'],
             data['email'],
+            data['photoUrl'],
             penPal
         );
     }

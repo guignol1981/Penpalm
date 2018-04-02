@@ -10,6 +10,8 @@ import {AuthenticationService} from '../../services/authentication.service';
 })
 export class HomeComponent implements OnInit {
     user: User;
+    tabs = ['news', 'inbox', 'outbox', 'compose', 'account'];
+    activeTabs = 'news';
 
     constructor(private userService: UserService,
                 private authenticationService: AuthenticationService) {
@@ -33,7 +35,7 @@ export class HomeComponent implements OnInit {
 
     }
 
-    showAbout() {
+    showAccount() {
 
     }
 

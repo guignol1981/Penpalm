@@ -9,14 +9,29 @@
         <a (click)="compose()" class="btn btn--action">
             <i class="fas fa-pencil-alt"></i>
         </a>
-        <a (click)="showAbout()" class="btn btn--action">
-            <i class="fas fa-question"></i>
+        <a (click)="showAccount()" class="btn btn--image">
+            <img [src]="user.photoUrl" alt="">
         </a>
         <a (click)="logout()" class="btn btn--action">
             <i class="fas fa-sign-out-alt"></i>
         </a>
     </div>
-    <div class="postcard">
-        <app-post-card></app-post-card>
+    <div *ngIf="activeTabs === 'news'" class="main">
+        <app-news></app-news>
+    </div>
+    <div *ngIf="activeTabs === 'inbox'" class="main">
+        <app-inbox></app-inbox>
+    </div>
+    <div *ngIf="activeTabs === 'outbox'" class="main">
+        <app-outbox></app-outbox>
+    </div>
+    <div *ngIf="activeTabs === 'compose'" class="main">
+        <app-compose></app-compose>
+    </div>
+    <div *ngIf="activeTabs === 'account'" class="main">
+        <app-account></app-account>
+    </div>
+    <div class="footer">
+        <app-footer></app-footer>
     </div>
 </div>

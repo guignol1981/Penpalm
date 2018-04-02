@@ -20,9 +20,17 @@
   }
 
   &--action {
-    height: 10rem;
-    width: 10rem;
-    font-size: 10rem;
+    padding: 4rem;
+    height: 9rem;
+    width: 9rem;
+    font-size: 4rem;
     background-color: var(--color-secondary);
+    border-radius: 1rem;
+  }
+
+  &--image > img {
+    height: 9rem;
+    width: 9rem;
+    border-radius: 1rem;
   }
 }

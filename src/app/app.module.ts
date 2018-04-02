@@ -13,6 +13,12 @@ import {CanActivateViaAuthGuardService} from "./services/can-activate-via-auth-g
 import { PostCardComponent } from './components/post-card/post-card.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import {AuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider, SocialLoginModule} from 'angular4-social-login';
+import { FooterComponent } from './components/footer/footer.component';
+import { InboxComponent } from './components/inbox/inbox.component';
+import { OutboxComponent } from './components/outbox/outbox.component';
+import { ComposeComponent } from './components/compose/compose.component';
+import { AccountComponent } from './components/account/account.component';
+import { NewsComponent } from './components/news/news.component';
 
 let config = new AuthServiceConfig([
     {
@@ -31,7 +37,13 @@ let config = new AuthServiceConfig([
     HomeComponent,
     LoginComponent,
     PostCardComponent,
-    LogoutComponent
+    LogoutComponent,
+    FooterComponent,
+    InboxComponent,
+    OutboxComponent,
+    ComposeComponent,
+    AccountComponent,
+    NewsComponent
   ],
   imports: [
     BrowserModule,
