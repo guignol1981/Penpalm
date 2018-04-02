@@ -3,12 +3,26 @@
   color: white;
   cursor: pointer;
   font-size: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &--social {
 
   }
 
   &--primary {
-    color: blue;
+    color: var(--color-primary);
+  }
+
+  &--secondary {
+    color: var(--color-secondary);
+  }
+
+  &--action {
+    height: 10rem;
+    width: 10rem;
+    font-size: 10rem;
+    background-color: var(--color-secondary);
   }
 }

@@ -1,5 +1,22 @@
 <div class="container">
-    <div class="mailbox">
+    <div class="actions">
+        <a (click)="showInbox()" class="btn btn--action">
+            <i class="fas fa-arrow-down"></i>
+        </a>
+        <a (click)="showOutbox()" class="btn btn--action">
+            <i class="fas fa-arrow-up"></i>
+        </a>
+        <a (click)="compose()" class="btn btn--action">
+            <i class="fas fa-pencil-alt"></i>
+        </a>
+        <a (click)="showAbout()" class="btn btn--action">
+            <i class="fas fa-question"></i>
+        </a>
+        <a (click)="logout()" class="btn btn--action">
+            <i class="fas fa-sign-out-alt"></i>
+        </a>
+    </div>
+    <div class="postcard">
         <app-post-card></app-post-card>
     </div>
 </div>

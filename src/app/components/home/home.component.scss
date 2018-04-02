@@ -6,16 +6,23 @@
 	grid-gap: 3rem;
 
 	grid-template-areas:
-			". . ."
-			". mailbox ."
+			". actions ."
+			". postcard ."
 			". . .";
 
 	justify-items: center;
 	align-items: center;
 }
 
-.mailbox {
-	grid-area: mailbox;
+.postcard {
+	grid-area: postcard;
 	align-self: stretch;
 	width: 100%;
+}
+
+.actions {
+	width: 100%;
+	grid-area: actions;
+	display: flex;
+	justify-content: space-evenly;
 }

@@ -28,4 +28,14 @@ export class LoginComponent implements OnInit {
         });
     }
 
+    loginWithGoogle() {
+        this.authenticationService.login().then(fbToken => {
+            this.userService.signIn(fbToken).then(success => {
+                if (success) {
+                    this.router.navigate(['/home']);
+                }
+            });
+        });
+    }
+
 }
