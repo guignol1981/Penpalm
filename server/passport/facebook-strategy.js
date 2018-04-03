@@ -7,7 +7,7 @@ passport.use(new FacebookStrategy({
         clientSecret: '7f210335c7b72e642a5c0e40130d055a'
     },
     function (accessToken, refreshToken, profile, done) {
-        User.upsertFbUser(accessToken, refreshToken, profile, function (err, user) {
+        User.upsertSocialUser(accessToken, refreshToken, profile, function (err, user) {
             return done(err, user);
         });
     })

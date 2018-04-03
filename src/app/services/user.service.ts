@@ -3,6 +3,7 @@ import {Headers, Http, Response} from '@angular/http';
 import {AuthenticationService} from './authentication.service';
 import {User} from '../models/user/user';
 import {SocialUser} from 'angular4-social-login';
+import {News} from "../models/news/news";
 
 @Injectable()
 export class UserService {
@@ -13,17 +14,29 @@ export class UserService {
 
     public static deserializeUser(data: any): User {
         let penPal = new User();
+        let newsList = [];
 
         if (data['penPal']) {
             let penPalData = data['penPal'];
             penPal._id = penPalData['_id'];
+            penPal.photoUrl = penPalData['photoUrl'];
         }
+
+        data['newsList'].forEach(newsData => {
+            newsList.push(new News(
+                newsData['_id'],
+                newsData['title'],
+                newsData['body'],
+                newsData['imageUrl']
+            ));
+        });
 
         return new User(
             data['_id'],
             data['email'],
             data['photoUrl'],
-            penPal
+            penPal,
+            newsList
         );
     }
 
@@ -43,7 +56,7 @@ export class UserService {
             });
     }
 
-    getCurrentUser(): Promise<any> {
+    getCurrentUser(): Promise<User> {
         let headers = new Headers({
             'Content-Type': 'application/json',
             Authorization: 'Bearer ' + this.authenticationService.getToken()
@@ -55,6 +68,7 @@ export class UserService {
                 return UserService.deserializeUser(response.json().data);
             })
             .catch(() => {
+                return null;
             });
     }
 

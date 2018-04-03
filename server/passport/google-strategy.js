@@ -7,7 +7,7 @@ passport.use(new GoogleTokenStrategy({
         clientSecret: 'eZDYKD12tJFXWv_ZBt_2tM2K'
     },
     function (accessToken, refreshToken, profile, done) {
-        User.upsertFbUser(accessToken, refreshToken, profile, function (err, user) {
+        User.upsertSocialUser(accessToken, refreshToken, profile, function (err, user) {
             return done(err, user);
         });
     }

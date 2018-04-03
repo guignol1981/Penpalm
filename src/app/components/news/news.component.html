@@ -1,3 +1,16 @@
-<p>
-  news works!
-</p>
+<div class="container">
+    <div *ngFor="let news of newsList">
+        <div class="news__icon">
+            <i class="fas fa-newspaper"></i>
+        </div>
+        <div class="news">
+            <div class="news__title">
+                {{news.title}}
+            </div>
+            <div class="news__body">
+                {{news.body}}
+            </div>
+        </div>
+        <img *ngIf="news.imageUrl" class="news-image" [src]="news.imageUrl" alt="">
+    </div>
+</div>

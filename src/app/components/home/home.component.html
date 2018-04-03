@@ -1,4 +1,4 @@
-<div class="container">
+<div *ngIf="user" class="container">
     <div class="actions">
         <a (click)="setTab('inbox')" class="btn btn--action">
             <i class="fas fa-arrow-down"></i>
@@ -17,7 +17,7 @@
         </a>
     </div>
     <div *ngIf="activeTabs === 'news'" class="main">
-        <app-news></app-news>
+        <app-news [newsList]="user.newsList"></app-news>
     </div>
     <div *ngIf="activeTabs === 'inbox'" class="main">
         <app-inbox></app-inbox>
@@ -34,4 +34,4 @@
     <div class="footer">
         <app-footer></app-footer>
     </div>
-</div>
+</div>¢
