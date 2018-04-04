@@ -1,0 +1,25 @@
+.container {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.postcard {
+	background-color: #fff;
+	box-sizing: border-box;
+	border: none;
+	border-radius: .5rem;
+	resize: none;
+	font-size: 2rem;
+	line-height: 2.4rem;
+	overflow: auto;
+	height: 36rem;
+	width: 36rem;
+	padding: .8rem;
+}
+
+.navigation {
+	margin-right: 2rem;
+	margin-left: 2rem;
+}

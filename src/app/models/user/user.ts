@@ -8,7 +8,7 @@ export class User {
                 public photoUrl?: string,
                 public penPal?: User,
                 public news?: News,
-                public preference?: Preference) {
+                public preferences?: Preference) {
     }
 
 }

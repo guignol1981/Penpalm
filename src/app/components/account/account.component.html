@@ -1,7 +1,19 @@
-<div *ngIf="preference" class="container">
-  <form [formGroup]="form">
-    test
-  </form>
-  <a (click)="submit()" class="btn btn--action"></a>
-  <a (click)="deleteAccount()" class="btn btn--action"></a>
+<div *ngIf="user" class="container">
+    <form [formGroup]="form" class="form">
+        <div class="form__group">
+            <label for="displayImage">Show my picture</label>
+            <input type="checkbox" formControlName="displayImage" id="displayImage">
+        </div>
+        <div class="form__group">
+            <label for="displayName">Show my name</label>
+            <input type="checkbox" formControlName="displayName" id="displayName">
+        </div>
+        <div class="form__group">
+            <label for="emailNotifications">Enable email notifications</label>
+            <input type="checkbox" formControlName="emailNotifications" id="emailNotifications">
+        </div>
+        <div class="form__actions">
+            <a (click)="submit()" class="btn btn--submit">Submit</a>
+        </div>
+    </form>
 </div>

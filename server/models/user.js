@@ -1,6 +1,7 @@
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 let newsFactory = require('../services/news-factory');
+let Preference = require('../models/preference');
 
 let UserSchema = new Schema({
 	name: {type: String, require: true},
@@ -19,7 +20,8 @@ let UserSchema = new Schema({
 		select: false
 	},
 	penPal: {type: Schema.Types.ObjectId, ref: 'User', default: null},
-	news: {type: Schema.Types.ObjectId, ref: 'News'}
+	news: {type: Schema.Types.ObjectId, ref: 'News'},
+	preferences: {type: Schema.Types.ObjectId, ref: 'Preference', default: new Preference()}
 });
 
 UserSchema.statics.upsertSocialUser = function(accessToken, refreshToken, profile, cb) {
@@ -29,22 +31,26 @@ UserSchema.statics.upsertSocialUser = function(accessToken, refreshToken, profil
 		'provider.id': profile.id
 	}, function(err, user) {
 		if (!user) {
-			let newUser = new that({
-				name: profile.name.givenName,
-				email: profile.emails[0].value,
-				photoUrl: profile.photos ? profile.photos[0].value : profile._json.picture,
-				provider: {
-					id: profile.id,
-					token: accessToken,
-					source: profile.provider
-				}
-			});
-			newUser.matchPenPal((user) => {
-				user.save(function(error, savedUser) {
-					if (error) {
-						console.log(error);
-					}
-					return cb(error, savedUser);
+			let preference = new Preference();
+			preference.save().then(preference => {
+				let newUser = new that({
+					name: profile.name.givenName,
+					email: profile.emails[0].value,
+					photoUrl: profile.photos ? profile.photos[0].value : profile._json.picture,
+					provider: {
+						id: profile.id,
+						token: accessToken,
+						source: profile.provider
+					},
+					preferences: preference
+				});
+				newUser.matchPenPal((user) => {
+					user.save(function(error, savedUser) {
+						if (error) {
+							console.log(error);
+						}
+						return cb(error, savedUser);
+					});
 				});
 			});
 		} else {

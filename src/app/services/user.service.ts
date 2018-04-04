@@ -4,6 +4,7 @@ import {AuthenticationService} from './authentication.service';
 import {User} from '../models/user/user';
 import {SocialUser} from 'angular4-social-login';
 import {News} from '../models/news/news';
+import {Preference} from "../models/user/preference";
 
 @Injectable()
 export class UserService {
@@ -28,13 +29,21 @@ export class UserService {
             data['news']['imageUrl']
         );
 
+        let preferences = new Preference(
+            data['preferences']['_id'],
+            data['preferences']['displayImage'],
+            data['preferences']['displayName'],
+            data['preferences']['emailNotifications']
+        );
+
         return new User(
             data['_id'],
             data['name'],
             data['email'],
             data['photoUrl'],
             penPal,
-            news
+            news,
+            preferences
         );
     }
 
@@ -61,6 +70,22 @@ export class UserService {
         });
 
         return this.http.get(`api/users`, {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                return UserService.deserializeUser(response.json().data);
+            })
+            .catch(() => {
+                return null;
+            });
+    }
+
+    update(user: User): Promise<User> {
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.put(`api/users`, JSON.stringify(user), {headers: headers})
             .toPromise()
             .then((response: Response) => {
                 return UserService.deserializeUser(response.json().data);
