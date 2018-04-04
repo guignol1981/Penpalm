@@ -1,27 +1,22 @@
 <div *ngIf="user" class="container">
     <ul class="nav">
-        <li class="nav-item">
-            <a (click)="setTab('inbox')">
+        <li (click)="setTab('inbox')" class="nav-item">
+            <a>
                 <i class="fas fa-arrow-down"></i>
             </a>
         </li>
-        <li class="nav-item">
-            <a (click)="setTab('outbox')">
+        <li (click)="setTab('outbox')" class="nav-item">
+            <a>
                 <i class="fas fa-arrow-up"></i>
             </a>
         </li>
-        <li class="nav-item">
-            <a (click)="setTab('compose')">
+        <li (click)="setTab('compose')" class="nav-item">
+            <a>
                 <i class="fas fa-pencil-alt"></i>
             </a>
         </li>
-        <li class="nav-item">
-            <a (click)="logout()">
-                <i class="fas fa-sign-out-alt"></i>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a (click)="setTab('account')" class="nav-item__image-wrap">
+        <li (click)="setTab('account')" class="nav-item">
+            <a class="nav-item__image-wrap">
                 <img [src]="user.photoUrl" alt="profile image" class="nav-item__image">
             </a>
         </li>
