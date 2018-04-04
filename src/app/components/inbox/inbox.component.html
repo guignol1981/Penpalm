@@ -1,3 +1,5 @@
-<p>
-  inbox works!
-</p>
+<div class="container">
+    <div *ngFor="let postcard of postcards" class="postcard">
+        {{postcard.body}}
+    </div>
+</div>
