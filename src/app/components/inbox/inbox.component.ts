@@ -9,6 +9,7 @@ import {Postcard} from "../../models/postcard/postcard";
 })
 export class InboxComponent implements OnInit {
     postcards: Postcard[];
+    navIndex = 0;
     constructor(private postcardService: PostcardService) {
     }
 
@@ -18,5 +19,21 @@ export class InboxComponent implements OnInit {
         });
     }
 
+    navTo(direction) {
+        if (
+            (direction === -1 && this.canNavigateForward())
+            ||
+            (direction === 1 && this.canNavigateBackward())
+        ) {
+            this.navIndex += direction;
+        }
+    }
 
+    canNavigateForward() {
+        return this.navIndex > 0;
+    }
+
+    canNavigateBackward() {
+        return this.navIndex + 1 < this.postcards.length;
+    }
 }

@@ -1,3 +1,7 @@
-<p>
-  account works!
-</p>
+<div *ngIf="preference" class="container">
+  <form [formGroup]="form">
+    test
+  </form>
+  <a (click)="submit()" class="btn btn--action"></a>
+  <a (click)="deleteAccount()" class="btn btn--action"></a>
+</div>
