@@ -1,6 +1,11 @@
 <div class="container">
-    <form [formGroup]="form">
-        <textarea formControlName="body" name="body" id="body" cols="30" rows="10"></textarea>
-    </form>
-    <a (click)="submit()" class="btn">Send postcard</a>
+    <div *ngIf="!sent" class="postcard">
+        <form [formGroup]="form">
+            <textarea class="postcard__body" formControlName="body" name="body" id="body" cols="30" rows="10"></textarea>
+        </form>
+    </div>
+    <a *ngIf="!sent" (click)="submit()" class="btn btn--submit">Send postcard</a>
+    <div *ngIf="sent" class="submit-msg">
+        Postcard sent!
+    </div>
 </div>

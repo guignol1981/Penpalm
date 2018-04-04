@@ -10,6 +10,7 @@ import {PostcardService} from '../../services/postcard.service';
 })
 export class ComposeComponent implements OnInit {
     form: FormGroup;
+    sent = false;
 
     constructor(private postcardService: PostcardService) {
     }
@@ -27,7 +28,7 @@ export class ComposeComponent implements OnInit {
        );
 
         this.postcardService.create(postcard).then((postcard: Postcard) => {
-            console.log('ok');
+            this.sent = true;
         });
     }
 }

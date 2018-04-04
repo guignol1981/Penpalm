@@ -1,8 +1,28 @@
 .container {
   height: 100%;
-  background-color: var(--color-paper);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.postcard {
+
+  &__body {
+    box-sizing: border-box;
+    border: none;
+    border-radius: .5rem;
+    resize: none;
+    font-size: 2rem;
+    line-height: 2.4rem;
+    overflow: auto;
+    height: auto;
+    width: 36rem;
+    padding: .8rem;
+  }
+}
+
+.submit-msg {
+  font-size: 4rem;
+  color: #fff;
 }
