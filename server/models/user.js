@@ -3,6 +3,7 @@ let Schema = mongoose.Schema;
 let newsFactory = require('../services/news-factory');
 
 let UserSchema = new Schema({
+	name: {type: String, require: true},
 	email: {
 		type: String, required: true,
 		trim: true,
@@ -18,7 +19,7 @@ let UserSchema = new Schema({
 		select: false
 	},
 	penPal: {type: Schema.Types.ObjectId, ref: 'User', default: null},
-	newsList: [{type: Schema.Types.ObjectId, ref: 'News', default: []}]
+	news: {type: Schema.Types.ObjectId, ref: 'News'}
 });
 
 UserSchema.statics.upsertSocialUser = function(accessToken, refreshToken, profile, cb) {
@@ -29,14 +30,14 @@ UserSchema.statics.upsertSocialUser = function(accessToken, refreshToken, profil
 	}, function(err, user) {
 		if (!user) {
 			let newUser = new that({
+				name: profile.name.givenName,
 				email: profile.emails[0].value,
 				photoUrl: profile.photos ? profile.photos[0].value : profile._json.picture,
 				provider: {
 					id: profile.id,
 					token: accessToken,
 					source: profile.provider
-				},
-				newsList: []
+				}
 			});
 			newUser.matchPenPal((user) => {
 				user.save(function(error, savedUser) {
@@ -63,10 +64,10 @@ UserSchema.methods.matchPenPal = function(callback) {
 				this.penPal = penPal;
 				penPal.penPal = this;
 				newsFactory.match(penPal, (news) => {
-					this.newsList.push(news);
+					this.news = news;
 					newsFactory.match(this, (news) => {
+						penPal.news = news;
 						penPal.save().then(() => {
-							penPal.newsList.push(news);
 							callback(this);
 						});
 					});
@@ -74,7 +75,7 @@ UserSchema.methods.matchPenPal = function(callback) {
 			} else {
 				newsFactory.noMatch(
 					(news) => {
-						this.newsList.push(news);
+						this.news = news;
 						callback(this);
 					}
 				);

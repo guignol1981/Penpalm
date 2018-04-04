@@ -8,7 +8,7 @@ import {News} from "../../models/news/news";
   styleUrls: ['./news.component.scss']
 })
 export class NewsComponent implements OnInit {
-  @Input() newsList: News[];
+  @Input() news: News;
 
   constructor() { }
 

@@ -1,3 +1,6 @@
-<p>
-  compose works!
-</p>
+<div class="container">
+    <form [formGroup]="form">
+        <textarea formControlName="body" name="body" id="body" cols="30" rows="10"></textarea>
+    </form>
+    <a (click)="submit()" class="btn">Send postcard</a>
+</div>

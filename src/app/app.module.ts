@@ -9,7 +9,7 @@ import {UserService} from './services/user.service';
 import {LoginComponent} from './components/login/login.component';
 import {AuthenticationService} from "./services/authentication.service";
 import {CanActivateViaAuthGuardService} from "./services/can-activate-via-auth-guard.service";
-import {PostCardComponent} from './components/post-card/post-card.component';
+import {PostcardComponent} from './components/postcard/postcard.component';
 import {LogoutComponent} from './components/logout/logout.component';
 import {AuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider, SocialLoginModule} from 'angular4-social-login';
 import {FooterComponent} from './components/footer/footer.component';
@@ -18,6 +18,7 @@ import {OutboxComponent} from './components/outbox/outbox.component';
 import {ComposeComponent} from './components/compose/compose.component';
 import {AccountComponent} from './components/account/account.component';
 import {NewsComponent} from './components/news/news.component';
+import {PostcardService} from './services/postcard.service';
 
 let config = new AuthServiceConfig([
     {
@@ -39,7 +40,7 @@ export function provideConfig() {
         AppComponent,
         HomeComponent,
         LoginComponent,
-        PostCardComponent,
+        PostcardComponent,
         LogoutComponent,
         FooterComponent,
         InboxComponent,
@@ -57,6 +58,7 @@ export function provideConfig() {
     ],
     providers: [
         UserService,
+        PostcardService,
         AuthenticationService,
         CanActivateViaAuthGuardService,
         {

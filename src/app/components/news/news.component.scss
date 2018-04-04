@@ -9,19 +9,20 @@
 .news {
 	font-size: 4rem;
 	color: #fff;
-	margin-bottom: 3rem;
+	text-align: center;
 
 	&__title {
 		font-size: 4rem;
-	}
-
-	&__body {
-		font-size: 3rem;
+		margin-bottom: 3rem;
 	}
 
 	&__icon {
 		font-size: 6rem;
 		color: white;
+	}
+
+	&__body {
+		font-size: 3rem;
 	}
 }
 

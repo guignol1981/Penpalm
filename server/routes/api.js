@@ -8,6 +8,7 @@ let authenticate = require('express-jwt')({
 
 let userController = require('../controllers/user-controller');
 let authenticatorController = require('../controllers/authenticator-controller');
+let postcardController = require('../controllers/postcard-controller');
 
 router.post('/auth/facebook',
     passport.authenticate('facebook-token'),
@@ -21,6 +22,12 @@ router.post('/auth/google',
     authenticatorController.generateToken,
     authenticatorController.sendToken);
 
+//users
 router.get('/users', authenticate, userController.get);
+
+
+//postcards
+router.post('/postcards', authenticate, postcardController.create);
+
 
 module.exports = router;

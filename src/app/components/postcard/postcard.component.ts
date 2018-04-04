@@ -1,12 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Postcard} from '../../models/post-card/postcard';
+import {Postcard} from '../../models/postcard/postcard';
 
 @Component({
   selector: 'app-post-card',
-  templateUrl: './post-card.component.html',
-  styleUrls: ['./post-card.component.scss']
+  templateUrl: './postcard.component.html',
+  styleUrls: ['./postcard.component.scss']
 })
-export class PostCardComponent implements OnInit {
+export class PostcardComponent implements OnInit {
   @Input() postcard: Postcard;
 
   constructor() { }

@@ -20,17 +20,17 @@
   }
 
   &--action {
-    padding: 4rem;
-    height: 9rem;
-    width: 9rem;
-    font-size: 4rem;
+    padding: 3rem;
+    height: 6rem;
+    width: 6rem;
+    font-size: 3rem;
     background-color: var(--color-secondary);
     border-radius: 1rem;
   }
 
   &--image > img {
-    height: 9rem;
-    width: 9rem;
+    height: 6rem;
+    width: 6rem;
     border-radius: 1rem;
   }
 }

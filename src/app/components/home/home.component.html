@@ -17,7 +17,7 @@
         </a>
     </div>
     <div *ngIf="activeTabs === 'news'" class="main">
-        <app-news [newsList]="user.newsList"></app-news>
+        <app-news [news]="user.news"></app-news>
     </div>
     <div *ngIf="activeTabs === 'inbox'" class="main">
         <app-inbox></app-inbox>
