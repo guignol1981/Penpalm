@@ -1,21 +1,31 @@
 <div *ngIf="user" class="container">
-    <div class="actions">
-        <a (click)="setTab('inbox')" class="btn btn--action">
-            <i class="fas fa-arrow-down"></i>
-        </a>
-        <a (click)="setTab('outbox')" class="btn btn--action">
-            <i class="fas fa-arrow-up"></i>
-        </a>
-        <a (click)="setTab('compose')" class="btn btn--action">
-            <i class="fas fa-pencil-alt"></i>
-        </a>
-        <a (click)="setTab('account')" class="btn btn--image">
-            <img [src]="user.photoUrl" alt="">
-        </a>
-        <a (click)="logout()" class="btn btn--action">
-            <i class="fas fa-sign-out-alt"></i>
-        </a>
-    </div>
+    <ul class="nav">
+        <li class="nav-item">
+            <a (click)="setTab('inbox')">
+                <i class="fas fa-arrow-down"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a (click)="setTab('outbox')">
+                <i class="fas fa-arrow-up"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a (click)="setTab('compose')">
+                <i class="fas fa-pencil-alt"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a (click)="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a (click)="setTab('account')" class="nav-item__image-wrap">
+                <img [src]="user.photoUrl" alt="profile image" class="nav-item__image">
+            </a>
+        </li>
+    </ul>
     <div *ngIf="activeTabs === 'news'" class="main">
         <app-news [news]="user.news"></app-news>
     </div>
