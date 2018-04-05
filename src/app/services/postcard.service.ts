@@ -33,20 +33,23 @@ export class PostcardService {
             .catch(() => null);
     }
 
-    getInbox(): Promise<Postcard[]> {
+    getInbox(fetchConfig: any): Promise<any> {
         let headers = new Headers({
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + this.authenticationService.getToken()
         });
 
-        return this.http.get(this.apiEndPoint + '/inbox', {headers: headers})
+        return this.http.get(this.apiEndPoint + '/inbox', {headers: headers, params: fetchConfig})
             .toPromise()
             .then((response: Response) => {
                 let postcards = [];
-                response.json().data.forEach(postcardData => {
+                let data = response.json().data;
+
+                data.postcards.forEach(postcardData => {
                     postcards.push(PostcardService.deserializePostcard(postcardData));
                 });
-                return postcards;
+
+                return {postcards: postcards, count: data.count};
             })
             .catch(() => null);
     }

@@ -10,12 +10,20 @@ import {Postcard} from "../../models/postcard/postcard";
 export class InboxComponent implements OnInit {
     postcards: Postcard[];
     navIndex = 0;
+    count = 0;
+
+    fetchConfig = {
+        skip: 0
+    };
+
     constructor(private postcardService: PostcardService) {
     }
 
     ngOnInit() {
-        this.postcardService.getInbox().then((postcards: Postcard[]) => {
-            this.postcards = postcards;
+        this.postcardService.getInbox(this.fetchConfig).then(response => {
+            this.postcards = response.postcards;
+            this.count = response.count;
+            console.log(response);
         });
     }
 
