@@ -1,28 +1,40 @@
 .container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.compose {
+	align-self: stretch;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
 .postcard {
+	margin-bottom: 2rem;
+	height: 25rem;
+	width: 50rem;
 
-  &__body {
-    box-sizing: border-box;
-    border: none;
-    border-radius: .5rem;
-    resize: none;
-    font-size: 2rem;
-    line-height: 2.4rem;
-    overflow: auto;
-    height: auto;
-    width: 36rem;
-    padding: .8rem;
-  }
+	&__body {
+		box-sizing: border-box;
+		border: none;
+		border-radius: .5rem;
+		resize: none;
+		font-size: 2rem;
+		line-height: 2.4rem;
+		overflow: auto;
+		height: auto;
+		width: 100%;
+		padding: .8rem;
+		outline: none;
+	}
 }
 
 .submit-msg {
-  font-size: 4rem;
-  color: #fff;
+	font-size: 4rem;
+	color: #fff;
 }

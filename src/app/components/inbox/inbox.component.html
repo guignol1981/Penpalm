@@ -1,11 +1,8 @@
 <div *ngIf="postcards" class="container">
-    <a class="navigation btn btn--nav" (click)="navTo(1)">
-        <i class="fas fa-arrow-circle-left"></i>
-    </a>
     <div class="postcard">
         {{postcards[navIndex].body}}
     </div>
-    <a class="navigation btn btn--nav" (click)="navTo(-1)">
-        <i class="fas fa-arrow-circle-right"></i>
-    </a>
+    <div>
+        paging
+    </div>
 </div>
