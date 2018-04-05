@@ -28,8 +28,8 @@ router.put('/users', authenticate, userController.update);
 
 //postcards
 router.post('/postcards', authenticate, postcardController.create);
-router.get('/postcards/inbox', authenticate, postcardController.inbox);
-router.get('/postcards/sent', authenticate, postcardController.sent);
+router.get('/postcards/in', authenticate, postcardController.getInbox);
+router.get('/postcards/out', authenticate, postcardController.getOutbox);
 
 
 module.exports = router;

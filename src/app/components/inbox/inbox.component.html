@@ -1,22 +1,28 @@
 <div *ngIf="postcards" class="container">
     <div class="paging">
         <div class="paging__handles">
-            <a>
+            <a (click)="skipFirst()"
+               [class]="fetchConfig.skip > 0 ? 'paging__handles__handle' : 'paging__handles__handle--inactive'">
                 <i class="fas fa-angle-double-left"></i>
             </a>
-            <a>
+            <a (click)="skipBackward()"
+               [class]="fetchConfig.skip > 0 ? 'paging__handles__handle' : 'paging__handles__handle--inactive'">
                 <i class="fas fa-angle-left"></i>
             </a>
         </div>
         <div class="paging__indexes">
             <a (click)="navTo(i)" *ngFor="let postcard of postcards; let i = index"
-               [class]="navIndex === i ? 'paging__indexes__index paging__indexes__index--selected' : 'paging__indexes__index'">{{i}}</a>
+               [class]="navIndex === i ? 'paging__indexes__index paging__indexes__index--selected' : 'paging__indexes__index'">
+                {{i + 1 + fetchConfig.skip}}
+            </a>
         </div>
         <div class="paging__handles">
-            <a>
+            <a (click)="skipForward()"
+               [class]="count > fetchConfig.skip + 5 ? 'paging__handles__handle' : 'paging__handles__handle--inactive'">
                 <i class="fas fa-angle-right"></i>
             </a>
-            <a>
+            <a (click)="skipLast()"
+               [class]="count > fetchConfig.skip + 5 ? 'paging__handles__handle' : 'paging__handles__handle--inactive'">
                 <i class="fas fa-angle-double-right"></i>
             </a>
         </div>

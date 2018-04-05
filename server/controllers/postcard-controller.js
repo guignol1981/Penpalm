@@ -29,7 +29,7 @@ module.exports.create = function(req, res) {
 		});
 };
 
-module.exports.inbox = function(req, res) {
+module.exports.getInbox = function(req, res) {
 	let url = require('url');
 	let url_parts = url.parse(req.url, true);
 	let query = url_parts.query;
@@ -38,6 +38,7 @@ module.exports.inbox = function(req, res) {
 		Postcard.find({'recipient': req.auth.id})
 			.skip(Number(query.skip))
 			.limit(5)
+			.sort({'creationDate': -1})
 			.exec()
 			.then(postcards => {
 				res.send({
@@ -52,13 +53,24 @@ module.exports.inbox = function(req, res) {
 };
 
 
-module.exports.sent = function(req, res) {
-	Postcard.find({'author': req.auth.id})
-		.exec()
-		.then(postcards => {
-			res.send({
-				msg: 'Sent postcards retrieved',
-				data: postcards
+module.exports.getOutbox = function(req, res) {
+	let url = require('url');
+	let url_parts = url.parse(req.url, true);
+	let query = url_parts.query;
+	Postcard.count({'author': req.auth.id}).then(count => {
+		Postcard.find({'author': req.auth.id})
+			.skip(Number(query.skip))
+			.limit(5)
+			.sort({'creationDate': -1})
+			.exec()
+			.then(postcards => {
+				res.send({
+					msg: 'Inbox retrieved',
+					data: {
+						postcards: postcards,
+						count: count
+					}
+				});
 			});
-		});
+	});
 };

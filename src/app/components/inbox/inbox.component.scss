@@ -15,6 +15,15 @@
 	align-items: center;
 
 	&__handles {
+
+		&__handle {
+			cursor: pointer;
+
+			&--inactive {
+				cursor: auto;
+				color: #333333;
+			}
+		}
 	}
 
 	&__indexes {

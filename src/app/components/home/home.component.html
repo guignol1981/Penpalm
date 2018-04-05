@@ -25,10 +25,10 @@
         <app-news [news]="user.news"></app-news>
     </div>
     <div *ngIf="activeTabs === 'inbox'" class="main">
-        <app-inbox></app-inbox>
+        <app-inbox [direction]="'in'"></app-inbox>
     </div>
     <div *ngIf="activeTabs === 'outbox'" class="main">
-        <app-outbox></app-outbox>
+        <app-inbox [direction]="'out'"></app-inbox>
     </div>
     <div *ngIf="activeTabs === 'compose'" class="main">
         <app-compose></app-compose>
