@@ -4,6 +4,7 @@ import {UserService} from '../../services/user.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {User} from "../../models/user/user";
 import {AuthenticationService} from "../../services/authentication.service";
+import {NotificationsService} from "angular2-notifications";
 
 @Component({
     selector: 'app-account',
@@ -15,7 +16,8 @@ export class AccountComponent implements OnInit {
     form: FormGroup;
 
     constructor(private userService: UserService,
-                private authenticationService: AuthenticationService) {
+                private authenticationService: AuthenticationService,
+                private notificationService: NotificationsService) {
     }
 
     ngOnInit() {
@@ -33,7 +35,7 @@ export class AccountComponent implements OnInit {
         this.user.preferences.emailNotifications = this.form.get('emailNotifications').value;
 
         this.userService.update(this.user).then((user: User) => {
-
+            this.notificationService.success('Preferences saved');
         });
     }
 

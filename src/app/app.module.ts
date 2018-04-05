@@ -19,6 +19,8 @@ import {ComposeComponent} from './components/compose/compose.component';
 import {AccountComponent} from './components/account/account.component';
 import {NewsComponent} from './components/news/news.component';
 import {PostcardService} from './services/postcard.service';
+import {SimpleNotificationsModule} from 'angular2-notifications';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 let config = new AuthServiceConfig([
     {
@@ -50,11 +52,13 @@ export function provideConfig() {
         NewsComponent
     ],
     imports: [
+        BrowserAnimationsModule,
         BrowserModule,
         HttpModule,
         ReactiveFormsModule,
         routing,
-        SocialLoginModule
+        SocialLoginModule,
+        SimpleNotificationsModule.forRoot()
     ],
     providers: [
         UserService,

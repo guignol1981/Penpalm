@@ -19,21 +19,8 @@ export class InboxComponent implements OnInit {
         });
     }
 
-    navTo(direction) {
-        if (
-            (direction === -1 && this.canNavigateForward())
-            ||
-            (direction === 1 && this.canNavigateBackward())
-        ) {
-            this.navIndex += direction;
-        }
+    flip() {
+
     }
 
-    canNavigateForward() {
-        return this.navIndex > 0;
-    }
-
-    canNavigateBackward() {
-        return this.navIndex + 1 < this.postcards.length;
-    }
 }
