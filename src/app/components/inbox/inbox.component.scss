@@ -10,7 +10,20 @@
 	color: #fff;
 	font-size: 2rem;
 	margin-bottom: 2rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	letter-spacing: 1rem;
+
+	&__handles {
+
+	}
+
+	&__numbers {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 }
 
 .postcard {

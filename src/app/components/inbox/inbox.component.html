@@ -1,10 +1,16 @@
 <div *ngIf="postcards" class="container">
     <div class="paging">
-        <i class="fas fa-angle-double-left"></i>
-        <i class="fas fa-angle-left"></i>
-        1 2 3 4 5
-        <i class="fas fa-angle-right"></i>
-        <i class="fas fa-angle-double-right"></i>
+        <div class="paging__handles">
+            <i class="fas fa-angle-double-left"></i>
+            <i class="fas fa-angle-left"></i>
+        </div>
+        <div class="paging__numbers">
+            <a *ngFor="let postcard of postcards; let i = index">{{i}}</a>
+        </div>
+        <div class="paging__handles">
+            <i class="fas fa-angle-right"></i>
+            <i class="fas fa-angle-double-right"></i>
+        </div>
     </div>
     <div class="postcard">
         {{postcards[navIndex].body}}
