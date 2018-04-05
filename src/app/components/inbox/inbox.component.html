@@ -1,16 +1,29 @@
 <div *ngIf="postcards" class="container">
     <div class="paging">
         <div class="paging__handles">
-            <i class="fas fa-angle-double-left"></i>
-            <i class="fas fa-angle-left"></i>
+            <a>
+                <i class="fas fa-angle-double-left"></i>
+            </a>
+            <a>
+                <i class="fas fa-angle-left"></i>
+            </a>
         </div>
-        <div class="paging__numbers">
-            <a *ngFor="let postcard of postcards; let i = index">{{i}}</a>
+        <div class="paging__indexes">
+            <a (click)="navTo(i)" *ngFor="let postcard of postcards; let i = index"
+               [class]="navIndex === i ? 'paging__indexes__index paging__indexes__index--selected' : 'paging__indexes__index'">{{i}}</a>
         </div>
         <div class="paging__handles">
-            <i class="fas fa-angle-right"></i>
-            <i class="fas fa-angle-double-right"></i>
+            <a>
+                <i class="fas fa-angle-right"></i>
+            </a>
+            <a>
+                <i class="fas fa-angle-double-right"></i>
+            </a>
         </div>
+    </div>
+
+    <div class="postcard--date">
+        {{postcards[navIndex].creationDate | date}}
     </div>
     <div class="postcard">
         {{postcards[navIndex].body}}

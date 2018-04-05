@@ -27,6 +27,10 @@ export class InboxComponent implements OnInit {
         });
     }
 
+    navTo(index) {
+        this.navIndex = index;
+    }
+
     flip() {
 
     }

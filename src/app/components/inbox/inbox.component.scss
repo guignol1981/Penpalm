@@ -13,16 +13,27 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	letter-spacing: 1rem;
 
 	&__handles {
-
 	}
 
-	&__numbers {
+	&__indexes {
 		display: flex;
 		justify-content: center;
 		align-items: center;
+
+		&__index {
+			cursor: pointer;
+			padding: .5rem;
+			margin: 1rem;
+			border-radius: 1rem;
+			transition: all .3s;
+
+			&--selected {
+				background-color: #fff;
+				color: #000;
+			}
+		}
 	}
 }
 
@@ -38,4 +49,10 @@
 	height: 25rem;
 	width: 50rem;
 	padding: .8rem;
+}
+
+.postcard--date {
+	color: #fff;
+	font-size: 2rem;
+	margin-bottom: .5rem;
 }
