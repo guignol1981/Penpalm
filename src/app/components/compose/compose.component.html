@@ -6,7 +6,10 @@
                           rows="10"></textarea>
             </form>
         </div>
-        <a (click)="submit()" class="btn">Send postcard</a>
+        <div class="compose__action">
+            <a (click)="flip()" class="btn">Flip</a>
+            <a (click)="submit()" class="btn">Send postcard</a>
+        </div>
     </div>
     <div *ngIf="!composeMode">
         <a (click)="enterComposeMode()" class="btn">Write a postcard</a>

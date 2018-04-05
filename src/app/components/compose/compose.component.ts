@@ -25,6 +25,10 @@ export class ComposeComponent implements OnInit {
         this.composeMode = true;
     }
 
+    flip() {
+
+    }
+
     submit() {
         let postcard = new Postcard(
             null,
