@@ -32,6 +32,11 @@
 	transition: all .3s;
 	border-radius: 1rem;
 
+	&--active {
+		background-color: white;
+		color: black;
+	}
+
 	&__image-wrap {
 		display: flex;
 		align-items: center;

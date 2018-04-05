@@ -1,39 +1,39 @@
 <div *ngIf="user" class="container">
     <ul class="nav">
-        <li (click)="setTab('inbox')" class="nav-item">
+        <li (click)="setTab('inbox')" [class]="activeTab === 'inbox' ? 'nav-item nav-item--active' : 'nav-item'">
             <a>
                 <i class="fas fa-arrow-down"></i>
             </a>
         </li>
-        <li (click)="setTab('outbox')" class="nav-item">
+        <li (click)="setTab('outbox')" [class]="activeTab === 'outbox' ? 'nav-item nav-item--active' : 'nav-item'">
             <a>
                 <i class="fas fa-arrow-up"></i>
             </a>
         </li>
-        <li (click)="setTab('compose')" class="nav-item">
+        <li (click)="setTab('compose')" [class]="activeTab === 'compose' ? 'nav-item nav-item--active' : 'nav-item'">
             <a>
                 <i class="fas fa-pencil-alt"></i>
             </a>
         </li>
-        <li (click)="setTab('account')" class="nav-item">
+        <li (click)="setTab('account')" [class]="activeTab === 'account' ? 'nav-item nav-item--active' : 'nav-item'">
             <a class="nav-item__image-wrap">
                 <img [src]="user.photoUrl" alt="profile image" class="nav-item__image">
             </a>
         </li>
     </ul>
-    <div *ngIf="activeTabs === 'news'" class="main">
+    <div *ngIf="activeTab === 'news'" class="main">
         <app-news [news]="user.news"></app-news>
     </div>
-    <div *ngIf="activeTabs === 'inbox'" class="main">
+    <div *ngIf="activeTab === 'inbox'" class="main">
         <app-inbox [direction]="'in'"></app-inbox>
     </div>
-    <div *ngIf="activeTabs === 'outbox'" class="main">
+    <div *ngIf="activeTab === 'outbox'" class="main">
         <app-inbox [direction]="'out'"></app-inbox>
     </div>
-    <div *ngIf="activeTabs === 'compose'" class="main">
+    <div *ngIf="activeTab === 'compose'" class="main">
         <app-compose></app-compose>
     </div>
-    <div *ngIf="activeTabs === 'account'" class="main">
+    <div *ngIf="activeTab === 'account'" class="main">
         <app-account [user]="user"></app-account>
     </div>
     <div class="footer">

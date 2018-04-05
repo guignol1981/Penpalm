@@ -10,7 +10,7 @@ import {AuthenticationService} from '../../services/authentication.service';
 })
 export class HomeComponent implements OnInit {
     user: User;
-    activeTabs = 'news';
+    activeTab = 'news';
 
     constructor(private userService: UserService,
                 private authenticationService: AuthenticationService) {
@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
     }
 
     setTab(tab) {
-        this.activeTabs = tab;
+        this.activeTab = tab;
     }
 
     logout() {
