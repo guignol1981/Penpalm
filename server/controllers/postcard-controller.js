@@ -30,7 +30,10 @@ module.exports.create = function(req, res) {
 };
 
 module.exports.inbox = function(req, res) {
+	Postcard.count({'recipient': req.auth.id}).then(count => console.log(count));
 	Postcard.find({'recipient': req.auth.id})
+		.skip(5)
+		.limit(5)
 		.exec()
 		.then(postcards => {
 			res.send({
