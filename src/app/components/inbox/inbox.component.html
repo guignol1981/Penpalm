@@ -1,4 +1,4 @@
-<div *ngIf="postcards" class="container">
+<div *ngIf="postcards && postcards.length > 0" class="container">
     <div class="paging">
         <div class="paging__handles">
             <a (click)="skipFirst()"
@@ -45,4 +45,7 @@
     <div class="action">
         <a (click)="flip(postcard)" class="btn">Flip</a>
     </div>
+</div>
+<div *ngIf="!postcards || postcards.length === 0" class="empty">
+    {{direction === 'in' ? 'You don\'t have any postcard yet' : 'You haven\'t sent any postcard yet'}}
 </div>

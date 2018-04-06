@@ -20,6 +20,7 @@ import {NewsComponent} from './components/news/news.component';
 import {PostcardService} from './services/postcard.service';
 import {SimpleNotificationsModule} from 'angular2-notifications';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {NewsService} from "./services/news.service";
 
 let config = new AuthServiceConfig([
     {
@@ -61,6 +62,7 @@ export function provideConfig() {
     providers: [
         UserService,
         PostcardService,
+        NewsService,
         AuthenticationService,
         CanActivateViaAuthGuardService,
         {

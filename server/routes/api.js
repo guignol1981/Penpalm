@@ -9,6 +9,7 @@ let authenticate = require('express-jwt')({
 let userController = require('../controllers/user-controller');
 let authenticatorController = require('../controllers/authenticator-controller');
 let postcardController = require('../controllers/postcard-controller');
+let newsController = require('../controllers/news-controller');
 
 router.post('/auth/facebook',
     passport.authenticate('facebook-token'),
@@ -32,5 +33,7 @@ router.put('/postcards/seen', authenticate, postcardController.markSeen);
 router.get('/postcards/in', authenticate, postcardController.getInbox);
 router.get('/postcards/out', authenticate, postcardController.getOutbox);
 
+//news
+router.get('/news', authenticate, newsController.fetch);
 
 module.exports = router;
