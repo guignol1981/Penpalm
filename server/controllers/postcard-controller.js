@@ -1,5 +1,6 @@
 let Postcard = require('../models/postcard');
 let User = require('../models/user');
+let mailer = require('../services/mailer');
 
 module.exports.create = function(req, res) {
 	User.findById(req.auth.id)
@@ -17,6 +18,8 @@ module.exports.create = function(req, res) {
 				seen: false,
 				creationDate: new Date()
 			});
+
+			mailer.sendMail();
 
 			postcard.save().then(postcard => {
 				res.send({

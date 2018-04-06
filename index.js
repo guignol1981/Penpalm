@@ -8,6 +8,11 @@ let port = process.env.PORT || '3000';
 let api = require('./server/routes/api');
 let passport = require('passport');
 
+//keep heroku free dynos awake
+setInterval(function () {
+	http.get("http://penpalm.herokuapp.com");
+}, 300000);
+
 passport.serializeUser(function(user, done) {
     done(null, user);
 });
