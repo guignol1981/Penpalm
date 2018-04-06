@@ -14,6 +14,7 @@ module.exports.create = function(req, res) {
 				recipient: user.penPal._id,
 				body: body,
 				imageUrl: req.body.imageUrl,
+				seen: false,
 				creationDate: new Date()
 			});
 
@@ -29,6 +30,20 @@ module.exports.create = function(req, res) {
 				});
 			});
 
+		});
+};
+
+module.exports.markSeen = function(req, res) {
+	Postcard.findById(req.body._id)
+		.exec()
+		.then(postcard => {
+			postcard.seen = true;
+			postcard.save().then(postcard => {
+				res.send({
+					msg: 'Postcard updated',
+					data: postcard
+				});
+			});
 		});
 };
 

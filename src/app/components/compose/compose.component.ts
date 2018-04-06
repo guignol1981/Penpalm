@@ -50,7 +50,9 @@ export class ComposeComponent implements OnInit {
             this.form.get('body').value,
             this.form.get('imageUrl').value
         );
+
         this.sending = true;
+
         this.postcardService.create(postcard).then((postcard: Postcard) => {
             this.form.reset();
             this.composeMode = false;

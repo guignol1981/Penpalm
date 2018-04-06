@@ -6,6 +6,7 @@ let PostcardSchema = new Schema({
     recipient: {type: Schema.Types.ObjectId, ref: 'User', required: true},
     body: {type: String, required: true},
     imageUrl: {type: String},
+    seen: {type: Boolean, default: false},
     creationDate: {type: Date, require: true}
 });
 

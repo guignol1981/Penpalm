@@ -30,15 +30,16 @@ export class InboxComponent implements OnInit {
     fetchPostcards() {
         this.refreshing = true;
         this.postcardService.fetch(this.fetchConfig).then(response => {
-            this.navIndex = 0;
             this.postcards = response.postcards;
             this.count = response.count;
             this.refreshing = false;
+            this.navTo(0);
         });
     }
 
     navTo(index) {
         this.navIndex = index;
+        this.postcardService.markSeen(this.postcards[index]).then(() => {});
     }
 
     skipForward() {

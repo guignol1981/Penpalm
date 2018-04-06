@@ -16,6 +16,7 @@ export class PostcardService {
             data['_id'],
             data['body'],
             data['imageUrl'],
+            data['seen'],
             data['creationDate']
         );
     }
@@ -27,6 +28,20 @@ export class PostcardService {
         });
 
         return this.http.post(this.apiEndPoint, JSON.stringify(postcard), {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                return PostcardService.deserializePostcard(response.json().data);
+            })
+            .catch(() => null);
+    }
+
+    markSeen(postcard: Postcard): Promise<Postcard> {
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.put(this.apiEndPoint + '/seen', JSON.stringify(postcard), {headers: headers})
             .toPromise()
             .then((response: Response) => {
                 return PostcardService.deserializePostcard(response.json().data);
@@ -54,5 +69,6 @@ export class PostcardService {
             })
             .catch(() => null);
     }
+
 
 }

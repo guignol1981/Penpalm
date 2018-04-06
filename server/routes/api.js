@@ -28,6 +28,7 @@ router.put('/users', authenticate, userController.update);
 
 //postcards
 router.post('/postcards', authenticate, postcardController.create);
+router.put('/postcards/seen', authenticate, postcardController.markSeen);
 router.get('/postcards/in', authenticate, postcardController.getInbox);
 router.get('/postcards/out', authenticate, postcardController.getOutbox);
 
