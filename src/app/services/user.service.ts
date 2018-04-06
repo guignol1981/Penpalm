@@ -22,13 +22,6 @@ export class UserService {
             penPal.photoUrl = penPalData['photoUrl'];
         }
 
-        let news = new News(
-            data['news']['_id'],
-            data['news']['title'],
-            data['news']['body'],
-            data['news']['imageUrl']
-        );
-
         let preferences = new Preference(
             data['preferences']['_id'],
             data['preferences']['displayImage'],
@@ -42,7 +35,6 @@ export class UserService {
             data['email'],
             data['photoUrl'],
             penPal,
-            news,
             preferences
         );
     }

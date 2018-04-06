@@ -7,7 +7,6 @@ export class User {
                 public email?: string,
                 public photoUrl?: string,
                 public penPal?: User,
-                public news?: News,
                 public preferences?: Preference) {
     }
 

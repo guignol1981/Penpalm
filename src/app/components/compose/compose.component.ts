@@ -22,13 +22,28 @@ export class ComposeComponent implements OnInit {
     ngOnInit() {
         this.form = new FormGroup({
             body: new FormControl(null, Validators.required),
-            imageUrl: new FormControl(null)
+            imageUrl: new FormControl(null),
+            imageFitType: new FormControl('contain')
         });
     }
 
     enterComposeMode() {
         this.composeMode = true;
     }
+
+    getImageClass() {
+        let cssClass = 'postcard__image';
+        switch (this.form.get('imageFitType').value) {
+            case 'contain':
+                return cssClass += ' postcard__image--contain';
+            case 'cover':
+                return cssClass += ' postcard__image--cover';
+            case 'fill':
+                return cssClass += ' postcard__image--fill';
+            case 'none':
+                return cssClass += ' postcard__image--none';
+        }
+     }
 
     flip(postcard) {
         if (this.shownSide === 'front') {
@@ -48,7 +63,8 @@ export class ComposeComponent implements OnInit {
         let postcard = new Postcard(
             null,
             this.form.get('body').value,
-            this.form.get('imageUrl').value
+            this.form.get('imageUrl').value,
+            this.form.get('imageFitType').value
         );
 
         this.sending = true;

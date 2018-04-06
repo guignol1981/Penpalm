@@ -38,7 +38,7 @@
         </div>
         <div class="postcard--side postcard--back">
             <div class="postcard__image-wrap">
-                <img *ngIf="postcards[navIndex].imageUrl" class="postcard__image" [src]="postcards[navIndex].imageUrl" alt="postcard image">
+                <img *ngIf="postcards[navIndex].imageUrl" [class]="getImageClass()" [src]="postcards[navIndex].imageUrl" alt="postcard image">
             </div>
         </div>
     </div>

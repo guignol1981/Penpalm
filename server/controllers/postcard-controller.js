@@ -1,6 +1,5 @@
 let Postcard = require('../models/postcard');
 let User = require('../models/user');
-let newsFactory = require('../services/news-factory');
 
 module.exports.create = function(req, res) {
 	User.findById(req.auth.id)
@@ -14,22 +13,17 @@ module.exports.create = function(req, res) {
 				recipient: user.penPal._id,
 				body: body,
 				imageUrl: req.body.imageUrl,
+				imageFitType: req.body.imageFitType,
 				seen: false,
 				creationDate: new Date()
 			});
 
-			newsFactory.newPostcard(user, (news) => {
-				user.penPal.news = news;
-				user.penPal.save(() => {
-					postcard.save().then(postcard => {
-						res.send({
-							msg: 'Postcard saved',
-							data: postcard
-						});
-					});
+			postcard.save().then(postcard => {
+				res.send({
+					msg: 'Postcard saved',
+					data: postcard
 				});
 			});
-
 		});
 };
 

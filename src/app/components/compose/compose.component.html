@@ -9,13 +9,20 @@
             </div>
             <div class="postcard--side postcard--back">
                 <div class="postcard__image-wrap">
-                    <img class="postcard__image" [src]="form.get('imageUrl').value"
+                    <img [class]="getImageClass()" [src]="form.get('imageUrl').value"
                          alt="">
                 </div>
             </div>
         </div>
         <form [formGroup]="form">
             <input formControlName="imageUrl" class="image-url-input" type="text" name="imageUrl" id="imageUrl" placeholder="image url">
+            <select formControlName="imageFitType" id="type" class="form-control custom-select"
+                    aria-describedby="typeHelper">
+                <option value="contain">Contain</option>
+                <option value="cover">Cover</option>
+                <option value="fill">Fill</option>
+                <option value="none">None</option>
+            </select>
         </form>
         <div class="compose__action">
             <a (click)="flip(postcard)" class="btn">Flip</a>

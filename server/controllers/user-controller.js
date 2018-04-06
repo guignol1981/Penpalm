@@ -4,7 +4,6 @@ let Preference = require('../models/preference');
 module.exports.get = function(req, res) {
 	User.findById(req.auth.id)
 		.populate('penPal')
-		.populate('news')
 		.populate('preferences')
 		.exec()
 		.then(user => {
@@ -18,7 +17,6 @@ module.exports.get = function(req, res) {
 module.exports.update = function(req, res) {
 	User.findById(req.auth.id)
 		.populate('penPal')
-		.populate('news')
 		.populate('preferences')
 		.exec()
 		.then(user => {

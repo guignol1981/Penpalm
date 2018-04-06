@@ -1,6 +1,5 @@
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
-let newsFactory = require('../services/news-factory');
 let Preference = require('../models/preference');
 
 let UserSchema = new Schema({
@@ -20,7 +19,6 @@ let UserSchema = new Schema({
 		select: false
 	},
 	penPal: {type: Schema.Types.ObjectId, ref: 'User', default: null},
-	news: {type: Schema.Types.ObjectId, ref: 'News'},
 	preferences: {type: Schema.Types.ObjectId, ref: 'Preference', default: new Preference()}
 });
 
@@ -69,22 +67,11 @@ UserSchema.methods.matchPenPal = function(callback) {
 			if (penPal) {
 				this.penPal = penPal;
 				penPal.penPal = this;
-				newsFactory.match(penPal, (news) => {
-					this.news = news;
-					newsFactory.match(this, (news) => {
-						penPal.news = news;
-						penPal.save().then(() => {
-							callback(this);
-						});
-					});
+				penPal.save().then(() => {
+					callback(this);
 				});
 			} else {
-				newsFactory.noMatch(
-					(news) => {
-						this.news = news;
-						callback(this);
-					}
-				);
+				callback(this);
 			}
 		});
 };

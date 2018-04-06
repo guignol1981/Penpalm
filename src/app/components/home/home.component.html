@@ -22,7 +22,7 @@
         </li>
     </ul>
     <div *ngIf="activeTab === 'news'" class="main">
-        <app-news [news]="user.news"></app-news>
+        <app-news></app-news>
     </div>
     <div *ngIf="activeTab === 'inbox'" class="main">
         <app-inbox [direction]="'in'"></app-inbox>

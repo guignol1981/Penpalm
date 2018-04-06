@@ -37,6 +37,20 @@ export class InboxComponent implements OnInit {
         });
     }
 
+    getImageClass() {
+        let cssClass = 'postcard__image';
+        switch (this.postcards[this.navIndex].imageFitType) {
+            case 'contain':
+                return cssClass += ' postcard__image--contain';
+            case 'cover':
+                return cssClass += ' postcard__image--cover';
+            case 'fill':
+                return cssClass += ' postcard__image--fill';
+            case 'none':
+                return cssClass += ' postcard__image--none';
+        }
+    }
+
     navTo(index) {
         this.navIndex = index;
         this.postcardService.markSeen(this.postcards[index]).then(() => {});

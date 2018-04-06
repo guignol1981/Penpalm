@@ -16,6 +16,7 @@ export class PostcardService {
             data['_id'],
             data['body'],
             data['imageUrl'],
+            data['imageFitType'],
             data['seen'],
             data['creationDate']
         );
