@@ -13,7 +13,7 @@ export class InboxComponent implements OnInit {
     navIndex = 0;
     count = 0;
     refreshing = false;
-
+    shownSide = 'front';
     fetchConfig = {
         skip: 0,
         direction: ''
@@ -73,8 +73,14 @@ export class InboxComponent implements OnInit {
         this.fetchPostcards();
     }
 
-    flip() {
-
+    flip(postcard) {
+        if (this.shownSide === 'front') {
+            this.shownSide = 'back';
+            postcard.style.transform = 'rotateY(180deg)';
+        } else {
+            this.shownSide = 'front';
+            postcard.style.transform = 'rotateY(0deg)';
+        }
     }
 
 }

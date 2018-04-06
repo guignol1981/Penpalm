@@ -31,10 +31,19 @@
     <div class="postcard--date">
         {{postcards[navIndex].creationDate | date}}
     </div>
-    <div class="postcard">
-        {{postcards[navIndex].body}}
+    <div #postcard class="postcard">
+        <div class="postcard--side">
+            <div class="postcard__body">
+                {{postcards[navIndex].body}}
+            </div>
+        </div>
+        <div class="postcard--side postcard--back">
+            <div class="postcard__image-wrap">
+                <img *ngIf="postcards[navIndex].imageUrl" class="postcard__image" [src]="postcards[navIndex].imageUrl" alt="postcard image">
+            </div>
+        </div>
     </div>
     <div class="action">
-        <a (click)="flip()" class="btn">Flip</a>
+        <a (click)="flip(postcard)" class="btn">Flip</a>
     </div>
 </div>

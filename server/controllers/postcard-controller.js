@@ -11,6 +11,7 @@ module.exports.create = function(req, res) {
 				author: user.id,
 				recipient: user.penPal._id,
 				body: req.body.body,
+				imageUrl: req.body.imageUrl,
 				creationDate: new Date()
 			});
 

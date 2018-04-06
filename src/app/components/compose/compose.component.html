@@ -1,13 +1,24 @@
 <div class="container">
     <div *ngIf="composeMode" class="compose">
-        <div class="postcard">
-            <form [formGroup]="form">
-                <textarea class="postcard__body" formControlName="body" name="body" id="body" cols="30"
-                          rows="10"></textarea>
-            </form>
+        <div #postcard class="postcard">
+            <div class="postcard--side">
+                <form [formGroup]="form">
+                    <textarea class="postcard__body" formControlName="body" name="body" id="body" cols="30"
+                              rows="10"></textarea>
+                </form>
+            </div>
+            <div class="postcard--side postcard--back">
+                <div class="postcard__image-wrap">
+                    <img class="postcard__image" [src]="form.get('imageUrl').value"
+                         alt="">
+                </div>
+            </div>
         </div>
+        <form [formGroup]="form">
+            <input formControlName="imageUrl" class="image-url-input" type="text" name="imageUrl" id="imageUrl" placeholder="image url">
+        </form>
         <div class="compose__action">
-            <a (click)="flip()" class="btn">Flip</a>
+            <a (click)="flip(postcard)" class="btn">Flip</a>
             <a (click)="submit()" class="btn">Send postcard</a>
         </div>
     </div>

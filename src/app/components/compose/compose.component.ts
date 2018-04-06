@@ -12,6 +12,7 @@ import {NotificationsService} from "angular2-notifications";
 export class ComposeComponent implements OnInit {
     form: FormGroup;
     composeMode = false;
+    shownSide = 'front';
 
     constructor(private postcardService: PostcardService,
                 private notificationService: NotificationsService) {
@@ -20,6 +21,7 @@ export class ComposeComponent implements OnInit {
     ngOnInit() {
         this.form = new FormGroup({
             body: new FormControl(null, Validators.required),
+            imageUrl: new FormControl(null)
         });
     }
 
@@ -27,14 +29,21 @@ export class ComposeComponent implements OnInit {
         this.composeMode = true;
     }
 
-    flip() {
-
+    flip(postcard) {
+        if (this.shownSide === 'front') {
+            this.shownSide = 'back';
+            postcard.style.transform = 'rotateY(180deg)';
+        } else {
+            this.shownSide = 'front';
+            postcard.style.transform = 'rotateY(0deg)';
+        }
     }
 
     submit() {
         let postcard = new Postcard(
             null,
-            this.form.get('body').value
+            this.form.get('body').value,
+            this.form.get('imageUrl').value
         );
 
         this.postcardService.create(postcard).then((postcard: Postcard) => {

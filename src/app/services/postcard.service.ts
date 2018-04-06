@@ -15,6 +15,7 @@ export class PostcardService {
         return new Postcard(
             data['_id'],
             data['body'],
+            data['imageUrl'],
             data['creationDate']
         );
     }
