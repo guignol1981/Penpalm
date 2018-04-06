@@ -15,7 +15,7 @@
         <div class="form__actions">
             <a (click)="save()" class="btn btn">Save</a>
             <a (click)="logout()" class="btn btn">Logout</a>
-            <a (click)="deleteAccount()" class="btn">Close account</a>
+            <a (click)="deleteAccount()" [class]="deleteWarning ? 'btn btn--warning' : 'btn'">Close account</a>
         </div>
     </form>
 </div>

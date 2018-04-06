@@ -3,8 +3,8 @@ let FacebookStrategy = require('passport-facebook-token');
 let User = require('../models/user');
 
 passport.use(new FacebookStrategy({
-        clientID: '1788186814836142',
-        clientSecret: '7f210335c7b72e642a5c0e40130d055a'
+        clientID: '1055819054566173',
+        clientSecret: 'a730aee798715d24dad31aae106f7673'
     },
     function (accessToken, refreshToken, profile, done) {
         User.upsertSocialUser(accessToken, refreshToken, profile, function (err, user) {

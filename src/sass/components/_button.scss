@@ -39,6 +39,11 @@
 		color: var(--color-secondary);
 	}
 
+	&--warning {
+		background-color: var(--color-warning);
+		color: #fff;
+	}
+
 	&--action {
 		padding: 3rem;
 		height: 6rem;

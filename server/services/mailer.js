@@ -18,8 +18,8 @@ let mailOptions = {
 	html: '<b>Hello world?</b>'
 };
 
-module.exports.sendMail = function () {
-	transporter.sendMail(mailOptions, (error, info) => {
+module.exports.sendMail = function (options) {
+	transporter.sendMail(options, (error, info) => {
 		if (error) {
 			return console.log(error);
 		}

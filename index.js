@@ -7,6 +7,7 @@ let app = express();
 let port = process.env.PORT || '3000';
 let api = require('./server/routes/api');
 let passport = require('passport');
+require('./server/services/scheduled-job');
 
 //keep heroku free dynos awake
 setInterval(function () {

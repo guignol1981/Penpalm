@@ -14,6 +14,7 @@ import {NotificationsService} from "angular2-notifications";
 export class AccountComponent implements OnInit {
     @Input() user: User;
     form: FormGroup;
+    deleteWarning = false;
 
     constructor(private userService: UserService,
                 private authenticationService: AuthenticationService,
@@ -44,6 +45,11 @@ export class AccountComponent implements OnInit {
     }
 
     deleteAccount() {
+        if (!this.deleteWarning) {
+            this.deleteWarning = true;
+            return;
+        }
+
         this.userService.remove(this.user).then(success => {
             if (success) {
                 this.notificationService.success('Account deleted');

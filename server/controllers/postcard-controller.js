@@ -19,8 +19,6 @@ module.exports.create = function(req, res) {
 				creationDate: new Date()
 			});
 
-			mailer.sendMail();
-
 			postcard.save().then(postcard => {
 				res.send({
 					msg: 'Postcard saved',
