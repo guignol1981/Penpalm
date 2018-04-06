@@ -40,6 +40,9 @@
 			padding: .5rem;
 			margin: 1rem;
 			border-radius: 1rem;
+			text-align: center;
+			width: 4rem;
+			
 			transition: all .3s;
 
 			&--selected {
@@ -84,6 +87,8 @@
 		background-color: #fff;
 		font-size: 2rem;
 		line-height: 2.4rem;
+		padding: 1rem;
+		border-radius: 1rem;
 	}
 
 	&--back {

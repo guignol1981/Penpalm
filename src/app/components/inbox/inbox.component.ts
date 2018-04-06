@@ -69,6 +69,7 @@ export class InboxComponent implements OnInit {
         if (this.refreshing) {
             return;
         }
+
         this.fetchConfig.skip = 0;
         this.fetchPostcards();
     }
