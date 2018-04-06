@@ -44,7 +44,12 @@ export class AccountComponent implements OnInit {
     }
 
     deleteAccount() {
-
+        this.userService.remove(this.user).then(success => {
+            if (success) {
+                this.notificationService.success('Account deleted');
+                this.authenticationService.signOut();
+            }
+        });
     }
 
 

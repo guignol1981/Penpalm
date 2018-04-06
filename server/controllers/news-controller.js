@@ -13,6 +13,7 @@ module.exports.fetch = function(req, res) {
 						title: 'We are still looking for a pen pal for you!'
 					}
 				});
+
 				return;
 			}
 			Postcard.find({recipient: user._id, seen: false})

@@ -87,4 +87,20 @@ export class UserService {
             });
     }
 
+    remove(user: User): Promise<Boolean> {
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.put(`api/users/remove` , JSON.stringify(user), {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                return true;
+            })
+            .catch(() => {
+                return null;
+            });
+    }
+
 }

@@ -19,7 +19,8 @@ let UserSchema = new Schema({
 		select: false
 	},
 	penPal: {type: Schema.Types.ObjectId, ref: 'User', default: null},
-	preferences: {type: Schema.Types.ObjectId, ref: 'Preference', default: new Preference()}
+	preferences: {type: Schema.Types.ObjectId, ref: 'Preference', default: new Preference()},
+	active: {type: Boolean, default: true}
 });
 
 UserSchema.statics.upsertSocialUser = function(accessToken, refreshToken, profile, cb) {

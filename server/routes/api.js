@@ -26,6 +26,7 @@ router.post('/auth/google',
 //users
 router.get('/users', authenticate, userController.get);
 router.put('/users', authenticate, userController.update);
+router.put('/users/remove', authenticate, userController.remove);
 
 //postcards
 router.post('/postcards', authenticate, postcardController.create);
