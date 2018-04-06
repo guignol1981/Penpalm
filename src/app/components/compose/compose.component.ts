@@ -13,6 +13,7 @@ export class ComposeComponent implements OnInit {
     form: FormGroup;
     composeMode = false;
     shownSide = 'front';
+    sending = false;
 
     constructor(private postcardService: PostcardService,
                 private notificationService: NotificationsService) {
@@ -40,16 +41,21 @@ export class ComposeComponent implements OnInit {
     }
 
     submit() {
+        if (this.sending) {
+            return;
+        }
+
         let postcard = new Postcard(
             null,
             this.form.get('body').value,
             this.form.get('imageUrl').value
         );
-
+        this.sending = true;
         this.postcardService.create(postcard).then((postcard: Postcard) => {
             this.form.reset();
             this.composeMode = false;
             this.notificationService.success('Postcard sent');
+            this.sending = false;
         });
     }
 }

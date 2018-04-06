@@ -51,7 +51,7 @@
 		width: 100%;
 		backface-visibility: hidden;
 		position: absolute;
-		overflow: hidden;
+		border-radius: 1rem;
 	}
 
 	&--back {
@@ -60,6 +60,7 @@
 		transform: rotateY(180deg);
 		height: 100%;
 		width: 100%;
+		overflow: hidden;
 	}
 
 	&__body {

@@ -7,10 +7,12 @@ module.exports.create = function(req, res) {
 		.populate('penPal')
 		.exec()
 		.then(user => {
+			let body = req.body.body.split('\n').join('<br>');
+
 			let postcard = new Postcard({
 				author: user.id,
 				recipient: user.penPal._id,
-				body: req.body.body,
+				body: body,
 				imageUrl: req.body.imageUrl,
 				creationDate: new Date()
 			});

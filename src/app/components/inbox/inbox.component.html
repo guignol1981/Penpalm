@@ -33,8 +33,7 @@
     </div>
     <div #postcard class="postcard">
         <div class="postcard--side">
-            <div class="postcard__body">
-                {{postcards[navIndex].body}}
+            <div class="postcard__body" [innerHTML]="postcards[navIndex].body">
             </div>
         </div>
         <div class="postcard--side postcard--back">

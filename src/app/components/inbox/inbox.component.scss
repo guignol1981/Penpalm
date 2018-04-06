@@ -19,8 +19,8 @@
 	align-items: center;
 
 	&__handles {
-
 		&__handle {
+			margin: 1rem;
 			cursor: pointer;
 
 			&--inactive {
@@ -42,7 +42,7 @@
 			border-radius: 1rem;
 			text-align: center;
 			width: 4rem;
-			
+
 			transition: all .3s;
 
 			&--selected {
@@ -78,10 +78,11 @@
 		width: 100%;
 		backface-visibility: hidden;
 		position: absolute;
-		overflow: hidden;
+		border-radius: 1rem;
 	}
 
 	&__body {
+		overflow: scroll;
 		height: 100%;
 		width: 100%;
 		background-color: #fff;
@@ -97,6 +98,7 @@
 		background-color: blanchedalmond;
 		text-align: center;
 		transform: rotateY(180deg);
+		overflow: hidden;
 	}
 }
 
