@@ -29,6 +29,7 @@
 		&__handle {
 			margin: 1rem;
 			cursor: pointer;
+			transition: all .2s;
 
 			&--inactive {
 				cursor: auto;
@@ -52,6 +53,11 @@
 			height: 4rem;
 
 			transition: all .3s;
+
+			&:hover {
+				background-color: #fff;
+				color: #000;
+			}
 
 			&--selected {
 				background-color: #fff;

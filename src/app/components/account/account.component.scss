@@ -1,9 +1,51 @@
 .container {
 	height: 100%;
 	width: 100%;
+	display: grid;
+	grid-template-rows: 2fr 6fr 1fr;
+	grid-template-columns: 3fr 1fr;
+	grid-gap: 2rem;
+
+	grid-template-areas:
+			"header ."
+			"options info"
+			"actions .";
+
+	justify-items: stretch;
+	align-items: stretch;
+}
+
+.header {
+	grid-area: header;
+	font-size: 4rem;
+	color: #fff;
+	justify-self: center;
+	align-self: center;
+}
+
+.options {
+	grid-area: options;
 	display:flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	font-size: 3rem;
+	color: #fff;
+}
+
+.info {
+	grid-area: info;
+}
+
+.actions {
+	grid-area: actions;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	& > a {
+		margin: 1rem;
+	}
 }
 
 .form {

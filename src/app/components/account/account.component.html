@@ -1,23 +1,31 @@
 <div *ngIf="user" class="container">
-    <form [formGroup]="form" class="form">
-        <div class="form__group">
-            <label for="displayImage">Show my picture</label>
-            <input type="checkbox" formControlName="displayImage" id="displayImage">
-        </div>
-        <div class="form__group">
-            <label for="displayName">Show my first name</label>
-            <input type="checkbox" formControlName="displayName" id="displayName">
-        </div>
-        <div class="form__group">
-            <label for="emailNotifications">Enable email notifications</label>
-            <input type="checkbox" formControlName="emailNotifications" id="emailNotifications">
-        </div>
-        <div class="form__actions">
-            <a (click)="save()" class="btn btn">Save</a>
-            <a (click)="logout()" class="btn btn">Logout</a>
-            <a (click)="deleteAccount()" [class]="deleteWarning ? 'btn btn--warning' : 'btn'">
-                {{deleteWarning ? 'Click again to close account' : 'Close account'}}
-            </a>
-        </div>
-    </form>
+    <div class="header">
+        {{user.name}}
+    </div>
+    <div class="options">
+        <form [formGroup]="form" class="">
+            <div class="form__group">
+                <label for="displayImage">Show my picture</label>
+                <input type="checkbox" formControlName="displayImage" id="displayImage">
+            </div>
+            <div class="form__group">
+                <label for="displayName">Show my first name</label>
+                <input type="checkbox" formControlName="displayName" id="displayName">
+            </div>
+            <div class="form__group">
+                <label for="emailNotifications">Enable email notifications</label>
+                <input type="checkbox" formControlName="emailNotifications" id="emailNotifications">
+            </div>
+        </form>
+    </div>
+    <div class="info">
+        info
+    </div>
+    <div class="actions">
+        <a (click)="save()" class="btn btn">Save</a>
+        <a (click)="logout()" class="btn btn">Logout</a>
+        <a (click)="deleteAccount()" [class]="deleteWarning ? 'btn btn--warning' : 'btn'">
+            {{deleteWarning ? 'Click again to close account' : 'Close account'}}
+        </a>
+    </div>
 </div>

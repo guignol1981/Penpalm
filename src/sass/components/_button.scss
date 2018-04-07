@@ -4,11 +4,17 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: white;
-	color: black;
 	border-radius: 1rem;
 	padding: 1rem 1.4rem;
 	font-size: 2rem;
+	transition: all .2s;
+	background-color: transparent;
+	color: white;
+
+	&:hover {
+		background: white;
+		color: black;
+	}
 
 	&--social {
 		font-size: 4rem;
@@ -17,7 +23,7 @@
 			color: blue;
 		}
 
-		&--google{
+		&--google {
 			color: red;
 		}
 	}
