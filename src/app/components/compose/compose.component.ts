@@ -14,6 +14,7 @@ export class ComposeComponent implements OnInit {
     composeMode = false;
     shownSide = 'front';
     sending = false;
+    sendWarning = false;
 
     constructor(private postcardService: PostcardService,
                 private notificationService: NotificationsService) {
@@ -56,6 +57,11 @@ export class ComposeComponent implements OnInit {
     }
 
     submit() {
+        if (!this.sendWarning) {
+            this.sendWarning = true;
+            return;
+        }
+
         if (this.sending) {
             return;
         }

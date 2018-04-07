@@ -78,30 +78,55 @@
 	}
 
 	&__body {
+		background-color: blanchedalmond;
+		//font-family: 'Homemade Apple', cursive;
+		font-size: 2rem;
+		line-height: 2.4rem;
 		box-sizing: border-box;
 		border: none;
 		border-radius: .5rem;
 		resize: none;
-		font-size: 2rem;
-		line-height: 2.4rem;
 		overflow: auto;
-		height: auto;
+		height: 25rem;
 		width: 100%;
-		padding: .8rem;
+		padding: 2rem;
 		outline: none;
-	}
-}
 
-.image-url-input {
-	outline: none;
-	padding: 1rem 1.2rem;
-	text-align: center;
-	width: 50rem;
-	border-radius: 1rem;
-	margin-bottom: 1rem;
+		&__stamp {
+			position: absolute;
+			top: 1rem;
+			right: 1rem;
+			height: 8rem;
+			filter: opacity(.5);
+		}
+	}
 }
 
 .submit-msg {
 	font-size: 4rem;
 	color: #fff;
+}
+
+.form {
+	width: 50rem;
+
+	&__image-options {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		&--image-url-input {
+			flex: 3;
+			outline: none;
+			padding: 1rem 1.2rem;
+			text-align: center;
+			border-radius: 1rem;
+			margin-bottom: 1rem;
+		}
+
+		&--custom-select {
+
+		}
+	}
 }

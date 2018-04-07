@@ -1,12 +1,18 @@
 let Postcard = require('../models/postcard');
 let User = require('../models/user');
-let mailer = require('../services/mailer');
 
 module.exports.create = function(req, res) {
 	User.findById(req.auth.id)
 		.populate('penPal')
 		.exec()
 		.then(user => {
+			if (!req.body.body) {
+				res.status(500).send({
+					msg: 'The postcard do not have a body'
+				});
+
+				return;
+			}
 			let body = req.body.body.split('\n').join('<br>');
 
 			let postcard = new Postcard({

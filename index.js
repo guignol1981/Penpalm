@@ -9,7 +9,6 @@ let api = require('./server/routes/api');
 let passport = require('passport');
 require('./server/services/scheduled-job');
 
-//keep heroku free dynos awake
 setInterval(function () {
 	http.get("http://penpalm.herokuapp.com");
 }, 300000);

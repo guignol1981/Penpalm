@@ -15,6 +15,7 @@ export class NewsService {
     public static deserializeNews(data: any): News {
         return new News(
             data['title'],
+            data['sub'],
             data['imageUrl']
         );
     }

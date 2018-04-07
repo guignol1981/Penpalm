@@ -58,7 +58,6 @@
 	border-radius: 1rem;
 	height: 25rem;
 	width: 50rem;
-
 	transform-style: preserve-3d;
 	transition: all 1s ease-in-out;
 
@@ -96,14 +95,23 @@
 	}
 
 	&__body {
+		font-size: 2rem;
+		line-height: 2.4rem;
 		overflow: scroll;
 		height: 100%;
 		width: 100%;
-		background-color: #fff;
-		font-size: 2rem;
-		line-height: 2.4rem;
-		padding: 1rem;
+		background-color: blanchedalmond;
+		padding: 2rem;
 		border-radius: 1rem;
+		position: relative;
+
+		&__stamp {
+			position: absolute;
+			top: 1rem;
+			right: 1rem;
+			height: 8rem;
+			filter: opacity(.5);
+		}
 	}
 
 	&--back {

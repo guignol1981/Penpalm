@@ -5,7 +5,7 @@
             <input type="checkbox" formControlName="displayImage" id="displayImage">
         </div>
         <div class="form__group">
-            <label for="displayName">Show my name</label>
+            <label for="displayName">Show my first name</label>
             <input type="checkbox" formControlName="displayName" id="displayName">
         </div>
         <div class="form__group">
@@ -15,7 +15,9 @@
         <div class="form__actions">
             <a (click)="save()" class="btn btn">Save</a>
             <a (click)="logout()" class="btn btn">Logout</a>
-            <a (click)="deleteAccount()" [class]="deleteWarning ? 'btn btn--warning' : 'btn'">Close account</a>
+            <a (click)="deleteAccount()" [class]="deleteWarning ? 'btn btn--warning' : 'btn'">
+                {{deleteWarning ? 'Click again to close account' : 'Close account'}}
+            </a>
         </div>
     </form>
 </div>
