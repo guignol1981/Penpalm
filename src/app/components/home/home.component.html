@@ -1,5 +1,15 @@
 <div *ngIf="user" class="container">
     <ul class="nav">
+        <li (click)="setTab('account')" [class]="activeTab === 'account' ? 'nav-item nav-item--active' : 'nav-item'">
+            <a class="nav-item__image-wrap">
+                <img [src]="user.photoUrl" alt="profile image" class="nav-item__image">
+            </a>
+        </li>
+        <li *ngIf="user.penPal._id" (click)="setTab('compose')" [class]="activeTab === 'compose' ? 'nav-item nav-item--active' : 'nav-item'">
+            <a>
+                <i class="fas fa-pencil-alt"></i>
+            </a>
+        </li>
         <li (click)="setTab('inbox')" [class]="activeTab === 'inbox' ? 'nav-item nav-item--active' : 'nav-item'">
             <a>
                 <i class="fas fa-arrow-down"></i>
@@ -8,16 +18,6 @@
         <li (click)="setTab('outbox')" [class]="activeTab === 'outbox' ? 'nav-item nav-item--active' : 'nav-item'">
             <a>
                 <i class="fas fa-arrow-up"></i>
-            </a>
-        </li>
-        <li *ngIf="user.penPal._id" (click)="setTab('compose')" [class]="activeTab === 'compose' ? 'nav-item nav-item--active' : 'nav-item'">
-            <a>
-                <i class="fas fa-pencil-alt"></i>
-            </a>
-        </li>
-        <li (click)="setTab('account')" [class]="activeTab === 'account' ? 'nav-item nav-item--active' : 'nav-item'">
-            <a class="nav-item__image-wrap">
-                <img [src]="user.photoUrl" alt="profile image" class="nav-item__image">
             </a>
         </li>
     </ul>
