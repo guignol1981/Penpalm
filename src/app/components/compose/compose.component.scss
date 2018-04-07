@@ -5,10 +5,7 @@
 	grid-template-columns: 3fr 1fr;
 	grid-gap: 2rem;
 
-	grid-template-areas:
-			". options"
-			"postcard options"
-			"actions options";
+	grid-template-areas: "form options" "postcard options" "actions options";
 
 	justify-items: stretch;
 	align-items: stretch;
@@ -110,52 +107,93 @@
 	}
 }
 
-.compose {
-	align-self: stretch;
+.form {
+	margin-left: 5rem;
+	margin-right: 5rem;
+	grid-area: form;
+	color: #fff;
 	display: flex;
-	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 
-	position: relative;
-	-webkit-perspective: 1000px;
-	perspective: 1000px;
-
-	&__action {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		& > a {
-			margin: 1rem;
-		}
-	}
-}
-
-.submit-msg {
-	font-size: 4rem;
-	color: #fff;
-}
-
-.form {
-
-	&__image-options {
+	&__group {
 		width: 100%;
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 
-		&--image-url-input {
-			flex: 3;
-			outline: none;
-			padding: 1rem 1.2rem;
-			text-align: center;
-			border-radius: 1rem;
-			margin-bottom: 1rem;
+		&--label {
+			font-size: 2.5rem;
 		}
 
-		&--custom-select {
+		&--input {
+			width: 100%;
+
+			&--text {
+				width: 100%;
+				border: none;
+				outine: none;
+				padding: 1rem 3rem;
+				font-size: 2rem;
+				text-align: center;
+				border-radius: 1rem;
+			}
+		}
+
+		&--helper {
 
 		}
 	}
 }
+
+//
+//.compose {
+//	align-self: stretch;
+//	display: flex;
+//	flex-direction: column;
+//	justify-content: center;
+//	align-items: center;
+//
+//	position: relative;
+//	-webkit-perspective: 1000px;
+//	perspective: 1000px;
+//
+//	&__action {
+//		display: flex;
+//		justify-content: center;
+//		align-items: center;
+//
+//		& > a {
+//			margin: 1rem;
+//		}
+//	}
+//}
+//
+//.submit-msg {
+//	font-size: 4rem;
+//	color: #fff;
+//}
+//
+//.form {
+//
+//	&__image-options {
+//		width: 100%;
+//		display: flex;
+//		justify-content: center;
+//		align-items: center;
+//
+//		&--image-url-input {
+//			flex: 3;
+//			outline: none;
+//			padding: 1rem 1.2rem;
+//			text-align: center;
+//			border-radius: 1rem;
+//			margin-bottom: 1rem;
+//		}
+//
+//		&--custom-select {
+//
+//		}
+//	}
+//}

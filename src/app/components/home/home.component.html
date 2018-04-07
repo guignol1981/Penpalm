@@ -5,7 +5,8 @@
                 <img [src]="user.photoUrl" alt="profile image" class="nav-item__image">
             </a>
         </li>
-        <li *ngIf="user.penPal._id" (click)="setTab('compose')" [class]="activeTab === 'compose' ? 'nav-item nav-item--active' : 'nav-item'">
+        <li *ngIf="user.penPal._id" (click)="setTab('compose')"
+            [class]="activeTab === 'compose' ? 'nav-item nav-item--active' : 'nav-item'">
             <a>
                 <i class="fas fa-pencil-alt"></i>
             </a>
@@ -18,6 +19,11 @@
         <li (click)="setTab('outbox')" [class]="activeTab === 'outbox' ? 'nav-item nav-item--active' : 'nav-item'">
             <a>
                 <i class="fas fa-arrow-up"></i>
+            </a>
+        </li>
+        <li (click)="setTab('news')" [class]="activeTab === 'news' ? 'nav-item nav-item--active' : 'nav-item'">
+            <a>
+                <i class="fas fa-newspaper"></i>
             </a>
         </li>
         <li (click)="setTab('about')" [class]="activeTab === 'about' ? 'nav-item nav-item--active' : 'nav-item'">
@@ -43,5 +49,9 @@
     </div>
     <div class="footer">
         <app-footer></app-footer>
+    </div>
+    <div class="spoty">
+        <iframe src="https://open.spotify.com/embed?uri=spotify:track:1m5N9YCZL4BXuSXdYmhRaj&view=coverart" width="300"
+                height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
     </div>
 </div>

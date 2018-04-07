@@ -15,6 +15,7 @@ export class ComposeComponent implements OnInit {
     shownSide = 'front';
     sending = false;
     sendWarning = false;
+    selectedOption = '';
 
     constructor(private postcardService: PostcardService,
                 private notificationService: NotificationsService) {
@@ -24,12 +25,22 @@ export class ComposeComponent implements OnInit {
         this.form = new FormGroup({
             body: new FormControl(null, Validators.required),
             imageUrl: new FormControl(null),
-            imageFitType: new FormControl('contain')
+            imageFitType: new FormControl('contain'),
+            spotifyLink: new FormControl(null),
+            youtubeLink: new FormControl(null)
         });
     }
 
     enterComposeMode() {
         this.composeMode = true;
+    }
+
+    selectOption(option) {
+        this.selectedOption = option;
+    }
+
+    getYoutubeLink() {
+        return 'http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com';
     }
 
     getImageClass() {

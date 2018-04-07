@@ -5,9 +5,14 @@
                               rows="10" placeholder="Write something here..."></textarea>
         </form>
         <div class="postcard--side postcard--back">
-            <div class="postcard__image-wrap">
-                <img [class]="getImageClass()" [src]="form.get('imageUrl').value"
-                     alt="">
+            <iframe *ngIf="form.get('youtubeLink').value" id="player" type="text/html" width="100%" height="100%"
+                    [src]="getYoutubeLink()"
+                    frameborder="0"></iframe>
+            <div *ngIf="form.get('imageUrl').value">
+                <div class="postcard__image-wrap">
+                    <img [class]="getImageClass()" [src]="form.get('imageUrl').value"
+                         alt="">
+                </div>
             </div>
         </div>
     </div>
@@ -17,8 +22,9 @@
                 General
             </div>
             <div class="options__group--list">
-                <a href="#" class="btn btn--align-right btn--text-md"><i class="fab fa-spotify"></i>&nbsp;Link a spotify song</a>
-                <a href="#" class="btn btn--align-right btn--text-md"><i class="fas fa-share-alt"></i>&nbsp;Allow share</a>
+                <a (click)="selectOption('spotify')" class="btn btn--align-right btn--text-md"><i
+                        class="fab fa-spotify"></i>&nbsp;Link a spotify song</a>
+                <a class="btn btn--align-right btn--text-md"><i class="fas fa-share-alt"></i>&nbsp;Allow share</a>
             </div>
         </div>
         <div class="options__group">
@@ -26,8 +32,8 @@
                 Front side
             </div>
             <div class="options__group--list">
-                <a href="#" class="btn btn--align-right btn--text-md"><i class="far fa-square"></i>&nbsp;Choose a template</a>
-                <a href="#" class="btn btn--align-right btn--text-md"><i class="fas fa-paint-brush"></i>&nbsp;Text color</a>
+                <a class="btn btn--align-right btn--text-md"><i class="far fa-square"></i>&nbsp;Choose a template</a>
+                <a class="btn btn--align-right btn--text-md"><i class="fas fa-paint-brush"></i>&nbsp;Text color</a>
             </div>
         </div>
         <div class="options__group">
@@ -35,17 +41,54 @@
                 Back side
             </div>
             <div class="options__group--list">
-                <a href="#" class="btn btn--align-right btn--text-md"><i class="fas fa-paint-brush"></i>&nbsp;Background color</a>
-                <a href="#" class="btn btn--align-right btn--text-md"><i class="fas fa-video"></i>&nbsp;Record a video</a>
-                <a href="#" class="btn btn--align-right btn--text-md"><i class="fab fa-youtube"></i>&nbsp;Link a youtube video</a>
-                <a href="#" class="btn btn--align-right btn--text-md"><i class="fas fa-camera-retro"></i>&nbsp;Take a picture</a>
-                <a href="#" class="btn btn--align-right btn--text-md"><i class="fas fa-link"></i>&nbsp;Link a picture</a>
-                <a href="#" class="btn btn--align-right btn--text-md"><i class="fas fa-image"></i>&nbsp;Add a picture</a>
+                <a class="btn btn--align-right btn--text-md"><i class="fas fa-paint-brush"></i>&nbsp;Background
+                    color</a>
+                <a class="btn btn--align-right btn--text-md"><i class="fas fa-video"></i>&nbsp;Record a video</a>
+                <a (click)="selectOption('youtubeLink')" class="btn btn--align-right btn--text-md"><i
+                        class="fab fa-youtube"></i>&nbsp;Link a youtube
+                    video</a>
+                <a class="btn btn--align-right btn--text-md"><i class="fas fa-camera-retro"></i>&nbsp;Take a picture</a>
+                <a (click)="selectOption('linkedImage')" class="btn btn--align-right btn--text-md"><i
+                        class="fas fa-link"></i>&nbsp;Link a picture</a>
+                <a class="btn btn--align-right btn--text-md"><i class="fas fa-image"></i>&nbsp;Add a picture</a>
+                <a class="btn btn--align-right btn--text-md"><i class="fas fa-map-marker"></i>&nbsp;Location</a>
             </div>
         </div>
 
-        <form [formGroup]="form">
-        </form>
+    </div>
+    <div class="form" [formGroup]="form">
+        <div *ngIf="selectedOption === 'spotify'" class="form__group">
+            <div class="form__group--label">
+                <i class="fab fa-spotify"></i>
+                <label for="spotifyLink">Spotitfy link</label>
+            </div>
+            <div class="form__group--input">
+                <input formControlName="spotifyLink" class="form__group--input--text" id="spotifyLink" type="text"
+                       placeholder="song link or spotify uri">
+            </div>
+        </div>
+
+        <div *ngIf="selectedOption === 'linkedImage'" class="form__group">
+            <div class="form__group--label">
+                <i class="fas fa-link"></i>
+                <label for="imageUrl">Image link</label>
+            </div>
+            <div class="form__group--input">
+                <input formControlName="imageUrl" class="form__group--input--text" id="imageUrl" type="text"
+                       placeholder="image url">
+            </div>
+        </div>
+
+        <div *ngIf="selectedOption === 'youtubeLink'" class="form__group">
+            <div class="form__group--label">
+                <i class="fab fa-youtube"></i>
+                <label for="imageUrl">Youtube link</label>
+            </div>
+            <div class="form__group--input">
+                <input formControlName="youtubeLink" class="form__group--input--text" id="youtubeLink" type="text"
+                       placeholder="youtube link">
+            </div>
+        </div>
     </div>
     <div class="actions">
         <a (click)="flip(postcard)" class="btn">Flip</a>
@@ -53,45 +96,4 @@
             {{sendWarning? 'Click again to send' : 'Send postcard'}}
         </a>
     </div>
-    <!--<div *ngIf="composeMode" class="compose">-->
-    <!--<div #postcard class="postcard">-->
-    <!--<div class="postcard&#45;&#45;side">-->
-    <!--<form [formGroup]="form">-->
-    <!--<textarea class="postcard__body" formControlName="body" name="body" id="body" cols="30"-->
-    <!--rows="10" placeholder="Write something here..."></textarea>-->
-    <!--</form>-->
-    <!--<img class="postcard__body__stamp" src="../../../assets/stamp.png" alt="stamp">-->
-    <!--</div>-->
-    <!--<div class="postcard&#45;&#45;side postcard&#45;&#45;back">-->
-    <!--<div class="postcard__image-wrap">-->
-    <!--<img [class]="getImageClass()" [src]="form.get('imageUrl').value"-->
-    <!--alt="">-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<form [formGroup]="form" class="form">-->
-    <!--<div class="form__image-options">-->
-    <!--<input formControlName="imageUrl" class="form__image-options&#45;&#45;image-url-input" type="text"-->
-    <!--name="imageUrl" id="imageUrl" placeholder="image url">-->
-    <!--<div class="form__image-options&#45;&#45;custom-select">-->
-    <!--<select formControlName="imageFitType" id="type" class="form-control custom-select"-->
-    <!--aria-describedby="typeHelper">-->
-    <!--<option value="contain">Contain</option>-->
-    <!--<option value="cover">Cover</option>-->
-    <!--<option value="fill">Fill</option>-->
-    <!--<option value="none">None</option>-->
-    <!--</select>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</form>-->
-    <!--<div class="compose__action">-->
-    <!--<a (click)="flip(postcard)" class="btn">Flip</a>-->
-    <!--<a (click)="submit()" [class]="sendWarning ? 'btn btn&#45;&#45;primary': 'btn'">-->
-    <!--{{sendWarning? 'Click again to send' : 'Send postcard'}}-->
-    <!--</a>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div *ngIf="!composeMode">-->
-    <!--<a (click)="enterComposeMode()" class="btn">Write a postcard</a>-->
-    <!--</div>-->
 </div>

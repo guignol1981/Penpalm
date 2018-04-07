@@ -8,7 +8,7 @@
 	grid-template-areas:
 			"nav main main"
 			"nav main main"
-			"nav footer .";
+			"nav footer spoty";
 
 	justify-items: stretch;
 	align-items: stretch;
@@ -73,5 +73,9 @@
 .footer {
 	grid-area: footer;
 	width: 100%;
+}
+
+.spoty {
+	grid-area: spoty;
 }
 
