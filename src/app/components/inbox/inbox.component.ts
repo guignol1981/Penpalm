@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {PostcardService} from "../../services/postcard.service";
 import {Postcard} from "../../models/postcard/postcard";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-inbox',
@@ -19,7 +20,8 @@ export class InboxComponent implements OnInit {
         direction: ''
     };
 
-    constructor(private postcardService: PostcardService) {
+    constructor(private postcardService: PostcardService,
+                private domSanitizer: DomSanitizer) {
     }
 
     ngOnInit() {
@@ -30,6 +32,9 @@ export class InboxComponent implements OnInit {
     fetchPostcards() {
         this.refreshing = true;
         this.postcardService.fetch(this.fetchConfig).then(response => {
+            response.postcards.forEach((item) => {
+                item.body = this.domSanitizer.bypassSecurityTrustHtml(item.body);
+            });
             this.postcards = response.postcards;
             this.count = response.count;
             this.refreshing = false;
@@ -53,7 +58,8 @@ export class InboxComponent implements OnInit {
 
     navTo(index) {
         this.navIndex = index;
-        this.postcardService.markSeen(this.postcards[index]).then(() => {});
+        this.postcardService.markSeen(this.postcards[index]).then(() => {
+        });
     }
 
     skipForward() {

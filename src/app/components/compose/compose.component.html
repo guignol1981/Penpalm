@@ -1,21 +1,21 @@
 <div class="container">
-    <div *ngIf="composeMode" class="compose">
-        <div #postcard class="postcard">
-            <div class="postcard--side">
-                <form [formGroup]="form">
+    <div #postcard class="postcard">
+        <div class="postcard--side">
+            <!--<form [formGroup]="form">-->
                     <textarea class="postcard__body" formControlName="body" name="body" id="body" cols="30"
                               rows="10" placeholder="Write something here..."></textarea>
-                </form>
-                <img class="postcard__body__stamp" src="../../../assets/stamp.png" alt="stamp">
-            </div>
-            <div class="postcard--side postcard--back">
-                <div class="postcard__image-wrap">
-                    <img [class]="getImageClass()" [src]="form.get('imageUrl').value"
-                         alt="">
-                </div>
+            <!--</form>-->
+            <img class="postcard__body__stamp" src="../../../assets/stamp.png" alt="stamp">
+        </div>
+        <div class="postcard--side postcard--back">
+            <div class="postcard__image-wrap">
+                <img [class]="getImageClass()" [src]="form.get('imageUrl').value"
+                     alt="">
             </div>
         </div>
-        <form [formGroup]="form" class="form">
+    </div>
+    <div class="options">
+        <form [formGroup]="form">
             <div class="form__image-options">
                 <input formControlName="imageUrl" class="form__image-options--image-url-input" type="text"
                        name="imageUrl" id="imageUrl" placeholder="image url">
@@ -30,14 +30,52 @@
                 </div>
             </div>
         </form>
-        <div class="compose__action">
-            <a (click)="flip(postcard)" class="btn">Flip</a>
-            <a (click)="submit()" [class]="sendWarning ? 'btn btn--primary': 'btn'">
-                {{sendWarning? 'Click again to send' : 'Send postcard'}}
-            </a>
-        </div>
     </div>
-    <div *ngIf="!composeMode">
-        <a (click)="enterComposeMode()" class="btn">Write a postcard</a>
+    <div class="actions">
+        <a (click)="flip(postcard)" class="btn">Flip</a>
+        <a (click)="submit()" [class]="sendWarning ? 'btn btn--primary': 'btn'">
+            {{sendWarning? 'Click again to send' : 'Send postcard'}}
+        </a>
     </div>
+    <!--<div *ngIf="composeMode" class="compose">-->
+    <!--<div #postcard class="postcard">-->
+    <!--<div class="postcard&#45;&#45;side">-->
+    <!--<form [formGroup]="form">-->
+    <!--<textarea class="postcard__body" formControlName="body" name="body" id="body" cols="30"-->
+    <!--rows="10" placeholder="Write something here..."></textarea>-->
+    <!--</form>-->
+    <!--<img class="postcard__body__stamp" src="../../../assets/stamp.png" alt="stamp">-->
+    <!--</div>-->
+    <!--<div class="postcard&#45;&#45;side postcard&#45;&#45;back">-->
+    <!--<div class="postcard__image-wrap">-->
+    <!--<img [class]="getImageClass()" [src]="form.get('imageUrl').value"-->
+    <!--alt="">-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<form [formGroup]="form" class="form">-->
+    <!--<div class="form__image-options">-->
+    <!--<input formControlName="imageUrl" class="form__image-options&#45;&#45;image-url-input" type="text"-->
+    <!--name="imageUrl" id="imageUrl" placeholder="image url">-->
+    <!--<div class="form__image-options&#45;&#45;custom-select">-->
+    <!--<select formControlName="imageFitType" id="type" class="form-control custom-select"-->
+    <!--aria-describedby="typeHelper">-->
+    <!--<option value="contain">Contain</option>-->
+    <!--<option value="cover">Cover</option>-->
+    <!--<option value="fill">Fill</option>-->
+    <!--<option value="none">None</option>-->
+    <!--</select>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</form>-->
+    <!--<div class="compose__action">-->
+    <!--<a (click)="flip(postcard)" class="btn">Flip</a>-->
+    <!--<a (click)="submit()" [class]="sendWarning ? 'btn btn&#45;&#45;primary': 'btn'">-->
+    <!--{{sendWarning? 'Click again to send' : 'Send postcard'}}-->
+    <!--</a>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div *ngIf="!composeMode">-->
+    <!--<a (click)="enterComposeMode()" class="btn">Write a postcard</a>-->
+    <!--</div>-->
 </div>

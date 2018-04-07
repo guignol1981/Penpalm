@@ -1,37 +1,33 @@
 .container {
 	height: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-}
+	display: grid;
+	grid-template-rows: 2fr 6fr 1fr;
+	grid-template-columns: 3fr 1fr;
+	grid-gap: 2rem;
 
-.compose {
-	align-self: stretch;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+	grid-template-areas: ". ." "postcard options" "actions .";
 
+	justify-items: stretch;
+	align-items: stretch;
 	position: relative;
 	-webkit-perspective: 1000px;
 	perspective: 1000px;
+}
 
-	&__action {
-		display: flex;
-		justify-content: center;
-		align-items: center;
+.options {
+	grid-area: options;
+}
 
-		& > a {
-			margin: 1rem;
-		}
-	}
+.actions {
+	grid-area: actions;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .postcard {
-	margin-bottom: 2rem;
-	height: 25rem;
-	width: 50rem;
+	grid-area: postcard;
+	margin: 5rem;
 	transform-style: preserve-3d;
 	transition: all 1s ease-in-out;
 
@@ -79,18 +75,18 @@
 
 	&__body {
 		background-color: blanchedalmond;
-		//font-family: 'Homemade Apple', cursive;
 		font-size: 2rem;
 		line-height: 2.4rem;
 		box-sizing: border-box;
 		border: none;
-		border-radius: .5rem;
+		border-radius: 1rem;
 		resize: none;
 		overflow: auto;
-		height: 25rem;
+		height: 100%;
 		width: 100%;
 		padding: 2rem;
 		outline: none;
+		position: relative;
 
 		&__stamp {
 			position: absolute;
@@ -102,13 +98,34 @@
 	}
 }
 
+.compose {
+	align-self: stretch;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	position: relative;
+	-webkit-perspective: 1000px;
+	perspective: 1000px;
+
+	&__action {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		& > a {
+			margin: 1rem;
+		}
+	}
+}
+
 .submit-msg {
 	font-size: 4rem;
 	color: #fff;
 }
 
 .form {
-	width: 50rem;
 
 	&__image-options {
 		width: 100%;

@@ -20,13 +20,13 @@ schedule.scheduleJob(newMessageRule, function() {
 				Postcard.count({'recipient': user._id, 'seen': false}).then(count => {
 					if (count > 0) {
 						let postcardWord = count > 1 ? 'postcards' : 'postcard';
-						mailer.sendMail({
-							from: '"Fred Foo 👻" <foo@example.com>',
-							to: user.email,
-							subject: 'You have new ' + postcardWord + '!',
-							text: 'Hello! ' + user.name + '! You have ' + count + ' new ' + postcardWord + ' waiting to be read!',
-							html: '<b>Hello world?</b>'
-						});
+						// mailer.sendMail({
+						// 	from: '"Fred Foo 👻" <foo@example.com>',
+						// 	to: user.email,
+						// 	subject: 'You have new ' + postcardWord + '!',
+						// 	text: 'Hello! ' + user.name + '! You have ' + count + ' new ' + postcardWord + ' waiting to be read!',
+						// 	html: '<b>Hello world?</b>'
+						// });
 					}
 				});
 			});
