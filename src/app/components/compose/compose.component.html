@@ -5,9 +5,11 @@
                               rows="10" placeholder="Write something here..."></textarea>
         </form>
         <div class="postcard--side postcard--back">
-            <iframe *ngIf="form.get('youtubeLink').value" id="player" type="text/html" width="100%" height="100%"
-                    [src]="getYoutubeLink()"
-                    frameborder="0"></iframe>
+            <youtube-player *ngIf="form.get('youtubeLink').value"
+                    [videoId]="getYoutubeLinkId()"
+                    [height]="'100%'"
+                    [width]="'100%'"
+            ></youtube-player>
             <div *ngIf="form.get('imageUrl').value">
                 <div class="postcard__image-wrap">
                     <img [class]="getImageClass()" [src]="form.get('imageUrl').value"

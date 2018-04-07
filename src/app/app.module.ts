@@ -21,6 +21,8 @@ import {PostcardService} from './services/postcard.service';
 import {SimpleNotificationsModule} from 'angular2-notifications';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NewsService} from "./services/news.service";
+import { YoutubePlayerModule } from 'ng2-youtube-player';
+
 
 let config = new AuthServiceConfig([
     {
@@ -57,7 +59,8 @@ export function provideConfig() {
         ReactiveFormsModule,
         routing,
         SocialLoginModule,
-        SimpleNotificationsModule.forRoot()
+        SimpleNotificationsModule.forRoot(),
+        YoutubePlayerModule
     ],
     providers: [
         UserService,

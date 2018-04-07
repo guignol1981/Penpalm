@@ -39,8 +39,16 @@ export class ComposeComponent implements OnInit {
         this.selectedOption = option;
     }
 
-    getYoutubeLink() {
-        return 'http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com';
+    getYoutubeLinkId() {
+        let link = this.form.get('youtubeLink').value;
+
+        function youtube_parser(url){
+            var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+            var match = url.match(regExp);
+            return (match&&match[7].length==11)? match[7] : false;
+        }
+
+        return youtube_parser(link);
     }
 
     getImageClass() {
