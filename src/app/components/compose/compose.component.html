@@ -1,12 +1,9 @@
 <div class="container">
     <div #postcard class="postcard">
-        <div class="postcard--side">
-            <!--<form [formGroup]="form">-->
+        <form [formGroup]="form" class="postcard--side">
                     <textarea class="postcard__body" formControlName="body" name="body" id="body" cols="30"
                               rows="10" placeholder="Write something here..."></textarea>
-            <!--</form>-->
-            <img class="postcard__body__stamp" src="../../../assets/stamp.png" alt="stamp">
-        </div>
+        </form>
         <div class="postcard--side postcard--back">
             <div class="postcard__image-wrap">
                 <img [class]="getImageClass()" [src]="form.get('imageUrl').value"
@@ -15,20 +12,39 @@
         </div>
     </div>
     <div class="options">
-        <form [formGroup]="form">
-            <div class="form__image-options">
-                <input formControlName="imageUrl" class="form__image-options--image-url-input" type="text"
-                       name="imageUrl" id="imageUrl" placeholder="image url">
-                <div class="form__image-options--custom-select">
-                    <select formControlName="imageFitType" id="type" class="form-control custom-select"
-                            aria-describedby="typeHelper">
-                        <option value="contain">Contain</option>
-                        <option value="cover">Cover</option>
-                        <option value="fill">Fill</option>
-                        <option value="none">None</option>
-                    </select>
-                </div>
+        <div class="options__group">
+            <div class="options__group--title">
+                General
             </div>
+            <div class="options__group--list">
+                <a href="#" class="btn btn--align-right btn--text-md"><i class="fab fa-spotify"></i>&nbsp;Link a spotify song</a>
+                <a href="#" class="btn btn--align-right btn--text-md"><i class="fas fa-share-alt"></i>&nbsp;Allow share</a>
+            </div>
+        </div>
+        <div class="options__group">
+            <div class="options__group--title">
+                Front side
+            </div>
+            <div class="options__group--list">
+                <a href="#" class="btn btn--align-right btn--text-md"><i class="fab fa-spotify"></i>&nbsp;Choose a template</a>
+                <a href="#" class="btn btn--align-right btn--text-md"><i class="fab fa-spotify"></i>&nbsp;Link a  song</a>
+            </div>
+        </div>
+        <div class="options__group">
+            <div class="options__group--title">
+                Back side
+            </div>
+            <div class="options__group--list">
+                <a href="#" class="btn btn--align-right btn--text-md"><i class="fas fa-paint-brush"></i>&nbsp;Background color</a>
+                <a href="#" class="btn btn--align-right btn--text-md"><i class="fas fa-video"></i>&nbsp;Record a video</a>
+                <a href="#" class="btn btn--align-right btn--text-md"><i class="fab fa-youtube"></i>&nbsp;Link a youtube video</a>
+                <a href="#" class="btn btn--align-right btn--text-md"><i class="fas fa-camera-retro"></i>&nbsp;Take a picture</a>
+                <a href="#" class="btn btn--align-right btn--text-md"><i class="fas fa-link"></i>&nbsp;Link a picture</a>
+                <a href="#" class="btn btn--align-right btn--text-md"><i class="fas fa-image"></i>&nbsp;Add a picture</a>
+            </div>
+        </div>
+
+        <form [formGroup]="form">
         </form>
     </div>
     <div class="actions">

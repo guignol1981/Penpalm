@@ -16,6 +16,15 @@
 		color: black;
 	}
 
+	&--text-md {
+		font-size: 1.5rem;
+	}
+
+	&--align-right {
+		display: flex;
+		justify-content: flex-start;
+	}
+
 	&--social {
 		font-size: 4rem;
 

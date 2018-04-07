@@ -16,6 +16,22 @@
 
 .options {
 	grid-area: options;
+	display: flex;
+	flex-direction: column;
+	overflow: scroll;
+
+	&__group {
+		color: #fff;
+		margin-bottom: 1rem;
+
+		&--title {
+			font-size: 2rem;
+		}
+
+		&--list {
+			font-size: 1rem;
+		}
+	}
 }
 
 .actions {
@@ -65,7 +81,7 @@
 	}
 
 	&--back {
-		background-color: blanchedalmond;
+		background-color: #82ccdd;
 		text-align: center;
 		transform: rotateY(180deg);
 		height: 100%;
@@ -74,7 +90,7 @@
 	}
 
 	&__body {
-		background-color: blanchedalmond;
+		background-color: #82ccdd;
 		font-size: 2rem;
 		line-height: 2.4rem;
 		box-sizing: border-box;
@@ -87,14 +103,6 @@
 		padding: 2rem;
 		outline: none;
 		position: relative;
-
-		&__stamp {
-			position: absolute;
-			top: 1rem;
-			right: 1rem;
-			height: 8rem;
-			filter: opacity(.5);
-		}
 	}
 }
 
