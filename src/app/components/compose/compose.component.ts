@@ -63,9 +63,9 @@ export class ComposeComponent implements OnInit {
         }
     }
 
-    setTemplate(template, bodyElement) {
-        this.form.get('template').setValue(template);
-        bodyElement.style.background = 'url(../../../assets/sunshine-template-01.png)';
+    setTemplate(templateName, bodyElement) {
+        this.form.get('template').setValue(templateName);
+        bodyElement.style.background = 'url(../../../assets/' + templateName + '-template.png)';
         bodyElement.style.backgroundRepeat = 'no-repeat';
         bodyElement.style.backgroundSize = 'cover';
         bodyElement.style.backgroundPosition = 'center';
@@ -97,7 +97,7 @@ export class ComposeComponent implements OnInit {
             this.form.get('imageUrl').value,
             this.form.get('imageFitType').value,
             this.form.get('spotifyLink').value,
-            this.getYoutubeLinkId(this.form.get('youtubeLink').value),
+            this.getYoutubeLinkId(),
             this.form.get('allowShare').value,
             this.form.get('template').value
         );

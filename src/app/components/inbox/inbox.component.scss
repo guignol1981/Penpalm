@@ -13,8 +13,8 @@
 	justify-items: stretch;
 	align-items: stretch;
 	position: relative;
-	-webkit-perspective: 1000px;
-	perspective: 1000px;
+	-webkit-perspective: 2000px;
+	perspective: 2000px;
 }
 
 .paging {
@@ -116,6 +116,10 @@
 		padding: 2rem;
 		border-radius: 1rem;
 		position: relative;
+
+		&::-webkit-scrollbar {
+			display: none;
+		}
 	}
 
 	&--back {

@@ -67,7 +67,7 @@ export class InboxComponent implements OnInit {
 
     setTemplate() {
         let bodyElement = document.getElementById('postcardbody');
-        bodyElement.style.background = 'url(../../../assets/sunshine-template-01.png)';
+        bodyElement.style.background = 'url(../../../assets/sunshine-template.png)';
         bodyElement.style.backgroundRepeat = 'no-repeat';
         bodyElement.style.backgroundSize = 'cover';
         bodyElement.style.backgroundPosition = 'center';
