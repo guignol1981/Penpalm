@@ -6,15 +6,24 @@
         <form [formGroup]="form" class="">
             <div class="form__group">
                 <label for="displayImage">Show my picture</label>
-                <input type="checkbox" formControlName="displayImage" id="displayImage">
+                <label class="switch">
+                    <input id="displayImage" formControlName="displayImage" type="checkbox" checked>
+                    <span class="slider round"></span>
+                </label>
             </div>
             <div class="form__group">
                 <label for="displayName">Show my first name</label>
-                <input type="checkbox" formControlName="displayName" id="displayName">
+                <label class="switch">
+                    <input id="displayName" formControlName="displayName" type="checkbox" checked>
+                    <span class="slider round"></span>
+                </label>
             </div>
             <div class="form__group">
                 <label for="emailNotifications">Enable email notifications</label>
-                <input type="checkbox" formControlName="emailNotifications" id="emailNotifications">
+                <label class="switch">
+                    <input id="emailNotifications" formControlName="emailNotifications" type="checkbox" checked>
+                    <span class="slider round"></span>
+                </label>
             </div>
         </form>
     </div>

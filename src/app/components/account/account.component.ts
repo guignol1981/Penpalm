@@ -22,7 +22,6 @@ export class AccountComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.user);
         this.form = new FormGroup({
             displayImage: new FormControl(this.user.preferences.displayImage),
             displayName: new FormControl(this.user.preferences.displayName),

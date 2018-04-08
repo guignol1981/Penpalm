@@ -6,9 +6,9 @@
         </form>
         <div class="postcard--side postcard--back">
             <youtube-player *ngIf="form.get('youtubeLink').value"
-                    [videoId]="getYoutubeLinkId()"
-                    [height]="'100%'"
-                    [width]="'100%'"
+                            [videoId]="getYoutubeLinkId()"
+                            [height]="'100%'"
+                            [width]="'100%'"
             ></youtube-player>
             <div *ngIf="form.get('imageUrl').value">
                 <div class="postcard__image-wrap">
@@ -26,7 +26,8 @@
             <div class="options__group--list">
                 <a (click)="selectOption('spotify')" class="btn btn--align-right btn--text-md"><i
                         class="fab fa-spotify"></i>&nbsp;Link a spotify song</a>
-                <a class="btn btn--align-right btn--text-md"><i class="fas fa-share-alt"></i>&nbsp;Allow share</a>
+                <a (click)="selectOption('allowShare')" class="btn btn--align-right btn--text-md"><i
+                        class="fas fa-share-alt"></i>&nbsp;Allow share</a>
             </div>
         </div>
         <div class="options__group">
@@ -34,7 +35,8 @@
                 Front side
             </div>
             <div class="options__group--list">
-                <a class="btn btn--align-right btn--text-md"><i class="far fa-square"></i>&nbsp;Choose a template</a>
+                <a (click)="selectOption('template')" class="btn btn--align-right btn--text-md"><i
+                        class="far fa-square"></i>&nbsp;Choose a template</a>
                 <a class="btn btn--align-right btn--text-md"><i class="fas fa-paint-brush"></i>&nbsp;Text color</a>
             </div>
         </div>
@@ -88,6 +90,28 @@
             </div>
             <div class="form__group--input">
                 <input formControlName="youtubeLink" class="form__group--input--text" id="youtubeLink" type="text"
+                       placeholder="youtube link">
+            </div>
+        </div>
+
+        <div *ngIf="selectedOption === 'allowShare'" class="form__group">
+            <div class="form__group--label">
+                <i class="fas fa-share-alt"></i>
+                <label for="imageUrl">Allow share</label>
+            </div>
+            <label class="switch">
+                <input formControlName="allowShare" type="checkbox" checked>
+                <span class="slider round"></span>
+            </label>
+        </div>
+
+        <div *ngIf="selectedOption === 'template'" class="form__group">
+            <div class="form__group--label">
+                <i class="far fa-square"></i>
+                <label for="template">Choose a template</label>
+            </div>
+            <div class="form__group--input">
+                <input formControlName="template" class="form__group--input--text" id="template" type="text"
                        placeholder="youtube link">
             </div>
         </div>

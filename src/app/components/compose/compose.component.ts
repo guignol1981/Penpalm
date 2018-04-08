@@ -27,7 +27,8 @@ export class ComposeComponent implements OnInit {
             imageUrl: new FormControl(null),
             imageFitType: new FormControl('contain'),
             spotifyLink: new FormControl(null),
-            youtubeLink: new FormControl(null)
+            youtubeLink: new FormControl(null),
+            allowShare: new FormControl(false)
         });
     }
 
