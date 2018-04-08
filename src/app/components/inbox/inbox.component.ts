@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {PostcardService} from "../../services/postcard.service";
 import {Postcard} from "../../models/postcard/postcard";
 import {DomSanitizer} from "@angular/platform-browser";
+import {createSrcToOutPathMapper} from "@angular/compiler-cli/src/transformers/program";
 
 @Component({
     selector: 'app-inbox',
@@ -45,21 +46,31 @@ export class InboxComponent implements OnInit {
     getImageClass() {
         let cssClass = 'postcard__image';
         switch (this.postcards[this.navIndex].imageFitType) {
-            case 'contain':
-                return cssClass += ' postcard__image--contain';
             case 'cover':
                 return cssClass += ' postcard__image--cover';
             case 'fill':
                 return cssClass += ' postcard__image--fill';
             case 'none':
                 return cssClass += ' postcard__image--none';
+            case 'contain':
+            default:
+                return cssClass += ' postcard__image--cover';
         }
     }
 
     navTo(index) {
         this.navIndex = index;
         this.postcardService.markSeen(this.postcards[index]).then(() => {
+        this.setTemplate();
         });
+    }
+
+    setTemplate() {
+        let bodyElement = document.getElementById('postcardbody');
+        bodyElement.style.background = 'url(../../../assets/sunshine-template-01.png)';
+        bodyElement.style.backgroundRepeat = 'no-repeat';
+        bodyElement.style.backgroundSize = 'cover';
+        bodyElement.style.backgroundPosition = 'center';
     }
 
     skipForward() {

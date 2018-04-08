@@ -28,12 +28,9 @@ export class ComposeComponent implements OnInit {
             imageFitType: new FormControl('contain'),
             spotifyLink: new FormControl(null),
             youtubeLink: new FormControl(null),
-            allowShare: new FormControl(false)
+            allowShare: new FormControl(false),
+            template: new FormControl('none'),
         });
-    }
-
-    enterComposeMode() {
-        this.composeMode = true;
     }
 
     selectOption(option) {
@@ -43,10 +40,10 @@ export class ComposeComponent implements OnInit {
     getYoutubeLinkId() {
         let link = this.form.get('youtubeLink').value;
 
-        function youtube_parser(url){
-            var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
-            var match = url.match(regExp);
-            return (match&&match[7].length==11)? match[7] : false;
+        function youtube_parser(url) {
+            let regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+            let match = url.match(regExp);
+            return (match && match[7].length === 11) ? match[7] : false;
         }
 
         return youtube_parser(link);
@@ -64,7 +61,15 @@ export class ComposeComponent implements OnInit {
             case 'none':
                 return cssClass += ' postcard__image--none';
         }
-     }
+    }
+
+    setTemplate(template, bodyElement) {
+        this.form.get('template').setValue(template);
+        bodyElement.style.background = 'url(../../../assets/sunshine-template-01.png)';
+        bodyElement.style.backgroundRepeat = 'no-repeat';
+        bodyElement.style.backgroundSize = 'cover';
+        bodyElement.style.backgroundPosition = 'center';
+    }
 
     flip(postcard) {
         if (this.shownSide === 'front') {
@@ -90,7 +95,11 @@ export class ComposeComponent implements OnInit {
             null,
             this.form.get('body').value,
             this.form.get('imageUrl').value,
-            this.form.get('imageFitType').value
+            this.form.get('imageFitType').value,
+            this.form.get('spotifyLink').value,
+            this.getYoutubeLinkId(this.form.get('youtubeLink').value),
+            this.form.get('allowShare').value,
+            this.form.get('template').value
         );
 
         this.sending = true;

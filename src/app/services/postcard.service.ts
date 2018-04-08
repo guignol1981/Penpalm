@@ -17,7 +17,10 @@ export class PostcardService {
             data['body'],
             data['imageUrl'],
             data['imageFitType'],
-            data['youtubeLink'],
+            data['spotifyLink'],
+            data['youtubeId'],
+            data['allowShare'],
+            data['template'],
             data['seen'],
             data['creationDate']
         );

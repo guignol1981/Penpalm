@@ -1,7 +1,7 @@
 <div class="container">
     <div #postcard class="postcard">
         <form [formGroup]="form" class="postcard--side">
-                    <textarea class="postcard__body" formControlName="body" name="body" id="body" cols="30"
+                    <textarea #body class="postcard__body" formControlName="body" name="body" id="body" cols="30"
                               rows="10" placeholder="Write something here..."></textarea>
         </form>
         <div class="postcard--side postcard--back">
@@ -108,11 +108,18 @@
         <div *ngIf="selectedOption === 'template'" class="form__group">
             <div class="form__group--label">
                 <i class="far fa-square"></i>
-                <label for="template">Choose a template</label>
+                <label for="template">Template</label>
             </div>
             <div class="form__group--input">
-                <input formControlName="template" class="form__group--input--text" id="template" type="text"
-                       placeholder="youtube link">
+                <div class="dropdown">
+                    <button id="template" class="dropbtn">{{form.get('template').value}}</button>
+                    <div class="dropdown-content">
+                        <a (click)="setTemplate('none', body)">none</a>
+                        <a (click)="setTemplate('sunshine', body)">sunshine</a>
+                        <a (click)="setTemplate('coffee-house', body)">coffee-house</a>
+                        <a (click)="setTemplate('happy-birthday', body)">happy-birthday</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -4,8 +4,13 @@ export class Postcard {
                 public body?: string,
                 public imageUrl?: string,
                 public imageFitType?: string,
-                public youtubeLink?: string,
+                public spotifyLink?: string,
+                public youtubeId?: string,
+                public allowShare?: boolean,
+                public template?: string,
                 public seen?: boolean,
                 public creationDate?: Date) {}
 
 }
+
+

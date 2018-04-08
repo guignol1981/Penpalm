@@ -21,6 +21,10 @@ module.exports.create = function(req, res) {
 				body: body,
 				imageUrl: req.body.imageUrl,
 				imageFitType: req.body.imageFitType,
+				spotifyLink: req.body.spotifyLink,
+				youtubeId: req.body.youtubeId,
+				allowShare: req.body.allowShare,
+				template: req.body.template,
 				seen: false,
 				creationDate: new Date()
 			});

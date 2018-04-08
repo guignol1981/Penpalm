@@ -32,18 +32,25 @@
     </div>
     <div #postcard class="postcard">
         <div class="postcard--side">
-            <div class="postcard__body" [innerHTML]="postcards[navIndex].body">
+            <div id="postcardbody" class="postcard__body" [innerHTML]="postcards[navIndex].body">
             </div>
         </div>
         <div class="postcard--side postcard--back">
-            <div class="postcard__image-wrap">
+            <youtube-player *ngIf="postcards[navIndex].youtubeId"
+                            [videoId]="postcards[navIndex].youtubeId"
+                            [height]="'100%'"
+                            [width]="'100%'"
+            ></youtube-player>
+
+            <div *ngIf="postcards[navIndex].imageUrl" class="postcard__image-wrap">
                 <img *ngIf="postcards[navIndex].imageUrl" [class]="getImageClass()" [src]="postcards[navIndex].imageUrl" alt="postcard image">
             </div>
+
         </div>
     </div>
     <div class="actions">
         <a (click)="flip(postcard)" class="btn">Flip</a>
-        <a (click)="flip(postcard)" class="btn">Share</a>
+        <a *ngIf="postcards[navIndex].allowShare" (click)="flip(postcard)" class="btn">Share</a>
         <a (click)="flip(postcard)" class="btn">Report</a>
     </div>
 </div>

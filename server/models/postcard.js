@@ -7,6 +7,10 @@ let PostcardSchema = new Schema({
     body: {type: String, required: true},
     imageUrl: {type: String},
     imageFitType: {type: String, default: 'contain'},
+    spotifyLink: {type: String, default: null},
+    youtubeId: {type: String, default: null},
+    allowShare: {type: Boolean, default: false},
+    template: {type: String, default: 'none'},
     seen: {type: Boolean, default: false},
     creationDate: {type: Date, require: true}
 });
