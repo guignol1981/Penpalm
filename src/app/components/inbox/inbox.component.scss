@@ -148,4 +148,8 @@
 .actions {
 	grid-area: actions;
 	justify-self: center;
+	grid-area: actions;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
