@@ -1,4 +1,4 @@
-<div *ngIf="postcards && postcards.length > 0" class="container">
+<div *ngIf="activePostcard && postcards.length > 0" class="container">
     <div class="paging">
         <div class="paging__handles">
             <a (click)="skipFirst()"

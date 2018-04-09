@@ -63,8 +63,9 @@ export class InboxComponent implements OnInit {
 
     navTo(index) {
         this.navIndex = index;
+        this.activePostcard = this.postcards[this.navIndex];
+
         this.postcardService.markSeen(this.postcards[index]).then(() => {
-            this.activePostcard = this.postcards[this.navIndex];
             this.spotyUrl = this.getSongSource();
             this.setTemplate();
         });
