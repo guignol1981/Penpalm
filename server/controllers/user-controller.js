@@ -45,7 +45,7 @@ module.exports.remove = function(req, res) {
 				creationDate: Date.now()
 			});
 
-			deletedAccountMail.save().then(test => {
+			deletedAccountMail.save().then(() => {
 				if (user.penPal) {
 					user.penPal.penPal = null;
 					user.penPal.save().then(() => {

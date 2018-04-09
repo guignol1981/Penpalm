@@ -93,7 +93,7 @@ export class UserService {
             Authorization: 'Bearer ' + this.authenticationService.getToken()
         });
 
-        return this.http.put(`api/users/remove` , JSON.stringify(user), {headers: headers})
+        return this.http.delete(`api/users` , {headers: headers})
             .toPromise()
             .then((response: Response) => {
                 return true;

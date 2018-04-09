@@ -28,33 +28,33 @@
         </div>
     </div>
     <div class="info">
-        {{postcards[navIndex].creationDate | date}}
-        <div *ngIf="postcards[navIndex].spotifyLink" class="spotify">
-            <iframe id="spoty" [src]="getSongSource()" width="300"
+        {{activePostcard.creationDate | date}}
+        <div *ngIf="spotyUrl" class="spotify">
+            <iframe id="spoty" [src]="spotyUrl" width="300"
                     height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         </div>
     </div>
     <div #postcard class="postcard">
         <div class="postcard--side">
-            <div id="postcardbody" class="postcard__body" [innerHTML]="postcards[navIndex].body">
+            <div id="postcardbody" class="postcard__body" [innerHTML]="activePostcard.body">
             </div>
         </div>
         <div class="postcard--side postcard--back">
-            <youtube-player *ngIf="postcards[navIndex].youtubeId"
-                            [videoId]="postcards[navIndex].youtubeId"
+            <youtube-player *ngIf="activePostcard.youtubeId"
+                            [videoId]="activePostcard.youtubeId"
                             [height]="'100%'"
                             [width]="'100%'"
             ></youtube-player>
 
-            <div *ngIf="postcards[navIndex].imageUrl" class="postcard__image-wrap">
-                <img *ngIf="postcards[navIndex].imageUrl" [class]="getImageClass()" [src]="postcards[navIndex].imageUrl" alt="postcard image">
+            <div *ngIf="activePostcard.imageUrl" class="postcard__image-wrap">
+                <img *ngIf="activePostcard.imageUrl" [class]="getImageClass()" [src]="activePostcard.imageUrl" alt="postcard image">
             </div>
 
         </div>
     </div>
     <div class="actions">
         <a (click)="flip(postcard)" class="btn">Flip</a>
-        <a *ngIf="postcards[navIndex].allowShare" (click)="flip(postcard)" class="btn">Share</a>
+        <a *ngIf="activePostcard.allowShare" (click)="flip(postcard)" class="btn">Share</a>
         <a (click)="flip(postcard)" class="btn">Report</a>
     </div>
 </div>

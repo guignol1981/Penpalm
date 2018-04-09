@@ -29,12 +29,36 @@ export class ComposeComponent implements OnInit {
             spotifyLink: new FormControl(null),
             youtubeLink: new FormControl(null),
             allowShare: new FormControl(false),
-            template: new FormControl('none'),
+            template: new FormControl(),
         });
+    }
+
+    isBackSideOptionAvailable(option) {
+        let isAvailable = true;
+        let backSideOptions = [
+            'youtubeLink',
+            'imageUrl'
+        ];
+
+        backSideOptions.forEach((item) => {
+            if (this.form.get('option').value && option !== item) {
+                isAvailable = false;
+                return false;
+            }
+        });
+
+        return isAvailable;
     }
 
     selectOption(option) {
         this.selectedOption = option;
+    }
+
+    removeOptionValue(option) {
+        this.form.get(option).reset();
+        if (option === 'template') {
+            this.setTemplate('none', null);
+        }
     }
 
     getYoutubeLinkId() {
@@ -62,17 +86,24 @@ export class ComposeComponent implements OnInit {
                 return cssClass += ' postcard__image--cover';
             case 'fill':
                 return cssClass += ' postcard__image--fill';
-            case 'none':
+            default:
                 return cssClass += ' postcard__image--none';
         }
     }
 
     setTemplate(templateName, bodyElement) {
-        this.form.get('template').setValue(templateName);
-        bodyElement.style.background = 'url(../../../assets/' + templateName + '-template.png)';
-        bodyElement.style.backgroundRepeat = 'no-repeat';
-        bodyElement.style.backgroundSize = 'cover';
-        bodyElement.style.backgroundPosition = 'center';
+        bodyElement = bodyElement || document.getElementById('body');
+
+        if (templateName !== 'none') {
+            this.form.get('template').setValue(templateName);
+            bodyElement.style.background = 'url(../../../assets/' + templateName + '-template.png)';
+            bodyElement.style.backgroundRepeat = 'no-repeat';
+            bodyElement.style.backgroundSize = 'cover';
+            bodyElement.style.backgroundPosition = 'center';
+        } else {
+            this.form.get('template').reset();
+            bodyElement.style.background = '';
+        }
     }
 
     flip(postcard) {

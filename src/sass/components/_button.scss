@@ -20,6 +20,10 @@
 		font-size: 1.5rem;
 	}
 
+	&--inactive {
+		color: #6d6d6d;
+	}
+
 	&--align-right {
 		display: flex;
 		justify-content: flex-start;

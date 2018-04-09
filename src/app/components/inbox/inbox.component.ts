@@ -11,9 +11,10 @@ import {createSrcToOutPathMapper} from '@angular/compiler-cli/src/transformers/p
 })
 export class InboxComponent implements OnInit {
     @Input() direction: string;
-    @Output() songRequested: EventEmitter<string> = new EventEmitter<string>();
-
     postcards: Postcard[];
+    activePostcard: Postcard;
+    spotyUrl;
+
     navIndex = 0;
     count = 0;
     refreshing = false;
@@ -47,7 +48,7 @@ export class InboxComponent implements OnInit {
 
     getImageClass() {
         let cssClass = 'postcard__image';
-        switch (this.postcards[this.navIndex].imageFitType) {
+        switch (this.activePostcard.imageFitType) {
             case 'cover':
                 return cssClass += ' postcard__image--cover';
             case 'fill':
@@ -63,12 +64,14 @@ export class InboxComponent implements OnInit {
     navTo(index) {
         this.navIndex = index;
         this.postcardService.markSeen(this.postcards[index]).then(() => {
+            this.activePostcard = this.postcards[this.navIndex];
+            this.spotyUrl = this.getSongSource();
             this.setTemplate();
         });
     }
 
     setTemplate() {
-        let template = this.postcards[this.navIndex].template;
+        let template = this.activePostcard.template;
 
         if (template === 'none') {
             return;
@@ -126,7 +129,7 @@ export class InboxComponent implements OnInit {
 
     getSongSource() {
         let src = this.domSanitizer.bypassSecurityTrustResourceUrl(
-            'https://open.spotify.com/embed?uri=' + this.postcards[this.navIndex].spotifyLink + '&view=coverart'
+            'https://open.spotify.com/embed?uri=' + this.activePostcard.spotifyLink + '&view=coverart'
         );
 
         return src;

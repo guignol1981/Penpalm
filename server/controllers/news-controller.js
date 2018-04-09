@@ -17,6 +17,7 @@ module.exports.fetch = function(req, res) {
 
 				return;
 			}
+
 			Postcard.find({recipient: user._id, seen: false})
 				.then(postcards => {
 					User.populate(user.penPal, {path: 'preferences'}).then(penPal => {
