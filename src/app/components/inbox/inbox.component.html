@@ -29,6 +29,10 @@
     </div>
     <div class="info">
         {{postcards[navIndex].creationDate | date}}
+        <div *ngIf="postcards[navIndex].spotifyLink" class="spotify">
+            <iframe id="spoty" [src]="getSongSource()" width="300"
+                    height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        </div>
     </div>
     <div #postcard class="postcard">
         <div class="postcard--side">

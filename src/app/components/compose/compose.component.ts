@@ -40,6 +40,10 @@ export class ComposeComponent implements OnInit {
     getYoutubeLinkId() {
         let link = this.form.get('youtubeLink').value;
 
+        if (!link) {
+            return null;
+        }
+
         function youtube_parser(url) {
             let regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
             let match = url.match(regExp);

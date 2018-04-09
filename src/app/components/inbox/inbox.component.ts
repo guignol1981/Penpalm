@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {PostcardService} from "../../services/postcard.service";
-import {Postcard} from "../../models/postcard/postcard";
-import {DomSanitizer} from "@angular/platform-browser";
-import {createSrcToOutPathMapper} from "@angular/compiler-cli/src/transformers/program";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {PostcardService} from '../../services/postcard.service';
+import {Postcard} from '../../models/postcard/postcard';
+import {DomSanitizer} from '@angular/platform-browser';
+import {createSrcToOutPathMapper} from '@angular/compiler-cli/src/transformers/program';
 
 @Component({
     selector: 'app-inbox',
@@ -11,6 +11,8 @@ import {createSrcToOutPathMapper} from "@angular/compiler-cli/src/transformers/p
 })
 export class InboxComponent implements OnInit {
     @Input() direction: string;
+    @Output() songRequested: EventEmitter<string> = new EventEmitter<string>();
+
     postcards: Postcard[];
     navIndex = 0;
     count = 0;
@@ -61,13 +63,19 @@ export class InboxComponent implements OnInit {
     navTo(index) {
         this.navIndex = index;
         this.postcardService.markSeen(this.postcards[index]).then(() => {
-        this.setTemplate();
+            this.setTemplate();
         });
     }
 
     setTemplate() {
+        let template = this.postcards[this.navIndex].template;
+
+        if (template === 'none') {
+            return;
+        }
+
         let bodyElement = document.getElementById('postcardbody');
-        bodyElement.style.background = 'url(../../../assets/sunshine-template.png)';
+        bodyElement.style.background = 'url(../../../assets/' + template + '-template.png)';
         bodyElement.style.backgroundRepeat = 'no-repeat';
         bodyElement.style.backgroundSize = 'cover';
         bodyElement.style.backgroundPosition = 'center';
@@ -114,6 +122,14 @@ export class InboxComponent implements OnInit {
             this.shownSide = 'front';
             postcard.style.transform = 'rotateY(0deg)';
         }
+    }
+
+    getSongSource() {
+        let src = this.domSanitizer.bypassSecurityTrustResourceUrl(
+            'https://open.spotify.com/embed?uri=' + this.postcards[this.navIndex].spotifyLink + '&view=coverart'
+        );
+
+        return src;
     }
 
 }

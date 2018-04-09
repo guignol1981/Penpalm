@@ -33,6 +33,6 @@ schedule.scheduleJob(newMessageRule, function() {
 		});
 });
 
-schedule.scheduleJob(newPenPalRule, function() {
-	console.log('shuffling pen pals!');
-});
+// schedule.scheduleJob(newPenPalRule, function() {
+// 	console.log('shuffling pen pals!');
+// });
