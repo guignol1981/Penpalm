@@ -41,7 +41,7 @@ export class ComposeComponent implements OnInit {
         ];
 
         backSideOptions.forEach((item) => {
-            if (this.form.get('option').value && option !== item) {
+            if (this.form.get(item).value && option !== item) {
                 isAvailable = false;
                 return false;
             }

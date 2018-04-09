@@ -25,12 +25,12 @@
             </div>
             <div class="options__group--list">
                 <a (click)="form.get('spotifyLink').value ? removeOptionValue('spotifyLink') : selectOption('spotifyLink')"
-                   class="btn btn--align-right btn--text-md"><i
+                   class="btn btn--align-left btn--text-md"><i
                         class="fab fa-spotify"></i>
                     &nbsp;
                     {{form.get('spotifyLink').value ? 'Remove link' : 'Spotify song'}}
                 </a>
-                <a (click)="selectOption('allowShare')" class="btn btn--align-right btn--text-md"><i
+                <a (click)="selectOption('allowShare')" class="btn btn--align-left btn--text-md"><i
                         class="fas fa-share-alt"></i>&nbsp;Allow share</a>
             </div>
         </div>
@@ -40,12 +40,12 @@
             </div>
             <div class="options__group--list">
                 <a (click)="form.get('template').value ? removeOptionValue('template') : selectOption('template')"
-                   class="btn btn--align-right btn--text-md"><i
+                   class="btn btn--align-left btn--text-md"><i
                         class="far fa-square"></i>
                     &nbsp;
                     {{form.get('template').value ? 'Remove template' : 'Template'}}
                 </a>
-                <a class="btn btn--align-right btn--text-md"><i class="fas fa-paint-brush"></i>&nbsp;Text color</a>
+                <a class="btn btn--align-left btn--text-md"><i class="fas fa-paint-brush"></i>&nbsp;Text color</a>
             </div>
         </div>
         <div class="options__group">
@@ -53,17 +53,17 @@
                 Back side
             </div>
             <div class="options__group--list">
-                <a class="btn btn--align-right btn--text-md"><i class="fas fa-paint-brush"></i>&nbsp;Background
+                <a class="btn btn--align-left btn--text-md"><i class="fas fa-paint-brush"></i>&nbsp;Background
                     color</a>
-                <a class="btn btn--align-right btn--text-md"><i class="fas fa-video"></i>&nbsp;Record a video</a>
-                <a (click)="selectOption('youtubeLink')" class="btn btn--align-right btn--text-md"><i
-                        class="fab fa-youtube"></i>&nbsp;Link a youtube
-                    video</a>
-                <a class="btn btn--align-right btn--text-md"><i class="fas fa-camera-retro"></i>&nbsp;Take a picture</a>
-                <a (click)="selectOption('linkedImage')" class="btn btn--align-right btn--text-md"><i
+                <a class="btn btn--align-left btn--text-md"><i class="fas fa-video"></i>&nbsp;Record a video</a>
+                <a (click)="isBackSideOptionAvailable('youtubeLink') ? selectOption('youtubeLink') : ''"
+                   [class]="isBackSideOptionAvailable('youtubeLink') ? 'btn btn--align-left btn--text-md' : 'btn btn--align-left btn--text-md btn--inactive'">
+                    <i class="fab fa-youtube"></i>&nbsp;Link a youtube video</a>
+                <a class="btn btn--align-left btn--text-md"><i class="fas fa-camera-retro"></i>&nbsp;Take a picture</a>
+                <a (click)="selectOption('linkedImage')" class="btn btn--align-left btn--text-md"><i
                         class="fas fa-link"></i>&nbsp;Link a picture</a>
-                <a class="btn btn--align-right btn--text-md"><i class="fas fa-image"></i>&nbsp;Add a picture</a>
-                <a class="btn btn--align-right btn--text-md"><i class="fas fa-map-marker"></i>&nbsp;Location</a>
+                <a class="btn btn--align-left btn--text-md"><i class="fas fa-image"></i>&nbsp;Add a picture</a>
+                <a class="btn btn--align-left btn--text-md"><i class="fas fa-map-marker"></i>&nbsp;Location</a>
             </div>
         </div>
 
