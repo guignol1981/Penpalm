@@ -1,8 +1,13 @@
 <div *ngIf="user" class="container">
     <div class="description-card">
-        <form [formGroup]="form" class="description-card--side">
-                    <textarea #description class="description-card__body" formControlName="description" name="description" id="description" cols="30"
-                              rows="10" placeholder="Write something about you, this card will be shown in the pen pal finder"></textarea>
+        <form [formGroup]="form" class="description-card--side description-card--front">
+            <div class="description-card--front__body">
+                <textarea #description class="description-content" formControlName="description" name="description" id="description" cols="30"
+                                  rows="10" placeholder="Write something about you, this card will be shown in the pen pal finder"></textarea>
+            </div>
+            <div class="description-card--front__about">
+                about
+            </div>
         </form>
         <div #back id="back" class="description-card--side description-card--back">
         </div>

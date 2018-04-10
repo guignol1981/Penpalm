@@ -104,20 +104,38 @@
 		overflow: hidden;
 	}
 
-	&__body {
-		font-size: 2rem;
-		line-height: 2.4rem;
-		box-sizing: border-box;
-		border: none;
-		border-radius: 1rem;
-		resize: none;
-		overflow: auto;
-		height: 100%;
-		width: 100%;
-		padding: 2rem;
-		outline: none;
-		position: relative;
+	&--front {
+		display: flex;
+		flex-direction: column;
+
+		&__body {
+			flex: 2;
+
+			& > textarea {
+				font-size: 2rem;
+				line-height: 2.4rem;
+				box-sizing: border-box;
+				border: none;
+				border-radius: 1rem;
+				resize: none;
+				overflow: auto;
+				height: 100%;
+				width: 100%;
+				padding: 2rem;
+				outline: none;
+				position: relative;
+			}
+
+		}
+
+		&__about {
+			flex: 1;
+			background-color: gray;
+			border-bottom-left-radius: 1rem;
+			border-bottom-right-radius: 1rem;
+		}
 	}
+
 }
 
 .options {
