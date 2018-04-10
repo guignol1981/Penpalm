@@ -112,7 +112,9 @@ export class InboxComponent implements OnInit {
         if (this.refreshing) {
             return;
         }
-        this.fetchConfig.skip = this.totalCount === this.totalCount - (this.totalCount % 5) ? this.totalCount - 5 : this.totalCount - (this.totalCount % 5);
+        this.fetchConfig.skip =
+            this.totalCount === this.totalCount - (this.totalCount % 5) ? this.totalCount - 5 : this.totalCount - (this.totalCount % 5);
+
         this.fetchPostcards();
     }
 

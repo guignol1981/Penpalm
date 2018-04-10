@@ -39,7 +39,7 @@
                     {{form.get('template').value ? 'Remove template' : 'Template'}}
                 </a>
                 <a class="btn btn--align-left btn--text-md btn--disabled"><i
-                        class="fas fa-users"></i>&nbsp;Recipient(s)</a>
+                        class="fas fa-user"></i>&nbsp;Recipient</a>
             </div>
         </div>
         <div class="options__group">
@@ -81,11 +81,11 @@
         <div *ngIf="selectedOption === 'spotifyLink'" class="form__group">
             <div class="form__group--label">
                 <i class="fab fa-spotify"></i>
-                <label for="spotifyLink">Spotitfy link</label>
+                <label for="spotifyLink">Spotitfy song</label>
             </div>
             <div class="form__group--input">
                 <input formControlName="spotifyLink" class="form__group--input--text" id="spotifyLink" type="text"
-                       placeholder="song link or spotify uri">
+                       placeholder="spotify uri">
             </div>
         </div>
 

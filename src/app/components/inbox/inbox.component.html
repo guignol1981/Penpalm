@@ -74,7 +74,7 @@
         <a (click)="flip(postcard)" class="btn">Flip</a>
     </div>
 </div>
-<div *ngIf="postcards || postcards.length === 0" class="container">
+<div *ngIf="!postcards || postcards.length === 0" class="container">
     <div class="empty">
         {{direction === 'in' ? 'You don\'t have any postcards yet' : 'You haven\'t sent any postcards yet'}}
     </div>

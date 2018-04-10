@@ -16,6 +16,7 @@ export class AccountComponent implements OnInit {
     form: FormGroup;
     deleteWarning = false;
     selectedOption = '';
+    shownSide = 'front';
 
     constructor(private userService: UserService,
                 private authenticationService: AuthenticationService,
