@@ -73,12 +73,13 @@ export class InboxComponent implements OnInit {
 
     setTemplate() {
         let template = this.activePostcard.template;
+        let bodyElement = document.getElementById('postcardbody');
 
-        if (template === 'none') {
+        if (!template) {
+            bodyElement.style.background = '';
             return;
         }
 
-        let bodyElement = document.getElementById('postcardbody');
         bodyElement.style.background = 'url(../../../assets/' + template + '-template.png)';
         bodyElement.style.backgroundRepeat = 'no-repeat';
         bodyElement.style.backgroundSize = 'cover';
@@ -129,11 +130,13 @@ export class InboxComponent implements OnInit {
     }
 
     getSongSource() {
-        let src = this.domSanitizer.bypassSecurityTrustResourceUrl(
+        if (!this.activePostcard.spotifyLink) {
+            return null;
+        }
+
+        return this.domSanitizer.bypassSecurityTrustResourceUrl(
             'https://open.spotify.com/embed?uri=' + this.activePostcard.spotifyLink + '&view=coverart'
         );
-
-        return src;
     }
 
 }

@@ -83,10 +83,10 @@
 		backface-visibility: hidden;
 		position: absolute;
 		border-radius: 1rem;
+		background-color: #fff;
 	}
 
 	&--back {
-		background-color: #82ccdd;
 		text-align: center;
 		transform: rotateY(180deg);
 		height: 100%;

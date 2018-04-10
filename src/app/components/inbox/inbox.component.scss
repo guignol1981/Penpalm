@@ -105,6 +105,7 @@
 		backface-visibility: hidden;
 		position: absolute;
 		border-radius: 1rem;
+		background-color: #fff;
 	}
 
 	&__body {
@@ -136,9 +137,24 @@
 	color: #fff;
 	font-size: 2rem;
 	margin-bottom: .5rem;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
+	overflow-y: scroll;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
+	&__item {
+		margin-bottom: 1rem;
+		width: 100%;
+	}
 }
 
 .empty {
+	grid-area: postcard;
 	height: 100%;
 	display: flex;
 	justify-content: center;
@@ -148,10 +164,10 @@
 }
 
 .actions {
-	grid-area: actions;
 	justify-self: center;
 	grid-area: actions;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
+

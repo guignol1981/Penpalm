@@ -27,13 +27,27 @@
             </a>
         </div>
     </div>
+
     <div class="info">
-        {{activePostcard.creationDate | date}}
-        <div *ngIf="spotyUrl" class="spotify">
-            <iframe id="spoty" [src]="spotyUrl" width="300"
+        <div class="info__item">
+            {{activePostcard.creationDate | date}}
+        </div>
+        <div class="info__item" *ngIf="spotyUrl">
+            <iframe id="spoty" [src]="spotyUrl" width="100%"
                     height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         </div>
+        <div class="info__item">
+            <a [class]="activePostcard.allowShare ? 'btn btn--align-left btn--text-md' : 'btn btn--align-left btn--text-md btn--inactive'"><i
+                    class="fas fa-share-alt"></i>&nbsp; Share</a>
+        </div>
+        <div class="info__item">
+            <a class="btn btn--align-left btn--text-md"><i class="fas fa-heart"></i>&nbsp; Add to favorite</a>
+        </div>
+        <div class="info__item">
+            <a class="btn btn--align-left btn--text-md"><i class="fas fa-flag"></i>&nbsp; Report</a>
+        </div>
     </div>
+
     <div #postcard class="postcard">
         <div class="postcard--side">
             <div id="postcardbody" class="postcard__body" [innerHTML]="activePostcard.body">
@@ -47,17 +61,18 @@
             ></youtube-player>
 
             <div *ngIf="activePostcard.imageUrl" class="postcard__image-wrap">
-                <img *ngIf="activePostcard.imageUrl" [class]="getImageClass()" [src]="activePostcard.imageUrl" alt="postcard image">
+                <img *ngIf="activePostcard.imageUrl" [class]="getImageClass()" [src]="activePostcard.imageUrl"
+                     alt="postcard image">
             </div>
 
         </div>
     </div>
     <div class="actions">
         <a (click)="flip(postcard)" class="btn">Flip</a>
-        <a *ngIf="activePostcard.allowShare" (click)="flip(postcard)" class="btn">Share</a>
-        <a (click)="flip(postcard)" class="btn">Report</a>
     </div>
 </div>
-<div *ngIf="!postcards || postcards.length === 0" class="empty">
-    {{direction === 'in' ? 'You don\'t have any postcard yet' : 'You haven\'t sent any postcard yet'}}
+<div *ngIf="!postcards || postcards.length === 0" class="container">
+    <div class="empty">
+        {{direction === 'in' ? 'You don\'t have any postcard yet' : 'You haven\'t sent any postcard yet'}}
+    </div>
 </div>
