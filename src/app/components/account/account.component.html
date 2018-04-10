@@ -1,6 +1,5 @@
 <div *ngIf="user" class="container">
-    <div class="description">
-
+    <div class="description form" [formGroup]="form">
     </div>
 
     <div class="options">
@@ -33,7 +32,7 @@
                    class="btn btn--align-left btn--text-md">
                     &nbsp;Email notifications
                 </a>
-                <a (click)="selectOption('emailNotifications')"
+                <a (click)="logout()"
                    class="btn btn--align-left btn--text-md">
                     &nbsp;Logout
                 </a>
@@ -49,7 +48,7 @@
         <a (click)="save()" class="btn btn">Save</a>
     </div>
 
-    <div class="form" [formGroup]="form">
+    <div class="input form" [formGroup]="form">
         <div *ngIf="selectedOption === 'displayPicture'" class="form__group">
             <div class="form__group--label">
                 <label for="displayPicture">Display picture</label>

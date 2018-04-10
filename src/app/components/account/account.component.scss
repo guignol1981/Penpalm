@@ -6,20 +6,23 @@
 	grid-template-columns: 3fr 1fr;
 	grid-gap: 2rem;
 
-	grid-template-areas: "form ." "desc options" "actions options";
+	grid-template-areas: "input ." "desc options" "actions options";
 
 	justify-items: stretch;
 	align-items: stretch;
 }
 
-.form {
+.input {
+	grid-area: input;
 	margin-left: 5rem;
 	margin-right: 5rem;
-	grid-area: form;
-	color: #fff;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.form {
+	color: #fff;
 
 	&__group {
 		width: 100%;
@@ -65,12 +68,6 @@
 	grid-area: desc;
 	display: flex;
 	flex-direction: column;
-
-	&__header {
-		color: #fff;
-		font-size: 3rem;
-		margin-bottom: 1rem;
-	}
 }
 
 

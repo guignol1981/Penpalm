@@ -33,6 +33,8 @@
 	font-size: 4rem;
 	cursor: pointer;
 	transition: all .3s;
+	z-index: 20;
+	background-color: #333333;
 
 	&--group {
 		position: relative;

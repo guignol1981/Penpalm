@@ -16,7 +16,6 @@ export class AccountComponent implements OnInit {
     form: FormGroup;
     deleteWarning = false;
     selectedOption = '';
-    shownSide = 'front';
 
     constructor(private userService: UserService,
                 private authenticationService: AuthenticationService,
@@ -28,7 +27,8 @@ export class AccountComponent implements OnInit {
             displayPicture: new FormControl(this.user.preferences.displayPicture),
             displayName: new FormControl(this.user.preferences.displayName),
             emailNotifications: new FormControl(this.user.preferences.emailNotifications),
-            findable: new FormControl(this.user.preferences.findable)
+            findable: new FormControl(this.user.preferences.findable),
+            test: new FormControl()
         });
     }
 
