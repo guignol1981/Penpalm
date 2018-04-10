@@ -124,6 +124,10 @@
 				padding: 2rem;
 				outline: none;
 				position: relative;
+
+				&::-webkit-scrollbar {
+					display: none;
+				}
 			}
 
 		}
