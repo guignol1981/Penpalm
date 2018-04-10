@@ -5,10 +5,7 @@
 	grid-template-columns: 1fr 3fr 1fr;
 	grid-gap: 2rem;
 
-	grid-template-areas:
-			"nav main main"
-			"nav main main"
-			"nav footer .";
+	grid-template-areas: "nav main main" "nav main main" "nav footer .";
 
 	justify-items: stretch;
 	align-items: stretch;
@@ -36,6 +33,28 @@
 	font-size: 4rem;
 	cursor: pointer;
 	transition: all .3s;
+
+	&--group {
+		position: relative;
+
+		&:hover > ul {
+			left: 10rem;
+			opacity: 1;
+		}
+
+		& > ul {
+			transition: all .5s;
+			position: absolute;
+			top: 0;
+			left: -5rem;
+			opacity: 0;
+			display: flex;
+
+			& > li:not(:last-child) {
+				margin-right: 1rem;
+			}
+		}
+	}
 
 	&--active {
 		background-color: white;
