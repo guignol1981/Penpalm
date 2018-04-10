@@ -21,9 +21,10 @@
                 <i class="fas fa-arrow-up"></i>
             </a>
         </li>
-        <li (click)="setTab('news')" [class]="activeTab === 'news' ? 'nav-item nav-item--active' : 'nav-item'">
+        <li (click)="setTab('search')" [class]="activeTab === 'search' ? 'nav-item nav-item--active' : 'nav-item'">
             <a>
-                <i class="fas fa-newspaper"></i>
+                <i class="fas fa-users"></i>
+
             </a>
         </li>
         <li (click)="setTab('about')" [class]="activeTab === 'about' ? 'nav-item nav-item--active' : 'nav-item'">
@@ -32,9 +33,6 @@
             </a>
         </li>
     </ul>
-    <div *ngIf="activeTab === 'news'" class="main">
-        <app-news></app-news>
-    </div>
     <div *ngIf="activeTab === 'inbox'" class="main">
         <app-inbox [direction]="'in'"></app-inbox>
     </div>

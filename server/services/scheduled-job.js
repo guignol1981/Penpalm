@@ -24,7 +24,7 @@ schedule.scheduleJob(newMessageRule, function() {
 						// 	from: '"Fred Foo 👻" <foo@example.com>',
 						// 	to: user.email,
 						// 	subject: 'You have new ' + postcardWord + '!',
-						// 	text: 'Hello! ' + user.name + '! You have ' + count + ' new ' + postcardWord + ' waiting to be read!',
+						// 	text: 'Hello! ' + user.name + '! You have ' + totalCount + ' new ' + postcardWord + ' waiting to be read!',
 						// 	html: '<b>Hello world?</b>'
 						// });
 					}

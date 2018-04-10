@@ -10,7 +10,7 @@ import {AuthenticationService} from '../../services/authentication.service';
 })
 export class HomeComponent implements OnInit {
     user: User;
-    activeTab = 'news';
+    activeTab = 'inbox';
 
     constructor(private userService: UserService,
                 private authenticationService: AuthenticationService) {

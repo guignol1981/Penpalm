@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Postcard} from '../../models/postcard/postcard';
 import {PostcardService} from '../../services/postcard.service';
-import {NotificationsService} from "angular2-notifications";
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
     selector: 'app-compose',
@@ -57,7 +57,7 @@ export class ComposeComponent implements OnInit {
     removeOptionValue(option) {
         this.form.get(option).reset();
         if (option === 'template') {
-            this.setTemplate('none', null);
+            this.setTemplate('none');
         }
     }
 
@@ -91,18 +91,26 @@ export class ComposeComponent implements OnInit {
         }
     }
 
-    setTemplate(templateName, bodyElement) {
+    setTemplate(templateName, bodyElement = null, backElement = null) {
         bodyElement = bodyElement || document.getElementById('body');
+        backElement = backElement || document.getElementById('back');
 
         if (templateName !== 'none') {
             this.form.get('template').setValue(templateName);
-            bodyElement.style.background = 'url(../../../assets/' + templateName + '-template.png)';
+
+            bodyElement.style.background = 'url(../../../assets/' + templateName + '-template_front.png)';
             bodyElement.style.backgroundRepeat = 'no-repeat';
             bodyElement.style.backgroundSize = 'cover';
             bodyElement.style.backgroundPosition = 'center';
+
+            backElement.style.background = 'url(../../../assets/' + templateName + '-template_back.png)';
+            backElement.style.backgroundRepeat = 'no-repeat';
+            backElement.style.backgroundSize = 'cover';
+            backElement.style.backgroundPosition = 'center';
         } else {
             this.form.get('template').reset();
             bodyElement.style.background = '';
+            backElement.style.background = '';
         }
     }
 

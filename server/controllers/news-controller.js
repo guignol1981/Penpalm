@@ -28,7 +28,6 @@ module.exports.fetch = function(req, res) {
 							msg: 'News fetched',
 							data: {
 								title: 'You have ' + postcards.length + ' new message(s) from ' + penPalName,
-								sub: 'You will be rematched ' + moment().endOf("week").fromNow(),
 								imageUrl: penPalPhotoUrl
 							}
 						});

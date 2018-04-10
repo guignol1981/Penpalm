@@ -13,10 +13,9 @@ export class InboxComponent implements OnInit {
     @Input() direction: string;
     postcards: Postcard[];
     activePostcard: Postcard;
-    spotyUrl;
-
+    spotySrc;
     navIndex = 0;
-    count = 0;
+    totalCount = 0;
     refreshing = false;
     shownSide = 'front';
     fetchConfig = {
@@ -40,7 +39,7 @@ export class InboxComponent implements OnInit {
                 item.body = this.domSanitizer.bypassSecurityTrustHtml(item.body);
             });
             this.postcards = response.postcards;
-            this.count = response.count;
+            this.totalCount = response.count;
             this.refreshing = false;
             this.navTo(0);
         });
@@ -64,9 +63,16 @@ export class InboxComponent implements OnInit {
     navTo(index) {
         this.navIndex = index;
         this.activePostcard = this.postcards[this.navIndex];
+        this.markActivePostcardAsSeen();
+    }
 
-        this.postcardService.markSeen(this.postcards[index]).then(() => {
-            this.spotyUrl = this.getSongSource();
+    markActivePostcardAsSeen() {
+        if (!this.activePostcard) {
+            return;
+        }
+
+        this.postcardService.markSeen(this.activePostcard).then(() => {
+            this.spotySrc = this.getSongSource();
             this.setTemplate();
         });
     }
@@ -106,7 +112,7 @@ export class InboxComponent implements OnInit {
         if (this.refreshing) {
             return;
         }
-        this.fetchConfig.skip = this.count === this.count - (this.count % 5) ? this.count - 5 : this.count - (this.count % 5);
+        this.fetchConfig.skip = this.totalCount === this.totalCount - (this.totalCount % 5) ? this.totalCount - 5 : this.totalCount - (this.totalCount % 5);
         this.fetchPostcards();
     }
 

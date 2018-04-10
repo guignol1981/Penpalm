@@ -4,7 +4,7 @@
                     <textarea #body class="postcard__body" formControlName="body" name="body" id="body" cols="30"
                               rows="10" placeholder="Write something here..."></textarea>
         </form>
-        <div class="postcard--side postcard--back">
+        <div #back id="back" class="postcard--side postcard--back">
             <youtube-player *ngIf="form.get('youtubeLink').value"
                             [videoId]="getYoutubeLinkId()"
                             [height]="'100%'"
@@ -32,6 +32,12 @@
                 </a>
                 <a (click)="selectOption('allowShare')" class="btn btn--align-left btn--text-md"><i
                         class="fas fa-share-alt"></i>&nbsp;Allow share</a>
+                <a (click)="form.get('template').value ? removeOptionValue('template') : selectOption('template')"
+                   class="btn btn--align-left btn--text-md"><i
+                        class="far fa-square"></i>
+                    &nbsp;
+                    {{form.get('template').value ? 'Remove template' : 'Template'}}
+                </a>
             </div>
         </div>
         <div class="options__group">
@@ -39,12 +45,6 @@
                 Front side
             </div>
             <div class="options__group--list">
-                <a (click)="form.get('template').value ? removeOptionValue('template') : selectOption('template')"
-                   class="btn btn--align-left btn--text-md"><i
-                        class="far fa-square"></i>
-                    &nbsp;
-                    {{form.get('template').value ? 'Remove template' : 'Template'}}
-                </a>
                 <a class="btn btn--align-left btn--text-md btn--inactive"><i class="fas fa-paint-brush"></i>&nbsp;Text color</a>
             </div>
         </div>
@@ -131,9 +131,9 @@
                         'none'}}
                     </button>
                     <div class="dropdown-content">
-                        <a (click)="setTemplate('none', body)">none</a>
-                        <a (click)="setTemplate('sunshine', body)">sunshine</a>
-                        <a (click)="setTemplate('bubble', body)">bubble</a>
+                        <a (click)="setTemplate('none', body, back)">none</a>
+                        <a (click)="setTemplate('sunshine', body, back)">sunshine</a>
+                        <a (click)="setTemplate('bubble', body, back)">bubble</a>
                     </div>
                 </div>
             </div>
@@ -141,8 +141,8 @@
     </div>
     <div class="actions">
         <a (click)="flip(postcard)" class="btn">Flip</a>
-        <a (click)="submit()" [class]="sendWarning ? 'btn btn--primary': 'btn'">
-            {{sendWarning? 'Click again to send' : 'Send postcard'}}
+        <a *ngIf="form.valid" (click)="submit()" [class]="sendWarning ? 'btn btn--primary': 'btn'">
+            {{sendWarning? 'Click again to send' : 'Send'}}
         </a>
     </div>
 </div>

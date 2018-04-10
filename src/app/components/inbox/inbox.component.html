@@ -18,11 +18,11 @@
         </div>
         <div class="paging__handles">
             <a (click)="skipForward()"
-               [class]="count > fetchConfig.skip + 5 && !refreshing ? 'paging__handles__handle' : 'paging__handles__handle--inactive'">
+               [class]="totalCount > fetchConfig.skip + 5 && !refreshing ? 'paging__handles__handle' : 'paging__handles__handle--inactive'">
                 <i class="fas fa-angle-right"></i>
             </a>
             <a (click)="skipLast()"
-               [class]="count > fetchConfig.skip + 5 && !refreshing ? 'paging__handles__handle' : 'paging__handles__handle--inactive'">
+               [class]="totalCount > fetchConfig.skip + 5 && !refreshing ? 'paging__handles__handle' : 'paging__handles__handle--inactive'">
                 <i class="fas fa-angle-double-right"></i>
             </a>
         </div>
@@ -32,8 +32,8 @@
         <div class="info__item">
             {{activePostcard.creationDate | date}}
         </div>
-        <div class="info__item" *ngIf="spotyUrl">
-            <iframe id="spoty" [src]="spotyUrl" width="100%"
+        <div class="info__item" *ngIf="spotySrc">
+            <iframe id="spoty" [src]="spotySrc" width="100%"
                     height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         </div>
         <div class="info__item">
@@ -71,8 +71,8 @@
         <a (click)="flip(postcard)" class="btn">Flip</a>
     </div>
 </div>
-<div *ngIf="!postcards || postcards.length === 0" class="container">
+<div *ngIf="postcards || postcards.length === 0" class="container">
     <div class="empty">
-        {{direction === 'in' ? 'You don\'t have any postcard yet' : 'You haven\'t sent any postcard yet'}}
+        {{direction === 'in' ? 'You don\'t have any postcards yet' : 'You haven\'t sent any postcards yet'}}
     </div>
 </div>
