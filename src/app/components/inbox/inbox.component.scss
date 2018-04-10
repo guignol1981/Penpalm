@@ -31,7 +31,7 @@
 			cursor: pointer;
 			transition: all .2s;
 
-			&--inactive {
+			&--disabled {
 				cursor: auto;
 				color: #333333;
 			}

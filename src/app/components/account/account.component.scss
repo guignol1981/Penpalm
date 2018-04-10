@@ -7,34 +7,83 @@
 	grid-gap: 2rem;
 
 	grid-template-areas:
-			"header ."
-			"options info"
-			"actions .";
+					"form ."
+					"desc options"
+					"actions options";
 
 	justify-items: stretch;
 	align-items: stretch;
 }
 
-.header {
-	grid-area: header;
-	font-size: 4rem;
+.form {
+	margin-left: 5rem;
+	margin-right: 5rem;
+	grid-area: form;
 	color: #fff;
-	justify-self: center;
-	align-self: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	&__group {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		&--label {
+			font-size: 2.5rem;
+			margin-bottom: 1rem;
+		}
+
+		&--input {
+			width: 100%;
+
+			&--text {
+				width: 100%;
+				border: none;
+				outine: none;
+				padding: 1rem 3rem;
+				font-size: 2rem;
+				text-align: center;
+				border-radius: 1rem;
+			}
+		}
+
+		&--helper {
+
+		}
+	}
+}
+
+.description {
+	grid-area: desc;
 }
 
 .options {
 	grid-area: options;
-	display:flex;
+	align-self: self-start;
+	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items: center;
-	font-size: 3rem;
-	color: #fff;
-}
+	overflow: scroll;
 
-.info {
-	grid-area: info;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
+	&__group {
+		color: #fff;
+		margin-bottom: 1rem;
+
+		&--title {
+			font-size: 2rem;
+		}
+
+		&--list {
+			font-size: 1rem;
+		}
+	}
 }
 
 .actions {
@@ -42,34 +91,5 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
-	& > a {
-		margin: 1rem;
-	}
 }
 
-.form {
-	height: 100%;
-	width: 100%;
-	display:flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	font-size: 3rem;
-	color: #fff;
-
-	&__group {
-		margin-bottom: 2rem;
-	}
-
-	&__actions {
-		width: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		& > a {
-			margin: 1rem;
-		}
-	}
-}

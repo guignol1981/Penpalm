@@ -24,7 +24,7 @@ export class UserService {
 
         let preferences = new Preference(
             data['preferences']['_id'],
-            data['preferences']['displayImage'],
+            data['preferences']['displayPicture'],
             data['preferences']['displayName'],
             data['preferences']['emailNotifications']
         );

@@ -1,40 +1,70 @@
 <div *ngIf="user" class="container">
-    <div class="header">
+    <div class="description">
         {{user.name}}
     </div>
+
     <div class="options">
-        <form [formGroup]="form" class="">
-            <div class="form__group">
-                <label for="displayImage">Show my picture</label>
-                <label class="switch">
-                    <input id="displayImage" formControlName="displayImage" type="checkbox" checked>
-                    <span class="slider round"></span>
-                </label>
+        <div class="options__group">
+            <div class="options__group--title">
+                Options
             </div>
-            <div class="form__group">
-                <label for="displayName">Show my first name</label>
-                <label class="switch">
-                    <input id="displayName" formControlName="displayName" type="checkbox" checked>
-                    <span class="slider round"></span>
-                </label>
+            <div class="options__group--list">
+                <a (click)="selectOption('displayPicture')"
+                   class="btn btn--align-left btn--text-md">
+                    &nbsp;Display picture
+                </a>
+                <a (click)="selectOption('displayName')"
+                   class="btn btn--align-left btn--text-md">
+                    &nbsp;Display first name
+                </a>
+                <a (click)="selectOption('emailNotifications')"
+                   class="btn btn--align-left btn--text-md">
+                    &nbsp;Email notifications
+                </a>
             </div>
-            <div class="form__group">
-                <label for="emailNotifications">Enable email notifications</label>
-                <label class="switch">
-                    <input id="emailNotifications" formControlName="emailNotifications" type="checkbox" checked>
-                    <span class="slider round"></span>
-                </label>
-            </div>
-        </form>
+        </div>
     </div>
-    <div class="info">
-        info
-    </div>
+
     <div class="actions">
         <a (click)="save()" class="btn btn">Save</a>
         <a (click)="logout()" class="btn btn">Logout</a>
         <a (click)="deleteAccount()" [class]="deleteWarning ? 'btn btn--warning' : 'btn'">
             {{deleteWarning ? 'Click again to close account' : 'Close account'}}
         </a>
+    </div>
+
+    <div class="form" [formGroup]="form">
+        <div *ngIf="selectedOption === 'displayPicture'" class="form__group">
+            <div class="form__group--label">
+                <i class="fas fa-share-alt"></i>
+                <label for="displayPicture">Allow share</label>
+            </div>
+            <label class="switch">
+                <input id="displayPicture" formControlName="displayPicture" type="checkbox" checked>
+                <span class="slider round"></span>
+            </label>
+        </div>
+
+        <div *ngIf="selectedOption === 'displayName'" class="form__group">
+            <div class="form__group--label">
+                <i class="fas fa-share-alt"></i>
+                <label for="displayName">Allow share</label>
+            </div>
+            <label class="switch">
+                <input id="displayName" formControlName="displayName" type="checkbox" checked>
+                <span class="slider round"></span>
+            </label>
+        </div>
+
+        <div *ngIf="selectedOption === 'emailNotifications'" class="form__group">
+            <div class="form__group--label">
+                <i class="fas fa-share-alt"></i>
+                <label for="emailNotifications">Allow share</label>
+            </div>
+            <label class="switch">
+                <input id="emailNotifications" formControlName="emailNotifications" type="checkbox" checked>
+                <span class="slider round"></span>
+            </label>
+        </div>
     </div>
 </div>

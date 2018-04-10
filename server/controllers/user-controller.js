@@ -22,7 +22,7 @@ module.exports.update = function(req, res) {
 		.then(user => {
 			let preferences = user.preferences;
 
-			preferences.displayImage = req.body['preferences']['displayImage'];
+			preferences.displayPicture = req.body['preferences']['displayPicture'];
 			preferences.displayName = req.body['preferences']['displayName'];
 			preferences.emailNotifications = req.body['preferences']['emailNotifications'];
 

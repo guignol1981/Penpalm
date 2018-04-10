@@ -15,6 +15,7 @@ export class AccountComponent implements OnInit {
     @Input() user: User;
     form: FormGroup;
     deleteWarning = false;
+    selectedOption = '';
 
     constructor(private userService: UserService,
                 private authenticationService: AuthenticationService,
@@ -23,20 +24,24 @@ export class AccountComponent implements OnInit {
 
     ngOnInit() {
         this.form = new FormGroup({
-            displayImage: new FormControl(this.user.preferences.displayImage),
+            displayPicture: new FormControl(this.user.preferences.displayPicture),
             displayName: new FormControl(this.user.preferences.displayName),
             emailNotifications: new FormControl(this.user.preferences.emailNotifications)
         });
     }
 
     save() {
-        this.user.preferences.displayImage = this.form.get('displayImage').value;
+        this.user.preferences.displayPicture = this.form.get('displayPicture').value;
         this.user.preferences.displayName = this.form.get('displayName').value;
         this.user.preferences.emailNotifications = this.form.get('emailNotifications').value;
 
         this.userService.update(this.user).then((user: User) => {
             this.notificationService.success('Preferences saved');
         });
+    }
+
+    selectOption(option) {
+        this.selectedOption = option;
     }
 
     logout() {

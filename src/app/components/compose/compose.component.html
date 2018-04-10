@@ -38,6 +38,8 @@
                     &nbsp;
                     {{form.get('template').value ? 'Remove template' : 'Template'}}
                 </a>
+                <a class="btn btn--align-left btn--text-md btn--disabled"><i
+                        class="fas fa-users"></i>&nbsp;Recipient(s)</a>
             </div>
         </div>
         <div class="options__group">
@@ -45,7 +47,7 @@
                 Front side
             </div>
             <div class="options__group--list">
-                <a class="btn btn--align-left btn--text-md btn--inactive"><i class="fas fa-paint-brush"></i>&nbsp;Text color</a>
+                <a class="btn btn--align-left btn--text-md btn--disabled"><i class="fas fa-paint-brush"></i>&nbsp;Text color</a>
             </div>
         </div>
         <div class="options__group">
@@ -53,24 +55,24 @@
                 Back side
             </div>
             <div class="options__group--list">
-                <a class="btn btn--align-left btn--text-md btn--inactive"><i class="fas fa-paint-brush"></i>&nbsp;Background
+                <a class="btn btn--align-left btn--text-md btn--disabled"><i class="fas fa-paint-brush"></i>&nbsp;Background
                     color</a>
-                <a class="btn btn--align-left btn--text-md btn--inactive"><i class="fas fa-video"></i>&nbsp;Record a video</a>
+                <a class="btn btn--align-left btn--text-md btn--disabled"><i class="fas fa-video"></i>&nbsp;Record a video</a>
                 <a (click)="isBackSideOptionAvailable('youtubeLink') ? form.get('youtubeLink').value ? removeOptionValue('youtubeLink') : selectOption('youtubeLink') : ''"
-                   [class]="isBackSideOptionAvailable('youtubeLink') ? 'btn btn--align-left btn--text-md' : 'btn btn--align-left btn--text-md btn--inactive'">
+                   [class]="isBackSideOptionAvailable('youtubeLink') ? 'btn btn--align-left btn--text-md' : 'btn btn--align-left btn--text-md btn--disabled'">
                     <i class="fab fa-youtube"></i>
                     &nbsp;
                     {{form.get('youtubeLink').value ? 'Remove youtube link' : 'Youtube video'}}
                 </a>
-                <a class="btn btn--align-left btn--text-md btn--inactive"><i class="fas fa-camera-retro"></i>&nbsp;Take a picture</a>
+                <a class="btn btn--align-left btn--text-md btn--disabled"><i class="fas fa-camera-retro"></i>&nbsp;Take a picture</a>
                 <a (click)="isBackSideOptionAvailable('imageUrl') ? form.get('imageUrl').value ? removeOptionValue('imageUrl') : selectOption('imageUrl') : ''"
-                   [class]="isBackSideOptionAvailable('imageUrl') ? 'btn btn--align-left btn--text-md' : 'btn btn--align-left btn--text-md btn--inactive'">
+                   [class]="isBackSideOptionAvailable('imageUrl') ? 'btn btn--align-left btn--text-md' : 'btn btn--align-left btn--text-md btn--disabled'">
                     <i class="fas fa-link"></i>
                     &nbsp;
                     {{form.get('imageUrl').value ? 'Remove image link' : 'Linked image'}}
                 </a>
-                <a class="btn btn--align-left btn--text-md btn--inactive"><i class="fas fa-image"></i>&nbsp;Add a picture</a>
-                <a class="btn btn--align-left btn--text-md btn--inactive"><i class="fas fa-map-marker"></i>&nbsp;Location</a>
+                <a class="btn btn--align-left btn--text-md btn--disabled"><i class="fas fa-image"></i>&nbsp;Add a picture</a>
+                <a class="btn btn--align-left btn--text-md btn--disabled"><i class="fas fa-map-marker"></i>&nbsp;Location</a>
             </div>
         </div>
 
