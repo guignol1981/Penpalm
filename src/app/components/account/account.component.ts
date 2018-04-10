@@ -26,7 +26,8 @@ export class AccountComponent implements OnInit {
         this.form = new FormGroup({
             displayPicture: new FormControl(this.user.preferences.displayPicture),
             displayName: new FormControl(this.user.preferences.displayName),
-            emailNotifications: new FormControl(this.user.preferences.emailNotifications)
+            emailNotifications: new FormControl(this.user.preferences.emailNotifications),
+            findable: new FormControl(this.user.preferences.findable)
         });
     }
 

@@ -56,8 +56,68 @@
 	}
 }
 
-.description {
+.description-card {
 	grid-area: desc;
+	margin: 5rem;
+	transform-style: preserve-3d;
+	transition: all 1s ease-in-out;
+
+	&__image-wrap {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: max-content;
+	}
+
+	&__image {
+		max-width: 100%;
+		max-height: 100%;
+
+		&--contain {
+			object-fit: contain;
+		}
+		&--cover {
+			object-fit: cover;
+		}
+		&--fill {
+			object-fit: fill;
+		}
+		&--none {
+			object-fit: none;
+		}
+	}
+
+	&--side {
+		height: 100%;
+		width: 100%;
+		backface-visibility: hidden;
+		position: absolute;
+		border-radius: 1rem;
+		background-color: #fff;
+	}
+
+	&--back {
+		text-align: center;
+		transform: rotateY(180deg);
+		height: 100%;
+		width: 100%;
+		overflow: hidden;
+	}
+
+	&__body {
+		font-size: 2rem;
+		line-height: 2.4rem;
+		box-sizing: border-box;
+		border: none;
+		border-radius: 1rem;
+		resize: none;
+		overflow: auto;
+		height: 100%;
+		width: 100%;
+		padding: 2rem;
+		outline: none;
+		position: relative;
+	}
 }
 
 .options {

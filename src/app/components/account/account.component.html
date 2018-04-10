@@ -1,6 +1,11 @@
 <div *ngIf="user" class="container">
-    <div class="description">
-        {{user.name}}
+    <div class="description-card">
+        <form [formGroup]="form" class="description-card--side">
+                    <textarea #description class="description-card__body" formControlName="description" name="description" id="description" cols="30"
+                              rows="10" placeholder="Write something about you, this card will be shown in the pen pal finder"></textarea>
+        </form>
+        <div #back id="back" class="description-card--side description-card--back">
+        </div>
     </div>
 
     <div class="options">
@@ -21,6 +26,10 @@
                    class="btn btn--align-left btn--text-md">
                     &nbsp;Email notifications
                 </a>
+                <a (click)="selectOption('findable')"
+                   class="btn btn--align-left btn--text-md">
+                    &nbsp;Show me in finder
+                </a>
             </div>
         </div>
     </div>
@@ -36,8 +45,7 @@
     <div class="form" [formGroup]="form">
         <div *ngIf="selectedOption === 'displayPicture'" class="form__group">
             <div class="form__group--label">
-                <i class="fas fa-share-alt"></i>
-                <label for="displayPicture">Allow share</label>
+                <label for="displayPicture">Display picture</label>
             </div>
             <label class="switch">
                 <input id="displayPicture" formControlName="displayPicture" type="checkbox" checked>
@@ -47,8 +55,7 @@
 
         <div *ngIf="selectedOption === 'displayName'" class="form__group">
             <div class="form__group--label">
-                <i class="fas fa-share-alt"></i>
-                <label for="displayName">Allow share</label>
+                <label for="displayName">Display name</label>
             </div>
             <label class="switch">
                 <input id="displayName" formControlName="displayName" type="checkbox" checked>
@@ -58,11 +65,20 @@
 
         <div *ngIf="selectedOption === 'emailNotifications'" class="form__group">
             <div class="form__group--label">
-                <i class="fas fa-share-alt"></i>
-                <label for="emailNotifications">Allow share</label>
+                <label for="emailNotifications">Email notifications</label>
             </div>
             <label class="switch">
                 <input id="emailNotifications" formControlName="emailNotifications" type="checkbox" checked>
+                <span class="slider round"></span>
+            </label>
+        </div>
+
+        <div *ngIf="selectedOption === 'findable'" class="form__group">
+            <div class="form__group--label">
+                <label for="findable">Show me in finder</label>
+            </div>
+            <label class="switch">
+                <input id="findable" formControlName="findable" type="checkbox" checked>
                 <span class="slider round"></span>
             </label>
         </div>
