@@ -11,20 +11,26 @@
                 <i class="fas fa-pencil-alt"></i>
             </a>
         </li>
-        <li (click)="setTab('inbox')" [class]="activeTab === 'inbox' ? 'nav-item nav-item--active' : 'nav-item'">
-            <a>
-                <i class="fas fa-arrow-down"></i>
-            </a>
-        </li>
-        <li (click)="setTab('outbox')" [class]="activeTab === 'outbox' ? 'nav-item nav-item--active' : 'nav-item'">
-            <a>
-                <i class="fas fa-arrow-up"></i>
-            </a>
+        <li [class]="activeTab === 'inbox' || activeTab === 'outbox' ? 'nav-item nav-item--active nav-item--group' : 'nav-item nav-item--group'">
+            <i class="fas fa-inbox"></i>
+            <ul>
+                <li (click)="setTab('inbox')"
+                    [class]="activeTab === 'inbox' ? 'nav-item nav-item--active' : 'nav-item'">
+                    <a>
+                        <i class="fas fa-arrow-down"></i>
+                    </a>
+                </li>
+                <li (click)="setTab('outbox')"
+                    [class]="activeTab === 'outbox' ? 'nav-item nav-item--active' : 'nav-item'">
+                    <a>
+                        <i class="fas fa-arrow-up"></i>
+                    </a>
+                </li>
+            </ul>
         </li>
         <li (click)="setTab('search')" [class]="activeTab === 'search' ? 'nav-item nav-item--active' : 'nav-item'">
             <a>
                 <i class="fas fa-users"></i>
-
             </a>
         </li>
         <li (click)="setTab('about')" [class]="activeTab === 'about' ? 'nav-item nav-item--active' : 'nav-item'">
