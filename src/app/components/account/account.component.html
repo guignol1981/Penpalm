@@ -36,13 +36,36 @@
             </div>
         </div>
 
-        <div class="form__grou--inline">
+        <div class="form__group--inline">
             <div class="form__group">
                 <div class="form__group--label">
                     <label for="country">Country</label>
                 </div>
-                <div class="form__group--input">
-                    <a class="btn btn--inverse">test</a>
+                <div class="form__group--input form__group--input--dropdown">
+                    <div class="form__group--input--dropdown__value">
+                        {{form.get('country').value}}
+                    </div>
+                    <div id="country" class="form__group--input--dropdown__option-box">
+                        <a (click)="setCountry(country)" *ngFor="let country of countryList" class="form__group--input--dropdown__option-box__item">
+                           {{country}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form__group">
+                <div class="form__group--label">
+                    <label for="language">Country</label>
+                </div>
+                <div class="form__group--input form__group--input--dropdown">
+                    <div class="form__group--input--dropdown__value">
+                        {{form.get('language').value}}
+                    </div>
+                    <div id="language" class="form__group--input--dropdown__option-box">
+                        <a (click)="setLanguage(language)" *ngFor="let language of languageList" class="form__group--input--dropdown__option-box__item">
+                            {{language}}
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
