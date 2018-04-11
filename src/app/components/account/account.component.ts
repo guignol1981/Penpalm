@@ -30,7 +30,8 @@ export class AccountComponent implements OnInit {
             displayName: new FormControl(this.user.preferences.displayName),
             emailNotifications: new FormControl(this.user.preferences.emailNotifications),
             language: new FormControl(null),
-            country: new FormControl(null)
+            country: new FormControl(null),
+            description: new FormControl(null)
         });
     }
 
