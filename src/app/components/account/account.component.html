@@ -55,7 +55,7 @@
 
             <div class="form__group">
                 <div class="form__group--label">
-                    <label for="language">Country</label>
+                    <label for="language">Main language</label>
                 </div>
                 <div class="form__group--input form__group--input--dropdown">
                     <div class="form__group--input--dropdown__value">
@@ -89,11 +89,11 @@
             <div class="options__group--list">
                 <a (click)="logout()"
                    class="btn btn--align-left btn--text-md">
-                    &nbsp;Logout
+                    Logout
                 </a>
-                <a (click)="selectOption('emailNotifications')"
-                   class="btn btn--align-left btn--text-md">
-                    &nbsp;Close account
+                <a (click)="deleteAccount()"
+                   [class]="deleteWarning ? 'btn btn--align-left btn--text-md btn--warning' : 'btn btn--align-left btn--text-md'">
+                    {{deleteWarning ? 'Click again to close account' : 'Close account'}}
                 </a>
             </div>
         </div>
