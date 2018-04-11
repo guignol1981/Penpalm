@@ -1,5 +1,52 @@
 <div *ngIf="user" class="container">
-    <div class="description form" [formGroup]="form">
+    <div class="header">
+        {{user.name}}
+    </div>
+
+    <div class="form" [formGroup]="form">
+        <div class="form__group--inline">
+            <div class="form__group">
+                <div class="form__group--label">
+                    <label for="showPicture">Show my picture</label>
+                </div>
+                <label class="switch">
+                    <input id="showPicture" type="checkbox" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+
+            <div class="form__group">
+                <div class="form__group--label">
+                    <label for="showFirstName">Show my first name</label>
+                </div>
+                <label class="switch">
+                    <input id="showFirstName" type="checkbox" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+
+            <div class="form__group">
+                <div class="form__group--label">
+                    <label for="enableEmailNotifications">Enable email notifications</label>
+                </div>
+                <label class="switch">
+                    <input id="enableEmailNotifications" type="checkbox" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="form__grou--inline">
+            <div class="form__group">
+                <div class="form__group--label">
+                    <label for="country">Country</label>
+                </div>
+                <div class="form__group--input">
+                    <a class="btn btn--inverse">test</a>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div class="options">
@@ -8,30 +55,6 @@
                 Options
             </div>
             <div class="options__group--list">
-                <a (click)="selectOption('displayPicture')"
-                   class="btn btn--align-left btn--text-md">
-                    &nbsp;Show picture
-                </a>
-                <a (click)="selectOption('displayName')"
-                   class="btn btn--align-left btn--text-md">
-                    &nbsp;Show first name
-                </a>
-                <a (click)="selectOption('findable')"
-                   class="btn btn--align-left btn--text-md">
-                    &nbsp;Show me in finder
-                </a>
-            </div>
-        </div>
-
-        <div class="options__group">
-            <div class="options__group--title">
-                Account
-            </div>
-            <div class="options__group--list">
-                <a (click)="selectOption('emailNotifications')"
-                   class="btn btn--align-left btn--text-md">
-                    &nbsp;Email notifications
-                </a>
                 <a (click)="logout()"
                    class="btn btn--align-left btn--text-md">
                     &nbsp;Logout
@@ -48,45 +71,4 @@
         <a (click)="save()" class="btn btn">Save</a>
     </div>
 
-    <div class="input form" [formGroup]="form">
-        <div *ngIf="selectedOption === 'displayPicture'" class="form__group">
-            <div class="form__group--label">
-                <label for="displayPicture">Display picture</label>
-            </div>
-            <label class="switch">
-                <input id="displayPicture" formControlName="displayPicture" type="checkbox" checked>
-                <span class="slider round"></span>
-            </label>
-        </div>
-
-        <div *ngIf="selectedOption === 'displayName'" class="form__group">
-            <div class="form__group--label">
-                <label for="displayName">Display name</label>
-            </div>
-            <label class="switch">
-                <input id="displayName" formControlName="displayName" type="checkbox" checked>
-                <span class="slider round"></span>
-            </label>
-        </div>
-
-        <div *ngIf="selectedOption === 'emailNotifications'" class="form__group">
-            <div class="form__group--label">
-                <label for="emailNotifications">Email notifications</label>
-            </div>
-            <label class="switch">
-                <input id="emailNotifications" formControlName="emailNotifications" type="checkbox" checked>
-                <span class="slider round"></span>
-            </label>
-        </div>
-
-        <div *ngIf="selectedOption === 'findable'" class="form__group">
-            <div class="form__group--label">
-                <label for="findable">Show me in finder</label>
-            </div>
-            <label class="switch">
-                <input id="findable" formControlName="findable" type="checkbox" checked>
-                <span class="slider round"></span>
-            </label>
-        </div>
-    </div>
 </div>

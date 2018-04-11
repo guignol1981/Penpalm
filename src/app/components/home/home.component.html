@@ -28,7 +28,7 @@
                 </li>
             </ul>
         </li>
-        <li (click)="setTab('search')" [class]="activeTab === 'search' ? 'nav-item nav-item--active' : 'nav-item'">
+        <li (click)="setTab('matcher')" [class]="activeTab === 'matcher' ? 'nav-item nav-item--active' : 'nav-item'">
             <a>
                 <i class="fas fa-users"></i>
             </a>
@@ -50,6 +50,9 @@
     </div>
     <div *ngIf="activeTab === 'account'" class="main">
         <app-account [user]="user"></app-account>
+    </div>
+    <div *ngIf="activeTab === 'matcher'" class="main">
+        <app-matcher [user]="user"></app-matcher>
     </div>
     <div class="footer">
         <app-footer></app-footer>

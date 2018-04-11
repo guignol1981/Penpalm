@@ -22,6 +22,7 @@ import {SimpleNotificationsModule} from 'angular2-notifications';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NewsService} from "./services/news.service";
 import { YoutubePlayerModule } from 'ng2-youtube-player';
+import { MatcherComponent } from './components/matcher/matcher.component';
 
 
 let config = new AuthServiceConfig([
@@ -50,7 +51,8 @@ export function provideConfig() {
         InboxComponent,
         ComposeComponent,
         AccountComponent,
-        NewsComponent
+        NewsComponent,
+        MatcherComponent
     ],
     imports: [
         BrowserAnimationsModule,

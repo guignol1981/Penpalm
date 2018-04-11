@@ -29,6 +29,11 @@
 		justify-content: flex-start;
 	}
 
+	&--inverse {
+		background-color: #fff;
+		color: gray;
+	}
+
 	&--social {
 		font-size: 4rem;
 

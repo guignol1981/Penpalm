@@ -1,0 +1,79 @@
+.container {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-rows: 2fr 6fr 1fr;
+  grid-template-columns: 3fr 1fr;
+  grid-gap: 2rem;
+
+  grid-template-areas: "input ." "list options" "actions options";
+
+  justify-items: stretch;
+  align-items: stretch;
+}
+
+.input {
+  grid-area: input;
+}
+
+.list {
+  grid-area: list;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  overflow-y: scroll;
+  padding: 2rem;
+
+  &::-webkit-scrollbar {
+	display: none;
+  }
+
+  &__item {
+	transition: all .4s ease;
+	background-color: white;
+	border-radius: 50%;
+	width: 10rem;
+	height: 10rem;
+	margin: 1rem;
+	z-index: 300;
+
+	cursor: pointer;
+
+	&:hover {
+	  transform: scale(1.2);
+	}
+  }
+}
+
+.options {
+  grid-area: options;
+  align-self: self-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: scroll;
+
+  &::-webkit-scrollbar {
+	display: none;
+  }
+
+  &__group {
+	color: #fff;
+	margin-bottom: 1rem;
+
+	&--title {
+	  font-size: 2rem;
+	}
+
+	&--list {
+	  font-size: 1rem;
+	}
+  }
+}
+
+.actions {
+  grid-area: actions;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

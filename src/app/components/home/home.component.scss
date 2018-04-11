@@ -45,7 +45,7 @@
 		}
 
 		& > ul {
-			transition: all .5s;
+			transition: all .5s ease-in-out;
 			position: absolute;
 			top: 0;
 			left: -5rem;
