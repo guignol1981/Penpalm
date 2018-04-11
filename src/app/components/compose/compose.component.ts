@@ -16,6 +16,7 @@ export class ComposeComponent implements OnInit {
     sending = false;
     sendWarning = false;
     selectedOption = '';
+    templates = ['none', 'bubble'];
 
     constructor(private postcardService: PostcardService,
                 private notificationService: NotificationsService) {
@@ -29,7 +30,7 @@ export class ComposeComponent implements OnInit {
             spotifyLink: new FormControl(null),
             youtubeLink: new FormControl(null),
             allowShare: new FormControl(false),
-            template: new FormControl(),
+            template: new FormControl('none'),
         });
     }
 
