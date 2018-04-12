@@ -6,13 +6,14 @@
 	grid-template-columns: 3fr 1fr;
 	grid-gap: 2rem;
 
-	grid-template-areas: "header ." "form options" "actions .";
+	grid-template-areas: "title ." "form options" "actions .";
 
 	justify-items: stretch;
 	align-items: stretch;
 }
 
-.header {
+.title{
+	grid-area: title;
 	font-size: 3rem;
 	color: #fff;
 	display: flex;

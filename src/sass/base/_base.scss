@@ -1,20 +1,20 @@
 *,
 *::before,
 *::after {
-  box-sizing: inherit;
+	box-sizing: inherit;
 }
 
 html {
-  box-sizing: border-box;
-  font-size: 62.5%;
+	box-sizing: border-box;
+	font-size: 62.5%;
 }
 
 body {
-  background-color: #333333;
-  margin: 0;
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 400;
-  line-height: 1.6;
-  color: var(--color-grey-dark-2);
-  min-height: 100vh;
+	background-color: #333333;
+	margin: 0;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+	line-height: 1.6;
+	color: var(--color-grey-dark-2);
+	min-height: 100vh;
 }

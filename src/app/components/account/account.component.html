@@ -1,4 +1,4 @@
-<div *ngIf="user" class="container">
+<div *ngIf="user && form" class="container">
     <div class="header">
         {{user.name}}
     </div>
@@ -10,17 +10,17 @@
                     <label for="showPicture">Show my picture</label>
                 </div>
                 <label class="switch">
-                    <input id="showPicture" type="checkbox" checked>
+                    <input formControlName="showPicture" id="showPicture" type="checkbox" checked>
                     <span class="slider round"></span>
                 </label>
             </div>
 
             <div class="form__group">
                 <div class="form__group--label">
-                    <label for="showFirstName">Show my first name</label>
+                    <label for="showName">Show my first name</label>
                 </div>
                 <label class="switch">
-                    <input id="showFirstName" type="checkbox" checked>
+                    <input formControlName="showName" id="showName" type="checkbox" checked>
                     <span class="slider round"></span>
                 </label>
             </div>
@@ -30,7 +30,8 @@
                     <label for="enableEmailNotifications">Enable email notifications</label>
                 </div>
                 <label class="switch">
-                    <input id="enableEmailNotifications" type="checkbox" checked>
+                    <input formControlName="enableEmailNotifications" id="enableEmailNotifications" type="checkbox"
+                           checked>
                     <span class="slider round"></span>
                 </label>
             </div>
@@ -46,8 +47,9 @@
                         {{form.get('country').value}}
                     </div>
                     <div id="country" class="form__group--input--dropdown__option-box">
-                        <a (click)="setCountry(country)" *ngFor="let country of countryList" class="form__group--input--dropdown__option-box__item">
-                           {{country}}
+                        <a (click)="setCountry(country)" *ngFor="let country of countryList"
+                           class="form__group--input--dropdown__option-box__item">
+                            {{country}}
                         </a>
                     </div>
                 </div>
@@ -62,7 +64,8 @@
                         {{form.get('language').value}}
                     </div>
                     <div id="language" class="form__group--input--dropdown__option-box">
-                        <a (click)="setLanguage(language)" *ngFor="let language of languageList" class="form__group--input--dropdown__option-box__item">
+                        <a (click)="setLanguage(language)" *ngFor="let language of languageList"
+                           class="form__group--input--dropdown__option-box__item">
                             {{language}}
                         </a>
                     </div>
@@ -75,7 +78,8 @@
                 <label for="language">About you</label>
             </div>
             <div class="form__group--input--textarea">
-                <textarea formControlName="description" name="" id="" cols="30" rows="5" placeholder="Write something here..."></textarea>
+                <textarea formControlName="description" name="" id="description" cols="30" rows="5"
+                          placeholder="Write something here..."></textarea>
             </div>
         </div>
 
@@ -100,7 +104,7 @@
     </div>
 
     <div class="actions">
-        <a (click)="save()" class="btn btn">Save</a>
+        <a (click)="form.valid ? save() : '';" [class]="form.valid ? 'btn' : 'btn--disabled'">Save</a>
     </div>
 
 </div>

@@ -3,8 +3,6 @@ import {Headers, Http, Response} from '@angular/http';
 import {AuthenticationService} from './authentication.service';
 import {User} from '../models/user/user';
 import {SocialUser} from 'angular4-social-login';
-import {News} from '../models/news/news';
-import {Preference} from "../models/user/preference";
 
 @Injectable()
 export class UserService {
@@ -14,28 +12,17 @@ export class UserService {
     }
 
     public static deserializeUser(data: any): User {
-        let penPal = new User();
-
-        if (data['penPal']) {
-            let penPalData = data['penPal'];
-            penPal._id = penPalData['_id'];
-            penPal.photoUrl = penPalData['photoUrl'];
-        }
-
-        let preferences = new Preference(
-            data['preferences']['_id'],
-            data['preferences']['displayPicture'],
-            data['preferences']['displayName'],
-            data['preferences']['emailNotifications']
-        );
-
         return new User(
             data['_id'],
             data['name'],
             data['email'],
             data['photoUrl'],
-            penPal,
-            preferences
+            data['language'],
+            data['country'],
+            data['description'],
+            data['showPicture'],
+            data['showName'],
+            data['enableEmailNotifications']
         );
     }
 
