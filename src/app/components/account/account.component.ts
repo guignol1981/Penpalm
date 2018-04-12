@@ -69,7 +69,7 @@ export class AccountComponent implements OnInit {
             return;
         }
 
-        this.userService.remove(this.user).then(success => {
+        this.userService.remove().then(success => {
             if (success) {
                 this.notificationService.success('Account deleted');
                 this.authenticationService.signOut();

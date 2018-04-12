@@ -3,9 +3,14 @@ import {Headers, Http, Response} from '@angular/http';
 import {AuthenticationService} from './authentication.service';
 import {User} from '../models/user/user';
 import {SocialUser} from 'angular4-social-login';
-
 @Injectable()
 export class UserService {
+    apiEndPoint = 'api/users';
+
+    headers = new Headers({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.authenticationService.getToken()
+    });
 
     constructor(private http: Http,
                 private authenticationService: AuthenticationService) {
@@ -43,12 +48,7 @@ export class UserService {
     }
 
     getCurrentUser(): Promise<User> {
-        let headers = new Headers({
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + this.authenticationService.getToken()
-        });
-
-        return this.http.get(`api/users`, {headers: headers})
+        return this.http.get(this.apiEndPoint, {headers: this.headers})
             .toPromise()
             .then((response: Response) => {
                 return UserService.deserializeUser(response.json().data);
@@ -57,14 +57,21 @@ export class UserService {
                 return null;
             });
     }
+
+    find(): Promise<User[]> {
+        return this.http.get(this.apiEndPoint, {headers: this.headers})
+            .toPromise()
+            .then((response: Response) => {
+                return UserService.deserializeUser(response.json().data);
+            })
+            .catch(() => {
+                return null;
+            });
+    }
+
 
     update(user: User): Promise<User> {
-        let headers = new Headers({
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + this.authenticationService.getToken()
-        });
-
-        return this.http.put(`api/users`, JSON.stringify(user), {headers: headers})
+        return this.http.put(this.apiEndPoint, JSON.stringify(user), {headers: this.headers})
             .toPromise()
             .then((response: Response) => {
                 return UserService.deserializeUser(response.json().data);
@@ -74,13 +81,8 @@ export class UserService {
             });
     }
 
-    remove(user: User): Promise<Boolean> {
-        let headers = new Headers({
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + this.authenticationService.getToken()
-        });
-
-        return this.http.delete(`api/users` , {headers: headers})
+    remove(): Promise<Boolean> {
+        return this.http.delete(this.apiEndPoint, {headers: this.headers})
             .toPromise()
             .then((response: Response) => {
                 return true;
@@ -89,5 +91,6 @@ export class UserService {
                 return null;
             });
     }
+
 
 }
