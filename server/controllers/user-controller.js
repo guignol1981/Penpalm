@@ -11,6 +11,18 @@ module.exports.get = function (req, res) {
         });
 };
 
+module.exports.getRequests = function (req, res) {
+    User.findById(req.auth.id)
+        .populate('pendingRequests')
+        .exec()
+        .then((user) => {
+           res.send({
+               msg: 'Requests found',
+               data: user.pendingRequests
+           });
+        });
+};
+
 module.exports.find = function (req, res) {
     let url = require('url');
     let url_parts = url.parse(req.url, true);

@@ -26,6 +26,7 @@ router.post('/auth/google',
 //users
 router.get('/users', authenticate, userController.get);
 router.get('/users/find', authenticate, userController.find);
+router.get('/users/requests', authenticate, userController.getRequests);
 router.put('/users', authenticate, userController.update);
 router.put('/users/request', authenticate, userController.request);
 router.put('/users/cancel-request', authenticate, userController.cancelRequest);

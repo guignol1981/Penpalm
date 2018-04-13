@@ -74,6 +74,18 @@ export class MatcherComponent implements OnInit {
         });
     }
 
+    viewRequests() {
+        if (this.transacting) {
+            return;
+        }
+
+        this.transacting = true;
+        this.userService.getRequests().then((users: User[]) => {
+           this.suggestedUsers = users;
+           this.transacting = false;
+        });
+    }
+
     cancelRequest() {
         if (this.transacting) {
             return;
