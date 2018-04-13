@@ -14,6 +14,8 @@ module.exports.get = function (req, res) {
 module.exports.find = function (req, res) {
     console.log('ok');
     User.find()
+        .where('_id')
+        .ne(req.auth.id)
         .exec()
         .then(users => {
             res.send({
