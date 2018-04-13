@@ -12,11 +12,22 @@ module.exports.get = function (req, res) {
 };
 
 module.exports.find = function (req, res) {
-    console.log('ok');
-    User.find()
-        .where('_id')
-        .ne(req.auth.id)
-        .exec()
+    let url = require('url');
+    let url_parts = url.parse(req.url, true);
+    let query = url_parts.query;
+    let mongooseQuery = User.find();
+
+    mongooseQuery.where('_id').ne(req.auth.id);
+    console.log(query);
+    if (query.language !== 'none') {
+        mongooseQuery.where('language').eq(query.language);
+    }
+
+    if (query.country !== 'none') {
+        mongooseQuery.where('country').eq(query.country);
+    }
+
+    mongooseQuery.exec()
         .then(users => {
             res.send({
                 msg: 'Users found',
@@ -47,7 +58,7 @@ module.exports.update = function (req, res) {
         });
 };
 
-module.exports.request = function(req, res) {
+module.exports.request = function (req, res) {
     User.findById(req.body._id)
         .exec()
         .then((user) => {
@@ -61,12 +72,12 @@ module.exports.request = function(req, res) {
         });
 };
 
-module.exports.cancelRequest = function(req, res) {
+module.exports.cancelRequest = function (req, res) {
     User.findById(req.body._id)
         .exec()
         .then((user) => {
             let index = user.pendingRequests.indexOf(req.auth.id);
-            if (index > - 1) {
+            if (index > -1) {
                 user.pendingRequests.splice(index, 1);
             }
 

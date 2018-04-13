@@ -71,13 +71,13 @@
                 Filters
             </div>
             <div class="options__group--list">
-                <a (click)="!findFilter.country ? selectOption('country-filter') : setCountryFilter(null)"
+                <a (click)="findFilter.country === 'none'? selectOption('country-filter') : setCountryFilter('none')"
                    class="btn btn--align-left btn--text-md">
-                    &nbsp;{{!findFilter.country ? 'Country' : 'Clear country filter'}}
+                    &nbsp;{{findFilter.country === 'none'? 'Country' : 'Clear country filter'}}
                 </a>
-                <a (click)="!findFilter.language ? selectOption('language-filter') : setLanguageFilter(null)"
+                <a (click)="findFilter.language  === 'none'? selectOption('language-filter') : setLanguageFilter('none')"
                    class="btn btn--align-left btn--text-md">
-                    &nbsp;{{!findFilter.language ? 'Language' : 'Clear language filter'}}
+                    &nbsp;{{findFilter.language === 'none' ? 'Language' : 'Clear language filter'}}
                 </a>
                 <a (click)="selectOption('interests-filter')"
                    class="btn btn--align-left btn--text-md btn--disabled">
@@ -92,7 +92,7 @@
             </div>
             <div class="options__group--list">
                 <a (click)="selectedUser.isRequestSent(user._id) ? cancelRequest() : sendRequest()"
-                   class="btn btn--align-left btn--text-md">
+                   [class]="transacting ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'">
                     &nbsp;{{selectedUser.isRequestSent(user._id) ? 'Cancel request' : 'Send request'}}
                 </a>
                 <a (click)="report()"

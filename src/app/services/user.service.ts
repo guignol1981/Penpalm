@@ -3,6 +3,7 @@ import {Headers, Http, Response} from '@angular/http';
 import {AuthenticationService} from './authentication.service';
 import {User} from '../models/user/user';
 import {SocialUser} from 'angular4-social-login';
+import {FindFilter} from '../components/matcher/matcher.component';
 @Injectable()
 export class UserService {
     apiEndPoint = 'api/users';
@@ -59,13 +60,13 @@ export class UserService {
             });
     }
 
-    find(): Promise<User[]> {
+    find(findFitler: FindFilter): Promise<User[]> {
         let headers = new Headers({
             'Content-Type': 'application/json',
             Authorization: 'Bearer ' + this.authenticationService.getToken()
         });
 
-        return this.http.get(this.apiEndPoint + '/find', {headers: headers})
+        return this.http.get(this.apiEndPoint + '/find', {headers: headers, params: findFitler})
             .toPromise()
             .then((response: Response) => {
                 let data = response.json().data;
