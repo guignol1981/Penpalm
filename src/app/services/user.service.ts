@@ -59,10 +59,16 @@ export class UserService {
     }
 
     find(): Promise<User[]> {
-        return this.http.get(this.apiEndPoint, {headers: this.headers})
+        return this.http.get(this.apiEndPoint + '/find', {headers: this.headers})
             .toPromise()
             .then((response: Response) => {
-                return UserService.deserializeUser(response.json().data);
+                let data = response.json().data;
+                let users = [];
+
+                data.forEach((userData) => {
+                    users.push(UserService.deserializeUser(userData));
+                });
+                return users;
             })
             .catch(() => {
                 return null;

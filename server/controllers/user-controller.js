@@ -8,7 +8,19 @@ module.exports.get = function (req, res) {
                 msg: 'User found',
                 data: user
             });
-        })
+        });
+};
+
+module.exports.find = function (req, res) {
+    console.log('ok');
+    User.find()
+        .exec()
+        .then(users => {
+            res.send({
+                msg: 'Users found',
+                data: users
+            });
+        });
 };
 
 module.exports.update = function (req, res) {

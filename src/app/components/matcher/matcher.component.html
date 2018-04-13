@@ -1,84 +1,122 @@
-<div class="container">
-  <div class="input">
-    input
-  </div>
+<div *ngIf="user && suggestedUsers" class="container">
+    <div class="input">
+        <div *ngIf="selectedOption === 'language-filter'" class="input__group">
+            <div class="input__group--label">
+                <label for="languagefilter">Language</label>
+            </div>
+            <div class="input__group--input">
+                <div class="input__group--input input__group--input--dropdown">
+                    <div class="input__group--input--dropdown__value">
+                        {{findFilter.language}}
+                    </div>
+                    <div id="languagefilter" class="input__group--input--dropdown__option-box">
+                        <a (click)="setLanguageFilter(language)" *ngFor="let language of languageList"
+                           class="input__group--input--dropdown__option-box__item">
+                            {{language}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  <div class="list">
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-    <div class="list__item"></div>
-  </div>
-
-  <div class="options">
-    <div class="options__group">
-      <div class="options__group--title">
-        Filters
-      </div>
-      <div class="options__group--list">
-        <a (click)="selectOption('displayPicture')"
-           class="btn btn--align-left btn--text-md">
-          &nbsp;Country
-        </a>
-        <a (click)="selectOption('displayName')"
-           class="btn btn--align-left btn--text-md">
-          &nbsp;Language
-        </a>
-        <a (click)="selectOption('displayName')"
-           class="btn btn--align-left btn--text-md">
-          &nbsp;Interest
-        </a>
-      </div>
+        <div *ngIf="selectedOption === 'country-filter'" class="input__group">
+            <div class="input__group--label">
+                <label for="countryfilter">Country</label>
+            </div>
+            <div class="input__group--input">
+                <div class="input__group--input input__group--input--dropdown">
+                    <div class="input__group--input--dropdown__value">
+                        {{findFilter.country}}
+                    </div>
+                    <div id="countryfilter" class="input__group--input--dropdown__option-box">
+                        <a (click)="setCountryFilter(country)" *ngFor="let country of countryList"
+                           class="input__group--input--dropdown__option-box__item">
+                            {{country}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="options__group">
-      <div class="options__group--title">
-        Pen pals
-      </div>
-      <div class="options__group--list">
-        <a (click)="selectOption('emailNotifications')"
-           class="btn btn--align-left btn--text-md">
-          &nbsp;Manage
-        </a>
-      </div>
+    <div *ngIf="!selectedUser" class="list">
+        <div *ngFor="let suggestedUser of suggestedUsers" class="list__item">
+            <a (click)="selectUser(suggestedUser)" class="image-wrap">
+                <img class="image" [src]="suggestedUser.photoUrl" alt="user picture">
+            </a>
+        </div>
     </div>
-  </div>
 
-  <div class="actions">
-    <a (click)="showMore()" class="btn btn">Show more</a>
-  </div>
+    <div *ngIf="selectedUser" class="user-details">
+        <div class="user-details__photo">
+            <div class="image-wrap">
+                <img class="image" [src]="selectedUser.photoUrl" alt="user picture">
+            </div>
+        </div>
+        <div class="user-details__name">
+            {{selectedUser.name}}
+        </div>
+        <div class="user-details__info">
+            <p>Language: {{selectedUser.language || 'Undefined'}}</p>
+            <p>Country: {{selectedUser.country || 'Undefined'}}</p>
+        </div>
+        <div class="user-details__description">
+            {{selectedUser.description || 'No description'}}
+        </div>
+    </div>
+
+    <div class="options">
+        <div *ngIf="!selectedUser" class="options__group">
+            <div class="options__group--title">
+                Filters
+            </div>
+            <div class="options__group--list">
+                <a (click)="!findFilter.country ? selectOption('country-filter') : setCountryFilter(null)"
+                   class="btn btn--align-left btn--text-md">
+                    &nbsp;{{!findFilter.country ? 'Country' : 'Clear country filter'}}
+                </a>
+                <a (click)="!findFilter.language ? selectOption('language-filter') : setLanguageFilter(null)"
+                   class="btn btn--align-left btn--text-md">
+                    &nbsp;{{!findFilter.language ? 'Language' : 'Clear language filter'}}
+                </a>
+                <a (click)="selectOption('interests-filter')"
+                   class="btn btn--align-left btn--text-md btn--disabled">
+                    &nbsp;Interests
+                </a>
+            </div>
+        </div>
+
+        <div *ngIf="selectedUser" class="options__group">
+            <div class="options__group--title">
+                Options
+            </div>
+            <div class="options__group--list">
+                <a (click)="selectOption('')"
+                   class="btn btn--align-left btn--text-md">
+                    &nbsp;Send request
+                </a>
+                <a (click)="selectOption('report')"
+                   class="btn btn--align-left btn--text-md">
+                    &nbsp;Report
+                </a>
+            </div>
+        </div>
+
+        <div class="options__group">
+            <div class="options__group--title">
+                Pen pals
+            </div>
+            <div class="options__group--list">
+                <a (click)="selectOption('emailNotifications')"
+                   class="btn btn--align-left btn--text-md">
+                    &nbsp;Manage
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <a *ngIf="selectedUser" (click)="backToList()" class="btn">Back to list</a>
+        <a *ngIf="!selectedUser" (click)="''" class="btn">Show more</a>
+    </div>
 </div>
