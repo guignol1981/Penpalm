@@ -91,9 +91,9 @@
                 Options
             </div>
             <div class="options__group--list">
-                <a (click)="sendRequest()"
+                <a (click)="selectedUser.isRequestSent(user._id) ? cancelRequest() : sendRequest()"
                    class="btn btn--align-left btn--text-md">
-                    &nbsp;Send request
+                    &nbsp;{{selectedUser.isRequestSent(user._id) ? 'Cancel request' : 'Send request'}}
                 </a>
                 <a (click)="report()"
                    class="btn btn--align-left btn--text-md">

@@ -52,10 +52,28 @@ module.exports.request = function(req, res) {
         .exec()
         .then((user) => {
             user.pendingRequests.push(req.auth.id);
-            user.save().then(() => {
+            user.save().then((user) => {
                 res.send({
                     msg: 'Pal request done',
-                    data: true
+                    data: user
+                });
+            });
+        });
+};
+
+module.exports.cancelRequest = function(req, res) {
+    User.findById(req.body._id)
+        .exec()
+        .then((user) => {
+            let index = user.pendingRequests.indexOf(req.auth.id);
+            if (index > - 1) {
+                user.pendingRequests.splice(index, 1);
+            }
+
+            user.save().then((user) => {
+                res.send({
+                    msg: 'Pal request canceled',
+                    data: user
                 });
             });
         });

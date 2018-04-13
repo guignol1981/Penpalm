@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {User} from '../../models/user/user';
-import {UserService} from "../../services/user.service";
-import {NotificationsService} from "angular2-notifications";
+import {UserService} from '../../services/user.service';
+import {NotificationsService} from 'angular2-notifications';
 
 interface FindFilter {
     country: string;
@@ -56,10 +56,14 @@ export class MatcherComponent implements OnInit {
     }
 
     sendRequest() {
-        this.userService.sendRequest(this.selectedUser).then((success: boolean) => {
-            if (success) {
-                this.notificationService.success('Request sent');
-            }
+        this.userService.sendRequest(this.selectedUser).then((user: User) => {
+            this.selectedUser = user;
+        });
+    }
+
+    cancelRequest() {
+        this.userService.cancelRequest(this.selectedUser).then((user: User) => {
+            this.selectedUser = user;
         });
     }
 

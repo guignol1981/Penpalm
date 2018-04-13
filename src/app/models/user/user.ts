@@ -1,4 +1,3 @@
-
 export class User {
 
     constructor(public _id?: string,
@@ -10,7 +9,21 @@ export class User {
                 public description?: string,
                 public showPicture?: boolean,
                 public showName?: boolean,
-                public enableEmailNotifications?: boolean) {
+                public enableEmailNotifications?: boolean,
+                public pendingRequests?: string[]) {
+    }
+
+    isRequestSent(userId: string): boolean {
+        let isRequestSent = false;
+
+        this.pendingRequests.forEach((item) => {
+            if (item === userId) {
+                isRequestSent = true;
+                return false;
+            }
+        });
+
+        return isRequestSent;
     }
 
 }

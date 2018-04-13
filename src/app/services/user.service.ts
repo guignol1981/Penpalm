@@ -22,7 +22,8 @@ export class UserService {
             data['description'],
             data['showPicture'],
             data['showName'],
-            data['enableEmailNotifications']
+            data['enableEmailNotifications'],
+            data['pendingRequests']
         );
     }
 
@@ -112,7 +113,7 @@ export class UserService {
             });
     }
 
-    sendRequest(user: User): Promise<boolean> {
+    sendRequest(user: User): Promise<User> {
         let headers = new Headers({
             'Content-Type': 'application/json',
             Authorization: 'Bearer ' + this.authenticationService.getToken()
@@ -121,7 +122,23 @@ export class UserService {
         return this.http.put(this.apiEndPoint + '/request', JSON.stringify(user), {headers: headers})
             .toPromise()
             .then((response: Response) => {
-                return response.json().data;
+                return UserService.deserializeUser(response.json().data);
+            })
+            .catch(() => {
+                return null;
+            });
+    }
+
+    cancelRequest(user: User): Promise<User> {
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.put(this.apiEndPoint + '/cancel-request', JSON.stringify(user), {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                return UserService.deserializeUser(response.json().data);
             })
             .catch(() => {
                 return null;

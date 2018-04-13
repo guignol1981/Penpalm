@@ -28,6 +28,7 @@ router.get('/users', authenticate, userController.get);
 router.get('/users/find', authenticate, userController.find);
 router.put('/users', authenticate, userController.update);
 router.put('/users/request', authenticate, userController.request);
+router.put('/users/cancel-request', authenticate, userController.cancelRequest);
 router.delete('/users', authenticate, userController.remove);
 
 //postcards
