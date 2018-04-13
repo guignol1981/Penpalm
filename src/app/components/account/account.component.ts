@@ -1,9 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UserService} from '../../services/user.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {User} from '../../models/user/user';
 import {AuthenticationService} from '../../services/authentication.service';
 import {NotificationsService} from 'angular2-notifications';
+import {Notif} from '../home/home.component';
 
 @Component({
     selector: 'app-account',
@@ -12,6 +13,7 @@ import {NotificationsService} from 'angular2-notifications';
 })
 export class AccountComponent implements OnInit {
     @Input() user: User;
+    @Output() notifEvent: EventEmitter<Notif> = new EventEmitter<Notif>();
     form: FormGroup;
     deleteWarning = false;
     selectedOption = '';
@@ -43,7 +45,7 @@ export class AccountComponent implements OnInit {
         this.user.description = this.form.get('description').value;
 
         this.userService.update(this.user).then((user: User) => {
-            this.notificationService.success('Profile details saved');
+            this.notifEvent.emit({type: 'success', msg: 'Profile updated'});
         });
     }
 

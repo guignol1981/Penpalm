@@ -3,6 +3,11 @@ import {UserService} from '../../services/user.service';
 import {User} from "../../models/user/user";
 import {AuthenticationService} from '../../services/authentication.service';
 
+export interface Notif {
+    type: string;
+    msg: string;
+}
+
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
@@ -11,6 +16,7 @@ import {AuthenticationService} from '../../services/authentication.service';
 export class HomeComponent implements OnInit {
     user: User;
     activeTab = 'matcher';
+    notif: Notif;
 
     constructor(private userService: UserService,
                 private authenticationService: AuthenticationService) {
@@ -28,6 +34,13 @@ export class HomeComponent implements OnInit {
 
     logout() {
         this.authenticationService.signOut();
+    }
+
+    onNotif(notif: Notif) {
+       this.notif = notif;
+        setTimeout(() => {
+            this.notif = null;
+        }, 3000);
     }
 
 }

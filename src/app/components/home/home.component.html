@@ -49,12 +49,15 @@
         <app-compose></app-compose>
     </div>
     <div *ngIf="activeTab === 'account'" class="main">
-        <app-account [user]="user"></app-account>
+        <app-account [user]="user" (notifEvent)="onNotif($event)"></app-account>
     </div>
     <div *ngIf="activeTab === 'matcher'" class="main">
         <app-matcher [user]="user"></app-matcher>
     </div>
     <div class="footer">
         <app-footer></app-footer>
+    </div>
+    <div *ngIf="notif" [class]="notif.type === 'success' ? 'notif notif--success' : 'notif notif--failure'">
+        {{notif.msg}}
     </div>
 </div>
