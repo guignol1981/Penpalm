@@ -47,6 +47,20 @@ module.exports.update = function (req, res) {
         });
 };
 
+module.exports.request = function(req, res) {
+    User.findById(req.body._id)
+        .exec()
+        .then((user) => {
+            user.pendingRequests.push(req.auth.id);
+            user.save().then(() => {
+                res.send({
+                    msg: 'Pal request done',
+                    data: true
+                });
+            });
+        });
+};
+
 module.exports.remove = function (req, res) {
     User.findById(req.auth.id)
         .exec()

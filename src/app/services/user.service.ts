@@ -112,5 +112,21 @@ export class UserService {
             });
     }
 
+    sendRequest(user: User): Promise<boolean> {
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.put(this.apiEndPoint + '/request', JSON.stringify(user), {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                return response.json().data;
+            })
+            .catch(() => {
+                return null;
+            });
+    }
+
 
 }
