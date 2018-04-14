@@ -46,29 +46,31 @@ module.exports.handleRequest = function (req, res) {
             User.findById(req.body._id)
                 .exec()
                 .then((targetUser) => {
-                    sourceUser.pendingRequests = sourceUser.pendingRequests.filter(item => item !== targetUser._id);
-                    targetUser.pendingRequests = targetUser.pendingRequests.filter(item => item !== sourceUser._id);
+                    sourceUser.removePendingRequest(targetUser._id, (sourceUser) => {
+                        targetUser.removePendingRequest(sourceUser._id, (targetUser) => {
 
-                    if (accept) {
-                        sourceUser.pals.push(targetUser);
-                        targetUser.pals.push(sourceUser);
+                            if (accept) {
+                                sourceUser.pals.push(targetUser);
+                                targetUser.pals.push(sourceUser);
 
-                        res.send({
-                            msg: 'Request accepted',
-                            data: {
-                                targetUser: targetUser,
-                                sourceUser: sourceUser
+                                res.send({
+                                    msg: 'Request accepted',
+                                    data: {
+                                        targetUser: targetUser,
+                                        sourceUser: sourceUser
+                                    }
+                                });
+                            } else {
+                                res.send({
+                                    msg: 'Request rejected',
+                                    data: null
+                                });
                             }
-                        });
-                    } else {
-                        res.send({
-                            msg: 'Request rejected',
-                            data: null
-                        });
-                    }
 
-                    sourceUser.save();
-                    targetUser.save();
+                            sourceUser.save();
+                            targetUser.save();
+                        });
+                    });
                 });
         });
 };
@@ -79,7 +81,7 @@ module.exports.find = function (req, res) {
     let mongooseQuery = User.find();
 
     mongooseQuery.where('_id').ne(req.auth.id);
-    console.log(query);
+
     if (query.language !== 'none') {
         mongooseQuery.where('language').eq(query.language);
     }

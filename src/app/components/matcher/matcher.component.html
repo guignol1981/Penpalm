@@ -1,5 +1,6 @@
 <div *ngIf="user" class="container">
-    <div class="input">
+
+    <div *ngIf="view === 'discover'" class="input">
         <div *ngIf="selectedOption === 'language-filter'" class="input__group">
             <div class="input__group--label">
                 <label for="languagefilter">Language</label>
@@ -40,7 +41,7 @@
 
     </div>
 
-    <div *ngIf="view === 'list'" class="list">
+    <div *ngIf="view === 'discover' || view === 'pending-requests' || view === 'sent-requests'" class="list">
         <div *ngFor="let suggestedUser of suggestedUsers" class="list__item">
             <a (click)="selectUser(suggestedUser)" class="image-wrap">
                 <img class="image" [src]="suggestedUser.photoUrl" alt="user picture">
@@ -67,7 +68,64 @@
     </div>
 
     <div class="options">
-        <div *ngIf="!selectedUser" class="options__group">
+
+        <div class="options__group">
+            <div class="options__group--title">
+                Pen pals
+            </div>
+            <div class="options__group--list">
+                <a (click)="viewList()"
+                   [class]="view === 'discover' ? 'btn btn--align-left btn--text-md btn--active' : 'btn btn--align-left btn--text-md'">
+                    Discover
+                </a>
+                <a (click)="viewPals()"
+                   [class]="view === 'pals' ? 'btn btn--align-left btn--text-md btn--active' : 'btn btn--align-left btn--text-md'">
+                    My pals
+                </a>
+                <a (click)="viewPendingRequests()"
+                   [class]="view === 'pending-requests' ? 'btn btn--align-left btn--text-md btn--active' : 'btn btn--align-left btn--text-md'">
+                    Pending requests
+                </a>
+                <a (click)="viewRequests()"
+                   [class]="view === 'sent-requests' ? 'btn btn--align-left btn--text-md btn--active' : 'btn btn--align-left btn--text-md'">
+                    Sent requests
+                </a>
+            </div>
+        </div>
+
+        <div *ngIf="selectedUser" class="options__group">
+            <div class="options__group--title">
+                Options
+            </div>
+            <div class="options__group--list">
+                <div *ngIf="user.isPal(selectedUser._id)">
+                    <a (click)="removeFromPals()"
+                       [class]="transacting ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'">
+                        Remove from pals</a>
+                </div>
+                <div *ngIf="user.isRequestSent(selectedUser._id)">
+                    <a *ngIf="user.isRequestSent(selectedUser._id)"
+                       (click)="handleRequest(true)"
+                       [class]="transacting ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'">
+                        Accept request</a>
+                    <a *ngIf="user.isRequestSent(selectedUser._id)"
+                       (click)="handleRequest(false)"
+                       [class]="transacting ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'">
+                        Refuse request</a>
+                </div>
+                <a *ngIf="!user.isRequestSent(selectedUser._id)"
+                   (click)="selectedUser.isRequestSent(user._id) ? cancelRequest() : sendRequest()"
+                   [class]="transacting ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'">
+                    {{selectedUser.isRequestSent(user._id) ? 'Cancel request' : 'Send request'}}
+                </a>
+                <a (click)="report()"
+                   class="btn btn--align-left btn--text-md btn--disabled">
+                    Report
+                </a>
+            </div>
+        </div>
+
+        <div *ngIf="view === 'discover'" class="options__group">
             <div class="options__group--title">
                 Filters
             </div>
@@ -86,57 +144,10 @@
                 </a>
             </div>
         </div>
-
-        <div *ngIf="selectedUser" class="options__group">
-            <div class="options__group--title">
-                Options
-            </div>
-            <div class="options__group--list">
-                <div *ngIf="user.isRequestSent(selectedUser._id)">
-                    <a *ngIf="user.isRequestSent(selectedUser._id)"
-                       (click)="handleRequest(true)"
-                       [class]="transacting ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'">
-                        Accept request</a>
-                    <a *ngIf="user.isRequestSent(selectedUser._id)"
-                       (click)="handleRequest(false)"
-                       [class]="transacting ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'">
-                        Refuse request</a>
-                </div>
-                <a *ngIf="!user.isRequestSent(selectedUser._id)" (click)="selectedUser.isRequestSent(user._id) ? cancelRequest() : sendRequest()"
-                   [class]="transacting ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'">
-                    {{selectedUser.isRequestSent(user._id) ? 'Cancel request' : 'Send request'}}
-                </a>
-                <a (click)="report()"
-                   class="btn btn--align-left btn--text-md">
-                    Report
-                </a>
-            </div>
-        </div>
-
-        <div class="options__group">
-            <div class="options__group--title">
-                Pen pals
-            </div>
-            <div class="options__group--list">
-                <a (click)="selectOption('emailNotifications')"
-                   class="btn btn--align-left btn--text-md">
-                    My pals
-                </a>
-                <a (click)="viewPendingRequests()"
-                   class="btn btn--align-left btn--text-md">
-                    Pending requests
-                </a>
-                <a (click)="viewRequests()"
-                   class="btn btn--align-left btn--text-md">
-                    My requests
-                </a>
-            </div>
-        </div>
     </div>
 
     <div class="actions">
-        <a *ngIf="selectedUser" (click)="backToList()" class="btn">Back to list</a>
-        <a *ngIf="!selectedUser" (click)="''" class="btn">Show more</a>
+        <a *ngIf="view === 'discover'" (click)="''" class="btn">Show more</a>
     </div>
 
 </div>

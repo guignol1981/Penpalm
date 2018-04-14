@@ -1,3 +1,4 @@
+
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
@@ -55,6 +56,17 @@ UserSchema.statics.upsertSocialUser = function (accessToken, refreshToken, profi
             return callback(err, user);
         }
     });
+};
+
+UserSchema.methods.removePendingRequest = function(userId, callback) {
+    let index = this.pendingRequests.indexOf(userId);
+
+    if (index > -1) {
+        this.pendingRequests.splice(index, 1);
+        this.save().then(() => {
+            callback(this);
+        });
+    }
 };
 
 let User = mongoose.model('User', UserSchema);

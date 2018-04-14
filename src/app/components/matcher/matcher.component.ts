@@ -28,7 +28,7 @@ export class MatcherComponent implements OnInit {
         language: 'none'
     };
     transacting = false;
-    view = 'list';
+    view = 'discover';
 
     constructor(private userService: UserService) {
     }
@@ -79,9 +79,10 @@ export class MatcherComponent implements OnInit {
         this.find(displayMsg);
     }
 
-    backToList() {
+    viewList() {
         this.selectedUser = null;
-        this.view = 'list';
+        this.view = 'discover';
+        this.find();
     }
 
     sendRequest() {
@@ -112,21 +113,30 @@ export class MatcherComponent implements OnInit {
     handleRequest(accept: boolean) {
         this.userService.handleRequest(this.selectedUser, accept).then((response: any) => {
             if (accept) {
+                console.log(this.user);
                 this.notifEvent.emit({type: 'success', msg: 'Pal added'});
                 this.selectedUser = response.targetUser;
                 this.user = response.sourceUser;
-
             } else {
                 this.notifEvent.emit({type: 'success', msg: 'Request rejected'});
-
             }
         });
+    }
+
+    viewPals() {
+        if (this.transacting) {
+            return;
+        }
+
+        this.view = 'pals';
     }
 
     viewPendingRequests() {
         if (this.transacting) {
             return;
         }
+
+        this.view = 'pending-requests';
 
         this.transacting = true;
         this.userService.getPendingRequests().then((users: User[]) => {
@@ -140,11 +150,17 @@ export class MatcherComponent implements OnInit {
             return;
         }
 
+        this.view = 'sent-requests';
+
         this.transacting = true;
         this.userService.getRequests().then((users: User[]) => {
             this.suggestedUsers = users;
             this.transacting = false;
         });
+    }
+
+    removeFromPals() {
+
     }
 
     manage() {

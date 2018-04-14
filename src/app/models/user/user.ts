@@ -10,7 +10,8 @@ export class User {
                 public showPicture?: boolean,
                 public showName?: boolean,
                 public enableEmailNotifications?: boolean,
-                public pendingRequests?: string[]) {
+                public pendingRequests?: string[],
+                public pals?: string[]) {
     }
 
     isRequestSent(userId: string): boolean {
@@ -24,6 +25,19 @@ export class User {
         });
 
         return isRequestSent;
+    }
+
+    isPal(userId: string) {
+        let isPal = false;
+
+        this.pals.forEach((item) => {
+            if (item === userId) {
+                isPal = true;
+                return false;
+            }
+        });
+
+        return isPal;
     }
 
 }

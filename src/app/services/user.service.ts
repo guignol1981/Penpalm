@@ -25,7 +25,8 @@ export class UserService {
             data['showPicture'],
             data['showName'],
             data['enableEmailNotifications'],
-            data['pendingRequests']
+            data['pendingRequests'],
+            data['pals']
         );
     }
 
