@@ -14,6 +14,22 @@ export class UserService {
     }
 
     public static deserializeUser(data: any): User {
+        let pals = [];
+
+        data.pals.forEach((item) => {
+            pals.push(new User(
+                item['_id'],
+                item['name'],
+                item['email'],
+                item['photoUrl'],
+                item['language'],
+                item['country'],
+                item['description'],
+                item['showPicture'],
+                item['showName']
+            ));
+        });
+
         return new User(
             data['_id'],
             data['name'],
@@ -26,7 +42,7 @@ export class UserService {
             data['showName'],
             data['enableEmailNotifications'],
             data['pendingRequests'],
-            data['pals']
+            pals
         );
     }
 

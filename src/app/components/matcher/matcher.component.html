@@ -103,7 +103,7 @@
                        [class]="transacting ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'">
                         Remove from pals</a>
                 </div>
-                <div *ngIf="user.isRequestSent(selectedUser._id)">
+                <div *ngIf="user.isRequestSent(selectedUser._id) && !user.isPal(selectedUser._id)">
                     <a *ngIf="user.isRequestSent(selectedUser._id)"
                        (click)="handleRequest(true)"
                        [class]="transacting ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'">
@@ -113,7 +113,7 @@
                        [class]="transacting ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'">
                         Refuse request</a>
                 </div>
-                <a *ngIf="!user.isRequestSent(selectedUser._id)"
+                <a *ngIf="!user.isRequestSent(selectedUser._id) && !user.isPal(selectedUser._id)"
                    (click)="selectedUser.isRequestSent(user._id) ? cancelRequest() : sendRequest()"
                    [class]="transacting ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'">
                     {{selectedUser.isRequestSent(user._id) ? 'Cancel request' : 'Send request'}}

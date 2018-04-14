@@ -48,7 +48,7 @@ module.exports.handleRequest = function (req, res) {
                 .then((targetUser) => {
                     sourceUser.removePendingRequest(targetUser._id, (sourceUser) => {
                         targetUser.removePendingRequest(sourceUser._id, (targetUser) => {
-
+                            console.log('ok');
                             if (accept) {
                                 sourceUser.pals.push(targetUser);
                                 targetUser.pals.push(sourceUser);
@@ -81,6 +81,8 @@ module.exports.find = function (req, res) {
     let mongooseQuery = User.find();
 
     mongooseQuery.where('_id').ne(req.auth.id);
+    mongooseQuery.where('pals').ne(req.auth.id);
+    mongooseQuery.where('pendingRequests').ne(req.auth.id);
 
     if (query.language !== 'none') {
         mongooseQuery.where('language').eq(query.language);

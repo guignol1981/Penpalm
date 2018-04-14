@@ -66,6 +66,8 @@ UserSchema.methods.removePendingRequest = function(userId, callback) {
         this.save().then(() => {
             callback(this);
         });
+    } else {
+        callback(this);
     }
 };
 
