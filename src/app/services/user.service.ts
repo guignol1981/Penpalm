@@ -60,6 +60,28 @@ export class UserService {
             });
     }
 
+    getPendingRequests(): Promise<User[]> {
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.get(this.apiEndPoint + '/pending-requests', {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                let users = [];
+
+                response.json().data.forEach((item) => {
+                   users.push(UserService.deserializeUser(item));
+                });
+
+                return users;
+            })
+            .catch(() => {
+                return null;
+            });
+    }
+
     getRequests(): Promise<User[]> {
         let headers = new Headers({
             'Content-Type': 'application/json',

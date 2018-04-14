@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {User} from '../../models/user/user';
 import {UserService} from '../../services/user.service';
 import {NotificationsService} from 'angular2-notifications';
+import {Notif} from '../home/home.component';
 
 export interface FindFilter {
     country: string;
@@ -15,6 +16,8 @@ export interface FindFilter {
 })
 export class MatcherComponent implements OnInit {
     @Input() user: User;
+    @Output() notifEvent: EventEmitter<Notif> = new EventEmitter<Notif>();
+
     suggestedUsers: User[];
     selectedOption = '';
     selectedUser: User;
@@ -25,23 +28,27 @@ export class MatcherComponent implements OnInit {
         language: 'none'
     };
     transacting = false;
+    view = 'list';
 
-    constructor(private userService: UserService,
-                private notificationService: NotificationsService) {
+    constructor(private userService: UserService) {
     }
 
     ngOnInit() {
         this.find();
     }
 
-    find() {
+    find(callback ?: any) {
         this.userService.find(this.findFilter).then((users: User[]) => {
             this.suggestedUsers = users;
+            if (callback) {
+                callback();
+            }
         });
     }
 
     selectUser(user: User) {
         this.selectedUser = user;
+        this.view = 'details';
     }
 
     selectOption(option) {
@@ -49,17 +56,32 @@ export class MatcherComponent implements OnInit {
     }
 
     setLanguageFilter(language) {
+        let me = this;
+        let msg = language === 'none' ? 'Filter cleared' : 'Filter applied';
+
         this.findFilter.language = language;
-        this.find();
+
+        let displayMsg = function() {
+            me.notifEvent.emit({type: 'success', msg: msg});
+        };
+        this.find(displayMsg);
     }
 
     setCountryFilter(country) {
+        let me = this;
+        let msg = country === 'none' ? 'Filter cleared' : 'Filter applied';
+
         this.findFilter.country = country;
-        this.find();
+
+        let displayMsg = function() {
+            me.notifEvent.emit({type: 'success', msg: msg});
+        };
+        this.find(displayMsg);
     }
 
     backToList() {
         this.selectedUser = null;
+        this.view = 'list';
     }
 
     sendRequest() {
@@ -69,8 +91,41 @@ export class MatcherComponent implements OnInit {
         this.transacting = true;
         this.userService.sendRequest(this.selectedUser).then((user: User) => {
             this.selectedUser = user;
-            this.notificationService.success('Request sent');
             this.transacting = false;
+            this.notifEvent.emit({type: 'success', msg: 'Request sent'});
+        });
+    }
+
+    cancelRequest() {
+        if (this.transacting) {
+            return;
+        }
+
+        this.transacting = true;
+        this.userService.cancelRequest(this.selectedUser).then((user: User) => {
+            this.selectedUser = user;
+            this.notifEvent.emit({type: 'success', msg: 'Request canceled'});
+            this.transacting = false;
+        });
+    }
+
+    acceptRequest() {
+
+    }
+
+    rejectRequest() {
+
+    }
+
+    viewPendingRequests() {
+        if (this.transacting) {
+            return;
+        }
+
+        this.transacting = true;
+        this.userService.getPendingRequests().then((users: User[]) => {
+           this.suggestedUsers = users;
+           this.transacting = false;
         });
     }
 
@@ -86,16 +141,8 @@ export class MatcherComponent implements OnInit {
         });
     }
 
-    cancelRequest() {
-        if (this.transacting) {
-            return;
-        }
-        this.transacting = true;
-        this.userService.cancelRequest(this.selectedUser).then((user: User) => {
-            this.selectedUser = user;
-            this.notificationService.success('Request canceled');
-            this.transacting = false;
-        });
+    manage() {
+
     }
 
     report() {

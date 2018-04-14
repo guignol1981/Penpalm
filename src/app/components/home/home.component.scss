@@ -102,9 +102,11 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
+	border-radius: 1rem;
+	margin: 1rem;
 	&--success	{
-		color: #55efc4;
+		background-color: transparentize(#55efc4, .7);
+		color: #fff;
 	}
 
 	&--warning {

@@ -11,15 +11,26 @@ module.exports.get = function (req, res) {
         });
 };
 
-module.exports.getRequests = function (req, res) {
+module.exports.getPendingRequests = function (req, res) {
     User.findById(req.auth.id)
         .populate('pendingRequests')
         .exec()
         .then((user) => {
-           res.send({
-               msg: 'Requests found',
-               data: user.pendingRequests
-           });
+            res.send({
+                msg: 'Pending requests found',
+                data: user.pendingRequests
+            });
+        });
+};
+
+module.exports.getRequests = function (req, res) {
+    User.find({'pendingRequests': req.auth.id})
+        .exec()
+        .then((users) => {
+            res.send({
+                msg: 'Requests found',
+                data: users
+            });
         });
 };
 

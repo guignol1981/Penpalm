@@ -1,4 +1,4 @@
-<div *ngIf="user && suggestedUsers" class="container">
+<div *ngIf="user" class="container">
     <div class="input">
         <div *ngIf="selectedOption === 'language-filter'" class="input__group">
             <div class="input__group--label">
@@ -37,9 +37,10 @@
                 </div>
             </div>
         </div>
+
     </div>
 
-    <div *ngIf="!selectedUser" class="list">
+    <div *ngIf="view === 'list'" class="list">
         <div *ngFor="let suggestedUser of suggestedUsers" class="list__item">
             <a (click)="selectUser(suggestedUser)" class="image-wrap">
                 <img class="image" [src]="suggestedUser.photoUrl" alt="user picture">
@@ -47,7 +48,7 @@
         </div>
     </div>
 
-    <div *ngIf="selectedUser" class="user-details">
+    <div *ngIf="view === 'details'" class="user-details">
         <div class="user-details__photo">
             <div class="image-wrap">
                 <img class="image" [src]="selectedUser.photoUrl" alt="user picture">
@@ -91,13 +92,23 @@
                 Options
             </div>
             <div class="options__group--list">
-                <a (click)="selectedUser.isRequestSent(user._id) ? cancelRequest() : sendRequest()"
+                <div *ngIf="user.isRequestSent(selectedUser._id)">
+                    <a *ngIf="user.isRequestSent(selectedUser._id)"
+                       (click)="acceptRequest()"
+                       [class]="transacting ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'">
+                        Accept request</a>
+                    <a *ngIf="user.isRequestSent(selectedUser._id)"
+                       (click)="rejectRequest()"
+                       [class]="transacting ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'">
+                        Refuse request</a>
+                </div>
+                <a *ngIf="!user.isRequestSent(selectedUser._id)" (click)="selectedUser.isRequestSent(user._id) ? cancelRequest() : sendRequest()"
                    [class]="transacting ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'">
-                    &nbsp;{{selectedUser.isRequestSent(user._id) ? 'Cancel request' : 'Send request'}}
+                    {{selectedUser.isRequestSent(user._id) ? 'Cancel request' : 'Send request'}}
                 </a>
                 <a (click)="report()"
                    class="btn btn--align-left btn--text-md">
-                    &nbsp;Report
+                    Report
                 </a>
             </div>
         </div>
@@ -109,11 +120,15 @@
             <div class="options__group--list">
                 <a (click)="selectOption('emailNotifications')"
                    class="btn btn--align-left btn--text-md">
-                    &nbsp;Manage
+                    Manage
+                </a>
+                <a (click)="viewPendingRequests()"
+                   class="btn btn--align-left btn--text-md">
+                    Pending requests
                 </a>
                 <a (click)="viewRequests()"
                    class="btn btn--align-left btn--text-md">
-                    &nbsp;Requests
+                    My requests
                 </a>
             </div>
         </div>
@@ -123,4 +138,5 @@
         <a *ngIf="selectedUser" (click)="backToList()" class="btn">Back to list</a>
         <a *ngIf="!selectedUser" (click)="''" class="btn">Show more</a>
     </div>
+
 </div>
