@@ -61,7 +61,7 @@ export class MatcherComponent implements OnInit {
 
         this.findFilter.language = language;
 
-        let displayMsg = function() {
+        let displayMsg = function () {
             me.notifEvent.emit({type: 'success', msg: msg});
         };
         this.find(displayMsg);
@@ -73,7 +73,7 @@ export class MatcherComponent implements OnInit {
 
         this.findFilter.country = country;
 
-        let displayMsg = function() {
+        let displayMsg = function () {
             me.notifEvent.emit({type: 'success', msg: msg});
         };
         this.find(displayMsg);
@@ -109,12 +109,18 @@ export class MatcherComponent implements OnInit {
         });
     }
 
-    acceptRequest() {
+    handleRequest(accept: boolean) {
+        this.userService.handleRequest(this.selectedUser, accept).then((response: any) => {
+            if (accept) {
+                this.notifEvent.emit({type: 'success', msg: 'Pal added'});
+                this.selectedUser = response.targetUser;
+                this.user = response.sourceUser;
 
-    }
+            } else {
+                this.notifEvent.emit({type: 'success', msg: 'Request rejected'});
 
-    rejectRequest() {
-
+            }
+        });
     }
 
     viewPendingRequests() {
@@ -124,8 +130,8 @@ export class MatcherComponent implements OnInit {
 
         this.transacting = true;
         this.userService.getPendingRequests().then((users: User[]) => {
-           this.suggestedUsers = users;
-           this.transacting = false;
+            this.suggestedUsers = users;
+            this.transacting = false;
         });
     }
 
@@ -136,8 +142,8 @@ export class MatcherComponent implements OnInit {
 
         this.transacting = true;
         this.userService.getRequests().then((users: User[]) => {
-           this.suggestedUsers = users;
-           this.transacting = false;
+            this.suggestedUsers = users;
+            this.transacting = false;
         });
     }
 

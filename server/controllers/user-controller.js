@@ -1,4 +1,5 @@
 let User = require('../models/user');
+let url = require('url');
 
 module.exports.get = function (req, res) {
     User.findById(req.auth.id)
@@ -34,8 +35,45 @@ module.exports.getRequests = function (req, res) {
         });
 };
 
+module.exports.handleRequest = function (req, res) {
+    let url_parts = url.parse(req.url, true);
+    let query = url_parts.query;
+    let accept = query.accept;
+
+    User.findById(req.auth.id)
+        .exec()
+        .then((sourceUser) => {
+            User.findById(req.body._id)
+                .exec()
+                .then((targetUser) => {
+                    sourceUser.pendingRequests = sourceUser.pendingRequests.filter(item => item !== targetUser._id);
+                    targetUser.pendingRequests = targetUser.pendingRequests.filter(item => item !== sourceUser._id);
+
+                    if (accept) {
+                        sourceUser.pals.push(targetUser);
+                        targetUser.pals.push(sourceUser);
+
+                        res.send({
+                            msg: 'Request accepted',
+                            data: {
+                                targetUser: targetUser,
+                                sourceUser: sourceUser
+                            }
+                        });
+                    } else {
+                        res.send({
+                            msg: 'Request rejected',
+                            data: null
+                        });
+                    }
+
+                    sourceUser.save();
+                    targetUser.save();
+                });
+        });
+};
+
 module.exports.find = function (req, res) {
-    let url = require('url');
     let url_parts = url.parse(req.url, true);
     let query = url_parts.query;
     let mongooseQuery = User.find();

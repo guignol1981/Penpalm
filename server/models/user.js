@@ -23,7 +23,8 @@ let UserSchema = new Schema({
     showPicture: {type: Boolean, default: true},
     showName: {type: Boolean, default: true},
     enableEmailNotifications: {type: Boolean, default: true},
-    pendingRequests: [{type: Schema.Types.ObjectId, ref: 'User', default: []}]
+    pendingRequests: [{type: Schema.Types.ObjectId, ref: 'User', default: []}],
+    pals: [{type: Schema.Types.ObjectId, ref: 'User', default: []}]
 });
 
 UserSchema.statics.upsertSocialUser = function (accessToken, refreshToken, profile, callback) {

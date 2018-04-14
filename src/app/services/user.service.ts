@@ -4,6 +4,7 @@ import {AuthenticationService} from './authentication.service';
 import {User} from '../models/user/user';
 import {SocialUser} from 'angular4-social-login';
 import {FindFilter} from '../components/matcher/matcher.component';
+
 @Injectable()
 export class UserService {
     apiEndPoint = 'api/users';
@@ -72,7 +73,7 @@ export class UserService {
                 let users = [];
 
                 response.json().data.forEach((item) => {
-                   users.push(UserService.deserializeUser(item));
+                    users.push(UserService.deserializeUser(item));
                 });
 
                 return users;
@@ -94,10 +95,38 @@ export class UserService {
                 let users = [];
 
                 response.json().data.forEach((item) => {
-                   users.push(UserService.deserializeUser(item));
+                    users.push(UserService.deserializeUser(item));
                 });
 
                 return users;
+            })
+            .catch(() => {
+                return null;
+            });
+    }
+
+    handleRequest(user: User, accept: boolean): Promise<any> {
+
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.put(this.apiEndPoint + '/handle-request', JSON.stringify(user), {headers: headers, params: {accept: accept}})
+            .toPromise()
+            .then((response: Response) => {
+                if (accept) {
+                    let data = response.json().data;
+                    let targetUser = UserService.deserializeUser(data.targetUser);
+                    let sourceUser = UserService.deserializeUser(data.sourceUser);
+
+                    return {
+                        targetUser: targetUser,
+                        sourceUser: sourceUser
+                    };
+                } else {
+                    return false;
+                }
             })
             .catch(() => {
                 return null;

@@ -30,6 +30,7 @@ router.get('/users/pending-requests', authenticate, userController.getPendingReq
 router.get('/users/requests', authenticate, userController.getRequests);
 router.put('/users', authenticate, userController.update);
 router.put('/users/request', authenticate, userController.request);
+router.put('/users/handle-request', authenticate, userController.handleRequest);
 router.put('/users/cancel-request', authenticate, userController.cancelRequest);
 router.delete('/users', authenticate, userController.remove);
 

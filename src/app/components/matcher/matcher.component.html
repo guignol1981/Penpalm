@@ -94,11 +94,11 @@
             <div class="options__group--list">
                 <div *ngIf="user.isRequestSent(selectedUser._id)">
                     <a *ngIf="user.isRequestSent(selectedUser._id)"
-                       (click)="acceptRequest()"
+                       (click)="handleRequest(true)"
                        [class]="transacting ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'">
                         Accept request</a>
                     <a *ngIf="user.isRequestSent(selectedUser._id)"
-                       (click)="rejectRequest()"
+                       (click)="handleRequest(false)"
                        [class]="transacting ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'">
                         Refuse request</a>
                 </div>
@@ -120,7 +120,7 @@
             <div class="options__group--list">
                 <a (click)="selectOption('emailNotifications')"
                    class="btn btn--align-left btn--text-md">
-                    Manage
+                    My pals
                 </a>
                 <a (click)="viewPendingRequests()"
                    class="btn btn--align-left btn--text-md">
