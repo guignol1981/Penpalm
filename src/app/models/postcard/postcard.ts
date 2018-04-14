@@ -8,6 +8,7 @@ export class Postcard {
                 public youtubeId?: string,
                 public allowShare?: boolean,
                 public template?: string,
+                public recipient?: string,
                 public seen?: boolean,
                 public creationDate?: Date) {}
 

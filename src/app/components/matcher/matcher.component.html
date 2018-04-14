@@ -41,7 +41,8 @@
 
     </div>
 
-    <div *ngIf="userList && view === 'discover' || view === 'pending-requests' || view === 'sent-requests' || view === 'pals'" class="list">
+    <div *ngIf="userList && view === 'discover' || view === 'pending-requests' || view === 'sent-requests' || view === 'pals'"
+         class="list">
         <div *ngIf="userList.length === 0" class="list__empty">
             This list is empty
         </div>
@@ -106,7 +107,8 @@
                 <div *ngIf="user.isPal(selectedUser._id)">
                     <a (click)="removePal()"
                        [class]="transacting ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'">
-                        Remove from pals</a>
+                        {{removeWarning ? 'Click again to remove' : 'Remove pal'}}
+                    </a>
                 </div>
                 <div *ngIf="user.isRequestSent(selectedUser._id) && !user.isPal(selectedUser._id)">
                     <a *ngIf="user.isRequestSent(selectedUser._id)"

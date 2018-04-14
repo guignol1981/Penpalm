@@ -17,7 +17,6 @@ export interface FindFilter {
 })
 export class MatcherComponent implements OnInit {
     @Output() notifEvent: EventEmitter<Notif> = new EventEmitter<Notif>();
-
     user: User;
     userList: User[];
     selectedOption = '';
@@ -31,6 +30,7 @@ export class MatcherComponent implements OnInit {
     };
     transacting = false;
     view = 'discover';
+    removeWarning = false;
 
     constructor(private userService: UserService,
                 private utilService: UtilService) {
@@ -73,7 +73,7 @@ export class MatcherComponent implements OnInit {
 
     setLanguageFilter(language) {
         let me = this;
-        let msg = language === 'none' ? 'Filter cleared' : 'Filter applied';
+        let msg = language.name === 'none' ? 'Filter cleared' : 'Filter applied';
 
         this.findFilter.language = language.name;
 
@@ -149,6 +149,11 @@ export class MatcherComponent implements OnInit {
 
     removePal() {
         if (this.transacting) {
+            return;
+        }
+
+        if (!this.removeWarning) {
+            this.removeWarning = true;
             return;
         }
 

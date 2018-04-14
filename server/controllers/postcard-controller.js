@@ -17,7 +17,7 @@ module.exports.create = function(req, res) {
 
 			let postcard = new Postcard({
 				author: user.id,
-				recipient: user.penPal._id,
+				recipient: req.body.recipient,
 				body: body,
 				imageUrl: req.body.imageUrl,
 				imageFitType: req.body.imageFitType,

@@ -21,6 +21,7 @@ export class PostcardService {
             data['youtubeId'],
             data['allowShare'],
             data['template'],
+            data['recipient'],
             data['seen'],
             data['creationDate']
         );

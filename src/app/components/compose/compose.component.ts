@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Postcard} from '../../models/postcard/postcard';
 import {PostcardService} from '../../services/postcard.service';
 import {NotificationsService} from 'angular2-notifications';
 import {UserService} from '../../services/user.service';
 import {User} from '../../models/user/user';
+import {Notif} from '../home/home.component';
 
 @Component({
     selector: 'app-compose',
@@ -12,13 +13,13 @@ import {User} from '../../models/user/user';
     styleUrls: ['./compose.component.scss']
 })
 export class ComposeComponent implements OnInit {
+    @Output() notifEvent: EventEmitter<Notif> = new EventEmitter<Notif>();
     user: User;
     recipients: User[];
-
+    transacting = false;
     form: FormGroup;
     composeMode = false;
     shownSide = 'front';
-    sending = false;
     sendWarning = false;
     selectedOption = '';
     templates = ['none', 'bubble'];
@@ -42,7 +43,7 @@ export class ComposeComponent implements OnInit {
                     youtubeLink: new FormControl(null),
                     allowShare: new FormControl(false),
                     template: new FormControl('none'),
-                    recipient: new FormControl(null)
+                    recipient: new FormControl(null, Validators.required)
                 });
             });
         });
@@ -158,14 +159,15 @@ export class ComposeComponent implements OnInit {
     }
 
     submit() {
+        if (this.transacting) {
+            return;
+        }
+
         if (!this.sendWarning) {
             this.sendWarning = true;
             return;
         }
 
-        if (this.sending) {
-            return;
-        }
 
         let postcard = new Postcard(
             null,
@@ -175,16 +177,17 @@ export class ComposeComponent implements OnInit {
             this.form.get('spotifyLink').value,
             this.getYoutubeLinkId(),
             this.form.get('allowShare').value,
-            this.form.get('template').value
+            this.form.get('template').value,
+            this.form.get('recipient').value,
         );
 
-        this.sending = true;
+        this.transacting = true;
 
-        this.postcardService.create(postcard).then((postcard: Postcard) => {
+        this.postcardService.create(postcard).then(() => {
             this.form.reset();
             this.composeMode = false;
-            this.notificationService.success('Postcard sent');
-            this.sending = false;
+            this.transacting = false;
+            this.notifEvent.emit({type: 'success', msg: 'Postcard sent'});
         });
     }
 }

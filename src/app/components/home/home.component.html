@@ -46,7 +46,7 @@
         <app-inbox [direction]="'out'"></app-inbox>
     </div>
     <div *ngIf="activeTab === 'compose'" class="main">
-        <app-compose></app-compose>
+        <app-compose (notifEvent)="onNotif($event)"></app-compose>
     </div>
     <div *ngIf="activeTab === 'account'" class="main">
         <app-account (notifEvent)="onNotif($event)"></app-account>
