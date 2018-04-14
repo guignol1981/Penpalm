@@ -41,7 +41,7 @@
 
     </div>
 
-    <div *ngIf="view === 'discover' || view === 'pending-requests' || view === 'sent-requests' || view === 'pals'" class="list">
+    <div *ngIf="userList && view === 'discover' || view === 'pending-requests' || view === 'sent-requests' || view === 'pals'" class="list">
         <div *ngIf="userList.length === 0" class="list__empty">
             This list is empty
         </div>

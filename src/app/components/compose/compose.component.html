@@ -39,8 +39,11 @@
                     &nbsp;
                     {{form.get('template').value  !== 'none' ? 'Remove template' : 'Template'}}
                 </a>
-                <a class="btn btn--align-left btn--text-md btn--disabled"><i
-                        class="fas fa-user"></i>&nbsp;Recipient</a>
+                <a (click)="form.get('recipient').value ? removeOptionValue('recipient') : selectOption('recipient')"
+                        class="btn btn--align-left btn--text-md btn--disabled"><i
+                        class="fas fa-user"></i>
+                    &nbsp;Recipient
+                </a>
             </div>
         </div>
         <div class="options__group">
@@ -138,10 +141,30 @@
                     <div class="form__group--input--dropdown__value">
                         {{form.get('template').value}}
                     </div>
-                    <div id="language" class="form__group--input--dropdown__option-box">
+                    <div id="template" class="form__group--input--dropdown__option-box">
                         <a (click)="setTemplate(template)" *ngFor="let template of templates"
                            class="form__group--input--dropdown__option-box__item">
                             {{template}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="selectedOption === 'recipient'" class="form__group">
+            <div class="form__group--label">
+                <i class="far fa-square"></i>
+                <label for="recipient">Recipient</label>
+            </div>
+            <div class="form__group--input">
+                <div class="form__group--input form__group--input--dropdown">
+                    <div class="form__group--input--dropdown__value">
+                        {{selectedRecipientName}}
+                    </div>
+                    <div id="recipient" class="form__group--input--dropdown__option-box">
+                        <a (click)="setRecipient(recipient)" *ngFor="let recipient of recipients"
+                           class="form__group--input--dropdown__option-box__item">
+                            {{recipient.name}}
                         </a>
                     </div>
                 </div>

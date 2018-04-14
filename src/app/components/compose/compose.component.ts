@@ -13,6 +13,8 @@ import {User} from '../../models/user/user';
 })
 export class ComposeComponent implements OnInit {
     user: User;
+    recipients: User[];
+
     form: FormGroup;
     composeMode = false;
     shownSide = 'front';
@@ -28,15 +30,20 @@ export class ComposeComponent implements OnInit {
 
     ngOnInit() {
         this.userService.getCurrentUser().then((user: User) => {
-            this.user = user;
-            this.form = new FormGroup({
-                body: new FormControl(null, Validators.required),
-                imageUrl: new FormControl(null),
-                imageFitType: new FormControl('contain'),
-                spotifyLink: new FormControl(null),
-                youtubeLink: new FormControl(null),
-                allowShare: new FormControl(false),
-                template: new FormControl('none'),
+            this.userService.getPals().then((pals: User[]) => {
+                this.user = user;
+                this.recipients = pals;
+
+                this.form = new FormGroup({
+                    body: new FormControl(null, Validators.required),
+                    imageUrl: new FormControl(null),
+                    imageFitType: new FormControl('contain'),
+                    spotifyLink: new FormControl(null),
+                    youtubeLink: new FormControl(null),
+                    allowShare: new FormControl(false),
+                    template: new FormControl('none'),
+                    recipient: new FormControl(null)
+                });
             });
         });
     }
@@ -97,6 +104,24 @@ export class ComposeComponent implements OnInit {
             default:
                 return cssClass += ' postcard__image--none';
         }
+    }
+
+    get selectedRecipientName() {
+        let recipientName = null;
+        let selectedRecipientId = this.form.get('recipient').value;
+
+        this.recipients.forEach((item) => {
+            if (item._id === selectedRecipientId) {
+               recipientName = item.name;
+                return false;
+            }
+        });
+
+        return recipientName;
+    }
+
+    setRecipient(recipient: User) {
+        this.form.get('recipient').setValue(recipient._id);
     }
 
     setTemplate(templateName, bodyElement = null, backElement = null) {
