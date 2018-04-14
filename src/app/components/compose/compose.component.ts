@@ -3,6 +3,8 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Postcard} from '../../models/postcard/postcard';
 import {PostcardService} from '../../services/postcard.service';
 import {NotificationsService} from 'angular2-notifications';
+import {UserService} from '../../services/user.service';
+import {User} from '../../models/user/user';
 
 @Component({
     selector: 'app-compose',
@@ -10,6 +12,7 @@ import {NotificationsService} from 'angular2-notifications';
     styleUrls: ['./compose.component.scss']
 })
 export class ComposeComponent implements OnInit {
+    user: User;
     form: FormGroup;
     composeMode = false;
     shownSide = 'front';
@@ -19,18 +22,22 @@ export class ComposeComponent implements OnInit {
     templates = ['none', 'bubble'];
 
     constructor(private postcardService: PostcardService,
+                private userService: UserService,
                 private notificationService: NotificationsService) {
     }
 
     ngOnInit() {
-        this.form = new FormGroup({
-            body: new FormControl(null, Validators.required),
-            imageUrl: new FormControl(null),
-            imageFitType: new FormControl('contain'),
-            spotifyLink: new FormControl(null),
-            youtubeLink: new FormControl(null),
-            allowShare: new FormControl(false),
-            template: new FormControl('none'),
+        this.userService.getCurrentUser().then((user: User) => {
+            this.user = user;
+            this.form = new FormGroup({
+                body: new FormControl(null, Validators.required),
+                imageUrl: new FormControl(null),
+                imageFitType: new FormControl('contain'),
+                spotifyLink: new FormControl(null),
+                youtubeLink: new FormControl(null),
+                allowShare: new FormControl(false),
+                template: new FormControl('none'),
+            });
         });
     }
 

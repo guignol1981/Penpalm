@@ -42,10 +42,15 @@
     </div>
 
     <div *ngIf="view === 'discover' || view === 'pending-requests' || view === 'sent-requests' || view === 'pals'" class="list">
-        <div *ngFor="let userList of userList" class="list__item">
-            <a (click)="selectUser(userList)" class="image-wrap">
-                <img class="image" [src]="userList.photoUrl" alt="user picture">
-            </a>
+        <div *ngIf="userList.length === 0" class="list__empty">
+            This list is empty
+        </div>
+        <div *ngIf="userList.length > 0">
+            <div *ngFor="let userList of userList" class="list__item">
+                <a (click)="selectUser(userList)" class="image-wrap">
+                    <img class="image" [src]="userList.photoUrl" alt="user picture">
+                </a>
+            </div>
         </div>
     </div>
 

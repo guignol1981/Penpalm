@@ -1,4 +1,4 @@
-<div class="container">
+<div *ngIf="user" class="container">
     <div #postcard class="postcard">
         <form [formGroup]="form" class="postcard--side">
                     <textarea #body class="postcard__body" formControlName="body" name="body" id="body" cols="30"
