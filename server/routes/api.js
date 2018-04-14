@@ -10,7 +10,9 @@ let userController = require('../controllers/user-controller');
 let authenticatorController = require('../controllers/authenticator-controller');
 let postcardController = require('../controllers/postcard-controller');
 let newsController = require('../controllers/news-controller');
+let utilController = require('../controllers/util-controller');
 
+//social auth
 router.post('/auth/facebook',
     passport.authenticate('facebook-token'),
     authenticatorController.prepareReqForToken,
@@ -44,5 +46,8 @@ router.get('/postcards/out', authenticate, postcardController.getOutbox);
 
 //news
 router.get('/news', authenticate, newsController.fetch);
+
+router.get('/util/countries', authenticate, utilController.getCountries);
+router.get('/util/languages', authenticate, utilController.getLanguages);
 
 module.exports = router;

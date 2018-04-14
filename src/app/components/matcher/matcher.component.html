@@ -1,4 +1,4 @@
-<div *ngIf="user" class="container">
+<div *ngIf="user && languageList && countryList" class="container">
 
     <div *ngIf="view === 'discover'" class="input">
         <div *ngIf="selectedOption === 'language-filter'" class="input__group">
@@ -13,7 +13,7 @@
                     <div id="languagefilter" class="input__group--input--dropdown__option-box">
                         <a (click)="setLanguageFilter(language)" *ngFor="let language of languageList"
                            class="input__group--input--dropdown__option-box__item">
-                            {{language}}
+                            {{language.name}}
                         </a>
                     </div>
                 </div>
@@ -139,7 +139,7 @@
                    class="btn btn--align-left btn--text-md">
                     &nbsp;{{findFilter.country === 'none'? 'Country' : 'Clear country filter'}}
                 </a>
-                <a (click)="findFilter.language  === 'none'? selectOption('language-filter') : setLanguageFilter('none')"
+                <a (click)="findFilter.language  === 'none'? selectOption('language-filter') : setLanguageFilter({name: 'none'})"
                    class="btn btn--align-left btn--text-md">
                     &nbsp;{{findFilter.language === 'none' ? 'Language' : 'Clear language filter'}}
                 </a>

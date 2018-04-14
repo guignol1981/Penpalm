@@ -25,6 +25,11 @@
                 General
             </div>
             <div class="options__group--list">
+                <a (click)="selectOption('recipient')"
+                        class="btn btn--align-left btn--text-md btn"><i
+                        class="fas fa-user"></i>
+                    &nbsp;Recipient
+                </a>
                 <a (click)="form.get('spotifyLink').value ? removeOptionValue('spotifyLink') : selectOption('spotifyLink')"
                    class="btn btn--align-left btn--text-md"><i
                         class="fab fa-spotify"></i>
@@ -38,11 +43,6 @@
                         class="far fa-square"></i>
                     &nbsp;
                     {{form.get('template').value  !== 'none' ? 'Remove template' : 'Template'}}
-                </a>
-                <a (click)="form.get('recipient').value ? removeOptionValue('recipient') : selectOption('recipient')"
-                        class="btn btn--align-left btn--text-md btn--disabled"><i
-                        class="fas fa-user"></i>
-                    &nbsp;Recipient
                 </a>
             </div>
         </div>

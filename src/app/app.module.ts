@@ -23,6 +23,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NewsService} from "./services/news.service";
 import { YoutubePlayerModule } from 'ng2-youtube-player';
 import { MatcherComponent } from './components/matcher/matcher.component';
+import {UtilService} from './services/util.service';
 
 
 let config = new AuthServiceConfig([
@@ -65,6 +66,7 @@ export function provideConfig() {
         YoutubePlayerModule
     ],
     providers: [
+        UtilService,
         UserService,
         PostcardService,
         NewsService,

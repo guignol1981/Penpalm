@@ -1,4 +1,4 @@
-<div *ngIf="user && form" class="container">
+<div *ngIf="user && form && countryList && languageList" class="container">
 
     <div class="title">
         {{user.name}}
@@ -67,7 +67,7 @@
                     <div id="language" class="form__group--input--dropdown__option-box">
                         <a (click)="setLanguage(language)" *ngFor="let language of languageList"
                            class="form__group--input--dropdown__option-box__item">
-                            {{language}}
+                            {{language.name}}
                         </a>
                     </div>
                 </div>
