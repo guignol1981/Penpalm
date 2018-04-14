@@ -49,10 +49,10 @@
         <app-compose></app-compose>
     </div>
     <div *ngIf="activeTab === 'account'" class="main">
-        <app-account [user]="user" (notifEvent)="onNotif($event)"></app-account>
+        <app-account (notifEvent)="onNotif($event)"></app-account>
     </div>
     <div *ngIf="activeTab === 'matcher'" class="main">
-        <app-matcher [user]="user" (notifEvent)="onNotif($event)"></app-matcher>
+        <app-matcher (notifEvent)="onNotif($event)"></app-matcher>
     </div>
     <div class="footer">
         <app-footer></app-footer>

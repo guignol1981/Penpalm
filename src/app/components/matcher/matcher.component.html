@@ -41,10 +41,10 @@
 
     </div>
 
-    <div *ngIf="view === 'discover' || view === 'pending-requests' || view === 'sent-requests'" class="list">
-        <div *ngFor="let suggestedUser of suggestedUsers" class="list__item">
-            <a (click)="selectUser(suggestedUser)" class="image-wrap">
-                <img class="image" [src]="suggestedUser.photoUrl" alt="user picture">
+    <div *ngIf="view === 'discover' || view === 'pending-requests' || view === 'sent-requests' || view === 'pals'" class="list">
+        <div *ngFor="let userList of userList" class="list__item">
+            <a (click)="selectUser(userList)" class="image-wrap">
+                <img class="image" [src]="userList.photoUrl" alt="user picture">
             </a>
         </div>
     </div>
@@ -99,7 +99,7 @@
             </div>
             <div class="options__group--list">
                 <div *ngIf="user.isPal(selectedUser._id)">
-                    <a (click)="removeFromPals()"
+                    <a (click)="removePal()"
                        [class]="transacting ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'">
                         Remove from pals</a>
                 </div>

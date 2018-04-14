@@ -48,10 +48,9 @@ module.exports.handleRequest = function (req, res) {
                 .then((targetUser) => {
                     sourceUser.removePendingRequest(targetUser._id, (sourceUser) => {
                         targetUser.removePendingRequest(sourceUser._id, (targetUser) => {
-                            console.log('ok');
                             if (accept) {
-                                sourceUser.pals.push(targetUser);
-                                targetUser.pals.push(sourceUser);
+                                sourceUser.pals.push(targetUser._id);
+                                targetUser.pals.push(sourceUser._id);
 
                                 res.send({
                                     msg: 'Request accepted',
@@ -60,6 +59,7 @@ module.exports.handleRequest = function (req, res) {
                                         sourceUser: sourceUser
                                     }
                                 });
+
                             } else {
                                 res.send({
                                     msg: 'Request rejected',
@@ -72,6 +72,41 @@ module.exports.handleRequest = function (req, res) {
                         });
                     });
                 });
+        });
+};
+
+module.exports.removePal = function (req, res) {
+    User.findById(req.auth.id)
+        .exec()
+        .then((sourceUser) => {
+            sourceUser.unmatch(req.body._id, (sourceUser) => {
+                User.findById(req.body._id)
+                    .exec()
+                    .then((targetUser) => {
+                        targetUser.unmatch(sourceUser._id, (targetUser) => {
+                            res.send({
+                                msg: 'Removed from pal',
+                                data: {
+                                    targetUser: targetUser,
+                                    sourceUser: sourceUser
+                                }
+                            });
+                        });
+                    });
+            });
+        });
+};
+
+module.exports.getPals = function (req, res) {
+    User.findById(req.auth.id)
+        .populate('pals')
+        .exec()
+        .then((user) => {
+            res.send({
+                msg: 'Pals found',
+                data: user.pals
+            });
+            return;
         });
 };
 
@@ -114,7 +149,7 @@ module.exports.update = function (req, res) {
             user.showName = body['showName'];
             user.enableEmailNotifications = body['enableEmailNotifications'];
 
-            user.save().then(() => {
+            user.save().then((user) => {
                 res.send({
                     msg: 'User updated',
                     data: user

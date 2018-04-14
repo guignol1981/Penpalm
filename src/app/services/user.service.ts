@@ -14,22 +14,6 @@ export class UserService {
     }
 
     public static deserializeUser(data: any): User {
-        let pals = [];
-
-        data.pals.forEach((item) => {
-            pals.push(new User(
-                item['_id'],
-                item['name'],
-                item['email'],
-                item['photoUrl'],
-                item['language'],
-                item['country'],
-                item['description'],
-                item['showPicture'],
-                item['showName']
-            ));
-        });
-
         return new User(
             data['_id'],
             data['name'],
@@ -42,7 +26,7 @@ export class UserService {
             data['showName'],
             data['enableEmailNotifications'],
             data['pendingRequests'],
-            pals
+            data['pals']
         );
     }
 
@@ -150,6 +134,53 @@ export class UserService {
             });
     }
 
+    removePal(user: User): Promise<any> {
+
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.put(this.apiEndPoint + '/remove-pal', JSON.stringify(user), {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                let data = response.json().data;
+                let targetUser = UserService.deserializeUser(data.targetUser);
+                let sourceUser = UserService.deserializeUser(data.sourceUser);
+
+                return {
+                    targetUser: targetUser,
+                    sourceUser: sourceUser
+                };
+            })
+            .catch(() => {
+                return null;
+            });
+    }
+
+    getPals() {
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.get(this.apiEndPoint + '/pals', {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                let data = response.json().data;
+                let users = [];
+
+                data.forEach((userData) => {
+                    users.push(UserService.deserializeUser(userData));
+                });
+
+                return users;
+            })
+            .catch(() => {
+                return null;
+            });
+    }
+
     find(findFitler: FindFilter): Promise<User[]> {
         let headers = new Headers({
             'Content-Type': 'application/json',
@@ -165,6 +196,7 @@ export class UserService {
                 data.forEach((userData) => {
                     users.push(UserService.deserializeUser(userData));
                 });
+
                 return users;
             })
             .catch(() => {

@@ -11,7 +11,7 @@ export class User {
                 public showName?: boolean,
                 public enableEmailNotifications?: boolean,
                 public pendingRequests?: string[],
-                public pals?: User[]) {
+                public pals?: string[]) {
     }
 
     isRequestSent(userId: string): boolean {
@@ -31,7 +31,7 @@ export class User {
         let isPal = false;
 
         this.pals.forEach((item) => {
-            if (item._id === userId) {
+            if (item === userId) {
                 isPal = true;
                 return false;
             }

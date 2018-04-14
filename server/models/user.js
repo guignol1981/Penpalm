@@ -58,6 +58,19 @@ UserSchema.statics.upsertSocialUser = function (accessToken, refreshToken, profi
     });
 };
 
+UserSchema.methods.unmatch = function (userId, callback) {
+    let index = this.pals.indexOf(userId);
+
+    if (index > -1) {
+        this.pals.splice(index, 1);
+        this.save().then(() => {
+            callback(this);
+        });
+    } else {
+        callback(this);
+    }
+};
+
 UserSchema.methods.removePendingRequest = function(userId, callback) {
     let index = this.pendingRequests.indexOf(userId);
 
@@ -70,6 +83,7 @@ UserSchema.methods.removePendingRequest = function(userId, callback) {
         callback(this);
     }
 };
+
 
 let User = mongoose.model('User', UserSchema);
 

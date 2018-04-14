@@ -12,8 +12,8 @@ import {Notif} from '../home/home.component';
     styleUrls: ['./account.component.scss']
 })
 export class AccountComponent implements OnInit {
-    @Input() user: User;
     @Output() notifEvent: EventEmitter<Notif> = new EventEmitter<Notif>();
+    user: User;
     form: FormGroup;
     deleteWarning = false;
     selectedOption = '';
@@ -26,13 +26,16 @@ export class AccountComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.form = new FormGroup({
-            showPicture: new FormControl(this.user.showPicture),
-            showName: new FormControl(this.user.showName),
-            enableEmailNotifications: new FormControl(this.user.enableEmailNotifications),
-            language: new FormControl(this.user.language),
-            country: new FormControl(this.user.country),
-            description: new FormControl(this.user.description)
+        this.userService.getCurrentUser().then((user: User) => {
+            this.user = user;
+            this.form = new FormGroup({
+                showPicture: new FormControl(this.user.showPicture),
+                showName: new FormControl(this.user.showName),
+                enableEmailNotifications: new FormControl(this.user.enableEmailNotifications),
+                language: new FormControl(this.user.language),
+                country: new FormControl(this.user.country),
+                description: new FormControl(this.user.description)
+            });
         });
     }
 
