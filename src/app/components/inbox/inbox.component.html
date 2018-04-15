@@ -32,6 +32,16 @@
         <div class="info__item">
             {{activePostcard.creationDate | date}}
         </div>
+        <div class="info__item info__item--author">
+            <div class="info__item--author__name">
+                {{activePostcard.author.name}}
+            </div>
+            <div class="info__item--author__photo">
+                <div class="image-wrap">
+                    <img class="image" [src]="activePostcard.author.photoUrl" alt="user picture">
+                </div>
+            </div>
+        </div>
         <div class="info__item" *ngIf="spotySrc">
             <iframe id="spoty" [src]="spotySrc" width="100%"
                     height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
@@ -74,7 +84,14 @@
         <a (click)="flip(postcard)" class="btn">Flip</a>
     </div>
 </div>
-<div *ngIf="!postcards || postcards.length === 0" class="container">
+
+<div *ngIf="!postcards" class="container">
+    <div class="loading-container">
+        <div class="loading loading"></div>
+    </div>
+</div>
+
+<div *ngIf="postcards && postcards.length === 0" class="container">
     <div class="empty">
         {{direction === 'in' ? 'You don\'t have any postcards yet' : 'You haven\'t sent any postcards yet'}}
     </div>

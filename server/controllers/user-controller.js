@@ -2,7 +2,11 @@ let User = require('../models/user');
 let url = require('url');
 
 module.exports.get = function (req, res) {
-    User.findById(req.auth.id)
+    let url_parts = url.parse(req.url, true);
+    let query = url_parts.query;
+    let id = query.id;
+
+    User.findById(id || req.auth.id)
         .exec()
         .then(user => {
             res.send({

@@ -59,6 +59,7 @@ module.exports.getInbox = function(req, res) {
 
 	Postcard.count({'recipient': req.auth.id}).then(count => {
 		Postcard.find({'recipient': req.auth.id})
+			.populate('author')
 			.skip(Number(query.skip))
 			.limit(5)
 			.sort({'creationDate': -1})
@@ -82,6 +83,7 @@ module.exports.getOutbox = function(req, res) {
 	let query = url_parts.query;
 	Postcard.count({'author': req.auth.id}).then(count => {
 		Postcard.find({'author': req.auth.id})
+			.populate('author')
 			.skip(Number(query.skip))
 			.limit(5)
 			.sort({'creationDate': -1})

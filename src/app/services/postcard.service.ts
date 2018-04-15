@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response, Headers} from '@angular/http';
 import {Postcard} from '../models/postcard/postcard';
 import {AuthenticationService} from './authentication.service';
+import {UserService} from './user.service';
 
 @Injectable()
 export class PostcardService {
@@ -12,6 +13,7 @@ export class PostcardService {
     }
 
     public static deserializePostcard(data: any): Postcard {
+
         return new Postcard(
             data['_id'],
             data['body'],
@@ -22,6 +24,7 @@ export class PostcardService {
             data['allowShare'],
             data['template'],
             data['recipient'],
+            UserService.deserializeUser(data['author']),
             data['seen'],
             data['creationDate']
         );

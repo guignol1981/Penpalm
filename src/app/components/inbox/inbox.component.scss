@@ -150,7 +150,31 @@
 	&__item {
 		margin-bottom: 1rem;
 		width: 100%;
+
+		&--author {
+			display: flex;
+			align-items: center;
+			margin-top: 3rem;
+			margin-bottom: 3rem;
+
+			&__name {
+
+			}
+
+			&__photo {
+				max-width: 10rem;
+			}
+		}
 	}
+}
+
+.loading-container {
+	grid-area: postcard;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .empty {
@@ -169,5 +193,17 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.image-wrap {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.image {
+	max-width: 50%;
+	max-height: 50%;
+	border-radius: 50%;
 }
 

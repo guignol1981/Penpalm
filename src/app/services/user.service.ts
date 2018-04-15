@@ -46,13 +46,13 @@ export class UserService {
             });
     }
 
-    getCurrentUser(): Promise<User> {
+    getCurrentUser(id?: string): Promise<User> {
         let headers = new Headers({
             'Content-Type': 'application/json',
             Authorization: 'Bearer ' + this.authenticationService.getToken()
         });
 
-        return this.http.get(this.apiEndPoint, {headers: headers})
+        return this.http.get(this.apiEndPoint, {headers: headers, params: {id: id}})
             .toPromise()
             .then((response: Response) => {
                 return UserService.deserializeUser(response.json().data);

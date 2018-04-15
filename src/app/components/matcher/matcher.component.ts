@@ -43,7 +43,6 @@ export class MatcherComponent implements OnInit {
 
         this.utilService.getLanguages().then((languages) => {
             this.languageList = languages;
-            this.languageList.unshift({name: 'none'});
         });
 
         this.userService.getCurrentUser().then((user: User) => {
