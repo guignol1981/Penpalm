@@ -114,7 +114,9 @@
                               [dropBoxMessage]="'Drop your image here!'"
                               [preview]="false"
                               (uploadFinished)="onImageUploadFinished($event)"
-                              [url]="'http://localhost:3000/api/test'">
+                              (removed)="onImageRemoved()"
+                              [url]="'http://localhost:3000/api/images'"
+                              [headers]="headers">
                 </image-upload>
             </div>
         </div>

@@ -23,7 +23,6 @@ module.exports.sendUploadToGCS = function (req, res, next) {
 
     stream.on('error', (err) => {
         req.file.cloudStorageError = err;
-        console.log(err);
         next(err);
     });
 

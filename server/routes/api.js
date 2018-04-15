@@ -50,9 +50,11 @@ router.get('/postcards/out', authenticate, postcardController.getOutbox);
 //news
 router.get('/news', authenticate, newsController.fetch);
 
+//utils
 router.get('/util/countries', authenticate, utilController.getCountries);
 router.get('/util/languages', authenticate, utilController.getLanguages);
 
-router.post('/test', upload.single('image'),imageController.sendUploadToGCS, imageController.upload);
+//images
+router.post('/images', authenticate, upload.single('image'),imageController.sendUploadToGCS, imageController.upload);
 
 module.exports = router;

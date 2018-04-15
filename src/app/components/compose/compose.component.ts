@@ -5,6 +5,7 @@ import {PostcardService} from '../../services/postcard.service';
 import {UserService} from '../../services/user.service';
 import {User} from '../../models/user/user';
 import {Notif} from '../home/home.component';
+import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
     selector: 'app-compose',
@@ -25,6 +26,7 @@ export class ComposeComponent implements OnInit {
 
 
     constructor(private postcardService: PostcardService,
+                private authenticationService: AuthenticationService,
                 private userService: UserService) {
     }
 
@@ -47,6 +49,28 @@ export class ComposeComponent implements OnInit {
                 });
             });
         });
+    }
+
+    get selectedRecipientName() {
+        let recipientName = null;
+        let selectedRecipientId = this.form.get('recipient').value;
+
+        this.recipients.forEach((item) => {
+            if (item._id === selectedRecipientId) {
+                recipientName = item.name;
+                return false;
+            }
+        });
+
+        return recipientName;
+    }
+
+    get imageUrl() {
+        return this.form.get('imageUrl').value || this.form.get('uploadedImage').value || null;
+    }
+
+    get headers () {
+        return {'Authorization' : 'Bearer ' + this.authenticationService.getToken()};
     }
 
     isBackSideOptionAvailable(option) {
@@ -108,24 +132,6 @@ export class ComposeComponent implements OnInit {
         }
     }
 
-    get selectedRecipientName() {
-        let recipientName = null;
-        let selectedRecipientId = this.form.get('recipient').value;
-
-        this.recipients.forEach((item) => {
-            if (item._id === selectedRecipientId) {
-                recipientName = item.name;
-                return false;
-            }
-        });
-
-        return recipientName;
-    }
-
-    get imageUrl() {
-        return this.form.get('imageUrl').value || this.form.get('uploadedImage').value || null;
-    }
-
     setRecipient(recipient: User) {
         this.form.get('recipient').setValue(recipient._id);
     }
@@ -167,6 +173,10 @@ export class ComposeComponent implements OnInit {
         let imageData = JSON.parse(data.serverResponse._body).data;
         let imageUrl = imageData.imageUrl;
         this.form.get('uploadedImage').setValue(imageUrl);
+    }
+
+    onImageRemoved() {
+        this.form.get('uploadedImage').reset();
     }
 
     submit() {

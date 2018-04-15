@@ -104,8 +104,9 @@
 	align-items: center;
 	border-radius: 1rem;
 	margin: 1rem;
+
 	&--success	{
-		background-color: transparentize(#55efc4, .7);
+		background-color: var(--color-primary);
 		color: var(--color-whitish);
 	}
 
