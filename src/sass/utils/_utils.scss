@@ -7,3 +7,28 @@
 	-webkit-animation: spin 2s linear infinite; /* Safari */
 	animation: spin 2s linear infinite;
 }
+
+.image-uploader {
+	background-color: var(--color-whitish);
+	border-radius: 1rem;
+	width: 100%;
+}
+
+.image-uploader .img-ul-upload {
+	background-color: var(--color-primary) !important;
+	border-radius: 1rem;
+}
+
+.image-uploader .img-ul-clear {
+	background-color: var(--color-secondary) !important;
+	border-radius: 1rem;
+	margin-left: .5rem;
+}
+
+.image-uploader .img-ul-drag-box-msg {
+	color: gray !important;
+}
+
+.image-uploader .img-ul-container {
+	background-color: var(--color-whitish) !important;
+}

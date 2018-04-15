@@ -9,6 +9,8 @@ let api = require('./server/routes/api');
 let passport = require('passport');
 require('./server/services/scheduled-job');
 
+process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(__dirname, 'server/configs/google-api.json');
+
 setInterval(function () {
 	http.get("http://penpalm.herokuapp.com");
 }, 300000);

@@ -1,6 +1,8 @@
 let express = require('express');
 let router = express.Router();
 let passport = require('passport');
+let multer = require('multer');
+let upload = multer({storage: multer.memoryStorage()});
 let authenticate = require('express-jwt')({
     secret: 'my-secret',
     requestProperty: 'auth'
@@ -11,6 +13,7 @@ let authenticatorController = require('../controllers/authenticator-controller')
 let postcardController = require('../controllers/postcard-controller');
 let newsController = require('../controllers/news-controller');
 let utilController = require('../controllers/util-controller');
+let imageController = require('../controllers/image-controller');
 
 //social auth
 router.post('/auth/facebook',
@@ -49,5 +52,7 @@ router.get('/news', authenticate, newsController.fetch);
 
 router.get('/util/countries', authenticate, utilController.getCountries);
 router.get('/util/languages', authenticate, utilController.getLanguages);
+
+router.post('/test', upload.single('image'),imageController.sendUploadToGCS, imageController.upload);
 
 module.exports = router;

@@ -2,7 +2,6 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Postcard} from '../../models/postcard/postcard';
 import {PostcardService} from '../../services/postcard.service';
-import {NotificationsService} from 'angular2-notifications';
 import {UserService} from '../../services/user.service';
 import {User} from '../../models/user/user';
 import {Notif} from '../home/home.component';
@@ -24,9 +23,9 @@ export class ComposeComponent implements OnInit {
     selectedOption = '';
     templates = ['none', 'bubble'];
 
+
     constructor(private postcardService: PostcardService,
-                private userService: UserService,
-                private notificationService: NotificationsService) {
+                private userService: UserService) {
     }
 
     ngOnInit() {
@@ -41,6 +40,7 @@ export class ComposeComponent implements OnInit {
                     imageFitType: new FormControl('contain'),
                     spotifyLink: new FormControl(null),
                     youtubeLink: new FormControl(null),
+                    uploadedImage: new FormControl(null),
                     allowShare: new FormControl(false),
                     template: new FormControl('none'),
                     recipient: new FormControl(null, Validators.required)
@@ -53,7 +53,8 @@ export class ComposeComponent implements OnInit {
         let isAvailable = true;
         let backSideOptions = [
             'youtubeLink',
-            'imageUrl'
+            'imageUrl',
+            'uploadedImage'
         ];
 
         backSideOptions.forEach((item) => {
@@ -129,8 +130,9 @@ export class ComposeComponent implements OnInit {
         bodyElement = bodyElement || document.getElementById('body');
         backElement = backElement || document.getElementById('back');
 
+        this.form.get('template').setValue(templateName);
+        console.log(this.form.get('template').value);
         if (templateName !== 'none') {
-            this.form.get('template').setValue(templateName);
 
             bodyElement.style.background = 'url(../../../assets/' + templateName + '-template_front.png)';
             bodyElement.style.backgroundRepeat = 'no-repeat';
@@ -142,7 +144,6 @@ export class ComposeComponent implements OnInit {
             backElement.style.backgroundSize = 'cover';
             backElement.style.backgroundPosition = 'center';
         } else {
-            this.form.get('template').reset();
             bodyElement.style.background = '';
             backElement.style.background = '';
         }

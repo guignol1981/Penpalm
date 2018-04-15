@@ -7,8 +7,8 @@ import {routing} from './routing';
 import {HomeComponent} from './components/home/home.component';
 import {UserService} from './services/user.service';
 import {LoginComponent} from './components/login/login.component';
-import {AuthenticationService} from "./services/authentication.service";
-import {CanActivateViaAuthGuardService} from "./services/can-activate-via-auth-guard.service";
+import {AuthenticationService} from './services/authentication.service';
+import {CanActivateViaAuthGuardService} from './services/can-activate-via-auth-guard.service';
 import {PostcardComponent} from './components/postcard/postcard.component';
 import {LogoutComponent} from './components/logout/logout.component';
 import {AuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider, SocialLoginModule} from 'angular4-social-login';
@@ -19,11 +19,12 @@ import {AccountComponent} from './components/account/account.component';
 import {NewsComponent} from './components/news/news.component';
 import {PostcardService} from './services/postcard.service';
 import {SimpleNotificationsModule} from 'angular2-notifications';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {NewsService} from "./services/news.service";
-import { YoutubePlayerModule } from 'ng2-youtube-player';
-import { MatcherComponent } from './components/matcher/matcher.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NewsService} from './services/news.service';
+import {YoutubePlayerModule} from 'ng2-youtube-player';
+import {MatcherComponent} from './components/matcher/matcher.component';
 import {UtilService} from './services/util.service';
+import {ImageUploadModule} from 'angular2-image-upload';
 
 
 let config = new AuthServiceConfig([
@@ -63,7 +64,8 @@ export function provideConfig() {
         routing,
         SocialLoginModule,
         SimpleNotificationsModule.forRoot(),
-        YoutubePlayerModule
+        YoutubePlayerModule,
+        ImageUploadModule.forRoot()
     ],
     providers: [
         UtilService,

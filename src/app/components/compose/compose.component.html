@@ -26,7 +26,7 @@
             </div>
             <div class="options__group--list">
                 <a (click)="selectOption('recipient')"
-                        class="btn btn--align-left btn--text-md btn"><i
+                   class="btn btn--align-left btn--text-md btn"><i
                         class="fas fa-user"></i>
                     &nbsp;Recipient
                 </a>
@@ -42,7 +42,7 @@
                    class="btn btn--align-left btn--text-md"><i
                         class="far fa-square"></i>
                     &nbsp;
-                    {{form.get('template').value  !== 'none' ? 'Remove template' : 'Template'}}
+                    {{form.get('template').value !== 'none' ? 'Remove template' : 'Template'}}
                 </a>
             </div>
         </div>
@@ -78,8 +78,12 @@
                     &nbsp;
                     {{form.get('imageUrl').value ? 'Remove image link' : 'Linked image'}}
                 </a>
-                <a class="btn btn--align-left btn--text-md btn--disabled"><i class="fas fa-image"></i>&nbsp;Add a
-                    picture</a>
+                <a (click)="isBackSideOptionAvailable('uploadedImage') ? form.get('uploadedImage').value ? removeOptionValue('uploadedImage') : selectOption('uploadedImage') : ''"
+                   [class]="isBackSideOptionAvailable('uploadedImage') ? 'btn btn--align-left btn--text-md' : 'btn btn--align-left btn--text-md btn--disabled'">
+                    <i class="fas fa-image"></i>
+                    &nbsp;
+                    {{form.get('uploadedImage').value ? 'Remove uploaded image' : 'Uploaded image'}}
+                </a>
                 <a class="btn btn--align-left btn--text-md btn--disabled"><i class="fas fa-map-marker"></i>&nbsp;Location</a>
             </div>
         </div>
@@ -95,6 +99,22 @@
             <div class="form__group--input">
                 <input formControlName="spotifyLink" class="form__group--input--text" id="spotifyLink" type="text"
                        placeholder="spotify uri">
+            </div>
+        </div>
+
+        <div *ngIf="selectedOption === 'uploadedImage'" class="form__group">
+            <div class="form__group--label">
+                <i class="fas fa-image"></i>
+                <label for="uploadedImage">Uploaded image</label>
+            </div>
+            <div class="form__group--input">
+                <image-upload id="uploadedImage"
+                              [class]="'image-uploader'"
+                              [buttonCaption]="'Select Image'"
+                              [dropBoxMessage]="'Drop your image here!'"
+                              [preview]="false"
+                              [url]="'http://localhost:3000/api/test'">
+                </image-upload>
             </div>
         </div>
 

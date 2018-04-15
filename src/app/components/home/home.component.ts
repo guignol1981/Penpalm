@@ -15,7 +15,7 @@ export interface Notif {
 })
 export class HomeComponent implements OnInit {
     user: User;
-    activeTab = 'matcher';
+    activeTab = 'compose';
     notif: Notif;
 
     constructor(private userService: UserService,
