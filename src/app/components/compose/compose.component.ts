@@ -114,12 +114,16 @@ export class ComposeComponent implements OnInit {
 
         this.recipients.forEach((item) => {
             if (item._id === selectedRecipientId) {
-               recipientName = item.name;
+                recipientName = item.name;
                 return false;
             }
         });
 
         return recipientName;
+    }
+
+    get imageUrl() {
+        return this.form.get('imageUrl').value || this.form.get('uploadedImage').value || null;
     }
 
     setRecipient(recipient: User) {
@@ -157,6 +161,12 @@ export class ComposeComponent implements OnInit {
             this.shownSide = 'front';
             postcard.style.transform = 'rotateY(0deg)';
         }
+    }
+
+    onImageUploadFinished(data) {
+        let imageData = JSON.parse(data.serverResponse._body).data;
+        let imageUrl = imageData.imageUrl;
+        this.form.get('uploadedImage').setValue(imageUrl);
     }
 
     submit() {

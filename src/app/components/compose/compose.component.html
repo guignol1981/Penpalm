@@ -10,9 +10,9 @@
                             [height]="'100%'"
                             [width]="'100%'"
             ></youtube-player>
-            <div *ngIf="form.get('imageUrl').value">
+            <div *ngIf="imageUrl">
                 <div class="postcard__image-wrap">
-                    <img [class]="getImageClass()" [src]="form.get('imageUrl').value"
+                    <img [class]="getImageClass()" [src]="imageUrl"
                          alt="">
                 </div>
             </div>
@@ -113,6 +113,7 @@
                               [buttonCaption]="'Select Image'"
                               [dropBoxMessage]="'Drop your image here!'"
                               [preview]="false"
+                              (uploadFinished)="onImageUploadFinished($event)"
                               [url]="'http://localhost:3000/api/test'">
                 </image-upload>
             </div>
