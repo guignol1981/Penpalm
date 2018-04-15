@@ -9,10 +9,10 @@
 	font-size: 2rem;
 	transition: all .2s;
 	background-color: transparent;
-	color: white;
+	color: var(--color-whitish);
 
 	&:hover {
-		background: white;
+		background: var(--color-whitish);
 		color: black;
 	}
 
@@ -26,7 +26,7 @@
 
 	&--active {
 		color: gray;
-		background-color: #fff;
+		background-color: var(--color-whitish);
 	}
 
 	&--align-left {
@@ -35,7 +35,7 @@
 	}
 
 	&--inverse {
-		background-color: #fff;
+		background-color: var(--color-whitish);
 		color: gray;
 	}
 
@@ -62,7 +62,7 @@
 
 	&--primary {
 		background-color: var(--color-primary);
-		color: #fff;
+		color: var(--color-whitish);
 	}
 
 	&--secondary {
@@ -72,7 +72,7 @@
 	&--warning {
 		transition: all .2s ease;
 		background-color: var(--color-warning);
-		color: #fff;
+		color: var(--color-whitish);
 		&:hover {
 			background: var(--color-warning);
 		}
@@ -118,7 +118,7 @@
 	width: 26px;
 	left: 4px;
 	bottom: 4px;
-	background-color: white;
+	background-color: var(--color-whitish);
 	-webkit-transition: .4s;
 	transition: .4s;
 }
@@ -154,7 +154,7 @@ input:checked + .slider:before {
 	border-radius: 1rem;
 	padding: 1rem 3rem;
 	font-size: 2rem;
-	background-color: #fff;
+	background-color: var(--color-whitish);
 	color: gray;
 }
 

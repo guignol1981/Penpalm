@@ -26,7 +26,7 @@
 	}
 
 	&__group {
-		color: #fff;
+		color: var(--color-whitish);
 		margin-bottom: 1rem;
 
 		&--title {
@@ -83,7 +83,7 @@
 		backface-visibility: hidden;
 		position: absolute;
 		border-radius: 1rem;
-		background-color: #fff;
+		background-color: var(--color-whitish);
 	}
 
 	&--back {
@@ -114,7 +114,7 @@
 	margin-left: 5rem;
 	margin-right: 5rem;
 	grid-area: form;
-	color: #fff;
+	color: var(--color-whitish);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -145,7 +145,7 @@
 			}
 
 			&--dropdown {
-				background-color: #fff;
+				background-color: var(--color-whitish);
 				height: 5rem;
 				font-size: 3rem;
 				color: gray;
@@ -176,7 +176,7 @@
 					width: 100%;
 					height: 15rem;
 					position: absolute;
-					background-color: #fff;
+					background-color: var(--color-whitish);
 					top: 5rem;
 					display: flex;
 					flex-direction: column;
@@ -210,7 +210,7 @@
 						&:hover {
 							cursor: pointer;
 							background-color: gray;
-							color: #fff;
+							color: var(--color-whitish);
 						}
 					}
 				}

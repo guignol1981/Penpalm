@@ -9,7 +9,7 @@
 .news {
 	width: 50rem;
 	font-size: 3rem;
-	color: #fff;
+	color: var(--color-whitish);
 	text-align: center;
 
 	&__title {
@@ -19,7 +19,7 @@
 
 	&__icon {
 		font-size: 4rem;
-		color: white;
+		color: var(--color-whitish);
 	}
 
 	&__sub {

@@ -29,7 +29,7 @@
 	height: 10rem;
 	border-radius: 50%;
 	text-decoration: none;
-	color: white;
+	color: var(--color-whitish);
 	font-size: 4rem;
 	cursor: pointer;
 	transition: all .3s;
@@ -59,7 +59,7 @@
 	}
 
 	&--active {
-		background-color: white;
+		background-color: var(--color-whitish);
 		color: black;
 	}
 
@@ -76,7 +76,7 @@
 	}
 
 	&:hover {
-		background-color: white;
+		background-color: var(--color-whitish);
 		color: black;
 	}
 
@@ -106,7 +106,7 @@
 	margin: 1rem;
 	&--success	{
 		background-color: transparentize(#55efc4, .7);
-		color: #fff;
+		color: var(--color-whitish);
 	}
 
 	&--warning {
