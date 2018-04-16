@@ -6,6 +6,7 @@ import {UserService} from '../../services/user.service';
 import {User} from '../../models/user/user';
 import {Notif} from '../home/home.component';
 import {AuthenticationService} from '../../services/authentication.service';
+import {GoogleMapService} from "../../services/google-map.service";
 
 @Component({
     selector: 'app-compose',
@@ -24,10 +25,10 @@ export class ComposeComponent implements OnInit {
     selectedOption = '';
     templates = ['none', 'bubble'];
 
-
     constructor(private postcardService: PostcardService,
                 private authenticationService: AuthenticationService,
-                private userService: UserService) {
+                private userService: UserService,
+                private googleMapService: GoogleMapService) {
     }
 
     ngOnInit() {
@@ -45,7 +46,8 @@ export class ComposeComponent implements OnInit {
                     uploadedImage: new FormControl(null),
                     allowShare: new FormControl(false),
                     template: new FormControl('none'),
-                    recipient: new FormControl(null, Validators.required)
+                    recipient: new FormControl(null, Validators.required),
+                    location: new FormControl(null)
                 });
             });
         });
@@ -73,12 +75,20 @@ export class ComposeComponent implements OnInit {
         return {'Authorization' : 'Bearer ' + this.authenticationService.getToken()};
     }
 
+    get geoData() {
+        return {
+            lat: this.form.get('location').value.lat,
+            lng: this.form.get('location').value.lng
+        };
+    }
+
     isBackSideOptionAvailable(option) {
         let isAvailable = true;
         let backSideOptions = [
             'youtubeLink',
             'imageUrl',
-            'uploadedImage'
+            'uploadedImage',
+            'location'
         ];
 
         backSideOptions.forEach((item) => {
@@ -95,8 +105,13 @@ export class ComposeComponent implements OnInit {
         this.selectedOption = option;
     }
 
-    removeOptionValue(option) {
+    removeOptionValue(option, inputElement?: HTMLInputElement) {
         this.form.get(option).reset();
+
+        if (inputElement) {
+            inputElement = null;
+        }
+
         if (option === 'template') {
             this.setTemplate('none');
         }
@@ -116,6 +131,13 @@ export class ComposeComponent implements OnInit {
         }
 
         return youtube_parser(link);
+    }
+
+    onLocationChange(value) {
+        this.googleMapService.getGeoData(value).then((geo) => {
+            let location = geo.data[0].geometry.location;
+            this.form.get('location').setValue({lat: location.lat, lng: location.lng});
+        });
     }
 
     getImageClass() {

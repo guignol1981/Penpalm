@@ -14,6 +14,7 @@ let postcardController = require('../controllers/postcard-controller');
 let newsController = require('../controllers/news-controller');
 let utilController = require('../controllers/util-controller');
 let imageController = require('../controllers/image-controller');
+let googleMapController = require('../controllers/google-map-controller');
 
 //social auth
 router.post('/auth/facebook',
@@ -56,5 +57,8 @@ router.get('/util/languages', authenticate, utilController.getLanguages);
 
 //images
 router.post('/images', authenticate, upload.single('image'),imageController.sendUploadToGCS, imageController.upload);
+
+//google map
+router.put('/geo-data', authenticate, googleMapController.getGeoData);
 
 module.exports = router;

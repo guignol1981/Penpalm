@@ -24,7 +24,9 @@ import {NewsService} from './services/news.service';
 import {YoutubePlayerModule} from 'ng2-youtube-player';
 import {MatcherComponent} from './components/matcher/matcher.component';
 import {UtilService} from './services/util.service';
+import { AgmCoreModule } from '@agm/core';
 import {ImageUploadModule} from 'angular2-image-upload';
+import {GoogleMapService} from "./services/google-map.service";
 
 
 let config = new AuthServiceConfig([
@@ -65,9 +67,13 @@ export function provideConfig() {
         SocialLoginModule,
         SimpleNotificationsModule.forRoot(),
         YoutubePlayerModule,
-        ImageUploadModule.forRoot()
+        ImageUploadModule.forRoot(),
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyAy4grLuONSG-gN4UuAAi-5lWZPXWO5nbM'
+        })
     ],
     providers: [
+        GoogleMapService,
         UtilService,
         UserService,
         PostcardService,
