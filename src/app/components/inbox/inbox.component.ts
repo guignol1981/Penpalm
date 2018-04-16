@@ -61,7 +61,7 @@ export class InboxComponent implements OnInit {
                 return cssClass += ' postcard__image--none';
             case 'contain':
             default:
-                return cssClass += ' postcard__image--cover';
+                return cssClass += ' postcard__image--contain';
         }
     }
 
