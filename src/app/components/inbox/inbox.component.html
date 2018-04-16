@@ -78,6 +78,10 @@
                      alt="postcard image">
             </div>
 
+            <agm-map *ngIf="activePostcard.location" [latitude]="geoData.lat" [longitude]="geoData.lng">
+                <agm-marker [latitude]="geoData.lat" [longitude]="geoData.lng"></agm-marker>
+            </agm-map>
+
         </div>
     </div>
     <div class="actions">

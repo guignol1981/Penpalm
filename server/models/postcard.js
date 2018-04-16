@@ -12,6 +12,7 @@ let PostcardSchema = new Schema({
     youtubeId: {type: String, default: null},
     allowShare: {type: Boolean, default: false},
     template: {type: String, default: 'none'},
+    location: {type: Object, default: null},
     seen: {type: Boolean, default: false},
     creationDate: {type: Date, require: true}
 });

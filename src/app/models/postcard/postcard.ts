@@ -11,6 +11,7 @@ export class Postcard {
                 public youtubeId?: string,
                 public allowShare?: boolean,
                 public template?: string,
+                public location?: any,
                 public recipient?: string,
                 public author?: User,
                 public seen?: boolean,

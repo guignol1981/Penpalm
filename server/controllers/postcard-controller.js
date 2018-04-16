@@ -26,6 +26,7 @@ module.exports.create = function(req, res) {
 				youtubeId: req.body.youtubeId,
 				allowShare: req.body.allowShare,
 				template: req.body.template,
+				location: req.body.location,
 				seen: false,
 				creationDate: new Date()
 			});

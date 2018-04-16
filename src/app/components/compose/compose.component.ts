@@ -164,7 +164,7 @@ export class ComposeComponent implements OnInit {
         backElement = backElement || document.getElementById('back');
 
         this.form.get('template').setValue(templateName);
-        console.log(this.form.get('template').value);
+
         if (templateName !== 'none') {
 
             bodyElement.style.background = 'url(../../../assets/' + templateName + '-template_front.png)';
@@ -223,6 +223,7 @@ export class ComposeComponent implements OnInit {
             this.getYoutubeLinkId(),
             this.form.get('allowShare').value,
             this.form.get('template').value,
+            this.form.get('location').value,
             this.form.get('recipient').value,
         );
 

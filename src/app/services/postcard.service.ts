@@ -24,6 +24,7 @@ export class PostcardService {
             data['youtubeId'],
             data['allowShare'],
             data['template'],
+            data['location'],
             data['recipient'],
             UserService.deserializeUser(data['author']),
             data['seen'],

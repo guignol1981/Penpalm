@@ -33,8 +33,14 @@ export class InboxComponent implements OnInit {
     }
 
     get imageUrl() {
-        console.log(this.activePostcard.imageUrl || this.activePostcard.uploadedImage || null);
         return this.activePostcard.imageUrl || this.activePostcard.uploadedImage || null;
+    }
+
+    get geoData() {
+        return {
+            lat: this.activePostcard.location.lat,
+            lng: this.activePostcard.location.lng
+        };
     }
 
     fetchPostcards() {
