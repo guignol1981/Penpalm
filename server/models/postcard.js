@@ -6,6 +6,7 @@ let PostcardSchema = new Schema({
     recipient: {type: Schema.Types.ObjectId, ref: 'User', required: true},
     body: {type: String, required: true},
     imageUrl: {type: String},
+    uploadedImage: {type: String},
     imageFitType: {type: String, default: 'contain'},
     spotifyLink: {type: String, default: null},
     youtubeId: {type: String, default: null},

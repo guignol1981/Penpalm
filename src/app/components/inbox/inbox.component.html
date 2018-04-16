@@ -73,8 +73,8 @@
                             [width]="'100%'"
             ></youtube-player>
 
-            <div *ngIf="activePostcard.imageUrl" class="postcard__image-wrap">
-                <img *ngIf="activePostcard.imageUrl" [class]="getImageClass()" [src]="activePostcard.imageUrl"
+            <div *ngIf="imageUrl" class="postcard__image-wrap">
+                <img [class]="getImageClass()" [src]="imageUrl"
                      alt="postcard image">
             </div>
 

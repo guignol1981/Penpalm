@@ -32,6 +32,11 @@ export class InboxComponent implements OnInit {
         this.fetchPostcards();
     }
 
+    get imageUrl() {
+        console.log(this.activePostcard.imageUrl || this.activePostcard.uploadedImage || null);
+        return this.activePostcard.imageUrl || this.activePostcard.uploadedImage || null;
+    }
+
     fetchPostcards() {
         this.refreshing = true;
         this.postcardService.fetch(this.fetchConfig).then(response => {

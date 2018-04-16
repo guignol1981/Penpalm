@@ -18,6 +18,7 @@ export class PostcardService {
             data['_id'],
             data['body'],
             data['imageUrl'],
+            data['uploadedImage'],
             data['imageFitType'],
             data['spotifyLink'],
             data['youtubeId'],

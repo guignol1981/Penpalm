@@ -5,6 +5,7 @@ export class Postcard {
     constructor(public _id?: string,
                 public body?: string,
                 public imageUrl?: string,
+                public uploadedImage?: string,
                 public imageFitType?: string,
                 public spotifyLink?: string,
                 public youtubeId?: string,

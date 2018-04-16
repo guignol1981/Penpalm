@@ -20,6 +20,7 @@ module.exports.create = function(req, res) {
 				recipient: req.body.recipient,
 				body: body,
 				imageUrl: req.body.imageUrl,
+				uploadedImage: req.body.uploadedImage,
 				imageFitType: req.body.imageFitType,
 				spotifyLink: req.body.spotifyLink,
 				youtubeId: req.body.youtubeId,

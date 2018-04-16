@@ -194,6 +194,7 @@ export class ComposeComponent implements OnInit {
             null,
             this.form.get('body').value,
             this.form.get('imageUrl').value,
+            this.form.get('uploadedImage').value,
             this.form.get('imageFitType').value,
             this.form.get('spotifyLink').value,
             this.getYoutubeLinkId(),
