@@ -105,11 +105,12 @@ export class ComposeComponent implements OnInit {
         this.selectedOption = option;
     }
 
-    removeOptionValue(option, inputElement?: HTMLInputElement) {
+    removeOptionValue(option) {
         this.form.get(option).reset();
 
-        if (inputElement) {
-            inputElement = null;
+        if (option === 'location') {
+            let input = document.getElementById('location') as HTMLInputElement;
+            input.value = null;
         }
 
         if (option === 'template') {

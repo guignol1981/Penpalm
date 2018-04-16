@@ -76,7 +76,7 @@
                     &nbsp;
                     {{form.get('uploadedImage').value ? 'Remove uploaded image' : 'Uploaded image'}}
                 </a>
-                <a (click)="isBackSideOptionAvailable('location') ? form.get('location').value ? removeOptionValue('location', locationInput) : selectOption('location') : ''"
+                <a (click)="isBackSideOptionAvailable('location') ? form.get('location').value ? removeOptionValue('location') : selectOption('location') : ''"
                    [class]="isBackSideOptionAvailable('location') ? 'btn btn--align-left btn--text-md' : 'btn btn--align-left btn--text-md btn--disabled'">
                     <i class="fas fa-map-marker"></i>
                     &nbsp;
@@ -146,7 +146,7 @@
                 <label for="location">Location</label>
             </div>
             <div class="form__group--input">
-                <input #locationInput (change)="onLocationChange($event.target.value)" class="form__group--input--text" id="location" type="text"
+                <input (change)="onLocationChange($event.target.value)" class="form__group--input--text" id="location" type="text"
                        placeholder="location information">
             </div>
         </div>
