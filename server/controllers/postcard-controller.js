@@ -13,12 +13,11 @@ module.exports.create = function(req, res) {
 
 				return;
 			}
-			let body = req.body.body.split('\n').join('<br>');
 
 			let postcard = new Postcard({
 				author: user.id,
 				recipient: req.body.recipient,
-				body: body,
+				body: req.body.body,
 				imageUrl: req.body.imageUrl,
 				uploadedImage: req.body.uploadedImage,
 				imageFitType: req.body.imageFitType,

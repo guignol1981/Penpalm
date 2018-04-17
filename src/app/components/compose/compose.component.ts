@@ -6,7 +6,7 @@ import {UserService} from '../../services/user.service';
 import {User} from '../../models/user/user';
 import {Notif} from '../home/home.component';
 import {AuthenticationService} from '../../services/authentication.service';
-import {GoogleMapService} from "../../services/google-map.service";
+import {GoogleMapService} from '../../services/google-map.service';
 
 @Component({
     selector: 'app-compose',
@@ -38,7 +38,7 @@ export class ComposeComponent implements OnInit {
                 this.recipients = pals;
 
                 this.form = new FormGroup({
-                    body: new FormControl(null, Validators.required),
+                    body: new FormControl(null),
                     imageUrl: new FormControl(null),
                     imageFitType: new FormControl('contain'),
                     spotifyLink: new FormControl(null),
@@ -71,8 +71,8 @@ export class ComposeComponent implements OnInit {
         return this.form.get('imageUrl').value || this.form.get('uploadedImage').value || null;
     }
 
-    get headers () {
-        return {'Authorization' : 'Bearer ' + this.authenticationService.getToken()};
+    get headers() {
+        return {'Authorization': 'Bearer ' + this.authenticationService.getToken()};
     }
 
     get geoData() {
@@ -202,7 +202,22 @@ export class ComposeComponent implements OnInit {
         this.form.get('uploadedImage').reset();
     }
 
-    submit() {
+    compose() {
+        this.selectedOption = 'compose';
+    }
+
+    selectWYSIWYGCommand(command) {
+
+        if (command === 'h1' || command === 'h2' || command === 'p') {
+            document.execCommand('formatBlock', false, command);
+        } else if (command === 'forecolor' || command === 'backcolor') {
+            document.execCommand(command, false, 'red');
+        } else {
+            document.execCommand(command, false, null);
+        }
+    }
+
+    submit(editor: HTMLElement) {
         if (this.transacting) {
             return;
         }
@@ -212,10 +227,9 @@ export class ComposeComponent implements OnInit {
             return;
         }
 
-
         let postcard = new Postcard(
             null,
-            this.form.get('body').value,
+            editor.innerHTML,
             this.form.get('imageUrl').value,
             this.form.get('uploadedImage').value,
             this.form.get('imageFitType').value,

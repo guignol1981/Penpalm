@@ -1,8 +1,8 @@
 <div *ngIf="user" class="container">
     <div #postcard class="postcard">
         <form [formGroup]="form" class="postcard--side">
-                    <textarea #body class="postcard__body" formControlName="body" name="body" id="body" cols="30"
-                              rows="10" placeholder="Write something here..."></textarea>
+            <div #editor (focus)="compose()" #body class="postcard__body" id="body" contenteditable>
+            </div>
         </form>
         <div #back id="back" class="postcard--side postcard--back">
             <youtube-player *ngIf="form.get('youtubeLink').value"
@@ -146,7 +146,8 @@
                 <label for="location">Location</label>
             </div>
             <div class="form__group--input">
-                <input (change)="onLocationChange($event.target.value)" class="form__group--input--text" id="location" type="text"
+                <input (change)="onLocationChange($event.target.value)" class="form__group--input--text" id="location"
+                       type="text"
                        placeholder="location information">
             </div>
         </div>
@@ -160,6 +161,26 @@
                 <input formControlName="allowShare" type="checkbox" checked>
                 <span class="slider round"></span>
             </label>
+        </div>
+
+        <div *ngIf="selectedOption === 'compose'" onmousedown="event.preventDefault();"
+             class="form__group--inline wysiwyg">
+            <a (click)="selectWYSIWYGCommand('undo')"><i class='fas fa-undo'></i></a>
+            <a (click)="selectWYSIWYGCommand('redo')"><i class='fas fa-redo'></i></a>
+            <a (click)="selectWYSIWYGCommand('bold')"><i class='fa fa-bold'></i></a>
+            <a (click)="selectWYSIWYGCommand('italic')"><i class='fa fa-italic'></i></a>
+            <a (click)="selectWYSIWYGCommand('underline')"><i class='fa fa-underline'></i></a>
+            <a (click)="selectWYSIWYGCommand('strikeThrough')"><i class='fa fa-strikethrough'></i></a>
+            <a (click)="selectWYSIWYGCommand('justifyLeft')"><i class='fa fa-align-left'></i></a>
+            <a (click)="selectWYSIWYGCommand('justifyCenter')"><i class='fa fa-align-center'></i></a>
+            <a (click)="selectWYSIWYGCommand('justifyRight')"><i class='fa fa-align-right'></i></a>
+            <a (click)="selectWYSIWYGCommand('justifyFull')"><i class='fa fa-align-justify'></i></a>
+            <a (click)="selectWYSIWYGCommand('indent')"><i class='fa fa-indent'></i></a>
+            <a (click)="selectWYSIWYGCommand('outdent')"><i class='fa fa-outdent'></i></a>
+            <a (click)="selectWYSIWYGCommand('insertUnorderedList')"><i class='fa fa-list-ul'></i></a>
+            <a (click)="selectWYSIWYGCommand('insertOrderedList')"><i class='fa fa-list-ol'></i></a>
+            <a (click)="selectWYSIWYGCommand('h1')">H1</a>
+            <a (click)="selectWYSIWYGCommand('h2')">H2</a>
         </div>
 
         <div *ngIf="selectedOption === 'template'" class="form__group">
@@ -204,7 +225,7 @@
     </div>
     <div class="actions">
         <a (click)="flip(postcard)" class="btn">Flip</a>
-        <a *ngIf="form.valid" (click)="submit()" [class]="sendWarning ? 'btn btn--primary': 'btn'">
+        <a *ngIf="form.valid" (click)="submit(editor)" [class]="sendWarning ? 'btn btn--primary': 'btn'">
             {{sendWarning? 'Click again to send' : 'Send'}}
         </a>
     </div>

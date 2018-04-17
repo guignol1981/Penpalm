@@ -96,8 +96,8 @@
 
 	&__body {
 		background-color: var(--color-whitish);
-		font-size: 2rem;
-		line-height: 2.4rem;
+		font-size: 2.5rem;
+		line-height: 3.2rem;
 		box-sizing: border-box;
 		border: none;
 		border-radius: 1rem;
@@ -108,6 +108,7 @@
 		padding: 2rem;
 		outline: none;
 		position: relative;
+		color: #333333;
 	}
 }
 
@@ -231,6 +232,12 @@
 		&--helper {
 
 		}
+	}
+}
+
+.wysiwyg {
+	& > a {
+		font-size: 3rem;
 	}
 }
 
