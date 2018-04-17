@@ -27,6 +27,8 @@ import {UtilService} from './services/util.service';
 import { AgmCoreModule } from '@agm/core';
 import {ImageUploadModule} from 'angular2-image-upload';
 import {GoogleMapService} from "./services/google-map.service";
+import { BaseViewComponent } from './components/base-view/base-view.component';
+import { ViewOptionsComponent } from './components/view-options/view-options.component';
 
 
 let config = new AuthServiceConfig([
@@ -56,7 +58,9 @@ export function provideConfig() {
         ComposeComponent,
         AccountComponent,
         NewsComponent,
-        MatcherComponent
+        MatcherComponent,
+        BaseViewComponent,
+        ViewOptionsComponent
     ],
     imports: [
         BrowserAnimationsModule,

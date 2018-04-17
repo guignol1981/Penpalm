@@ -1,0 +1,12 @@
+<div *ngIf="groups" class="container">
+    <div class="group">
+        <div *ngFor="let group of groups">
+            <p class="group__title">
+                {{group.name}}
+            </p>
+            <div *ngFor="let option of group.options" class="group__list">
+                <a class="btn btn--align-left btn--text-md" (click)="option.callback(option)">{{getOptionName(option)}}</a>
+            </div>
+        </div>
+    </div>
+</div>

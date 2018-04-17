@@ -1,0 +1,30 @@
+.container {
+	height: 100%;
+	width: 100%;
+	display: grid;
+	grid-template-rows: 2fr 6fr 1fr;
+	grid-template-columns: 3fr 1fr;
+	grid-gap: 2rem;
+
+	grid-template-areas: "top ." "main sub" "bottom sub";
+
+	justify-items: stretch;
+	align-items: stretch;
+}
+
+.top {
+	grid-area: top;
+}
+
+.main {
+	grid-area: main;
+}
+
+.sub {
+	grid-area: sub;
+}
+
+.bottom {
+	grid-area: bottom;
+}
+

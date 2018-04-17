@@ -1,0 +1,24 @@
+.sub-options {
+	align-self: self-start;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	overflow: scroll;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
+	&__group {
+		color: var(--color-whitish);
+		margin-bottom: 1rem;
+
+		&--title {
+			font-size: 2rem;
+		}
+
+		&--list {
+			font-size: 1rem;
+		}
+	}
+}

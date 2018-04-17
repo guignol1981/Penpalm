@@ -6,13 +6,16 @@ import {AuthenticationService} from '../../services/authentication.service';
 import {NotificationsService} from 'angular2-notifications';
 import {Notif} from '../home/home.component';
 import {UtilService} from '../../services/util.service';
+import {BaseViewComponent} from '../base-view/base-view.component';
+import {ViewOptionGroup} from '../../models/options/view-option-group';
+import {ViewOption} from '../../models/options/view-option';
 
 @Component({
     selector: 'app-account',
     templateUrl: './account.component.html',
-    styleUrls: ['./account.component.scss']
+    styleUrls: ['./account.component.scss', '../base-view/base-view.component.scss']
 })
-export class AccountComponent implements OnInit {
+export class AccountComponent extends BaseViewComponent implements OnInit {
     @Output() notifEvent: EventEmitter<Notif> = new EventEmitter<Notif>();
     user: User;
     form: FormGroup;
@@ -20,20 +23,38 @@ export class AccountComponent implements OnInit {
     selectedOption = '';
     countryList;
     languageList;
+    optionGroups = [
+        new ViewOptionGroup(
+            'Options',
+            [
+                new ViewOption('Logout', () => {
+                    this.logout();
+                }),
+                new ViewOption('Close account', (option: ViewOption) =>  {
+                    if (!option.warned) {
+                        option.warned = true;
+                        return;
+                    }
+                    this.deleteAccount();
+                }, true, 'Click again to close account')
+            ]
+        )
+    ];
 
     constructor(private userService: UserService,
                 private utilService: UtilService,
                 private authenticationService: AuthenticationService,
                 private notificationService: NotificationsService) {
+        super();
     }
 
     ngOnInit() {
         this.utilService.getCountries().then((countries) => {
-           this.countryList = countries;
+            this.countryList = countries;
         });
 
         this.utilService.getLanguages().then((languages) => {
-           this.languageList = languages;
+            this.languageList = languages;
         });
         this.userService.getCurrentUser().then((user: User) => {
             this.user = user;
@@ -78,11 +99,6 @@ export class AccountComponent implements OnInit {
     }
 
     deleteAccount() {
-        if (!this.deleteWarning) {
-            this.deleteWarning = true;
-            return;
-        }
-
         this.userService.remove().then(success => {
             if (success) {
                 this.notificationService.success('Account deleted');
