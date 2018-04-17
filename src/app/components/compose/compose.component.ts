@@ -75,6 +75,10 @@ export class ComposeComponent implements OnInit {
         return {'Authorization': 'Bearer ' + this.authenticationService.getToken()};
     }
 
+    get dateNow() {
+        return Date.now();
+    }
+
     get geoData() {
         return {
             lat: this.form.get('location').value.lat,

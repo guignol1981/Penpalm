@@ -2,6 +2,11 @@
     <div #postcard class="postcard">
         <form [formGroup]="form" class="postcard--side">
             <div #editor (focus)="compose()" #body class="postcard__body" id="body" contenteditable>
+                <div class="postcard__body__header">
+                    <p>From: {{user.name}}</p>
+                    <p>To: {{selectedRecipientName}}</p>
+                    <p>To: {{dateNow | date}}</p>
+                </div>
             </div>
         </form>
         <div #back id="back" class="postcard--side postcard--back">
