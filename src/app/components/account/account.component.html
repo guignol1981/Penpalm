@@ -86,25 +86,7 @@
 
     </div>
 
-    <app-view-options class="sub" [groups]="optionGroups"></app-view-options>
-
-    <!--<div class="sub sub-options">-->
-        <!--<div class="sub-options__group">-->
-            <!--<div class="sub-options__group&#45;&#45;title">-->
-                <!--Options-->
-            <!--</div>-->
-            <!--<div class="sub-options__group&#45;&#45;list">-->
-                <!--<a (click)="logout()"-->
-                   <!--class="btn btn&#45;&#45;align-left btn&#45;&#45;text-md">-->
-                    <!--Logout-->
-                <!--</a>-->
-                <!--<a (click)="deleteAccount()"-->
-                   <!--[class]="deleteWarning ? 'btn btn&#45;&#45;align-left btn&#45;&#45;text-md btn&#45;&#45;warning' : 'btn btn&#45;&#45;align-left btn&#45;&#45;text-md'">-->
-                    <!--{{deleteWarning ? 'Click again to close account' : 'Close account'}}-->
-                <!--</a>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
+    <app-view-options class="sub" [groups]="optionGroups" [disableOptions]="transacting"></app-view-options>
 
     <div class="bottom">
         <a (click)="form.valid ? save() : '';" [class]="form.valid ? 'btn' : 'btn--disabled'">Save</a>

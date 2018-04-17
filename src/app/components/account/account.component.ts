@@ -23,6 +23,7 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
     selectedOption = '';
     countryList;
     languageList;
+    transacting = false;
     optionGroups = [
         new ViewOptionGroup(
             'Options',
@@ -30,11 +31,7 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
                 new ViewOption('Logout', () => {
                     this.logout();
                 }),
-                new ViewOption('Close account', (option: ViewOption) =>  {
-                    if (!option.warned) {
-                        option.warned = true;
-                        return;
-                    }
+                new ViewOption('Close account', () =>  {
                     this.deleteAccount();
                 }, true, 'Click again to close account')
             ]
@@ -70,6 +67,7 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
     }
 
     save() {
+        this.transacting = true;
         this.user.showPicture = this.form.get('showPicture').value;
         this.user.showName = this.form.get('showName').value;
         this.user.enableEmailNotifications = this.form.get('enableEmailNotifications').value;
@@ -79,6 +77,7 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
 
         this.userService.update(this.user).then((user: User) => {
             this.notifEvent.emit({type: 'success', msg: 'Profile updated'});
+            this.transacting = false;
         });
     }
 

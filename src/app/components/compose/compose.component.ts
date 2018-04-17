@@ -187,6 +187,7 @@ export class ComposeComponent implements OnInit {
     }
 
     flip(postcard) {
+        this.selectedOption = null;
         if (this.shownSide === 'front') {
             this.shownSide = 'back';
             postcard.style.transform = 'rotateY(180deg)';

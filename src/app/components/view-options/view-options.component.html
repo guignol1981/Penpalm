@@ -5,7 +5,8 @@
                 {{group.name}}
             </p>
             <div *ngFor="let option of group.options" class="group__list">
-                <a class="btn btn--align-left btn--text-md" (click)="option.callback(option)">{{getOptionName(option)}}</a>
+                <a [class]="disableOptions ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'"
+                   (click)="executeOption(option)">{{getOptionName(option)}}</a>
             </div>
         </div>
     </div>
