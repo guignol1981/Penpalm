@@ -4,7 +4,7 @@ import {Postcard} from '../../models/postcard/postcard';
 import {PostcardService} from '../../services/postcard.service';
 import {UserService} from '../../services/user.service';
 import {User} from '../../models/user/user';
-import {Notif} from '../home/home.component';
+import {Notification} from '../home/home.component';
 import {AuthenticationService} from '../../services/authentication.service';
 import {GoogleMapService} from '../../services/google-map.service';
 
@@ -14,7 +14,7 @@ import {GoogleMapService} from '../../services/google-map.service';
     styleUrls: ['./compose.component.scss']
 })
 export class ComposeComponent implements OnInit {
-    @Output() notifEvent: EventEmitter<Notif> = new EventEmitter<Notif>();
+    @Output() notifEvent: EventEmitter<Notification> = new EventEmitter<Notification>();
     user: User;
     recipients: User[];
     transacting = false;

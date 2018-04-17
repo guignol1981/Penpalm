@@ -15,7 +15,6 @@ export class ViewOptionsComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.groups);
     }
 
     getOptionName(option: ViewOption) {

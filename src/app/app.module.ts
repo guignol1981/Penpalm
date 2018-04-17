@@ -29,6 +29,8 @@ import {ImageUploadModule} from 'angular2-image-upload';
 import {GoogleMapService} from "./services/google-map.service";
 import { BaseViewComponent } from './components/base-view/base-view.component';
 import { ViewOptionsComponent } from './components/view-options/view-options.component';
+import { ViewActionsComponent } from './components/view-actions/view-actions.component';
+import { NotificationComponent } from './components/notification/notification.component';
 
 
 let config = new AuthServiceConfig([
@@ -60,7 +62,9 @@ export function provideConfig() {
         NewsComponent,
         MatcherComponent,
         BaseViewComponent,
-        ViewOptionsComponent
+        ViewOptionsComponent,
+        ViewActionsComponent,
+        NotificationComponent
     ],
     imports: [
         BrowserAnimationsModule,

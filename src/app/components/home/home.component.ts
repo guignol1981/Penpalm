@@ -1,12 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {UserService} from '../../services/user.service';
 import {User} from "../../models/user/user";
-import {AuthenticationService} from '../../services/authentication.service';
-
-export interface Notif {
-    type: string;
-    msg: string;
-}
+import {Notification} from '../../models/notification/notification';
+import {NotificationComponent} from '../notification/notification.component';
 
 @Component({
     selector: 'app-home',
@@ -16,10 +12,9 @@ export interface Notif {
 export class HomeComponent implements OnInit {
     user: User;
     activeTab = 'account';
-    notif: Notif;
+    @ViewChild(NotificationComponent) notificationComponent: NotificationComponent;
 
-    constructor(private userService: UserService,
-                private authenticationService: AuthenticationService) {
+    constructor(private userService: UserService) {
     }
 
     ngOnInit() {
@@ -32,15 +27,8 @@ export class HomeComponent implements OnInit {
         this.activeTab = tab;
     }
 
-    logout() {
-        this.authenticationService.signOut();
-    }
-
-    onNotif(notif: Notif) {
-       this.notif = notif;
-        setTimeout(() => {
-            this.notif = null;
-        }, 3000);
+    onNotification(notification: Notification) {
+        this.notificationComponent.setNotif(notification);
     }
 
 }

@@ -46,18 +46,17 @@
         <app-inbox [direction]="'out'"></app-inbox>
     </div>
     <div *ngIf="activeTab === 'compose'" class="main">
-        <app-compose (notifEvent)="onNotif($event)"></app-compose>
+        <app-compose (notificationEmitter)="onNotification($event)"></app-compose>
     </div>
     <div *ngIf="activeTab === 'account'" class="main">
-        <app-account (notifEvent)="onNotif($event)"></app-account>
+        <app-account (notificationEmitter)="onNotification($event)"></app-account>
     </div>
     <div *ngIf="activeTab === 'matcher'" class="main">
-        <app-matcher (notifEvent)="onNotif($event)"></app-matcher>
+        <app-matcher (notifEvent)="onNotification($event)"></app-matcher>
     </div>
     <div class="footer">
         <app-footer></app-footer>
     </div>
-    <div *ngIf="notif" [class]="notif.type === 'success' ? 'notif notif--success' : 'notif notif--failure'">
-        {{notif.msg}}
-    </div>
+
+    <app-notification class="notif"></app-notification>
 </div>

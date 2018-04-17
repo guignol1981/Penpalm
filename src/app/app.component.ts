@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {AuthenticationService} from './services/authentication.service';
 
 @Component({
     selector: 'app-root',
@@ -7,18 +6,6 @@ import {AuthenticationService} from './services/authentication.service';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    notificationOptions = {
-        position: ['bottom', 'left'],
-        timeOut: 3000,
-        lastOnBottom: true
-    };
-
-    constructor(private authenticationService: AuthenticationService) {
+    constructor() {
     }
-
-
-    isLoggedIn() {
-        return this.authenticationService.isLoggedIn();
-    }
-
 }

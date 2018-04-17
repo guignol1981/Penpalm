@@ -16,6 +16,7 @@
                 </label>
             </div>
 
+
             <div class="top-form__group">
                 <div class="top-form__group--label">
                     <label for="showName">Show my first name</label>
@@ -87,9 +88,6 @@
     </div>
 
     <app-view-options class="sub" [groups]="optionGroups" [disableOptions]="transacting"></app-view-options>
-
-    <div class="bottom">
-        <a (click)="form.valid ? save() : '';" [class]="form.valid ? 'btn' : 'btn--disabled'">Save</a>
-    </div>
+    <app-view-actions class="bottom" [actions]="actions" [disableActions]="transacting"></app-view-actions>
 
 </div>

@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {User} from '../../models/user/user';
 import {UserService} from '../../services/user.service';
 import {NotificationsService} from 'angular2-notifications';
-import {Notif} from '../home/home.component';
+import {Notification} from '../home/home.component';
 import {UtilService} from '../../services/util.service';
 
 export interface FindFilter {
@@ -16,7 +16,7 @@ export interface FindFilter {
     styleUrls: ['./matcher.component.scss']
 })
 export class MatcherComponent implements OnInit {
-    @Output() notifEvent: EventEmitter<Notif> = new EventEmitter<Notif>();
+    @Output() notifEvent: EventEmitter<Notification> = new EventEmitter<Notification>();
     user: User;
     userList: User[];
     selectedOption = '';

@@ -1,14 +1,16 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../services/user.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {User} from '../../models/user/user';
 import {AuthenticationService} from '../../services/authentication.service';
-import {NotificationsService} from 'angular2-notifications';
-import {Notif} from '../home/home.component';
 import {UtilService} from '../../services/util.service';
 import {BaseViewComponent} from '../base-view/base-view.component';
 import {ViewOptionGroup} from '../../models/options/view-option-group';
 import {ViewOption} from '../../models/options/view-option';
+import {ViewAction} from '../../models/actions/view-action';
+import {EViewAction} from '../../models/actions/e-view-action.enum';
+import {Notification} from '../../models/notification/notification';
+import {ENotification} from '../../models/notification/e-notification.enum';
 
 @Component({
     selector: 'app-account',
@@ -16,14 +18,14 @@ import {ViewOption} from '../../models/options/view-option';
     styleUrls: ['./account.component.scss', '../base-view/base-view.component.scss']
 })
 export class AccountComponent extends BaseViewComponent implements OnInit {
-    @Output() notifEvent: EventEmitter<Notif> = new EventEmitter<Notif>();
     user: User;
     form: FormGroup;
-    deleteWarning = false;
-    selectedOption = '';
+
     countryList;
     languageList;
+
     transacting = false;
+
     optionGroups = [
         new ViewOptionGroup(
             'Options',
@@ -31,17 +33,26 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
                 new ViewOption('Logout', () => {
                     this.logout();
                 }),
-                new ViewOption('Close account', () =>  {
+                new ViewOption('Close account', () => {
                     this.deleteAccount();
                 }, true, 'Click again to close account')
             ]
         )
     ];
 
+    actions = [
+        new ViewAction(
+            'Save',
+            () => {
+                this.save();
+            },
+            EViewAction.Primary
+        )
+    ];
+
     constructor(private userService: UserService,
                 private utilService: UtilService,
-                private authenticationService: AuthenticationService,
-                private notificationService: NotificationsService) {
+                private authenticationService: AuthenticationService) {
         super();
     }
 
@@ -53,6 +64,7 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
         this.utilService.getLanguages().then((languages) => {
             this.languageList = languages;
         });
+
         this.userService.getCurrentUser().then((user: User) => {
             this.user = user;
             this.form = new FormGroup({
@@ -67,6 +79,10 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
     }
 
     save() {
+        if (this.transacting) {
+            return;
+        }
+
         this.transacting = true;
         this.user.showPicture = this.form.get('showPicture').value;
         this.user.showName = this.form.get('showName').value;
@@ -76,13 +92,10 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
         this.user.description = this.form.get('description').value;
 
         this.userService.update(this.user).then((user: User) => {
-            this.notifEvent.emit({type: 'success', msg: 'Profile updated'});
+            this.user = user;
             this.transacting = false;
+            this.notificationEmitter.emit(new Notification(ENotification.Success, 'Profile saved'));
         });
-    }
-
-    selectOption(option) {
-        this.selectedOption = option;
     }
 
     setCountry(country) {
@@ -94,13 +107,21 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
     }
 
     logout() {
+        if (this.transacting) {
+            return;
+        }
+
         this.authenticationService.signOut();
     }
 
     deleteAccount() {
+        if (this.transacting) {
+            return;
+        }
+
         this.userService.remove().then(success => {
+            this.transacting = false;
             if (success) {
-                this.notificationService.success('Account deleted');
                 this.authenticationService.signOut();
             }
         });
