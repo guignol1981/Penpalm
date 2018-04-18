@@ -5,6 +5,8 @@ export class ViewOption {
         public name: string,
         public callback: any,
         public shouldWarn: boolean = false,
-        public warnMsg?: string
+        public staySelected: boolean = false,
+        public condition: () => boolean = null,
+        public warnMsg?: string,
     ) {}
 }

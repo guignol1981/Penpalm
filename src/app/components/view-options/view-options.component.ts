@@ -17,6 +17,22 @@ export class ViewOptionsComponent implements OnInit {
     ngOnInit() {
     }
 
+    checkGroupCondition(group: ViewOptionGroup): boolean {
+        if (group.condition) {
+            return group.condition();
+        } else {
+            return true;
+        }
+    }
+
+    checkOptionCondition(option: ViewOption): boolean {
+        if (option.condition) {
+            return option.condition();
+        } else {
+            return true;
+        }
+    }
+
     getOptionName(option: ViewOption) {
         if (option.warned) {
             return option.warnMsg;

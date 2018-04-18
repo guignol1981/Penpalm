@@ -1,12 +1,14 @@
 <div *ngIf="groups" class="container">
     <div class="group">
         <div *ngFor="let group of groups">
-            <p class="group__title">
-                {{group.name}}
-            </p>
-            <div *ngFor="let option of group.options" class="group__list">
-                <a [class]="disableOptions ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'"
-                   (click)="executeOption(option)">{{getOptionName(option)}}</a>
+            <div *ngIf="checkGroupCondition(group)">
+                <p class="group__title">
+                    {{group.name}}
+                </p>
+                <div *ngFor="let option of group.options" class="group__list">
+                    <a *ngIf="checkOptionCondition(option)" [class]="disableOptions ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'"
+                       (click)="executeOption(option)">{{getOptionName(option)}}</a>
+                </div>
             </div>
         </div>
     </div>

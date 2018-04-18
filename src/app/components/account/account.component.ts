@@ -35,7 +35,7 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
                 }),
                 new ViewOption('Close account', () => {
                     this.deleteAccount();
-                }, true, 'Click again to close account')
+                }, true, false, null, 'Click again to close account')
             ]
         )
     ];

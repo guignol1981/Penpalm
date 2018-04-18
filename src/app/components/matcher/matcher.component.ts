@@ -1,7 +1,14 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {User} from '../../models/user/user';
 import {UserService} from '../../services/user.service';
 import {UtilService} from '../../services/util.service';
+import {BaseViewComponent} from '../base-view/base-view.component';
+import {Notification} from '../../models/notification/notification';
+import {ENotification} from '../../models/notification/e-notification.enum';
+import {ViewAction} from '../../models/actions/view-action';
+import {ViewOption} from '../../models/options/view-option';
+import {ViewOptionGroup} from '../../models/options/view-option-group';
+import {EViewAction} from '../../models/actions/e-view-action.enum';
 
 export interface FindFilter {
     country: string;
@@ -11,14 +18,12 @@ export interface FindFilter {
 @Component({
     selector: 'app-matcher',
     templateUrl: './matcher.component.html',
-    styleUrls: ['./matcher.component.scss']
+    styleUrls: ['./matcher.component.scss', '../base-view/base-view.component.scss']
 })
-export class MatcherComponent implements OnInit {
-    @Output() notifEvent: EventEmitter<Notification> = new EventEmitter<Notification>();
+export class MatcherComponent extends BaseViewComponent implements OnInit {
     user: User;
     userList: User[];
-    selectedOption = '';
-    selectedUser: User;
+    selectedUser: User = null;
     countryList;
     languageList;
     findFilter = {
@@ -30,8 +35,74 @@ export class MatcherComponent implements OnInit {
     view = 'discover';
     removeWarning = false;
 
+    optionGroups = [
+        new ViewOptionGroup(
+            'Pen pals',
+            [
+                new ViewOption('Discover', () => {
+                    this.viewList();
+                }, false, true),
+                new ViewOption('My pals', () => {
+                    this.viewPals();
+                }, false, true),
+                new ViewOption('Pending requests', () => {
+                    this.viewPendingRequests();
+                }, false, true),
+                new ViewOption('Sent requests', () => {
+                    this.viewSentRequests();
+                }, false, true)
+            ]
+        ),
+        new ViewOptionGroup(
+            'Options',
+            [
+                new ViewOption('Remove pal', () => {
+                    this.removePal();
+                }, true, false, () => {
+                    return this.user.isPal(this.selectedUser._id);
+                }, 'Click again to remove pal'),
+                new ViewOption('Accept request', () => {
+                    this.handleRequest(true);
+                }, false, false, () => {
+                    return this.user.hasRequestFrom(this.selectedUser._id) && !this.user.isPal(this.selectedUser._id);
+                }),
+                new ViewOption('Refuse request', () => {
+                    this.handleRequest(false);
+                }, false, false, () => {
+                    return this.user.hasRequestFrom(this.selectedUser._id) && !this.user.isPal(this.selectedUser._id);
+                }),
+                new ViewOption('Cancel request', () => {
+                    this.cancelRequest();
+                }, false, false, () => {
+                    return this.selectedUser.hasRequestFrom(this.user._id) && !this.user.isPal(this.selectedUser._id);
+                }),
+                new ViewOption('Send request', () => {
+                    this.sendRequest();
+                }, false, false, () => {
+                    return !this.user.hasRequestFrom(this.selectedUser._id) &&
+                        !this.user.isPal(this.selectedUser._id) &&
+                        !this.selectedUser.hasRequestFrom(this.user._id);
+                })
+            ],
+            () => {
+                return this.selectedUser !== null;
+            }
+        )
+    ];
+
+    actions = [
+        new ViewAction(
+            'Save',
+            () => {
+                this.find();
+            },
+            EViewAction.Primary
+        )
+    ];
+
     constructor(private userService: UserService,
                 private utilService: UtilService) {
+        super();
     }
 
     ngOnInit() {
@@ -64,10 +135,6 @@ export class MatcherComponent implements OnInit {
         this.view = 'details';
     }
 
-    selectOption(option) {
-        this.selectedOption = option;
-    }
-
     setLanguageFilter(language) {
         let me = this;
         let msg = language.name === 'none' ? 'Filter cleared' : 'Filter applied';
@@ -75,7 +142,7 @@ export class MatcherComponent implements OnInit {
         this.findFilter.language = language.name;
 
         let displayMsg = function () {
-            // me.notifEvent.emit({type: 'success', msg: msg});
+            me.notificationEmitter.emit(new Notification(ENotification.Success, msg));
         };
 
         this.find(displayMsg);
@@ -88,7 +155,7 @@ export class MatcherComponent implements OnInit {
         this.findFilter.country = country;
 
         let displayMsg = function () {
-            me.notifEvent.emit({type: 'success', msg: msg});
+            this.notificationEmitter.emit(new Notification(ENotification.Success, msg));
         };
         this.find(displayMsg);
     }
@@ -107,7 +174,7 @@ export class MatcherComponent implements OnInit {
         this.transacting = true;
         this.userService.sendRequest(this.selectedUser).then((user: User) => {
             this.selectedUser = user;
-            this.notifEvent.emit({type: 'success', msg: 'Request sent'});
+            this.notificationEmitter.emit(new Notification(ENotification.Success, 'Request sent'));
             this.transacting = false;
         });
     }
@@ -120,7 +187,7 @@ export class MatcherComponent implements OnInit {
         this.transacting = true;
         this.userService.cancelRequest(this.selectedUser).then((user: User) => {
             this.selectedUser = user;
-            this.notifEvent.emit({type: 'success', msg: 'Request canceled'});
+            this.notificationEmitter.emit(new Notification(ENotification.Success, 'Request canceled'));
             this.transacting = false;
         });
     }
@@ -133,11 +200,11 @@ export class MatcherComponent implements OnInit {
         this.transacting = true;
         this.userService.handleRequest(this.selectedUser, accept).then((response: any) => {
             if (accept) {
-                this.notifEvent.emit({type: 'success', msg: 'Pal added'});
+                this.notificationEmitter.emit(new Notification(ENotification.Success, 'Pal added'));
                 this.selectedUser = response.targetUser;
                 this.user = response.sourceUser;
             } else {
-                this.notifEvent.emit({type: 'success', msg: 'Request rejected'});
+                this.notificationEmitter.emit(new Notification(ENotification.Success, 'Request rejected'));
             }
 
             this.transacting = false;
@@ -156,7 +223,7 @@ export class MatcherComponent implements OnInit {
 
         this.transacting = true;
         this.userService.removePal(this.selectedUser).then((response: any) => {
-            this.notifEvent.emit({type: 'success', msg: 'Pal removed'});
+            this.notificationEmitter.emit(new Notification(ENotification.Success, 'Request removed'));
             this.selectedUser = response.targetUser;
             this.user = response.sourceUser;
             this.transacting = false;
@@ -191,7 +258,7 @@ export class MatcherComponent implements OnInit {
         });
     }
 
-    viewRequests() {
+    viewSentRequests() {
         if (this.transacting) {
             return;
         }
