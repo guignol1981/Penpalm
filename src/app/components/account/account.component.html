@@ -1,13 +1,13 @@
 <div *ngIf="user && form && countryList && languageList" class="container">
 
-    <div class="top title">
-        {{user.name}}
-    </div>
+    <div class="top title">{{user.name}}</div>
+    <app-view-options class="sub" [groups]="optionGroups" [disableOptions]="transacting"></app-view-options>
+    <app-view-actions class="bottom" [actions]="actions" [disableActions]="transacting"></app-view-actions>
 
-    <div class="main top-form" [formGroup]="form">
-        <div class="top-form__group--inline">
-            <div class="top-form__group">
-                <div class="top-form__group--label">
+    <div class="main form" [formGroup]="form">
+        <div class="form__row">
+            <div class="form__group">
+                <div class="form__group__label">
                     <label for="showPicture">Show my picture</label>
                 </div>
                 <label class="switch">
@@ -17,8 +17,8 @@
             </div>
 
 
-            <div class="top-form__group">
-                <div class="top-form__group--label">
+            <div class="form__group">
+                <div class="form__group__label">
                     <label for="showName">Show my first name</label>
                 </div>
                 <label class="switch">
@@ -27,8 +27,8 @@
                 </label>
             </div>
 
-            <div class="top-form__group">
-                <div class="top-form__group--label">
+            <div class="form__group">
+                <div class="form__group__label">
                     <label for="enableEmailNotifications">Enable email notifications</label>
                 </div>
                 <label class="switch">
@@ -39,35 +39,35 @@
             </div>
         </div>
 
-        <div class="top-form__group--inline">
-            <div class="top-form__group">
-                <div class="top-form__group--label">
+        <div class="form__row">
+            <div class="form__group">
+                <div class="form__group__label">
                     <label for="country">Country</label>
                 </div>
-                <div class="top-form__group--input top-form__group--input--dropdown">
-                    <div class="top-form__group--input--dropdown__value">
+                <div class="form__group__input form__group__input--dropdown">
+                    <div class="form__group__input--dropdown__value">
                         {{form.get('country').value}}
                     </div>
-                    <div id="country" class="top-form__group--input--dropdown__option-box">
+                    <div id="country" class="form__group__input--dropdown__option-box">
                         <a (click)="setCountry(country)" *ngFor="let country of countryList"
-                           class="top-form__group--input--dropdown__option-box__item">
+                           class="form__group__input--dropdown__option-box__item">
                             {{country}}
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div class="top-form__group">
-                <div class="top-form__group--label">
+            <div class="form__group">
+                <div class="form__group__label">
                     <label for="language">Main language</label>
                 </div>
-                <div class="top-form__group--input top-form__group--input--dropdown">
-                    <div class="top-form__group--input--dropdown__value">
+                <div class="form__group__input form__group__input--dropdown">
+                    <div class="form__group__input--dropdown__value">
                         {{form.get('language').value}}
                     </div>
-                    <div id="language" class="top-form__group--input--dropdown__option-box">
+                    <div id="language" class="form__group__input--dropdown__option-box">
                         <a (click)="setLanguage(language)" *ngFor="let language of languageList"
-                           class="top-form__group--input--dropdown__option-box__item">
+                           class="form__group__input--dropdown__option-box__item">
                             {{language.name}}
                         </a>
                     </div>
@@ -75,19 +75,15 @@
             </div>
         </div>
 
-        <div class="top-form__group">
-            <div class="top-form__group--label">
+        <div class="form__group">
+            <div class="form__group__label">
                 <label for="language">About you</label>
             </div>
-            <div class="top-form__group--input--textarea">
+            <div class="form__group__input--textarea">
                 <textarea formControlName="description" name="" id="description" cols="30" rows="5"
                           placeholder="Write something here..."></textarea>
             </div>
         </div>
 
     </div>
-
-    <app-view-options class="sub" [groups]="optionGroups" [disableOptions]="transacting"></app-view-options>
-    <app-view-actions class="bottom" [actions]="actions" [disableActions]="transacting"></app-view-actions>
-
 </div>

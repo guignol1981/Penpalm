@@ -1,8 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {User} from '../../models/user/user';
 import {UserService} from '../../services/user.service';
-import {NotificationsService} from 'angular2-notifications';
-import {Notification} from '../home/home.component';
 import {UtilService} from '../../services/util.service';
 
 export interface FindFilter {
@@ -77,7 +75,7 @@ export class MatcherComponent implements OnInit {
         this.findFilter.language = language.name;
 
         let displayMsg = function () {
-            me.notifEvent.emit({type: 'success', msg: msg});
+            // me.notifEvent.emit({type: 'success', msg: msg});
         };
 
         this.find(displayMsg);

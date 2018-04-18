@@ -22,6 +22,7 @@ export class ViewActionsComponent implements OnInit {
 
         if (this.disableActions) {
             cssClass += ' btn--disabled';
+            return cssClass;
         }
 
         switch (action.type) {

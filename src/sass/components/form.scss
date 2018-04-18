@@ -1,4 +1,4 @@
-.top-form {
+.form {
 	padding: 2rem;
 	color: var(--color-whitish);
 	overflow-y: scroll;
@@ -15,28 +15,33 @@
 		margin-bottom: 3rem;
 	}
 
+	&__row {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+		margin-bottom: 5rem;
+
+		& > .form__group:not(:last-child) {
+			margin-right: 1rem;
+		}
+	}
+
 	&__group {
 		width: 100%;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 
-		&--inline {
-			width: 100%;
-			display: flex;
-			justify-content: space-evenly;
-
-			& > *:not(:last-child) {
-				margin-right: 1rem;
-			}
+		& > .form__group:not(:last-child) {
+			margin-bottom: 1.5rem;
 		}
 
-		&--label {
-			font-size: 2rem;
+		&__label {
+			font-size: 1.5rem;
 			margin-bottom: 1rem;
 		}
 
-		&--input {
+		&__input {
 			width: 100%;
 
 			&--text {
@@ -140,7 +145,7 @@
 			}
 		}
 
-		&--helper {
+		&__helper {
 
 		}
 	}

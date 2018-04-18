@@ -18,7 +18,6 @@ import {ComposeComponent} from './components/compose/compose.component';
 import {AccountComponent} from './components/account/account.component';
 import {NewsComponent} from './components/news/news.component';
 import {PostcardService} from './services/postcard.service';
-import {SimpleNotificationsModule} from 'angular2-notifications';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NewsService} from './services/news.service';
 import {YoutubePlayerModule} from 'ng2-youtube-player';
@@ -73,7 +72,6 @@ export function provideConfig() {
         ReactiveFormsModule,
         routing,
         SocialLoginModule,
-        SimpleNotificationsModule.forRoot(),
         YoutubePlayerModule,
         ImageUploadModule.forRoot(),
         AgmCoreModule.forRoot({
