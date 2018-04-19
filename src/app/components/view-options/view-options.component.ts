@@ -10,11 +10,26 @@ import {ViewOption} from '../../models/options/view-option';
 export class ViewOptionsComponent implements OnInit {
     @Input() groups: ViewOptionGroup[];
     @Input() disableOptions: boolean;
+    selectedOption: ViewOption;
 
     constructor() {
     }
 
     ngOnInit() {
+    }
+
+    getOptionClass(option: ViewOption) {
+        let cssClass = 'btn btn--align-left btn--text-md';
+
+        if (this.disableOptions) {
+            return cssClass += ' btn--disabled';
+        }
+
+        if (option.staySelected && this.selectedOption === option) {
+            return cssClass += ' btn--active';
+        }
+
+        return cssClass;
     }
 
     checkGroupCondition(group: ViewOptionGroup): boolean {
@@ -49,6 +64,8 @@ export class ViewOptionsComponent implements OnInit {
             option.warned = true;
             return;
         }
+
+        this.selectedOption = option;
         option.callback();
     }
 

@@ -27,6 +27,7 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
     selectedUser: User = null;
     countryList;
     languageList;
+    filterDisplayed = null;
     findFilter = {
         country: 'none',
         language: 'none',
@@ -101,6 +102,20 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
             ],
             () => {
                 return this.selectedUser !== null;
+            }
+        ),
+        new ViewOptionGroup(
+            'Filters',
+            [
+                new ViewOption('Country', () => {
+                    this.filterDisplayed = 'country';
+                }),
+                new ViewOption('Language', () => {
+                    this.filterDisplayed = 'language';
+                })
+            ],
+            () => {
+                return this.view === 'discover';
             }
         )
     ];

@@ -6,7 +6,7 @@
                     {{group.name}}
                 </p>
                 <div *ngFor="let option of group.options" class="group__list">
-                    <a *ngIf="checkOptionCondition(option)" [class]="disableOptions ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'"
+                    <a *ngIf="checkOptionCondition(option)" [class]="getOptionClass(option)"
                        (click)="executeOption(option)">{{getOptionName(option)}}</a>
                 </div>
             </div>
