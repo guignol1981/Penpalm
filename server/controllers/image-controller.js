@@ -40,8 +40,6 @@ module.exports.sendUploadToGCS = function (req, res, next) {
 module.exports.upload = function (req, res, next) {
     let data = req.body;
 
-    // Was an image uploaded? If so, we'll use its public URL
-    // in cloud storage.
     if (req.file && req.file.cloudStoragePublicUrl) {
         data.imageUrl = req.file.cloudStoragePublicUrl;
     }

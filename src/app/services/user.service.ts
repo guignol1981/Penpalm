@@ -62,50 +62,6 @@ export class UserService {
             });
     }
 
-    getPendingRequests(): Promise<User[]> {
-        let headers = new Headers({
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + this.authenticationService.getToken()
-        });
-
-        return this.http.get(this.apiEndPoint + '/pending-requests', {headers: headers})
-            .toPromise()
-            .then((response: Response) => {
-                let users = [];
-
-                response.json().data.forEach((item) => {
-                    users.push(UserService.deserializeUser(item));
-                });
-
-                return users;
-            })
-            .catch(() => {
-                return null;
-            });
-    }
-
-    getRequests(): Promise<User[]> {
-        let headers = new Headers({
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + this.authenticationService.getToken()
-        });
-
-        return this.http.get(this.apiEndPoint + '/requests', {headers: headers})
-            .toPromise()
-            .then((response: Response) => {
-                let users = [];
-
-                response.json().data.forEach((item) => {
-                    users.push(UserService.deserializeUser(item));
-                });
-
-                return users;
-            })
-            .catch(() => {
-                return null;
-            });
-    }
-
     handleRequest(user: User, accept: boolean): Promise<any> {
 
         let headers = new Headers({
@@ -158,36 +114,13 @@ export class UserService {
             });
     }
 
-    getPals() {
-        let headers = new Headers({
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + this.authenticationService.getToken()
-        });
-
-        return this.http.get(this.apiEndPoint + '/pals', {headers: headers})
-            .toPromise()
-            .then((response: Response) => {
-                let data = response.json().data;
-                let users = [];
-
-                data.forEach((userData) => {
-                    users.push(UserService.deserializeUser(userData));
-                });
-
-                return users;
-            })
-            .catch(() => {
-                return null;
-            });
-    }
-
     find(findFitler: FindFilter): Promise<User[]> {
         let headers = new Headers({
             'Content-Type': 'application/json',
             Authorization: 'Bearer ' + this.authenticationService.getToken()
         });
 
-        return this.http.get(this.apiEndPoint + '/find', {headers: headers, params: findFitler})
+        return this.http.get(this.apiEndPoint + '/' + findFitler.type, {headers: headers, params: findFitler})
             .toPromise()
             .then((response: Response) => {
                 let data = response.json().data;

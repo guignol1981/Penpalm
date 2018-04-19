@@ -32,7 +32,7 @@ export class ComposeComponent implements OnInit {
 
     ngOnInit() {
         this.userService.getCurrentUser().then((user: User) => {
-            this.userService.getPals().then((pals: User[]) => {
+            this.userService.find({country: 'none', language: 'none', type: 'pals'}).then((pals: User[]) => {
                 this.user = user;
                 this.recipients = pals;
 

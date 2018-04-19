@@ -13,6 +13,7 @@ import {EViewAction} from '../../models/actions/e-view-action.enum';
 export interface FindFilter {
     country: string;
     language: string;
+    type: string;
 }
 
 @Component({
@@ -29,7 +30,7 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
     findFilter = {
         country: 'none',
         language: 'none',
-        pals: false
+        type: 'discover'
     };
     transacting = false;
     view = 'discover';
@@ -54,16 +55,16 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
             'Pen pals',
             [
                 new ViewOption('Discover', () => {
-                    this.viewList();
+                    this.viewList('discover');
                 }, false, true),
                 new ViewOption('My pals', () => {
-                    this.viewPals();
+                    this.viewList('pals');
                 }, false, true),
                 new ViewOption('Pending requests', () => {
-                    this.viewPendingRequests();
+                    this.viewList('pending-requests');
                 }, false, true),
                 new ViewOption('Sent requests', () => {
-                    this.viewSentRequests();
+                    this.viewList('sent-requests');
                 }, false, true)
             ]
         ),
@@ -125,8 +126,11 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
     }
 
     find(callback ?: any) {
+        this.transacting = true;
+
         this.userService.find(this.findFilter).then((users: User[]) => {
             this.userList = users;
+            this.transacting = false;
 
             if (callback) {
                 callback();
@@ -164,68 +168,16 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
         this.find(displayMsg);
     }
 
-    viewList() {
+    viewList(category) {
+        if (this.transacting) {
+            return;
+        }
+
         this.selectedUser = null;
-        this.view = 'discover';
-        this.findFilter.pals = false;
-        this.find();
-    }
-
-    view(category) {
-        if (this.transacting) {
-            return;
-        }
-
-        this.transacting = true;
-
         this.view = category;
+        this.findFilter.type = category;
 
-        this.userService.getPals().then((users: User[]) => {
-            this.userList = users;
-            this.transacting = false;
-        });
-    }
-
-    viewPals() {
-        if (this.transacting) {
-            return;
-        }
-
-        this.transacting = true;
-
-        this.view = 'pals';
-        this.userService.getPals().then((users: User[]) => {
-            this.userList = users;
-            this.transacting = false;
-        });
-    }
-
-    viewPendingRequests() {
-        if (this.transacting) {
-            return;
-        }
-
-        this.view = 'pending-requests';
-
-        this.transacting = true;
-        this.userService.getPendingRequests().then((users: User[]) => {
-            this.userList = users;
-            this.transacting = false;
-        });
-    }
-
-    viewSentRequests() {
-        if (this.transacting) {
-            return;
-        }
-
-        this.view = 'sent-requests';
-
-        this.transacting = true;
-        this.userService.getRequests().then((users: User[]) => {
-            this.userList = users;
-            this.transacting = false;
-        });
+        this.find();
     }
 
     sendRequest() {

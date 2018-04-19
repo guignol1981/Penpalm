@@ -32,9 +32,9 @@ router.post('/auth/google',
 //users
 router.get('/users', authenticate, userController.get);
 router.get('/users/pals', authenticate, userController.getPals);
-router.get('/users/find', authenticate, userController.find);
+router.get('/users/discover', authenticate, userController.find);
 router.get('/users/pending-requests', authenticate, userController.getPendingRequests);
-router.get('/users/requests', authenticate, userController.getRequests);
+router.get('/users/sent-requests', authenticate, userController.getRequests);
 router.put('/users', authenticate, userController.update);
 router.put('/users/request', authenticate, userController.request);
 router.put('/users/handle-request', authenticate, userController.handleRequest);
