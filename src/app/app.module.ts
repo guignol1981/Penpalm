@@ -30,6 +30,7 @@ import { BaseViewComponent } from './components/base-view/base-view.component';
 import { ViewOptionsComponent } from './components/view-options/view-options.component';
 import { ViewActionsComponent } from './components/view-actions/view-actions.component';
 import { NotificationComponent } from './components/notification/notification.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 
 let config = new AuthServiceConfig([
@@ -63,7 +64,8 @@ export function provideConfig() {
         BaseViewComponent,
         ViewOptionsComponent,
         ViewActionsComponent,
-        NotificationComponent
+        NotificationComponent,
+        LoaderComponent
     ],
     imports: [
         BrowserAnimationsModule,

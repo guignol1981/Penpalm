@@ -1,6 +1,6 @@
 <div *ngIf="actions" class="container">
     <div *ngFor="let action of actions">
-        <a [class]="getActionClass(action)" (click)="executeAction(action)">
+        <a *ngIf="checkActionCondition(action)" [class]="getActionClass(action)" (click)="executeAction(action)">
             {{getActionName(action)}}
         </a>
     </div>

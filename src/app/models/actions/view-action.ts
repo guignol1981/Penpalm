@@ -8,6 +8,7 @@ export class ViewAction {
         public callback: any,
         public type: EViewAction = EViewAction.Secondary,
         public shouldWarn: boolean = false,
+        public condition: () => boolean = null,
         public warnMsg?: string
     ) {}
 }

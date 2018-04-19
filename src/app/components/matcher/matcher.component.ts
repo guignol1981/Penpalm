@@ -35,6 +35,20 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
     view = 'discover';
     removeWarning = false;
 
+    actions = [
+        new ViewAction(
+            'Show more',
+            () => {
+                this.find();
+            },
+            EViewAction.Primary,
+            false,
+            () => {
+                return this.view === 'discover';
+            }
+        )
+    ];
+
     optionGroups = [
         new ViewOptionGroup(
             'Pen pals',
@@ -87,16 +101,6 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
             () => {
                 return this.selectedUser !== null;
             }
-        )
-    ];
-
-    actions = [
-        new ViewAction(
-            'Save',
-            () => {
-                this.find();
-            },
-            EViewAction.Primary
         )
     ];
 
@@ -167,6 +171,63 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
         this.find();
     }
 
+    view(category) {
+        if (this.transacting) {
+            return;
+        }
+
+        this.transacting = true;
+
+        this.view = category;
+
+        this.userService.getPals().then((users: User[]) => {
+            this.userList = users;
+            this.transacting = false;
+        });
+    }
+
+    viewPals() {
+        if (this.transacting) {
+            return;
+        }
+
+        this.transacting = true;
+
+        this.view = 'pals';
+        this.userService.getPals().then((users: User[]) => {
+            this.userList = users;
+            this.transacting = false;
+        });
+    }
+
+    viewPendingRequests() {
+        if (this.transacting) {
+            return;
+        }
+
+        this.view = 'pending-requests';
+
+        this.transacting = true;
+        this.userService.getPendingRequests().then((users: User[]) => {
+            this.userList = users;
+            this.transacting = false;
+        });
+    }
+
+    viewSentRequests() {
+        if (this.transacting) {
+            return;
+        }
+
+        this.view = 'sent-requests';
+
+        this.transacting = true;
+        this.userService.getRequests().then((users: User[]) => {
+            this.userList = users;
+            this.transacting = false;
+        });
+    }
+
     sendRequest() {
         if (this.transacting) {
             return;
@@ -230,54 +291,4 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
         });
     }
 
-    viewPals() {
-        if (this.transacting) {
-            return;
-        }
-
-        this.transacting = true;
-
-        this.view = 'pals';
-        this.userService.getPals().then((users: User[]) => {
-            this.userList = users;
-            this.transacting = false;
-        });
-    }
-
-    viewPendingRequests() {
-        if (this.transacting) {
-            return;
-        }
-
-        this.view = 'pending-requests';
-
-        this.transacting = true;
-        this.userService.getPendingRequests().then((users: User[]) => {
-            this.userList = users;
-            this.transacting = false;
-        });
-    }
-
-    viewSentRequests() {
-        if (this.transacting) {
-            return;
-        }
-
-        this.view = 'sent-requests';
-
-        this.transacting = true;
-        this.userService.getRequests().then((users: User[]) => {
-            this.userList = users;
-            this.transacting = false;
-        });
-    }
-
-
-    manage() {
-
-    }
-
-    report() {
-
-    }
 }

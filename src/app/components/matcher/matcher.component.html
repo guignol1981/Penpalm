@@ -1,4 +1,6 @@
 <div *ngIf="user && languageList && countryList" class="container">
+    <app-loader class="main" [load]="userList === null"></app-loader>
+    <app-view-actions class="bottom" [actions]="actions" [disableActions]="transacting"></app-view-actions>
 
     <!--<div *ngIf="view === 'discover'" class="input">-->
         <!--<div *ngIf="selectedOption === 'language-filter'" class="input__group">-->
@@ -157,8 +159,9 @@
         <!--</div>-->
     <!--</div>-->
 
-    <div class="bottom">
-        <a *ngIf="view === 'discover'" (click)="''" class="btn">Show more</a>
-    </div>
+
+    <!--<div class="bottom">-->
+        <!--<a *ngIf="view === 'discover'" (click)="''" class="btn">Show more</a>-->
+    <!--</div>-->
 
 </div>

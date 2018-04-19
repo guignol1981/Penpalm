@@ -17,6 +17,14 @@ export class ViewActionsComponent implements OnInit {
     ngOnInit() {
     }
 
+    checkActionCondition(action: ViewAction): boolean {
+        if (action.condition) {
+            return action.condition();
+        } else {
+            return true;
+        }
+    }
+
     getActionClass(action: ViewAction) {
         let cssClass = 'btn';
 

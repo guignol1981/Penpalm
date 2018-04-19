@@ -89,11 +89,13 @@
     </div>
 </div>
 
-<div *ngIf="!postcards" class="container">
-    <div class="loading-container">
-        <div class="loading loading"></div>
-    </div>
-</div>
+<app-loader class="main" [load]="!postcard"></app-loader>
+
+<!--<div *ngIf="!postcards" class="container">-->
+    <!--<div class="loading-container">-->
+        <!--<div class="loading loading"></div>-->
+    <!--</div>-->
+<!--</div>-->
 
 <div *ngIf="postcards && postcards.length === 0" class="container">
     <div class="empty">
