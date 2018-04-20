@@ -213,6 +213,7 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
     }
 
     selectUser(user: User) {
+        this.filterDisplayed = 'none';
         this.selectedUser = user;
         this.view = 'details';
     }
@@ -245,6 +246,10 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
     viewList(category) {
         if (this.transacting) {
             return;
+        }
+
+        if (category !== 'discover') {
+            this.filterDisplayed = 'none';
         }
 
         this.selectedUser = null;
