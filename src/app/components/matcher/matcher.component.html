@@ -1,7 +1,7 @@
 <div *ngIf="user && languageList && countryList" class="container">
     <app-loader class="main" [load]="userList === null"></app-loader>
     <app-view-actions class="bottom" [actions]="actions" [disableActions]="transacting"></app-view-actions>
-
+    <app-view-single-input class="top" [inputs]="inputs"></app-view-single-input>
     <!--<div *ngIf="view === 'discover'" class="input">-->
         <!--<div *ngIf="selectedOption === 'language-filter'" class="input__group">-->
             <!--<div class="input__group&#45;&#45;label">-->

@@ -1,0 +1,22 @@
+<div *ngFor="let input of inputs" [class]="checkCondition(input) ? 'container' : ''">
+    <div *ngIf="checkCondition(input)" class="input">
+        <div class="input__group">
+            <div class="input__group__label">
+                <label for="input">{{input.label}}</label>
+            </div>
+            <div class="input__group__input">
+                <div class="input__group__input input__group__input--dropdown">
+                    <div class="input__group__input--dropdown__value">
+                        {{input.value}}
+                    </div>
+                    <div id="input" class="input__group__input--dropdown__option-box">
+                        <a (click)="setValue(input, item)" *ngFor="let item of input.lov"
+                           class="input__group__input--dropdown__option-box__item">
+                            {{item}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

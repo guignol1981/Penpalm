@@ -52,7 +52,7 @@
         <app-account (notificationEmitter)="onNotification($event)"></app-account>
     </div>
     <div *ngIf="activeTab === 'matcher'" class="main">
-        <app-matcher (notifEvent)="onNotification($event)"></app-matcher>
+        <app-matcher (notificationEmitter)="onNotification($event)"></app-matcher>
     </div>
     <div class="footer">
         <app-footer></app-footer>
