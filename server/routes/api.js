@@ -54,6 +54,7 @@ router.get('/news', authenticate, newsController.fetch);
 //utils
 router.get('/util/countries', authenticate, utilController.getCountries);
 router.get('/util/languages', authenticate, utilController.getLanguages);
+router.get('/util/templates', authenticate, utilController.getTemplates);
 
 //images
 router.post('/images', authenticate, upload.single('image'),imageController.sendUploadToGCS, imageController.upload);

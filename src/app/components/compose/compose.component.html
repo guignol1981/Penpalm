@@ -2,7 +2,7 @@
     <app-view-actions class="bottom" [actions]="actions" [disableActions]="transacting"></app-view-actions>
     <app-view-single-input class="top" [inputs]="inputs"></app-view-single-input>
     <app-view-options class="sub" [groups]="optionGroups" [disableOptions]="transacting"></app-view-options>
-    <!--<div #postcard class="postcard">-->
+    <!--<div id="postcard" class="postcard">-->
         <!--<form [formGroup]="form" class="postcard&#45;&#45;side">-->
             <!--<div #editor (focus)="compose()" #body class="postcard__body" id="body" contenteditable>-->
                 <!--<div class="postcard__body__header">-->
@@ -232,7 +232,7 @@
         <!--</div>-->
     <!--</div>-->
     <!--<div class="actions">-->
-        <!--<a (click)="flip(postcard)" class="btn">Flip</a>-->
+        <!--<a (click)="flip()" class="btn">Flip</a>-->
         <!--<a *ngIf="form.valid" (click)="submit(editor)" [class]="sendWarning ? 'btn btn&#45;&#45;primary': 'btn'">-->
             <!--{{sendWarning? 'Click again to send' : 'Send'}}-->
         <!--</a>-->

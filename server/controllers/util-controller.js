@@ -1,6 +1,6 @@
 module.exports.getCountries = function (req, res) {
     res.send({
-        msg: 'countries found',
+        msg: 'Countries found',
         data:  ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua &amp; Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas"
             ,"Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia &amp; Herzegovina","Botswana","Brazil","British Virgin Islands"
             ,"Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica"
@@ -19,9 +19,16 @@ module.exports.getCountries = function (req, res) {
     });
 };
 
+module.exports.getTemplates = function (req, res) {
+    res.send({
+        msg: 'Templates found',
+        data:  ['Bubble']
+    });
+};
+
 module.exports.getLanguages = function (req, res) {
     res.send({
-        msg: 'languages found',
+        msg: 'Languages found',
         data:  [
             {"code":"ab","name":"Abkhaz","nativeName":"аҧсуа"},
             {"code":"aa","name":"Afar","nativeName":"Afaraf"},
@@ -205,7 +212,7 @@ module.exports.getLanguages = function (req, res) {
             {"code":"yi","name":"Yiddish","nativeName":"ייִדיש"},
             {"code":"yo","name":"Yoruba","nativeName":"Yorùbá"},
             {"code":"za","name":"Zhuang, Chuang","nativeName":"Saɯ cueŋƅ, Saw cuengh"}
-        ]
+        ].map(a => a.name)
     });
 };
 

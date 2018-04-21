@@ -6,13 +6,14 @@ import {UserService} from '../../services/user.service';
 import {User} from '../../models/user/user';
 import {AuthenticationService} from '../../services/authentication.service';
 import {GoogleMapService} from '../../services/google-map.service';
-import {SingleInput} from "../../models/single-input/single-input";
-import {ESingleInput} from "../../models/single-input/e-single-input.enum";
-import {ViewOptionGroup} from "../../models/options/view-option-group";
-import {ViewAction} from "../../models/actions/view-action";
-import {EViewAction} from "../../models/actions/e-view-action.enum";
-import {ViewOption} from "../../models/options/view-option";
-import {BaseViewComponent} from "../base-view/base-view.component";
+import {SingleInput} from '../../models/single-input/single-input';
+import {ESingleInput} from '../../models/single-input/e-single-input.enum';
+import {ViewOptionGroup} from '../../models/options/view-option-group';
+import {ViewAction} from '../../models/actions/view-action';
+import {EViewAction} from '../../models/actions/e-view-action.enum';
+import {ViewOption} from '../../models/options/view-option';
+import {BaseViewComponent} from '../base-view/base-view.component';
+import {UtilService} from '../../services/util.service';
 
 @Component({
     selector: 'app-compose',
@@ -28,7 +29,7 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
     shownSide = 'front';
     sendWarning = false;
     selectedOption = '';
-    templates = ['none', 'bubble'];
+    templates: string[];
 
     inputs: SingleInput[];
     optionGroups: ViewOptionGroup[];
@@ -37,11 +38,16 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
     constructor(private postcardService: PostcardService,
                 private authenticationService: AuthenticationService,
                 private userService: UserService,
+                private utilService: UtilService,
                 private googleMapService: GoogleMapService) {
         super();
     }
 
     ngOnInit() {
+        this.utilService.getCardTemplates().then((templates) => {
+            this.templates = templates;
+        });
+
         this.userService.getCurrentUser().then((user: User) => {
             this.userService.find({country: 'none', language: 'none', type: 'pals'}).then((pals: User[]) => {
                 this.user = user;
@@ -59,12 +65,13 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
                     recipient: new FormControl(null, Validators.required),
                     location: new FormControl(null)
                 });
+
+                this.initActions();
+                this.initOptions();
+                this.initInputs();
             });
         });
 
-        this.initActions();
-        this.initOptions();
-        this.initInputs();
     }
 
 
@@ -73,6 +80,7 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
             new ViewAction(
                 'Flip',
                 () => {
+                    this.flip();
                 },
                 EViewAction.Secondary,
                 false
@@ -93,6 +101,7 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
                 'General',
                 [
                     new ViewOption('Recipient', () => {
+                        this.selectedOption = 'recipient';
                     }, false, false, null, null, 'fas fa-user'),
                     new ViewOption('Spotify song', () => {
                     }, false, false, null, null, 'fab fa-spotify'),
@@ -105,7 +114,9 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
                     new ViewOption('Remove template', () => {
                     }, false, false, () => {
                         return false;
-                    }, null, 'far fa-square')
+                    }, null, 'far fa-square'),
+                    new ViewOption('Allow share', () => {
+                    }, false, false, null, null, 'fas fa-share-alt')
                 ]
             ),
             new ViewOptionGroup(
@@ -135,7 +146,10 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
                     }, false, false, () => {
                         return false;
                     }, null, 'fas fa-map-marker'),
-                ]
+                ],
+                () => {
+                    return this.shownSide === 'back';
+                }
             )
         ];
     }
@@ -146,8 +160,18 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
                 'Recipient',
                 ESingleInput.DropDown,
                 (singleInput: SingleInput) => {
+                    this.setRecipient(singleInput.value.id);
                 },
-
+                () => {
+                    return this.selectedOption === 'recipient';
+                }, 'fas fa-user',
+                this.recipients.map(a => {
+                    let lovItem = {
+                        label: a.name,
+                        id: a._id
+                    };
+                    return lovItem;
+                })
             )
         ];
     }
@@ -258,8 +282,8 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
         }
     }
 
-    setRecipient(recipient: User) {
-        this.form.get('recipient').setValue(recipient._id);
+    setRecipient(recipientId: string) {
+        this.form.get('recipient').setValue(recipientId);
     }
 
     setTemplate(templateName, bodyElement = null, backElement = null) {
@@ -285,7 +309,9 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
         }
     }
 
-    flip(postcard) {
+    flip() {
+        let postcard = document.getElementById('postcard');
+
         this.selectedOption = null;
         if (this.shownSide === 'front') {
             this.shownSide = 'back';

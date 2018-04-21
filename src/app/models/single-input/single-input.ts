@@ -1,6 +1,12 @@
 import {ESingleInput} from "./e-single-input.enum";
+
+export interface LovItem {
+    label: string;
+    id: string;
+}
+
 export class SingleInput {
-    public value = null;
+    public value: LovItem = null;
 
     constructor(
         public label: string,
@@ -8,7 +14,7 @@ export class SingleInput {
         public callback: any,
         public condition: () => boolean = null,
         public icon?: string,
-        public lov?: string[],
+        public lov?: LovItem[],
         public placeHolder?: string
     ) {}
 }

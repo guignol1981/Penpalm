@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SingleInput} from "../../models/single-input/single-input";
+import {LovItem, SingleInput} from '../../models/single-input/single-input';
 
 @Component({
     selector: 'app-view-single-input',
@@ -23,7 +23,7 @@ export class ViewSingleInputComponent implements OnInit {
         }
     }
 
-    setValue(singleInput: SingleInput, value: string) {
+    setValue(singleInput: SingleInput, value: LovItem) {
         singleInput.value = value;
         this.executeInput(singleInput);
     }

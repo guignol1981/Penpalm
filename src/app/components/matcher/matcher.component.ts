@@ -9,8 +9,8 @@ import {ViewAction} from '../../models/actions/view-action';
 import {ViewOption} from '../../models/options/view-option';
 import {ViewOptionGroup} from '../../models/options/view-option-group';
 import {EViewAction} from '../../models/actions/e-view-action.enum';
-import {SingleInput} from "../../models/single-input/single-input";
-import {ESingleInput} from "../../models/single-input/e-single-input.enum";
+import {SingleInput} from '../../models/single-input/single-input';
+import {ESingleInput} from '../../models/single-input/e-single-input.enum';
 
 export interface FindFilter {
     country: string;
@@ -182,7 +182,10 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
                     return this.filterDisplayed === 'country' && this.countryList;
                 },
                 null,
-                this.countryList
+                this.countryList.map(a => a = {
+                    label: a,
+                    value: a
+                })
             ),
             new SingleInput(
                 'Language filter',
@@ -194,7 +197,10 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
                     return this.filterDisplayed === 'language' && this.languageList;
                 },
                 null,
-                this.languageList.map(a => a.name)
+                this.languageList.map(a => a = {
+                    label: a,
+                    value: a
+                })
             )
         ];
     }
