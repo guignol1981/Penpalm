@@ -6,14 +6,20 @@ import {UserService} from '../../services/user.service';
 import {User} from '../../models/user/user';
 import {AuthenticationService} from '../../services/authentication.service';
 import {GoogleMapService} from '../../services/google-map.service';
+import {SingleInput} from "../../models/single-input/single-input";
+import {ESingleInput} from "../../models/single-input/e-single-input.enum";
+import {ViewOptionGroup} from "../../models/options/view-option-group";
+import {ViewAction} from "../../models/actions/view-action";
+import {EViewAction} from "../../models/actions/e-view-action.enum";
+import {ViewOption} from "../../models/options/view-option";
+import {BaseViewComponent} from "../base-view/base-view.component";
 
 @Component({
     selector: 'app-compose',
     templateUrl: './compose.component.html',
-    styleUrls: ['./compose.component.scss']
+    styleUrls: ['./compose.component.scss', '../base-view/base-view.component.scss']
 })
-export class ComposeComponent implements OnInit {
-    // @Output() notifEvent: EventEmitter<Notification> = new EventEmitter<Notification>();
+export class ComposeComponent extends BaseViewComponent implements OnInit {
     user: User;
     recipients: User[];
     transacting = false;
@@ -24,10 +30,15 @@ export class ComposeComponent implements OnInit {
     selectedOption = '';
     templates = ['none', 'bubble'];
 
+    inputs: SingleInput[];
+    optionGroups: ViewOptionGroup[];
+    actions: ViewAction[];
+
     constructor(private postcardService: PostcardService,
                 private authenticationService: AuthenticationService,
                 private userService: UserService,
                 private googleMapService: GoogleMapService) {
+        super();
     }
 
     ngOnInit() {
@@ -50,6 +61,95 @@ export class ComposeComponent implements OnInit {
                 });
             });
         });
+
+        this.initActions();
+        this.initOptions();
+        this.initInputs();
+    }
+
+
+    initActions() {
+        this.actions = [
+            new ViewAction(
+                'Flip',
+                () => {
+                },
+                EViewAction.Secondary,
+                false
+            ),
+            new ViewAction(
+                'Send',
+                () => {
+                },
+                EViewAction.Primary,
+                false
+            )
+        ];
+    }
+
+    initOptions() {
+        this.optionGroups = [
+            new ViewOptionGroup(
+                'General',
+                [
+                    new ViewOption('Recipient', () => {
+                    }, false, false, null, null, 'fas fa-user'),
+                    new ViewOption('Spotify song', () => {
+                    }, false, false, null, null, 'fab fa-spotify'),
+                    new ViewOption('Remove spotify song', () => {
+                    }, false, false, () => {
+                        return false;
+                    }, null, 'fab fa-spotify'),
+                    new ViewOption('Template', () => {
+                    }, false, false, null, null, 'far fa-square'),
+                    new ViewOption('Remove template', () => {
+                    }, false, false, () => {
+                        return false;
+                    }, null, 'far fa-square')
+                ]
+            ),
+            new ViewOptionGroup(
+                'Back side',
+                [
+                    new ViewOption('Youtube video', () => {
+                    }, false, false, null, null, 'fab fa-youtube'),
+                    new ViewOption('Remove youtube video', () => {
+                    }, false, false, () => {
+                        return false;
+                    }, null, 'fab fa-youtube"'),
+                    new ViewOption('Link image', () => {
+                    }, false, false, null, null, 'fas fa-link'),
+                    new ViewOption('Remove linked image', () => {
+                    }, false, false, () => {
+                        return false;
+                    }, null, 'fas fa-link'),
+                    new ViewOption('Upload image', () => {
+                    }, false, false, null, null, 'fas fa-image'),
+                    new ViewOption('Remove uploaded image', () => {
+                    }, false, false, () => {
+                        return false;
+                    }, null, 'fas fa-image'),
+                    new ViewOption('Location', () => {
+                    }, false, false, null, null, 'fas fa-map-marker'),
+                    new ViewOption('Remove location', () => {
+                    }, false, false, () => {
+                        return false;
+                    }, null, 'fas fa-map-marker'),
+                ]
+            )
+        ];
+    }
+
+    initInputs() {
+        this.inputs = [
+            new SingleInput(
+                'Recipient',
+                ESingleInput.DropDown,
+                (singleInput: SingleInput) => {
+                },
+
+            )
+        ];
     }
 
     get selectedRecipientName() {

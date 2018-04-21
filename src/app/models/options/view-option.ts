@@ -8,5 +8,6 @@ export class ViewOption {
         public staySelected: boolean = false,
         public condition: () => boolean = null,
         public warnMsg?: string,
+        public icon?: string
     ) {}
 }

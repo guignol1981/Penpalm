@@ -145,16 +145,16 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
                     }, false, false, () => {
                         return this.findFilter.country === 'none';
                     }),
-                    new ViewOption('Language', () => {
-                        this.filterDisplayed = 'language';
-                    }, false, false, () => {
-                        return this.findFilter.language === 'none';
-                    }),
                     new ViewOption('Remove country filter', () => {
                         this.filterDisplayed = 'none';
                         this.setCountryFilter('none');
                     }, false, false, () => {
                         return this.findFilter.country !== 'none';
+                    }),
+                    new ViewOption('Language', () => {
+                        this.filterDisplayed = 'language';
+                    }, false, false, () => {
+                        return this.findFilter.language === 'none';
                     }),
                     new ViewOption('Remove language filter', () => {
                         this.filterDisplayed = 'none';

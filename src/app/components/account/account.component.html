@@ -1,5 +1,4 @@
 <div *ngIf="user && form && countryList && languageList" class="container">
-
     <div class="top title">{{user.name}}</div>
     <app-view-options class="sub" [groups]="optionGroups" [disableOptions]="transacting"></app-view-options>
     <app-view-actions class="bottom" [actions]="actions" [disableActions]="transacting"></app-view-actions>
@@ -15,7 +14,6 @@
                     <span class="slider round"></span>
                 </label>
             </div>
-
 
             <div class="form__group">
                 <div class="form__group__label">
