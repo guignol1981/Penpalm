@@ -30,6 +30,7 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
     sendWarning = false;
     selectedOption = '';
     templates: string[];
+    postcard = new Postcard();
 
     inputs: SingleInput[];
     optionGroups: ViewOptionGroup[];
@@ -52,19 +53,6 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
             this.userService.find({country: 'none', language: 'none', type: 'pals'}).then((pals: User[]) => {
                 this.user = user;
                 this.recipients = pals;
-
-                this.form = new FormGroup({
-                    body: new FormControl(null),
-                    imageUrl: new FormControl(null),
-                    imageFitType: new FormControl('contain'),
-                    spotifyLink: new FormControl(null),
-                    youtubeLink: new FormControl(null),
-                    uploadedImage: new FormControl(null),
-                    allowShare: new FormControl(false),
-                    template: new FormControl('none'),
-                    recipient: new FormControl(null, Validators.required),
-                    location: new FormControl(null)
-                });
 
                 this.initActions();
                 this.initOptions();
@@ -104,7 +92,10 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
                         this.selectedOption = 'recipient';
                     }, false, false, null, null, 'fas fa-user'),
                     new ViewOption('Spotify song', () => {
-                    }, false, false, null, null, 'fab fa-spotify'),
+                        this.selectedOption = 'spotify';
+                    }, false, false, () => {
+                        return true;
+                    }, null, 'fab fa-spotify'),
                     new ViewOption('Remove spotify song', () => {
                     }, false, false, () => {
                         return false;
@@ -160,7 +151,7 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
                 'Recipient',
                 ESingleInput.DropDown,
                 (singleInput: SingleInput) => {
-                    this.setRecipient(singleInput.value.id);
+                    this.postcard.recipient = singleInput.lovValue.id;
                 },
                 () => {
                     return this.selectedOption === 'recipient';
@@ -172,6 +163,16 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
                     };
                     return lovItem;
                 })
+            ),
+            new SingleInput(
+                'Spotify song',
+                ESingleInput.Text,
+                (singleInput: SingleInput) => {
+                    this.postcard.spotifyLink = singleInput.value;
+                },
+                () => {
+                    return this.selectedOption === 'spotify';
+                }, 'fab fa-spotify', null, 'Spotify uri'
             )
         ];
     }
@@ -280,10 +281,6 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
             default:
                 return cssClass += ' postcard__image--none';
         }
-    }
-
-    setRecipient(recipientId: string) {
-        this.form.get('recipient').setValue(recipientId);
     }
 
     setTemplate(templateName, bodyElement = null, backElement = null) {

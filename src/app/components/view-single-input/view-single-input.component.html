@@ -1,20 +1,47 @@
-<div *ngFor="let input of inputs" [class]="checkCondition(input) ? 'container' : ''">
-    <div *ngIf="checkCondition(input)" class="input">
-        <div class="input__group">
-            <div class="input__group__label">
-                <label for="input">{{input.label}}</label>
+<div [ngSwitch]="input.inputType" *ngFor="let input of inputs">
+    <div *ngSwitchCase="eSingleInput.DropDown" [class]="checkCondition(input) ? 'container' : ''">
+        <div *ngIf="checkCondition(input)" class="input">
+            <div class="input__group">
+                <div class="input__group__label">
+                    <label for="inputDrp">
+                        <span *ngIf="input.icon">
+                            <i [class]="input.icon"></i>&nbsp;
+                        </span>
+                        {{input.label}}
+                    </label>
+                </div>
+                <div class="input__group__input">
+                    <div class="input__group__input input__group__input--dropdown">
+                        <div class="input__group__input--dropdown__value">
+                            {{input.lovValue ? input.lovValue.label : ''}}
+                        </div>
+                        <div id="inputDrp" class="input__group__input--dropdown__option-box">
+                            <a (click)="setLovValue(input, item)" *ngFor="let item of input.lov"
+                               class="input__group__input--dropdown__option-box__item">
+                                {{item.label}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="input__group__input">
-                <div class="input__group__input input__group__input--dropdown">
-                    <div class="input__group__input--dropdown__value">
-                        {{input.value ? input.value.label : ''}}
-                    </div>
-                    <div id="input" class="input__group__input--dropdown__option-box">
-                        <a (click)="setValue(input, item)" *ngFor="let item of input.lov"
-                           class="input__group__input--dropdown__option-box__item">
-                            {{item.label}}
-                        </a>
-                    </div>
+        </div>
+    </div>
+    <div *ngSwitchCase="eSingleInput.Text" [class]="checkCondition(input) ? 'container' : ''">
+        <div *ngIf="checkCondition(input)" class="input">
+            <div class="input__group">
+                <div class="input__group__label">
+                    <label for="inputText">
+                         <span *ngIf="input.icon">
+                            <i [class]="input.icon"></i>&nbsp;
+                        </span>
+                        {{input.label}}
+                    </label>
+                </div>
+                <div class="input__group__input">
+                    <input #inputText class="form__group__input--text" id="inputText" type="text"
+                           [placeholder]="input.placeHolder"
+                           [value]="input.value ? input.value : ''"
+                           (change)="setValue(input, inputText.value)">
                 </div>
             </div>
         </div>
