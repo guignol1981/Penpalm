@@ -11,6 +11,7 @@ import {ViewAction} from '../../models/actions/view-action';
 import {EViewAction} from '../../models/actions/e-view-action.enum';
 import {Notification} from '../../models/notification/notification';
 import {ENotification} from '../../models/notification/e-notification.enum';
+import {AccountViewData} from '../../models/view-data/account-view-data';
 
 @Component({
     selector: 'app-account',
@@ -26,29 +27,8 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
 
     transacting = false;
 
-    optionGroups = [
-        new ViewOptionGroup(
-            'Options',
-            [
-                new ViewOption('Logout', () => {
-                    this.logout();
-                }),
-                new ViewOption('Close account', () => {
-                    this.deleteAccount();
-                }, true, false, null, 'Click again to close account')
-            ]
-        )
-    ];
-
-    actions = [
-        new ViewAction(
-            'Save',
-            () => {
-                this.save();
-            },
-            EViewAction.Primary
-        )
-    ];
+    optionGroups: ViewOptionGroup[];
+    actions: ViewAction[];
 
     constructor(private userService: UserService,
                 private utilService: UtilService,
@@ -75,6 +55,9 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
                 country: new FormControl(this.user.country),
                 description: new FormControl(this.user.description)
             });
+
+            this.optionGroups = AccountViewData.getOptions(this);
+            this.actions = AccountViewData.getActions(this);
         });
     }
 

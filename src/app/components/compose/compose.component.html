@@ -8,22 +8,22 @@
     <div class="wysiwyg-container top">
         <div *ngIf="selectedOption === 'compose'" onmousedown="event.preventDefault();"
              class="wysiwyg-container__group--inline wysiwyg">
-            <a (click)="selectWYSIWYGCommand('undo')"><i class='fas fa-undo'></i></a>
-            <a (click)="selectWYSIWYGCommand('redo')"><i class='fas fa-redo'></i></a>
-            <a (click)="selectWYSIWYGCommand('bold')"><i class='fa fa-bold'></i></a>
-            <a (click)="selectWYSIWYGCommand('italic')"><i class='fa fa-italic'></i></a>
-            <a (click)="selectWYSIWYGCommand('underline')"><i class='fa fa-underline'></i></a>
-            <a (click)="selectWYSIWYGCommand('strikeThrough')"><i class='fa fa-strikethrough'></i></a>
-            <a (click)="selectWYSIWYGCommand('justifyLeft')"><i class='fa fa-align-left'></i></a>
-            <a (click)="selectWYSIWYGCommand('justifyCenter')"><i class='fa fa-align-center'></i></a>
-            <a (click)="selectWYSIWYGCommand('justifyRight')"><i class='fa fa-align-right'></i></a>
-            <a (click)="selectWYSIWYGCommand('justifyFull')"><i class='fa fa-align-justify'></i></a>
-            <a (click)="selectWYSIWYGCommand('indent')"><i class='fa fa-indent'></i></a>
-            <a (click)="selectWYSIWYGCommand('outdent')"><i class='fa fa-outdent'></i></a>
-            <a (click)="selectWYSIWYGCommand('insertUnorderedList')"><i class='fa fa-list-ul'></i></a>
-            <a (click)="selectWYSIWYGCommand('insertOrderedList')"><i class='fa fa-list-ol'></i></a>
-            <a (click)="selectWYSIWYGCommand('h1')">H1</a>
-            <a (click)="selectWYSIWYGCommand('h2')">H2</a>
+            <a class="btn" (click)="selectWYSIWYGCommand('undo')"><i class='fas fa-undo'></i></a>
+            <a class="btn"(click)="selectWYSIWYGCommand('redo')"><i class='fas fa-redo'></i></a>
+            <a class="btn"(click)="selectWYSIWYGCommand('bold')"><i class='fa fa-bold'></i></a>
+            <a class="btn"(click)="selectWYSIWYGCommand('italic')"><i class='fa fa-italic'></i></a>
+            <a class="btn"(click)="selectWYSIWYGCommand('underline')"><i class='fa fa-underline'></i></a>
+            <a class="btn"(click)="selectWYSIWYGCommand('strikeThrough')"><i class='fa fa-strikethrough'></i></a>
+            <a class="btn"(click)="selectWYSIWYGCommand('justifyLeft')"><i class='fa fa-align-left'></i></a>
+            <a class="btn"(click)="selectWYSIWYGCommand('justifyCenter')"><i class='fa fa-align-center'></i></a>
+            <a class="btn"(click)="selectWYSIWYGCommand('justifyRight')"><i class='fa fa-align-right'></i></a>
+            <a class="btn"(click)="selectWYSIWYGCommand('justifyFull')"><i class='fa fa-align-justify'></i></a>
+            <a class="btn"(click)="selectWYSIWYGCommand('indent')"><i class='fa fa-indent'></i></a>
+            <a class="btn"(click)="selectWYSIWYGCommand('outdent')"><i class='fa fa-outdent'></i></a>
+            <a class="btn"(click)="selectWYSIWYGCommand('insertUnorderedList')"><i class='fa fa-list-ul'></i></a>
+            <a class="btn"(click)="selectWYSIWYGCommand('insertOrderedList')"><i class='fa fa-list-ol'></i></a>
+            <a class="btn"(click)="selectWYSIWYGCommand('h1')">H1</a>
+            <a class="btn"(click)="selectWYSIWYGCommand('h2')">H2</a>
         </div>
     </div>
 </div>

@@ -11,6 +11,7 @@ import {ViewOptionGroup} from '../../models/options/view-option-group';
 import {EViewAction} from '../../models/actions/e-view-action.enum';
 import {SingleInput} from '../../models/single-input/single-input';
 import {ESingleInput} from '../../models/single-input/e-single-input.enum';
+import {MatcherViewData} from '../../models/view-data/matcher-view-data';
 
 export interface FindFilter {
     country: string;
@@ -60,149 +61,11 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
 
         this.userService.getCurrentUser().then((user: User) => {
             this.user = user;
-            this.initActions();
-            this.initOptions();
-            this.initInputs();
+            this.actions = MatcherViewData.getActions(this);
+            this.optionGroups = MatcherViewData.getOptions(this);
+            this.inputs = MatcherViewData.getInputs(this);
             this.find();
         });
-    }
-
-    initActions() {
-        this.actions = [
-            new ViewAction(
-                'Show more',
-                () => {
-                    this.find();
-                },
-                EViewAction.Primary,
-                false,
-                () => {
-                    return this.view === 'discover';
-                }
-            )
-        ];
-    }
-
-    initOptions() {
-        this.optionGroups = [
-            new ViewOptionGroup(
-                'Pen pals',
-                [
-                    new ViewOption('Discover', () => {
-                        this.viewList('discover');
-                    }, false, true),
-                    new ViewOption('My pals', () => {
-                        this.viewList('pals');
-                    }, false, true),
-                    new ViewOption('Pending requests', () => {
-                        this.viewList('pending-requests');
-                    }, false, true),
-                    new ViewOption('Sent requests', () => {
-                        this.viewList('sent-requests');
-                    }, false, true)
-                ]
-            ),
-            new ViewOptionGroup(
-                'Options',
-                [
-                    new ViewOption('Remove pal', () => {
-                        this.removePal();
-                    }, true, false, () => {
-                        return this.user.isPal(this.selectedUser._id);
-                    }, 'Click again to remove pal'),
-                    new ViewOption('Accept request', () => {
-                        this.handleRequest(true);
-                    }, false, false, () => {
-                        return this.user.hasRequestFrom(this.selectedUser._id) && !this.user.isPal(this.selectedUser._id);
-                    }),
-                    new ViewOption('Refuse request', () => {
-                        this.handleRequest(false);
-                    }, false, false, () => {
-                        return this.user.hasRequestFrom(this.selectedUser._id) && !this.user.isPal(this.selectedUser._id);
-                    }),
-                    new ViewOption('Cancel request', () => {
-                        this.cancelRequest();
-                    }, false, false, () => {
-                        return this.selectedUser.hasRequestFrom(this.user._id) && !this.user.isPal(this.selectedUser._id);
-                    }),
-                    new ViewOption('Send request', () => {
-                        this.sendRequest();
-                    }, false, false, () => {
-                        return !this.user.hasRequestFrom(this.selectedUser._id) &&
-                            !this.user.isPal(this.selectedUser._id) &&
-                            !this.selectedUser.hasRequestFrom(this.user._id);
-                    })
-                ],
-                () => {
-                    return this.selectedUser !== null;
-                }
-            ),
-            new ViewOptionGroup(
-                'Filters',
-                [
-                    new ViewOption('Country', () => {
-                        this.filterDisplayed = 'country';
-                    }, false, false, () => {
-                        return this.findFilter.country === 'none';
-                    }),
-                    new ViewOption('Remove country filter', () => {
-                        this.filterDisplayed = 'none';
-                        this.setCountryFilter('none');
-                    }, false, false, () => {
-                        return this.findFilter.country !== 'none';
-                    }),
-                    new ViewOption('Language', () => {
-                        this.filterDisplayed = 'language';
-                    }, false, false, () => {
-                        return this.findFilter.language === 'none';
-                    }),
-                    new ViewOption('Remove language filter', () => {
-                        this.filterDisplayed = 'none';
-                        this.setLanguageFilter('none');
-                    }, false, false, () => {
-                        return this.findFilter.language !== 'none';
-                    })
-                ],
-                () => {
-                    return this.view === 'discover';
-                }
-            )
-        ];
-    }
-
-    initInputs() {
-        this.inputs = [
-            new SingleInput(
-                'Country filter',
-                ESingleInput.DropDown,
-                (singleInput: SingleInput) => {
-                    this.setCountryFilter(singleInput.value);
-                },
-                () => {
-                    return this.filterDisplayed === 'country' && this.countryList;
-                },
-                null,
-                this.countryList.map(a => a = {
-                    label: a,
-                    value: a
-                })
-            ),
-            new SingleInput(
-                'Language filter',
-                ESingleInput.DropDown,
-                (singleInput: SingleInput) => {
-                    this.setLanguageFilter(singleInput.value);
-                },
-                () => {
-                    return this.filterDisplayed === 'language' && this.languageList;
-                },
-                null,
-                this.languageList.map(a => a = {
-                    label: a,
-                    value: a
-                })
-            )
-        ];
     }
 
     find(callback ?: any) {
