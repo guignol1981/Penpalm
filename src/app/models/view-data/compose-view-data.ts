@@ -39,6 +39,7 @@ export class ComposeViewData {
                     new ViewOption('Remove template', () => {
                         composeComponent.selectedOption = null;
                         composeComponent.postcard.template = null;
+                        composeComponent.postcardComponent.setTemplate(null);
                         composeComponent.clearInput('Template');
                     }, false, false, () => {
                         return !!composeComponent.postcard.template;
@@ -160,6 +161,7 @@ export class ComposeViewData {
                 ESingleInput.DropDown,
                 (singleInput: SingleInput) => {
                     composeComponent.postcard.template = singleInput.lovValue.id;
+                    composeComponent.postcardComponent.setTemplate(singleInput.lovValue.id);
                 },
                 () => {
                     return composeComponent.selectedOption === 'template';
@@ -239,7 +241,7 @@ export class ComposeViewData {
             new ViewAction(
                 'Flip',
                 () => {
-                    composeComponent.flip();
+                    composeComponent.flipPostcard();
                 },
                 EViewAction.Secondary,
                 false

@@ -2,38 +2,12 @@
     <app-view-actions class="bottom" [actions]="actions" [disableActions]="transacting"></app-view-actions>
     <app-view-single-input class="top" [inputs]="inputs"></app-view-single-input>
     <app-view-options class="sub" [groups]="optionGroups" [disableOptions]="transacting"></app-view-options>
+    <app-post-card class="main" [postcard]="postcard" [mode]="ePostcardMode.Write"
+                   (composeModeEmitter)="onComposeMode($event)"></app-post-card>
 
-    <div id="postcard" class="postcard main">
-        <div class="postcard--side">
-            <div #editor (focus)="compose()" #body class="postcard__body" id="body" contenteditable>
-                <div class="postcard__body__header">
-                    <!--<p>From: {{user.name}}</p>-->
-                    <!--<p>To: {{selectedRecipientName}}</p>-->
-                    <!--<p>To: {{dateNow | date}}</p>-->
-                </div>
-            </div>
-        </div>
-        <div #back id="back" class="postcard--side postcard--back">
-            <youtube-player *ngIf="postcard.backSideOptionType === eBackSideOption.Youtube"
-                            [videoId]="postcard.backSideValue"
-                            [height]="'100%'"
-                            [width]="'100%'"
-            ></youtube-player>
-            <div *ngIf="imageUrl">
-                <div class="postcard__image-wrap">
-                    <img [class]="getImageClass()" [src]="imageUrl"
-                         alt="">
-                </div>
-            </div>
-            <agm-map *ngIf="postcard.backSideOptionType === eBackSideOption.Location" [latitude]="geoData.lat" [longitude]="geoData.lng">
-                <agm-marker [latitude]="geoData.lat" [longitude]="geoData.lng"></agm-marker>
-            </agm-map>
-        </div>
-    </div>
-
-    <div class="form top">
+    <div class="wysiwyg-container top">
         <div *ngIf="selectedOption === 'compose'" onmousedown="event.preventDefault();"
-             class="form__group--inline wysiwyg">
+             class="wysiwyg-container__group--inline wysiwyg">
             <a (click)="selectWYSIWYGCommand('undo')"><i class='fas fa-undo'></i></a>
             <a (click)="selectWYSIWYGCommand('redo')"><i class='fas fa-redo'></i></a>
             <a (click)="selectWYSIWYGCommand('bold')"><i class='fa fa-bold'></i></a>

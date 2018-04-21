@@ -1,12 +1,69 @@
 .postcard {
   height: 100%;
-  background-color: var(--color-paper);
+  argin: 5rem;
+  transform-style: preserve-3d;
+  transition: all 1s ease-in-out;
 
-  &__body {
-    padding: 2rem 3rem;
-    font-family: 'Homemade Apple', cursive;
-    font-size: 6rem;
-    grid-area: body;
+  &__image-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: max-content;
   }
 
+  &__image {
+    max-width: 100%;
+    max-height: 100%;
+
+    &--contain {
+      object-fit: contain;
+    }
+    &--cover {
+      object-fit: cover;
+    }
+    &--fill {
+      object-fit: fill;
+    }
+    &--none {
+      object-fit: none;
+    }
+  }
+
+  &--side {
+    height: 100%;
+    width: 100%;
+    backface-visibility: hidden;
+    position: absolute;
+    border-radius: 1rem;
+    background-color: var(--color-whitish);
+  }
+
+  &--back {
+    text-align: center;
+    transform: rotateY(180deg);
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  &__body {
+    background-color: var(--color-whitish);
+    font-size: 2.5rem;
+    line-height: 3.2rem;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 1rem;
+    resize: none;
+    overflow: auto;
+    height: 100%;
+    width: 100%;
+    padding: 2rem;
+    outline: none;
+    position: relative;
+    color: #333333;
+  }
+}
+
+agm-map {
+  height: 100%;
 }

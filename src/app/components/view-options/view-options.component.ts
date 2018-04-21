@@ -50,7 +50,7 @@ export class ViewOptionsComponent implements OnInit {
 
     checkOptionActiveCondition(option: ViewOption): boolean {
         if (option.activeCondition) {
-            return option.activeCondition(option);
+            return option.activeCondition();
         } else {
             return true;
         }
