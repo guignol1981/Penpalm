@@ -14,6 +14,7 @@ import {EViewAction} from '../../models/actions/e-view-action.enum';
 import {ViewOption} from '../../models/options/view-option';
 import {BaseViewComponent} from '../base-view/base-view.component';
 import {UtilService} from '../../services/util.service';
+import {ComposeViewData} from '../../models/view-data/compose-view-data';
 
 @Component({
     selector: 'app-compose',
@@ -31,7 +32,7 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
     selectedOption = '';
     templates: string[];
     postcard = new Postcard();
-
+    eBackSideOption = EBackSideOption;
     inputs: SingleInput[];
     optionGroups: ViewOptionGroup[];
     actions: ViewAction[];
@@ -54,256 +55,12 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
                 this.user = user;
                 this.recipients = pals;
 
-                this.initActions();
-                this.initOptions();
-                this.initInputs();
+                this.optionGroups = ComposeViewData.getOptions(this);
+                this.inputs = ComposeViewData.getInputs(this);
+                this.actions = ComposeViewData.getActions(this);
             });
         });
 
-    }
-
-
-    initActions() {
-        this.actions = [
-            new ViewAction(
-                'Flip',
-                () => {
-                    this.flip();
-                },
-                EViewAction.Secondary,
-                false
-            ),
-            new ViewAction(
-                'Send',
-                () => {
-                },
-                EViewAction.Primary,
-                false
-            )
-        ];
-    }
-
-    initOptions() {
-        this.optionGroups = [
-            new ViewOptionGroup(
-                'General',
-                [
-                    new ViewOption('Recipient', () => {
-                        this.selectedOption = 'recipient';
-                    }, false, false, null, null, 'fas fa-user'),
-                    new ViewOption('Spotify song', () => {
-                        this.selectedOption = 'spotify';
-                    }, false, false, () => {
-                        return !this.postcard.spotifyLink;
-                    }, null, 'fab fa-spotify'),
-                    new ViewOption('Remove spotify song', () => {
-                        this.selectedOption = null;
-                        this.postcard.spotifyLink = null;
-                        this.clearInput('Spotify song');
-                    }, false, false, () => {
-                        return !!this.postcard.spotifyLink;
-                    }, null, 'fab fa-spotify'),
-                    new ViewOption('Template', () => {
-                        this.selectedOption = 'template';
-                    }, false, false, () => {
-                        return !this.postcard.template;
-                    }, null, 'far fa-square'),
-                    new ViewOption('Remove template', () => {
-                        this.selectedOption = null;
-                        this.postcard.template = null;
-                        this.clearInput('Template');
-                    }, false, false, () => {
-                        return !!this.postcard.template;
-                    }, null, 'far fa-square'),
-                    new ViewOption('Allow share', () => {
-                        this.selectedOption = 'allow-share';
-                    }, false, false, null, null, 'fas fa-share-alt')
-                ]
-            ),
-            new ViewOptionGroup(
-                'Back side',
-                [
-                    new ViewOption('Youtube video', () => {
-                        this.selectedOption = 'youtube';
-                    }, false, false, () => {
-                        return this.postcard.backSideOptionType !== EBackSideOption.Youtube;
-                    }, null, 'fab fa-youtube', () => {
-                        return this.isBackSideOptionAvailable(EBackSideOption.Youtube);
-                    }),
-                    new ViewOption('Remove youtube video', () => {
-                        this.postcard.backSideOptionType = EBackSideOption.None;
-                        this.postcard.backSideValue = null;
-                        this.selectedOption = null;
-                        this.clearInput('Youtube video');
-                    }, false, false, () => {
-                        return this.postcard.backSideOptionType === EBackSideOption.Youtube;
-                    }, null, 'fab fa-youtube', () => {
-                        return this.isBackSideOptionAvailable(EBackSideOption.Youtube);
-                    }),
-                    new ViewOption('Link image', () => {
-                        this.selectedOption = 'image-link';
-                    }, false, false, () => {
-                        return this.postcard.backSideOptionType !== EBackSideOption.LinkImage;
-                    }, null, 'fas fa-link', () => {
-                        return this.isBackSideOptionAvailable(EBackSideOption.LinkImage);
-                    }),
-                    new ViewOption('Remove linked image', () => {
-                        this.postcard.backSideOptionType = EBackSideOption.None;
-                        this.postcard.backSideValue = null;
-                        this.selectedOption = null;
-                        this.clearInput('Image link');
-                    }, false, false, () => {
-                        return this.postcard.backSideOptionType === EBackSideOption.LinkImage;
-                    }, null, 'fas fa-link', () => {
-                        return this.isBackSideOptionAvailable(EBackSideOption.LinkImage);
-                    }),
-                    new ViewOption('Upload image', () => {
-                        this.selectedOption = 'upload';
-                    }, false, false, () => {
-                        return this.postcard.backSideOptionType !== EBackSideOption.UploadImage;
-                    }, null, 'fas fa-image', () => {
-                        return this.isBackSideOptionAvailable(EBackSideOption.UploadImage);
-                    }),
-                    new ViewOption('Remove uploaded image', () => {
-                        this.postcard.backSideOptionType = EBackSideOption.None;
-                        this.postcard.backSideValue = null;
-                        this.selectedOption = null;
-                        this.clearInput('Upload image');
-                    }, false, false, () => {
-                        return this.postcard.backSideOptionType === EBackSideOption.UploadImage;
-                    }, null, 'fas fa-image', () => {
-                        return this.isBackSideOptionAvailable(EBackSideOption.UploadImage);
-                    }),
-                    new ViewOption('Location', () => {
-                        this.selectedOption = 'location';
-                    }, false, false, () => {
-                        return this.postcard.backSideOptionType !== EBackSideOption.LinkImage;
-                    }, null, 'fas fa-map-marker', () => {
-                        return this.isBackSideOptionAvailable(EBackSideOption.Location);
-                    }),
-                    new ViewOption('Remove location', () => {
-                        this.postcard.backSideOptionType = EBackSideOption.None;
-                        this.postcard.backSideValue = null;
-                        this.selectedOption = null;
-                        this.clearInput('location');
-                    }, false, false, () => {
-                        return this.postcard.backSideOptionType === EBackSideOption.LinkImage;
-                    }, null, 'fas fa-map-marker', () => {
-                        return this.isBackSideOptionAvailable(EBackSideOption.Location);
-                    }),
-                ],
-                () => {
-                    return this.shownSide === 'back';
-                }
-            )
-        ];
-    }
-
-    initInputs() {
-        this.inputs = [
-            new SingleInput(
-                'Recipient',
-                ESingleInput.DropDown,
-                (singleInput: SingleInput) => {
-                    this.postcard.recipient = singleInput.lovValue.id;
-                },
-                () => {
-                    return this.selectedOption === 'recipient';
-                }, 'fas fa-user',
-                this.recipients.map(a => {
-                    return {
-                        label: a.name,
-                        id: a._id
-                    };
-                })
-            ),
-            new SingleInput(
-                'Spotify song',
-                ESingleInput.Text,
-                (singleInput: SingleInput) => {
-                    this.postcard.spotifyLink = singleInput.value;
-                },
-                () => {
-                    return this.selectedOption === 'spotify';
-                }, 'fab fa-spotify', null, 'Spotify uri'
-            ),
-            new SingleInput(
-                'Template',
-                ESingleInput.DropDown,
-                (singleInput: SingleInput) => {
-                    this.postcard.template = singleInput.lovValue.id;
-                },
-                () => {
-                    return this.selectedOption === 'template';
-                }, 'far fa-square',
-                this.templates.map(a => {
-                    return {
-                        label: a,
-                        id: a
-                    };
-                })
-            ),
-            new SingleInput(
-                'Allow share',
-                ESingleInput.Switch,
-                (singleInput: SingleInput) => {
-                    this.postcard.allowShare = singleInput.boolValue;
-                },
-                () => {
-                    return this.selectedOption === 'allow-share';
-                }, 'fas fa-share-alt'
-            ),
-            new SingleInput(
-                'Youtube video',
-                ESingleInput.Text,
-                (singleInput: SingleInput) => {
-                    let youtubeLink = this.getYoutubeLink(singleInput.value);
-                    if (!youtubeLink) {
-                        singleInput.helperMsg = 'Invalid link';
-                        return;
-                    }
-                    singleInput.helperMsg = null;
-                    this.postcard.backSideOptionType = EBackSideOption.Youtube;
-                    this.postcard.backSideValue = this.getYoutubeLink(singleInput.value);
-                },
-                () => {
-                    return this.selectedOption === 'youtube';
-                }, 'fab fa-youtube', null, 'Youtube link'
-            ),
-            new SingleInput(
-                'Image link',
-                ESingleInput.Text,
-                (singleInput: SingleInput) => {
-                    this.postcard.backSideOptionType = EBackSideOption.LinkImage;
-                    this.postcard.backSideValue = singleInput.value;
-                },
-                () => {
-                    return this.selectedOption === 'image-link';
-                }, 'fas fa-link', null, 'Image url'
-            ),
-            new SingleInput(
-                'Upload image',
-                ESingleInput.Upload,
-                (singleInput: SingleInput) => {
-                    this.postcard.backSideOptionType = EBackSideOption.UploadImage;
-                    this.postcard.backSideValue = singleInput.value;
-                },
-                () => {
-                    return this.selectedOption === 'upload';
-                }, 'fas fa-image'
-            ),
-            new SingleInput(
-                'Location',
-                ESingleInput.Location,
-                (singleInput: SingleInput) => {
-                    this.postcard.backSideOptionType = EBackSideOption.Location;
-                    this.postcard.backSideValue = singleInput.value;
-                },
-                () => {
-                    return this.selectedOption === 'location';
-                }, 'fas fa-map-marker', null, 'Location'
-            ),
-        ];
     }
 
     clearInput(inputName) {
@@ -317,7 +74,11 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
 
     get selectedRecipientName() {
         let recipientName = null;
-        let selectedRecipientId = this.form.get('recipient').value;
+        let selectedRecipientId = this.postcard.recipient;
+
+        if (!selectedRecipientId) {
+            return '';
+        }
 
         this.recipients.forEach((item) => {
             if (item._id === selectedRecipientId) {
@@ -330,7 +91,11 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
     }
 
     get imageUrl() {
-        return this.form.get('imageUrl').value || this.form.get('uploadedImage').value || null;
+        if (this.postcard.backSideOptionType === EBackSideOption.LinkImage ||
+            this.postcard.backSideOptionType === EBackSideOption.UploadImage) {
+            return this.postcard.backSideValue;
+        }
+        return null;
     }
 
     get dateNow() {
@@ -339,17 +104,13 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
 
     get geoData() {
         return {
-            lat: this.form.get('location').value.lat,
-            lng: this.form.get('location').value.lng
+            lat: this.postcard.backSideValue.value.lat,
+            lng: this.postcard.backSideValue.value.lng
         };
     }
 
     isBackSideOptionAvailable(backSideOptionType: EBackSideOption): boolean {
         return this.postcard.backSideOptionType === backSideOptionType || this.postcard.backSideOptionType === EBackSideOption.None;
-    }
-
-    selectOption(option) {
-        this.selectedOption = option;
     }
 
     removeOptionValue(option) {
@@ -379,13 +140,6 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
         }
 
         return youtube_parser(link);
-    }
-
-    onLocationChange(value) {
-        this.googleMapService.getGeoData(value).then((geo) => {
-            let location = geo.data[0].geometry.location;
-            this.form.get('location').setValue({lat: location.lat, lng: location.lng});
-        });
     }
 
     getImageClass() {
