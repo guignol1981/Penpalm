@@ -46,4 +46,24 @@
             </div>
         </div>
     </div>
+    <div *ngSwitchCase="eSingleInput.Switch" [class]="checkCondition(input) ? 'container' : ''">
+        <div *ngIf="checkCondition(input)" class="input">
+            <div class="input__group">
+                <div class="input__group__label">
+                    <label for="inputSwitch">
+                         <span *ngIf="input.icon">
+                            <i [class]="input.icon"></i>&nbsp;
+                        </span>
+                        {{input.label}}
+                    </label>
+                </div>
+                <label class="switch">
+                    <input #inputSwitch type="checkbox" checked id="inputSwitch"
+                           [checked] ="input.boolValue"
+                           (change)="setBoolValue(input, inputSwitch.checked)">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+    </div>
 </div>

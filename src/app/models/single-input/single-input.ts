@@ -8,6 +8,7 @@ export interface LovItem {
 export class SingleInput {
     public value: string = null;
     public lovValue: LovItem = null;
+    public boolValue = false;
 
     constructor(public label: string,
                 public inputType: ESingleInput,

@@ -35,6 +35,11 @@ export class ViewSingleInputComponent implements OnInit {
         this.executeInput(singleInput);
     }
 
+    setBoolValue(singleInput: SingleInput, value: boolean) {
+        singleInput.boolValue = value;
+        this.executeInput(singleInput);
+    }
+
     executeInput(singleInput: SingleInput) {
         singleInput.callback(singleInput);
     }

@@ -94,19 +94,29 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
                     new ViewOption('Spotify song', () => {
                         this.selectedOption = 'spotify';
                     }, false, false, () => {
-                        return true;
+                        return !this.postcard.spotifyLink;
                     }, null, 'fab fa-spotify'),
                     new ViewOption('Remove spotify song', () => {
+                        this.selectedOption = null;
+                        this.postcard.spotifyLink = null;
+                        this.clearInput('Spotify song');
                     }, false, false, () => {
-                        return false;
+                        return !!this.postcard.spotifyLink;
                     }, null, 'fab fa-spotify'),
                     new ViewOption('Template', () => {
-                    }, false, false, null, null, 'far fa-square'),
-                    new ViewOption('Remove template', () => {
+                        this.selectedOption = 'template';
                     }, false, false, () => {
-                        return false;
+                        return !this.postcard.template;
+                    }, null, 'far fa-square'),
+                    new ViewOption('Remove template', () => {
+                        this.selectedOption = null;
+                        this.postcard.template = null;
+                        this.clearInput('Template');
+                    }, false, false, () => {
+                        return !!this.postcard.template;
                     }, null, 'far fa-square'),
                     new ViewOption('Allow share', () => {
+                        this.selectedOption = 'allow-share';
                     }, false, false, null, null, 'fas fa-share-alt')
                 ]
             ),
@@ -157,11 +167,10 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
                     return this.selectedOption === 'recipient';
                 }, 'fas fa-user',
                 this.recipients.map(a => {
-                    let lovItem = {
+                    return {
                         label: a.name,
                         id: a._id
                     };
-                    return lovItem;
                 })
             ),
             new SingleInput(
@@ -173,8 +182,43 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
                 () => {
                     return this.selectedOption === 'spotify';
                 }, 'fab fa-spotify', null, 'Spotify uri'
-            )
+            ),
+            new SingleInput(
+                'Template',
+                ESingleInput.DropDown,
+                (singleInput: SingleInput) => {
+                    this.postcard.template = singleInput.lovValue.id;
+                },
+                () => {
+                    return this.selectedOption === 'template';
+                }, 'far fa-square',
+                this.templates.map(a => {
+                    return {
+                        label: a,
+                        id: a
+                    };
+                })
+            ),
+            new SingleInput(
+                'Allow share',
+                ESingleInput.Switch,
+                (singleInput: SingleInput) => {
+                    this.postcard.allowShare = singleInput.boolValue;
+                },
+                () => {
+                    return this.selectedOption === 'allow-share';
+                }, 'fas fa-share-alt'
+            ),
         ];
+    }
+
+    clearInput(inputName) {
+        this.inputs.forEach(item => {
+            if (item.label === inputName) {
+                item.value = null;
+                item.lovValue = null;
+            }
+        });
     }
 
     get selectedRecipientName() {
