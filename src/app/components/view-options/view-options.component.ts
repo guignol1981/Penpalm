@@ -21,7 +21,7 @@ export class ViewOptionsComponent implements OnInit {
     getOptionClass(option: ViewOption) {
         let cssClass = 'btn btn--align-left btn--text-md';
 
-        if (this.disableOptions) {
+        if (this.disableOptions || !this.checkOptionActiveCondition(option)) {
             return cssClass += ' btn--disabled';
         }
 
@@ -48,6 +48,14 @@ export class ViewOptionsComponent implements OnInit {
         }
     }
 
+    checkOptionActiveCondition(option: ViewOption): boolean {
+        if (option.activeCondition) {
+            return option.activeCondition(option);
+        } else {
+            return true;
+        }
+    }
+
     getOptionName(option: ViewOption) {
         if (option.warned) {
             return option.warnMsg;
@@ -56,7 +64,7 @@ export class ViewOptionsComponent implements OnInit {
     }
 
     executeOption(option: ViewOption) {
-        if (this.disableOptions) {
+        if (this.disableOptions || !this.checkOptionActiveCondition(option)) {
             return;
         }
 

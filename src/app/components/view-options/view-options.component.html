@@ -6,8 +6,8 @@
                     {{group.name}}
                 </p>
                 <div *ngFor="let option of group.options" class="group__list">
-                    <a *ngIf="checkOptionCondition(option)" [class]="getOptionClass(option)"
-                       (click)="executeOption(option)">
+                    <a *ngIf="checkOptionCondition(option)" [class]="getOptionClass(option, group)"
+                       (click)="executeOption(option, group)">
                         <i *ngIf="option.icon" [class]="option.icon"></i>
                         &nbsp;{{getOptionName(option)}}
                     </a>
