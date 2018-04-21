@@ -6,7 +6,7 @@ export interface LovItem {
 }
 
 export class SingleInput {
-    public value: string = null;
+    public value: any = null;
     public lovValue: LovItem = null;
     public boolValue = false;
 

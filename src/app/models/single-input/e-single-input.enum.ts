@@ -2,5 +2,6 @@ export enum ESingleInput {
     Text,
     DropDown,
     Switch,
-    Upload
+    Upload,
+    Location
 }

@@ -95,4 +95,27 @@
             </div>
         </div>
     </div>
+    <div *ngSwitchCase="eSingleInput.Location" [class]="checkCondition(input) ? 'container' : ''">
+        <div *ngIf="checkCondition(input)" class="input">
+            <div class="input__group">
+                <div class="input__group__label">
+                    <label for="inputLocation">
+                         <span *ngIf="input.icon">
+                            <i [class]="input.icon"></i>&nbsp;
+                        </span>
+                        {{input.label}}
+                    </label>
+                </div>
+                <div class="input__group__input">
+                    <input #inputText class="form__group__input--text" id="inputLocation" type="text"
+                           [placeholder]="input.placeHolder"
+                           [value]="input.value ? formattedAddress : ''"
+                           (change)="onLocationChange(input, inputText.value)">
+                </div>
+                <div *ngIf="input.helperMsg" class="input__group__helper input__group__helper--error">
+                    <small>{{input.helperMsg}}</small>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

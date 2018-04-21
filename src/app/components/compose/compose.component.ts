@@ -175,11 +175,22 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
                         return this.isBackSideOptionAvailable(EBackSideOption.UploadImage);
                     }),
                     new ViewOption('Location', () => {
-                    }, false, false, null, null, 'fas fa-map-marker'),
-                    new ViewOption('Remove location', () => {
+                        this.selectedOption = 'location';
                     }, false, false, () => {
-                        return false;
-                    }, null, 'fas fa-map-marker'),
+                        return this.postcard.backSideOptionType !== EBackSideOption.LinkImage;
+                    }, null, 'fas fa-map-marker', () => {
+                        return this.isBackSideOptionAvailable(EBackSideOption.Location);
+                    }),
+                    new ViewOption('Remove location', () => {
+                        this.postcard.backSideOptionType = EBackSideOption.None;
+                        this.postcard.backSideValue = null;
+                        this.selectedOption = null;
+                        this.clearInput('location');
+                    }, false, false, () => {
+                        return this.postcard.backSideOptionType === EBackSideOption.LinkImage;
+                    }, null, 'fas fa-map-marker', () => {
+                        return this.isBackSideOptionAvailable(EBackSideOption.Location);
+                    }),
                 ],
                 () => {
                     return this.shownSide === 'back';
@@ -280,6 +291,17 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
                 () => {
                     return this.selectedOption === 'upload';
                 }, 'fas fa-image'
+            ),
+            new SingleInput(
+                'Location',
+                ESingleInput.Location,
+                (singleInput: SingleInput) => {
+                    this.postcard.backSideOptionType = EBackSideOption.Location;
+                    this.postcard.backSideValue = singleInput.value;
+                },
+                () => {
+                    return this.selectedOption === 'location';
+                }, 'fas fa-map-marker', null, 'Location'
             ),
         ];
     }
