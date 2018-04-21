@@ -16,6 +16,7 @@ export class SingleInput {
                 public condition: () => boolean = null,
                 public icon?: string,
                 public lov?: LovItem[],
-                public placeHolder?: string) {
+                public placeHolder?: string,
+                public helperMsg?: string) {
     }
 }

@@ -43,6 +43,9 @@
                            [value]="input.value ? input.value : ''"
                            (change)="setValue(input, inputText.value)">
                 </div>
+                <div *ngIf="input.helperMsg" class="input__group__helper input__group__helper--error">
+                    <small>{{input.helperMsg}}</small>
+                </div>
             </div>
         </div>
     </div>

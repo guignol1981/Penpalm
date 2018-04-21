@@ -124,16 +124,28 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
                 'Back side',
                 [
                     new ViewOption('Youtube video', () => {
-                    }, false, false, null, null, 'fab fa-youtube'),
+                        this.selectedOption = 'youtube';
+                    }, false, false, () => {
+                        return !this.postcard.youtubeId;
+                    }, null, 'fab fa-youtube'),
                     new ViewOption('Remove youtube video', () => {
+                        this.postcard.youtubeId = null;
+                        this.selectedOption = null;
+                        this.clearInput('Youtube video');
                     }, false, false, () => {
-                        return false;
-                    }, null, 'fab fa-youtube"'),
+                        return !!this.postcard.youtubeId;
+                    }, null, 'fab fa-youtube'),
                     new ViewOption('Link image', () => {
-                    }, false, false, null, null, 'fas fa-link'),
-                    new ViewOption('Remove linked image', () => {
+                        this.selectedOption = 'image-link';
                     }, false, false, () => {
-                        return false;
+                        return !this.postcard.imageUrl;
+                    }, null, 'fas fa-link'),
+                    new ViewOption('Remove linked image', () => {
+                        this.postcard.imageUrl = null;
+                        this.selectedOption = null;
+                        this.clearInput('Image link');
+                    }, false, false, () => {
+                        return !!this.postcard.imageUrl;
                     }, null, 'fas fa-link'),
                     new ViewOption('Upload image', () => {
                     }, false, false, null, null, 'fas fa-image'),
@@ -208,6 +220,32 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
                 () => {
                     return this.selectedOption === 'allow-share';
                 }, 'fas fa-share-alt'
+            ),
+            new SingleInput(
+                'Youtube video',
+                ESingleInput.Text,
+                (singleInput: SingleInput) => {
+                    let youtubeLink = this.getYoutubeLink(singleInput.value);
+                    if (!youtubeLink) {
+                        singleInput.helperMsg = 'Invalid link';
+                        return;
+                    }
+                    singleInput.helperMsg = null;
+                    this.postcard.youtubeId = this.getYoutubeLink(singleInput.value);
+                },
+                () => {
+                    return this.selectedOption === 'youtube';
+                }, 'fab fa-youtube', null, 'Youtube link'
+            ),
+            new SingleInput(
+                'Image link',
+                ESingleInput.Text,
+                (singleInput: SingleInput) => {
+                    this.postcard.imageUrl = singleInput.value;
+                },
+                () => {
+                    return this.selectedOption === 'image-link';
+                }, 'fas fa-link', null, 'Image url'
             ),
         ];
     }
@@ -290,8 +328,8 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
         }
     }
 
-    getYoutubeLinkId() {
-        let link = this.form.get('youtubeLink').value;
+    getYoutubeLink(value) {
+        let link = value;
 
         if (!link) {
             return null;
@@ -405,7 +443,7 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
             this.form.get('uploadedImage').value,
             this.form.get('imageFitType').value,
             this.form.get('spotifyLink').value,
-            this.getYoutubeLinkId(),
+            this.getYoutubeLink(),
             this.form.get('allowShare').value,
             this.form.get('template').value,
             this.form.get('location').value,

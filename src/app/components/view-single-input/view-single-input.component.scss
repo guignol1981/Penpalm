@@ -114,8 +114,12 @@
 			}
 		}
 
-		&--helper {
+		&__helper {
+			font-size: 2rem;
 
+			&--error {
+				color: var(--color-warning);
+			}
 		}
 	}
 }
