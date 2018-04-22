@@ -19,8 +19,8 @@ export class Postcard {
                 public template?: string,
                 public recipient?: string,
                 public author?: User,
-                public seen?: boolean,
-                public creationDate?: Date) {
+                public seen: boolean = false,
+                public creationDate: Date = new Date()) {
     }
 
 }

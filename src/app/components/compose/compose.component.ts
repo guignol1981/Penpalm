@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {EBackSideOption, Postcard} from '../../models/postcard/postcard';
 import {PostcardService} from '../../services/postcard.service';
 import {UserService} from '../../services/user.service';
@@ -10,6 +10,8 @@ import {BaseViewComponent} from '../base-view/base-view.component';
 import {UtilService} from '../../services/util.service';
 import {ComposeViewData} from '../../models/view-data/compose-view-data';
 import {EPostcardMode, PostcardComponent} from '../postcard/postcard.component';
+import {ENotification} from '../../models/notification/e-notification.enum';
+import {Notification} from '../../models/notification/notification';
 
 @Component({
     selector: 'app-compose',
@@ -21,7 +23,7 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
     user: User;
     recipients: User[];
     transacting = false;
-    selectedOption = '';
+    selectedOption = 'compose';
     templates: string[];
     postcard = new Postcard();
     ePostcardMode = EPostcardMode;
@@ -110,36 +112,17 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
     }
 
     submit() {
-        // if (this.transacting) {
-        //     return;
-        // }
-        //
-        // if (!this.sendWarning) {
-        //     this.sendWarning = true;
-        //     return;
-        // }
-        //
-        // let postcard = new Postcard(
-        //     null,
-        //     editor.innerHTML,
-        //     this.form.get('imageUrl').value,
-        //     this.form.get('uploadedImage').value,
-        //     this.form.get('imageFitType').value,
-        //     this.form.get('spotifyLink').value,
-        //     this.getYoutubeLink(),
-        //     this.form.get('allowShare').value,
-        //     this.form.get('template').value,
-        //     this.form.get('location').value,
-        //     this.form.get('recipient').value,
-        // );
-        //
-        // this.transacting = true;
-        //
-        // this.postcardService.create(postcard).then(() => {
-        //     this.form.reset();
-        //     this.composeMode = false;
-        //     this.transacting = false;
-        //     // this.notifEvent.emit({type: 'success', msg: 'Postcard sent'});
-        // });
+        if (this.transacting) {
+            return;
+        }
+
+        this.postcard.body = this.postcardComponent.getBody();
+        this.transacting = true;
+
+        this.postcardService.create(this.postcard).then(() => {
+            this.postcard = new Postcard();
+            this.transacting = false;
+            this.notificationEmitter.emit(new Notification(ENotification.Success, 'Postcard sent'));
+        });
     }
 }

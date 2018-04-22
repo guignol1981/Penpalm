@@ -60,6 +60,10 @@ export class PostcardComponent implements OnInit {
         }
     }
 
+    @Input()
+    getBody() {
+        return document.getElementById('body').innerHTML;
+    }
 
     get imageUrl() {
         if (this.postcard.backSideOptionType === EBackSideOption.LinkImage ||

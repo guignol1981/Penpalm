@@ -1,4 +1,9 @@
-<!--<div *ngIf="activePostcard && postcards.length > 0" class="container">-->
+<div *ngIf="postcards" class="container">
+    <app-view-actions class="bottom" [actions]="actions" [disableActions]="transacting"></app-view-actions>
+    <app-view-single-input class="top" [inputs]="inputs"></app-view-single-input>
+    <app-view-options class="sub" [groups]="optionGroups" [disableOptions]="transacting"></app-view-options>
+    <app-post-card *ngIf="activePostcard" class="main" [postcard]="activePostcard" [mode]="ePostcardMode.Read"></app-post-card>
+</div>
     <!--<div class="paging">-->
         <!--<div class="paging__handles">-->
             <!--<a (click)="skipFirst()"-->

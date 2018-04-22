@@ -6,9 +6,7 @@ import {AuthenticationService} from '../../services/authentication.service';
 import {UtilService} from '../../services/util.service';
 import {BaseViewComponent} from '../base-view/base-view.component';
 import {ViewOptionGroup} from '../../models/options/view-option-group';
-import {ViewOption} from '../../models/options/view-option';
 import {ViewAction} from '../../models/actions/view-action';
-import {EViewAction} from '../../models/actions/e-view-action.enum';
 import {Notification} from '../../models/notification/notification';
 import {ENotification} from '../../models/notification/e-notification.enum';
 import {AccountViewData} from '../../models/view-data/account-view-data';
@@ -86,7 +84,7 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
     }
 
     setLanguage(language) {
-        this.form.get('language').setValue(language.name);
+        this.form.get('language').setValue(language);
     }
 
     logout() {

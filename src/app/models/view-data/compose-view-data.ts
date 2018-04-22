@@ -249,6 +249,7 @@ export class ComposeViewData {
             new ViewAction(
                 'Send',
                 () => {
+                    composeComponent.submit();
                 },
                 EViewAction.Primary,
                 false

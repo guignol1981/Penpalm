@@ -11,7 +11,7 @@ import {NotificationComponent} from '../notification/notification.component';
 })
 export class HomeComponent implements OnInit {
     user: User;
-    activeTab = 'compose';
+    activeTab = 'inbox';
     @ViewChild(NotificationComponent) notificationComponent: NotificationComponent;
 
     constructor(private userService: UserService) {
