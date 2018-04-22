@@ -1,5 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, SecurityContext} from '@angular/core';
 import {EBackSideOption, Postcard} from '../../models/postcard/postcard';
+import {DomSanitizer} from '@angular/platform-browser';
 
 export enum EPostcardMode {
     Write,
@@ -18,12 +19,15 @@ export class PostcardComponent implements OnInit {
 
     public shownSide = 'front';
     eBackSideOption = EBackSideOption;
-
-    constructor() {
+    ePostcardMode = EPostcardMode;
+    constructor(private domSanitizer: DomSanitizer) {
     }
 
     ngOnInit() {
-
+        if (this.mode === EPostcardMode.Read) {
+            this.setTemplate(this.postcard.template);
+            this.setBody();
+        }
     }
 
     @Input()
@@ -40,9 +44,9 @@ export class PostcardComponent implements OnInit {
     }
 
     @Input()
-    setTemplate(templateName, bodyElement = null, backElement = null) {
-        bodyElement = bodyElement || document.getElementById('body');
-        backElement = backElement || document.getElementById('back');
+    setTemplate(templateName) {
+        let bodyElement = document.getElementById('body');
+        let backElement = document.getElementById('back');
 
         if (templateName) {
             bodyElement.style.background = 'url(../../../assets/' + templateName + '-template_front.png)';
@@ -62,7 +66,11 @@ export class PostcardComponent implements OnInit {
 
     @Input()
     getBody() {
-        return document.getElementById('body').innerHTML;
+        return this.domSanitizer.sanitize(SecurityContext.HTML, document.getElementById('body').innerHTML);
+    }
+
+    setBody() {
+        return document.getElementById('body').innerHTML = this.domSanitizer.sanitize(SecurityContext.HTML, this.postcard.body);
     }
 
     get imageUrl() {
@@ -85,6 +93,9 @@ export class PostcardComponent implements OnInit {
     }
 
     compose() {
+        if (this.mode === EPostcardMode.Read) {
+            return;
+        }
         this.composeModeEmitter.emit(true);
     }
 

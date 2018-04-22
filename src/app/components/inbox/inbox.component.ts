@@ -53,9 +53,6 @@ export class InboxComponent extends BaseViewComponent implements OnInit {
     fetchPostcards() {
         this.refreshing = true;
         this.postcardService.fetch(this.fetchConfig).then(response => {
-            response.postcards.forEach((item) => {
-                item.body = this.domSanitizer.bypassSecurityTrustHtml(item.body);
-            });
             this.postcards = response.postcards;
             this.totalCount = response.count;
             this.refreshing = false;

@@ -15,20 +15,17 @@ export class PostcardService {
     public static deserializePostcard(data: any): Postcard {
 
         return new Postcard(
-            // data['_id'],
-            // data['body'],
-            // data['imageUrl'],
-            // data['uploadedImage'],
-            // data['imageFitType'],
-            // data['spotifyLink'],
-            // data['youtubeId'],
-            // data['allowShare'],
-            // data['template'],
-            // data['location'],
-            // data['recipient'],
-            // UserService.deserializeUser(data['author']),
-            // data['seen'],
-            // data['creationDate']
+            data['_id'],
+            data['body'],
+            data['backSideOptionType'],
+            data['backSideValue'],
+            data['spotifyLink'],
+            data['allowShare'],
+            data['template'],
+            data['recipient'],
+            UserService.deserializeUser(data['author']),
+            data['seen'],
+            data['creationDate']
         );
     }
 
