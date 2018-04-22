@@ -5,7 +5,7 @@ export class ViewAction {
 
     constructor(
         public name: string,
-        public callback: any,
+        public callback: (action: ViewAction) => any,
         public type: EViewAction = EViewAction.Secondary,
         public shouldWarn: boolean = false,
         public condition: () => boolean = null,

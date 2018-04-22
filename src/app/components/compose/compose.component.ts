@@ -111,18 +111,20 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
         this.postcardComponent.flip();
     }
 
-    submit() {
+    submit(action: ViewAction) {
         if (this.transacting) {
             return;
         }
-
         this.postcard.body = this.postcardComponent.getBody();
         this.transacting = true;
 
+
         this.postcardService.create(this.postcard).then(() => {
+            action.warned = false;
             this.postcard = new Postcard();
-            this.transacting = false;
+            this.postcardComponent.setPostcard(this.postcard);
             this.notificationEmitter.emit(new Notification(ENotification.Success, 'Postcard sent'));
+            this.transacting = false;
         });
     }
 }

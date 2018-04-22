@@ -248,11 +248,15 @@ export class ComposeViewData {
             ),
             new ViewAction(
                 'Send',
-                () => {
-                    composeComponent.submit();
+                (action: ViewAction) => {
+                    composeComponent.submit(action);
                 },
                 EViewAction.Primary,
-                false
+                true,
+                () => {
+                    return !!document.getElementById('body').innerHTML && !!composeComponent.postcard.recipient;
+                },
+                'Click again to send'
             )
         ];
     }

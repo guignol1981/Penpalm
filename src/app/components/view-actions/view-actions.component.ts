@@ -62,7 +62,8 @@ export class ViewActionsComponent implements OnInit {
             action.warned = true;
             return;
         }
-        action.callback();
+
+        action.callback(action);
     }
 
 }
