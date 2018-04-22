@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, SecurityContext} from '@angular/core';
 import {EBackSideOption, Postcard} from '../../models/postcard/postcard';
 import {DomSanitizer} from '@angular/platform-browser';
+import { ChangeDetectorRef } from '@angular/core';
 
 export enum EPostcardMode {
     Write,
@@ -21,7 +22,8 @@ export class PostcardComponent implements OnInit {
     eBackSideOption = EBackSideOption;
     ePostcardMode = EPostcardMode;
 
-    constructor(private domSanitizer: DomSanitizer) {
+    constructor(private domSanitizer: DomSanitizer,
+                private cdr: ChangeDetectorRef) {
     }
 
     ngOnInit() {
@@ -29,9 +31,13 @@ export class PostcardComponent implements OnInit {
 
     @Input()
     setPostcard(postcard: Postcard) {
+        let me = this;
         this.postcard = postcard;
-        this.setTemplate(this.postcard.template);
-        this.setBody();
+        this.cdr.detectChanges();
+        setTimeout(() => {
+            me.setTemplate(me.postcard.template);
+            me.setBody();
+        }, 0);
     }
 
     @Input()

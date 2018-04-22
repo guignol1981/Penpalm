@@ -2,7 +2,7 @@
     <app-view-actions class="bottom" [actions]="actions" [disableActions]="transacting"></app-view-actions>
     <app-view-single-input class="top" [inputs]="inputs"></app-view-single-input>
     <app-view-options class="sub" [groups]="optionGroups" [disableOptions]="transacting"></app-view-options>
-    <app-post-card class="main" [mode]="ePostcardMode.Read"></app-post-card>
+    <app-post-card #postcard *ngIf="activePostcard" class="main" [mode]="ePostcardMode.Read"></app-post-card>
     <div class="paging top">
         <div class="paging__handles">
             <a (click)="skipFirst()"
@@ -50,27 +50,28 @@
                     height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         </div>
         <!--<div class="info__item">-->
-            <!--<a [class]="activePostcard.allowShare ? 'btn btn&#45;&#45;align-left btn&#45;&#45;text-md' : 'btn btn&#45;&#45;align-left btn&#45;&#45;text-md btn&#45;&#45;disabled'"><i-->
-                    <!--class="fas fa-share-alt"></i>&nbsp; Share</a>-->
+        <!--<a [class]="activePostcard.allowShare ? 'btn btn&#45;&#45;align-left btn&#45;&#45;text-md' : 'btn btn&#45;&#45;align-left btn&#45;&#45;text-md btn&#45;&#45;disabled'"><i-->
+        <!--class="fas fa-share-alt"></i>&nbsp; Share</a>-->
         <!--</div>-->
         <!--<div class="info__item">-->
-            <!--<a class="btn btn&#45;&#45;align-left btn&#45;&#45;text-md btn&#45;&#45;disabled"><i class="fas fa-heart"></i>&nbsp; Add to favorite</a>-->
+        <!--<a class="btn btn&#45;&#45;align-left btn&#45;&#45;text-md btn&#45;&#45;disabled"><i class="fas fa-heart"></i>&nbsp; Add to favorite</a>-->
         <!--</div>-->
         <!--<div class="info__item">-->
-            <!--<a class="btn btn&#45;&#45;align-left btn&#45;&#45;text-md btn&#45;&#45;disabled"><i class="fas fa-reply"></i>&nbsp; Reply</a>-->
+        <!--<a class="btn btn&#45;&#45;align-left btn&#45;&#45;text-md btn&#45;&#45;disabled"><i class="fas fa-reply"></i>&nbsp; Reply</a>-->
         <!--</div>-->
         <!--<div class="info__item">-->
-            <!--<a class="btn btn&#45;&#45;align-left btn&#45;&#45;text-md"><i class="fas fa-flag"></i>&nbsp; Report</a>-->
+        <!--<a class="btn btn&#45;&#45;align-left btn&#45;&#45;text-md"><i class="fas fa-flag"></i>&nbsp; Report</a>-->
         <!--</div>-->
     </div>
+    <div *ngIf="postcards && postcards.length === 0" class="main">
+        <div class="empty">
+            {{direction === 'in' ? 'You don\'t have any postcards yet' : 'You haven\'t sent any postcards yet'}}
+        </div>
+    </div>
+    <app-loader class="main" [load]="!postcards"></app-loader>
 </div>
 
 
-<app-loader class="main" [load]="!postcards"></app-loader>
 
 
-<div *ngIf="postcards && postcards.length === 0" class="container">
-    <div class="empty">
-        {{direction === 'in' ? 'You don\'t have any postcards yet' : 'You haven\'t sent any postcards yet'}}
-    </div>
-</div>
+

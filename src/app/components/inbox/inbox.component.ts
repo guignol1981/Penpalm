@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, AfterViewInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, AfterViewInit, ViewChild, ViewChildren, QueryList} from '@angular/core';
 import {PostcardService} from '../../services/postcard.service';
 import {Postcard} from '../../models/postcard/postcard';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -8,6 +8,7 @@ import {SingleInput} from '../../models/single-input/single-input';
 import {ViewOptionGroup} from '../../models/options/view-option-group';
 import {InboxViewData} from '../../models/view-data/inbox-view-data';
 import {EPostcardMode, PostcardComponent} from '../postcard/postcard.component';
+import {ChangeDetectorRef} from '@angular/core';
 
 @Component({
     selector: 'app-inbox',
@@ -15,8 +16,10 @@ import {EPostcardMode, PostcardComponent} from '../postcard/postcard.component';
     styleUrls: ['./inbox.component.scss', '../base-view/base-view.component.scss']
 })
 export class InboxComponent extends BaseViewComponent implements OnInit, AfterViewInit {
-    @ViewChild(PostcardComponent) postcardComponent: PostcardComponent;
     @Input() direction: string;
+    @ViewChildren('postcard')
+    postcardComponents: QueryList<PostcardComponent>;
+    postcardComponent: PostcardComponent;
     postcards: Postcard[];
     activePostcard: Postcard;
     ePostcardMode = EPostcardMode;
@@ -36,7 +39,8 @@ export class InboxComponent extends BaseViewComponent implements OnInit, AfterVi
     actions: ViewAction[];
 
     constructor(private postcardService: PostcardService,
-                private domSanitizer: DomSanitizer) {
+                private domSanitizer: DomSanitizer,
+                private cdr: ChangeDetectorRef) {
         super();
     }
 
@@ -48,6 +52,15 @@ export class InboxComponent extends BaseViewComponent implements OnInit, AfterVi
     }
 
     ngAfterViewInit() {
+        this.postcardComponents.changes.subscribe((comps: QueryList<PostcardComponent>) => {
+            if (comps.length > 0) {
+                this.postcardComponent = comps.first;
+                this.spotySrc = this.getSongSource();
+                this.cdr.detectChanges();
+                this.postcardComponent.setPostcard(this.activePostcard);
+                this.markActivePostcardAsSeen();
+            }
+        });
         this.fetchPostcards();
     }
 
@@ -64,10 +77,10 @@ export class InboxComponent extends BaseViewComponent implements OnInit, AfterVi
     navTo(index) {
         this.navIndex = index;
         this.activePostcard = this.postcards[this.navIndex];
-        if (this.activePostcard) {
+        if (this.activePostcard && this.postcardComponent) {
             this.spotySrc = this.getSongSource();
+            this.cdr.detectChanges();
             this.postcardComponent.setPostcard(this.activePostcard);
-            this.markActivePostcardAsSeen();
         }
     }
 
