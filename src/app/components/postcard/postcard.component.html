@@ -4,7 +4,7 @@
         </div>
     </div>
     <div #back id="back" class="postcard--side postcard--back">
-        <youtube-player *ngIf="postcard.backSideOptionType === eBackSideOption.Youtube"
+        <youtube-player *ngIf="postcard && postcard.backSideOptionType === eBackSideOption.Youtube"
                         [videoId]="postcard.backSideValue"
                         [height]="'100%'"
                         [width]="'100%'"
@@ -15,7 +15,7 @@
                      alt="">
             </div>
         </div>
-        <agm-map *ngIf="postcard.backSideOptionType === eBackSideOption.Location" [latitude]="geoData.lat"
+        <agm-map *ngIf="postcard && postcard.backSideOptionType === eBackSideOption.Location" [latitude]="geoData.lat"
                  [longitude]="geoData.lng">
             <agm-marker [latitude]="geoData.lat" [longitude]="geoData.lng"></agm-marker>
         </agm-map>

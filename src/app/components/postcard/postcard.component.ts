@@ -20,14 +20,18 @@ export class PostcardComponent implements OnInit {
     public shownSide = 'front';
     eBackSideOption = EBackSideOption;
     ePostcardMode = EPostcardMode;
+
     constructor(private domSanitizer: DomSanitizer) {
     }
 
     ngOnInit() {
-        if (this.mode === EPostcardMode.Read) {
-            this.setTemplate(this.postcard.template);
-            this.setBody();
-        }
+    }
+
+    @Input()
+    setPostcard(postcard: Postcard) {
+        this.postcard = postcard;
+        this.setTemplate(this.postcard.template);
+        this.setBody();
     }
 
     @Input()
@@ -74,8 +78,8 @@ export class PostcardComponent implements OnInit {
     }
 
     get imageUrl() {
-        if (this.postcard.backSideOptionType === EBackSideOption.LinkImage ||
-            this.postcard.backSideOptionType === EBackSideOption.UploadImage) {
+        if (this.postcard && (this.postcard.backSideOptionType === EBackSideOption.LinkImage ||
+                this.postcard.backSideOptionType === EBackSideOption.UploadImage)) {
             return this.postcard.backSideValue;
         }
         return null;
@@ -86,6 +90,9 @@ export class PostcardComponent implements OnInit {
     }
 
     get geoData() {
+        if (!this.postcard) {
+            return null;
+        }
         return {
             lat: this.postcard.backSideValue.lat,
             lng: this.postcard.backSideValue.lng

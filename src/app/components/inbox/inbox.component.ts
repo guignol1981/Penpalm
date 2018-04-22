@@ -1,13 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, AfterViewInit, ViewChild} from '@angular/core';
 import {PostcardService} from '../../services/postcard.service';
 import {Postcard} from '../../models/postcard/postcard';
 import {DomSanitizer} from '@angular/platform-browser';
-import {createSrcToOutPathMapper} from '@angular/compiler-cli/src/transformers/program';
 import {BaseViewComponent} from '../base-view/base-view.component';
 import {ViewAction} from '../../models/actions/view-action';
 import {SingleInput} from '../../models/single-input/single-input';
 import {ViewOptionGroup} from '../../models/options/view-option-group';
-import {ComposeViewData} from '../../models/view-data/compose-view-data';
 import {InboxViewData} from '../../models/view-data/inbox-view-data';
 import {EPostcardMode, PostcardComponent} from '../postcard/postcard.component';
 
@@ -16,7 +14,7 @@ import {EPostcardMode, PostcardComponent} from '../postcard/postcard.component';
     templateUrl: './inbox.component.html',
     styleUrls: ['./inbox.component.scss', '../base-view/base-view.component.scss']
 })
-export class InboxComponent extends BaseViewComponent implements OnInit {
+export class InboxComponent extends BaseViewComponent implements OnInit, AfterViewInit {
     @ViewChild(PostcardComponent) postcardComponent: PostcardComponent;
     @Input() direction: string;
     postcards: Postcard[];
@@ -44,10 +42,13 @@ export class InboxComponent extends BaseViewComponent implements OnInit {
 
     ngOnInit() {
         this.fetchConfig.direction = this.direction;
-        this.fetchPostcards();
         this.optionGroups = InboxViewData.getOptions(this);
         this.actions = InboxViewData.getActions(this);
         this.inputs = InboxViewData.getInputs(this);
+    }
+
+    ngAfterViewInit() {
+        this.fetchPostcards();
     }
 
     fetchPostcards() {
@@ -63,16 +64,20 @@ export class InboxComponent extends BaseViewComponent implements OnInit {
     navTo(index) {
         this.navIndex = index;
         this.activePostcard = this.postcards[this.navIndex];
-        this.markActivePostcardAsSeen();
+        if (this.activePostcard) {
+            this.spotySrc = this.getSongSource();
+            this.postcardComponent.setPostcard(this.activePostcard);
+            this.markActivePostcardAsSeen();
+        }
     }
 
     markActivePostcardAsSeen() {
-        if (!this.activePostcard) {
+        if (!this.activePostcard || this.activePostcard.seen) {
             return;
         }
 
         this.postcardService.markSeen(this.activePostcard).then(() => {
-            this.spotySrc = this.getSongSource();
+
         });
     }
 
@@ -88,6 +93,7 @@ export class InboxComponent extends BaseViewComponent implements OnInit {
         if (this.refreshing) {
             return;
         }
+
         this.fetchConfig.skip -= 5;
         this.fetchPostcards();
     }
@@ -122,7 +128,7 @@ export class InboxComponent extends BaseViewComponent implements OnInit {
     }
 
     getSongSource() {
-        if (!this.activePostcard.spotifyLink) {
+        if (!this.activePostcard || !this.activePostcard.spotifyLink) {
             return null;
         }
 

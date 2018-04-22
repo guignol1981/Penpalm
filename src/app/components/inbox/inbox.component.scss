@@ -1,24 +1,9 @@
 .container {
-	height: 100%;
-	display: grid;
-	grid-template-rows: 2fr 6fr 1fr;
-	grid-template-columns: 3fr 1fr;
-	grid-gap: 2rem;
-
-	grid-template-areas:
-			"paging ."
-			"postcard info"
-			"actions .";
-
-	justify-items: stretch;
-	align-items: stretch;
-	position: relative;
 	-webkit-perspective: 1500px;
 	perspective: 1500px;
 }
 
 .paging {
-	grid-area: paging;
 	color: var(--color-whitish);
 	font-size: 2rem;
 	display: flex;
@@ -64,72 +49,6 @@
 				color: #000;
 			}
 		}
-	}
-}
-
-.postcard {
-	grid-area: postcard;
-	margin: 5rem;
-	border-radius: 1rem;
-	transform-style: preserve-3d;
-	transition: all 1s ease-in-out;
-
-	&__image-wrap {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		height: max-content;
-	}
-
-	&__image {
-		max-width: 100%;
-		max-height: 100%;
-
-		&--contain {
-			object-fit: contain;
-		}
-		&--cover {
-			object-fit: cover;
-		}
-		&--fill {
-			object-fit: fill;
-		}
-		&--none {
-			object-fit: none;
-		}
-	}
-
-	&--side {
-		height: 100%;
-		width: 100%;
-		backface-visibility: hidden;
-		position: absolute;
-		border-radius: 1rem;
-		background-color: var(--color-whitish);
-	}
-
-	&__body {
-		color: #333333;
-		font-size: 2.5rem;
-		line-height: 3.2rem;
-		overflow: scroll;
-		height: 100%;
-		width: 100%;
-		padding: 2rem;
-		border-radius: 1rem;
-		position: relative;
-
-		&::-webkit-scrollbar {
-			display: none;
-		}
-	}
-
-	&--back {
-		height: 100%;
-		width: 100%;
-		text-align: center;
-		transform: rotateY(180deg);
-		overflow: hidden;
 	}
 }
 

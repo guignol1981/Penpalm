@@ -1,109 +1,109 @@
-<div *ngIf="postcards" class="container">
+<div class="container">
     <app-view-actions class="bottom" [actions]="actions" [disableActions]="transacting"></app-view-actions>
     <app-view-single-input class="top" [inputs]="inputs"></app-view-single-input>
     <app-view-options class="sub" [groups]="optionGroups" [disableOptions]="transacting"></app-view-options>
-    <app-post-card *ngIf="activePostcard" class="main" [postcard]="activePostcard" [mode]="ePostcardMode.Read"></app-post-card>
+    <app-post-card class="main" [mode]="ePostcardMode.Read"></app-post-card>
+    <div class="paging top">
+        <div class="paging__handles">
+            <a (click)="skipFirst()"
+               [class]="fetchConfig.skip > 0 && !refreshing ? 'paging__handles__handle' : 'paging__handles__handle--disabled'">
+                <i class="fas fa-angle-double-left"></i>
+            </a>
+            <a (click)="skipBackward()"
+               [class]="fetchConfig.skip > 0 && !refreshing? 'paging__handles__handle' : 'paging__handles__handle--disabled'">
+                <i class="fas fa-angle-left"></i>
+            </a>
+        </div>
+        <div class="paging__indexes">
+            <a (click)="navTo(i)" *ngFor="let postcard of postcards; let i = index"
+               [class]="navIndex === i ? 'paging__indexes__index paging__indexes__index--selected' : 'paging__indexes__index'">
+                {{i + 1 + fetchConfig.skip}}
+            </a>
+        </div>
+        <div class="paging__handles">
+            <a (click)="skipForward()"
+               [class]="totalCount > fetchConfig.skip + 5 && !refreshing ? 'paging__handles__handle' : 'paging__handles__handle--disabled'">
+                <i class="fas fa-angle-right"></i>
+            </a>
+            <a (click)="skipLast()"
+               [class]="totalCount > fetchConfig.skip + 5 && !refreshing ? 'paging__handles__handle' : 'paging__handles__handle--disabled'">
+                <i class="fas fa-angle-double-right"></i>
+            </a>
+        </div>
+    </div>
 </div>
-    <!--<div class="paging">-->
-        <!--<div class="paging__handles">-->
-            <!--<a (click)="skipFirst()"-->
-               <!--[class]="fetchConfig.skip > 0 && !refreshing ? 'paging__handles__handle' : 'paging__handles__handle&#45;&#45;disabled'">-->
-                <!--<i class="fas fa-angle-double-left"></i>-->
-            <!--</a>-->
-            <!--<a (click)="skipBackward()"-->
-               <!--[class]="fetchConfig.skip > 0 && !refreshing? 'paging__handles__handle' : 'paging__handles__handle&#45;&#45;disabled'">-->
-                <!--<i class="fas fa-angle-left"></i>-->
-            <!--</a>-->
-        <!--</div>-->
-        <!--<div class="paging__indexes">-->
-            <!--<a (click)="navTo(i)" *ngFor="let postcard of postcards; let i = index"-->
-               <!--[class]="navIndex === i ? 'paging__indexes__index paging__indexes__index&#45;&#45;selected' : 'paging__indexes__index'">-->
-                <!--{{i + 1 + fetchConfig.skip}}-->
-            <!--</a>-->
-        <!--</div>-->
-        <!--<div class="paging__handles">-->
-            <!--<a (click)="skipForward()"-->
-               <!--[class]="totalCount > fetchConfig.skip + 5 && !refreshing ? 'paging__handles__handle' : 'paging__handles__handle&#45;&#45;disabled'">-->
-                <!--<i class="fas fa-angle-right"></i>-->
-            <!--</a>-->
-            <!--<a (click)="skipLast()"-->
-               <!--[class]="totalCount > fetchConfig.skip + 5 && !refreshing ? 'paging__handles__handle' : 'paging__handles__handle&#45;&#45;disabled'">-->
-                <!--<i class="fas fa-angle-double-right"></i>-->
-            <!--</a>-->
-        <!--</div>-->
-    <!--</div>-->
 
-    <!--<div class="info">-->
-        <!--<div class="info__item">-->
-            <!--{{activePostcard.creationDate | date}}-->
-        <!--</div>-->
-        <!--<div class="info__item info__item&#45;&#45;author">-->
-            <!--<div class="info__item&#45;&#45;author__name">-->
-                <!--{{activePostcard.author.name}}-->
-            <!--</div>-->
-            <!--<div class="info__item&#45;&#45;author__photo">-->
-                <!--<div class="image-wrap">-->
-                    <!--<img class="image" [src]="activePostcard.author.photoUrl" alt="user picture">-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="info__item" *ngIf="spotySrc">-->
-            <!--<iframe id="spoty" [src]="spotySrc" width="100%"-->
-                    <!--height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>-->
-        <!--</div>-->
-        <!--<div class="info__item">-->
-            <!--<a [class]="activePostcard.allowShare ? 'btn btn&#45;&#45;align-left btn&#45;&#45;text-md' : 'btn btn&#45;&#45;align-left btn&#45;&#45;text-md btn&#45;&#45;disabled'"><i-->
-                    <!--class="fas fa-share-alt"></i>&nbsp; Share</a>-->
-        <!--</div>-->
-        <!--<div class="info__item">-->
-            <!--<a class="btn btn&#45;&#45;align-left btn&#45;&#45;text-md btn&#45;&#45;disabled"><i class="fas fa-heart"></i>&nbsp; Add to favorite</a>-->
-        <!--</div>-->
-        <!--<div class="info__item">-->
-            <!--<a class="btn btn&#45;&#45;align-left btn&#45;&#45;text-md btn&#45;&#45;disabled"><i class="fas fa-reply"></i>&nbsp; Reply</a>-->
-        <!--</div>-->
-        <!--<div class="info__item">-->
-            <!--<a class="btn btn&#45;&#45;align-left btn&#45;&#45;text-md"><i class="fas fa-flag"></i>&nbsp; Report</a>-->
-        <!--</div>-->
-    <!--</div>-->
+<!--<div class="info">-->
+<!--<div class="info__item">-->
+<!--{{activePostcard.creationDate | date}}-->
+<!--</div>-->
+<!--<div class="info__item info__item&#45;&#45;author">-->
+<!--<div class="info__item&#45;&#45;author__name">-->
+<!--{{activePostcard.author.name}}-->
+<!--</div>-->
+<!--<div class="info__item&#45;&#45;author__photo">-->
+<!--<div class="image-wrap">-->
+<!--<img class="image" [src]="activePostcard.author.photoUrl" alt="user picture">-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="info__item" *ngIf="spotySrc">-->
+<!--<iframe id="spoty" [src]="spotySrc" width="100%"-->
+<!--height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>-->
+<!--</div>-->
+<!--<div class="info__item">-->
+<!--<a [class]="activePostcard.allowShare ? 'btn btn&#45;&#45;align-left btn&#45;&#45;text-md' : 'btn btn&#45;&#45;align-left btn&#45;&#45;text-md btn&#45;&#45;disabled'"><i-->
+<!--class="fas fa-share-alt"></i>&nbsp; Share</a>-->
+<!--</div>-->
+<!--<div class="info__item">-->
+<!--<a class="btn btn&#45;&#45;align-left btn&#45;&#45;text-md btn&#45;&#45;disabled"><i class="fas fa-heart"></i>&nbsp; Add to favorite</a>-->
+<!--</div>-->
+<!--<div class="info__item">-->
+<!--<a class="btn btn&#45;&#45;align-left btn&#45;&#45;text-md btn&#45;&#45;disabled"><i class="fas fa-reply"></i>&nbsp; Reply</a>-->
+<!--</div>-->
+<!--<div class="info__item">-->
+<!--<a class="btn btn&#45;&#45;align-left btn&#45;&#45;text-md"><i class="fas fa-flag"></i>&nbsp; Report</a>-->
+<!--</div>-->
+<!--</div>-->
 
-    <!--<div #postcard class="postcard">-->
-        <!--<div class="postcard&#45;&#45;side">-->
-            <!--<div id="postcardbody" class="postcard__body" [innerHTML]="activePostcard.body">-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="postcard&#45;&#45;side postcard&#45;&#45;back">-->
-            <!--<youtube-player *ngIf="activePostcard.youtubeId"-->
-                            <!--[videoId]="activePostcard.youtubeId"-->
-                            <!--[height]="'100%'"-->
-                            <!--[width]="'100%'"-->
-            <!--&gt;</youtube-player>-->
+<!--<div #postcard class="postcard">-->
+<!--<div class="postcard&#45;&#45;side">-->
+<!--<div id="postcardbody" class="postcard__body" [innerHTML]="activePostcard.body">-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="postcard&#45;&#45;side postcard&#45;&#45;back">-->
+<!--<youtube-player *ngIf="activePostcard.youtubeId"-->
+<!--[videoId]="activePostcard.youtubeId"-->
+<!--[height]="'100%'"-->
+<!--[width]="'100%'"-->
+<!--&gt;</youtube-player>-->
 
-            <!--<div *ngIf="imageUrl" class="postcard__image-wrap">-->
-                <!--<img [class]="getImageClass()" [src]="imageUrl"-->
-                     <!--alt="postcard image">-->
-            <!--</div>-->
+<!--<div *ngIf="imageUrl" class="postcard__image-wrap">-->
+<!--<img [class]="getImageClass()" [src]="imageUrl"-->
+<!--alt="postcard image">-->
+<!--</div>-->
 
-            <!--<agm-map *ngIf="activePostcard.location" [latitude]="geoData.lat" [longitude]="geoData.lng">-->
-                <!--<agm-marker [latitude]="geoData.lat" [longitude]="geoData.lng"></agm-marker>-->
-            <!--</agm-map>-->
+<!--<agm-map *ngIf="activePostcard.location" [latitude]="geoData.lat" [longitude]="geoData.lng">-->
+<!--<agm-marker [latitude]="geoData.lat" [longitude]="geoData.lng"></agm-marker>-->
+<!--</agm-map>-->
 
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="actions">-->
-        <!--<a (click)="flip(postcard)" class="btn">Flip</a>-->
-    <!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="actions">-->
+<!--<a (click)="flip(postcard)" class="btn">Flip</a>-->
+<!--</div>-->
 <!--</div>-->
 
 <!--<app-loader class="main" [load]="!postcard"></app-loader>-->
 
 <!--&lt;!&ndash;<div *ngIf="!postcards" class="container">&ndash;&gt;-->
-    <!--&lt;!&ndash;<div class="loading-container">&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="loading loading"></div>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="loading-container">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="loading loading"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
 <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
 <!--<div *ngIf="postcards && postcards.length === 0" class="container">-->
-    <!--<div class="empty">-->
-        <!--{{direction === 'in' ? 'You don\'t have any postcards yet' : 'You haven\'t sent any postcards yet'}}-->
-    <!--</div>-->
+<!--<div class="empty">-->
+<!--{{direction === 'in' ? 'You don\'t have any postcards yet' : 'You haven\'t sent any postcards yet'}}-->
+<!--</div>-->
 <!--</div>-->

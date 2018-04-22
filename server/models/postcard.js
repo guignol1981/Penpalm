@@ -9,7 +9,7 @@ let PostcardSchema = new Schema({
     backSideValue: {type: Schema.Types.Mixed, default: null},
     spotifyLink: {type: String, default: null},
     allowShare: {type: Boolean, default: false},
-    template: {type: String, default: 'none'},
+    template: {type: String, default: null},
     seen: {type: Boolean, default: false},
     creationDate: {type: Date, require: true}
 });
