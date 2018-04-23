@@ -70,6 +70,9 @@
         </div>
     </div>
     <div *ngSwitchCase="eSingleInput.Upload" [class]="checkCondition(input) ? 'container' : ''">
+        <div *ngIf="showLoader" class="container">
+            <app-loader class="main" [type]="eLoader.Wheel" [load]="!user"></app-loader>
+        </div>
         <div *ngIf="checkCondition(input)" class="input">
             <div class="input__group">
                 <div class="input__group__label">
@@ -83,13 +86,15 @@
                 <div class="form__group__input">
                     <image-upload id="inputUpload"
                                   [class]="'image-uploader'"
+                                  [max]="1"
                                   [buttonCaption]="'Select Image'"
                                   [dropBoxMessage]="'Drop your image here!'"
                                   [preview]="false"
-                                  (uploadFinished)="onUploadFinished(input, $event)"
-                                  (removed)="onUploadRemoved(input)"
                                   [url]="'http://localhost:3000/api/images'"
-                                  [headers]="headers">
+                                  [headers]="headers"
+                                  (removed)="onUploadRemoved(input)"
+                                  (uploadFinished)="onUploadFinished(input, $event)"
+                                  (uploadStateChanged)="onUploadStateChanged($event)">
                     </image-upload>
                 </div>
             </div>

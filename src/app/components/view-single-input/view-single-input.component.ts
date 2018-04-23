@@ -4,6 +4,7 @@ import {ESingleInput} from '../../models/single-input/e-single-input.enum';
 import {AuthenticationService} from '../../services/authentication.service';
 import {GoogleMapService} from '../../services/google-map.service';
 import {ImageService} from '../../services/image.service';
+import {ELoader} from '../loader/loader.component';
 
 @Component({
     selector: 'app-view-single-input',
@@ -14,6 +15,8 @@ export class ViewSingleInputComponent implements OnInit {
     @Input() inputs: SingleInput[];
     eSingleInput = ESingleInput;
     formattedAddress = '';
+    showLoader = false;
+    eLoader = ELoader;
 
     constructor(private authenticationService: AuthenticationService,
                 private imageService: ImageService,
@@ -27,6 +30,9 @@ export class ViewSingleInputComponent implements OnInit {
         return {'Authorization': 'Bearer ' + this.authenticationService.getToken()};
     }
 
+    onUploadStateChanged(event) {
+        this.showLoader = event;
+    }
 
     onUploadFinished(singleInput: SingleInput, data) {
         let imageData = JSON.parse(data.serverResponse._body).data;

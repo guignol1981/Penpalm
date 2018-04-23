@@ -6,7 +6,7 @@
 	align-items: center;
 }
 
-.loading {
+.loading-wheel {
 	border: 1.6rem solid #f3f3f3;
 	border-radius: 50%;
 	border-top: 1.6rem solid var(--color-primary);
@@ -14,4 +14,53 @@
 	height: 12rem;
 	-webkit-animation: spin 2s linear infinite; /* Safari */
 	animation: spin 2s linear infinite;
+
+	&--small {
+		width: 6rem;
+		height: 6rem;
+	}
 }
+
+.loading-dots {
+	display: flex;
+
+	& > *:not(:last-child) {
+		margin-right: .5rem;
+	}
+
+	&__dot {
+		height: 2rem;
+		width: 2rem;
+		border-radius: 50%;
+		background-color: red;
+		animation: blink  1s infinite;
+
+		&--1 {
+			animation-delay: 1 / 3 + s;
+		}
+
+		&--2 {
+			animation-delay: (1 / 3) * 2 + s;
+		}
+
+		&--3 {
+			animation-delay: 1s;
+		}
+	}
+}
+
+@keyframes blink {
+	0% {
+		opacity: .8;
+	}
+
+	50% {
+		transform: translateY(-1rem);
+		opacity: 1;
+	}
+
+	100% {
+		opacity: .8;
+	}
+}
+
