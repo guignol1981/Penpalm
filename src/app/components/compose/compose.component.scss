@@ -11,6 +11,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	overflow-x: scroll;
 
 	&__group {
 		&--inline {

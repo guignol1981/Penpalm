@@ -5,8 +5,8 @@
     <app-post-card class="main" [postcard]="postcard" [mode]="ePostcardMode.Write"
                    (composeModeEmitter)="onComposeMode($event)"></app-post-card>
 
-    <div class="wysiwyg-container top">
-        <div *ngIf="selectedOption === 'compose'" onmousedown="event.preventDefault();"
+    <div *ngIf="selectedOption === 'compose'" class="wysiwyg-container top">
+        <div onmousedown="event.preventDefault();"
              class="wysiwyg-container__group--inline wysiwyg">
             <a class="btn" (click)="selectWYSIWYGCommand('undo')"><i class='fas fa-undo'></i></a>
             <a class="btn" (click)="selectWYSIWYGCommand('redo')"><i class='fas fa-redo'></i></a>
