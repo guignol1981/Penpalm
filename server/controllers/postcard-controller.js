@@ -18,14 +18,11 @@ module.exports.create = function(req, res) {
 				author: user.id,
 				recipient: req.body.recipient,
 				body: req.body.body,
-				imageUrl: req.body.imageUrl,
-				uploadedImage: req.body.uploadedImage,
-				imageFitType: req.body.imageFitType,
+                backSideOptionType: req.body.backSideOptionType,
+                backSideValue: req.body.backSideValue,
 				spotifyLink: req.body.spotifyLink,
-				youtubeId: req.body.youtubeId,
 				allowShare: req.body.allowShare,
 				template: req.body.template,
-				location: req.body.location,
 				seen: false,
 				creationDate: new Date()
 			});

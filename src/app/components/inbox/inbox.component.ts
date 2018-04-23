@@ -1,18 +1,29 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit, AfterViewInit, ViewChild, ViewChildren, QueryList} from '@angular/core';
 import {PostcardService} from '../../services/postcard.service';
 import {Postcard} from '../../models/postcard/postcard';
 import {DomSanitizer} from '@angular/platform-browser';
-import {createSrcToOutPathMapper} from '@angular/compiler-cli/src/transformers/program';
+import {BaseViewComponent} from '../base-view/base-view.component';
+import {ViewAction} from '../../models/actions/view-action';
+import {SingleInput} from '../../models/single-input/single-input';
+import {ViewOptionGroup} from '../../models/options/view-option-group';
+import {InboxViewData} from '../../models/view-data/inbox-view-data';
+import {EPostcardMode, PostcardComponent} from '../postcard/postcard.component';
+import {ChangeDetectorRef} from '@angular/core';
 
 @Component({
     selector: 'app-inbox',
     templateUrl: './inbox.component.html',
-    styleUrls: ['./inbox.component.scss']
+    styleUrls: ['./inbox.component.scss', '../base-view/base-view.component.scss']
 })
-export class InboxComponent implements OnInit {
+export class InboxComponent extends BaseViewComponent implements OnInit, AfterViewInit {
     @Input() direction: string;
+    @ViewChildren('postcard')
+    postcardComponents: QueryList<PostcardComponent>;
+    postcardComponent: PostcardComponent;
     postcards: Postcard[];
     activePostcard: Postcard;
+    ePostcardMode = EPostcardMode;
+    transacting = false;
     spotySrc;
     navIndex = 0;
     totalCount = 0;
@@ -23,32 +34,39 @@ export class InboxComponent implements OnInit {
         direction: ''
     };
 
+    inputs: SingleInput[];
+    optionGroups: ViewOptionGroup[];
+    actions: ViewAction[];
+
     constructor(private postcardService: PostcardService,
-                private domSanitizer: DomSanitizer) {
+                private domSanitizer: DomSanitizer,
+                private cdr: ChangeDetectorRef) {
+        super();
     }
 
     ngOnInit() {
         this.fetchConfig.direction = this.direction;
+        this.optionGroups = InboxViewData.getOptions(this);
+        this.actions = InboxViewData.getActions(this);
+        this.inputs = InboxViewData.getInputs(this);
+    }
+
+    ngAfterViewInit() {
+        this.postcardComponents.changes.subscribe((comps: QueryList<PostcardComponent>) => {
+            if (comps.length > 0) {
+                this.postcardComponent = comps.first;
+                this.spotySrc = this.getSongSource();
+                this.cdr.detectChanges();
+                this.postcardComponent.setPostcard(this.activePostcard);
+                this.markActivePostcardAsSeen();
+            }
+        });
         this.fetchPostcards();
-    }
-
-    get imageUrl() {
-        return this.activePostcard.imageUrl || this.activePostcard.uploadedImage || null;
-    }
-
-    get geoData() {
-        return {
-            lat: this.activePostcard.location.lat,
-            lng: this.activePostcard.location.lng
-        };
     }
 
     fetchPostcards() {
         this.refreshing = true;
         this.postcardService.fetch(this.fetchConfig).then(response => {
-            response.postcards.forEach((item) => {
-                item.body = this.domSanitizer.bypassSecurityTrustHtml(item.body);
-            });
             this.postcards = response.postcards;
             this.totalCount = response.count;
             this.refreshing = false;
@@ -56,51 +74,24 @@ export class InboxComponent implements OnInit {
         });
     }
 
-    getImageClass() {
-        let cssClass = 'postcard__image';
-        switch (this.activePostcard.imageFitType) {
-            case 'cover':
-                return cssClass += ' postcard__image--cover';
-            case 'fill':
-                return cssClass += ' postcard__image--fill';
-            case 'none':
-                return cssClass += ' postcard__image--none';
-            case 'contain':
-            default:
-                return cssClass += ' postcard__image--contain';
-        }
-    }
-
     navTo(index) {
         this.navIndex = index;
         this.activePostcard = this.postcards[this.navIndex];
-        this.markActivePostcardAsSeen();
+        if (this.activePostcard && this.postcardComponent) {
+            this.spotySrc = this.getSongSource();
+            this.cdr.detectChanges();
+            this.postcardComponent.setPostcard(this.activePostcard);
+        }
     }
 
     markActivePostcardAsSeen() {
-        if (!this.activePostcard) {
+        if (!this.activePostcard || this.activePostcard.seen) {
             return;
         }
 
         this.postcardService.markSeen(this.activePostcard).then(() => {
-            this.spotySrc = this.getSongSource();
-            this.setTemplate();
+
         });
-    }
-
-    setTemplate() {
-        let template = this.activePostcard.template;
-        let bodyElement = document.getElementById('postcardbody');
-
-        if (!template) {
-            bodyElement.style.background = '';
-            return;
-        }
-
-        bodyElement.style.background = 'url(../../../assets/' + template + '-template.png)';
-        bodyElement.style.backgroundRepeat = 'no-repeat';
-        bodyElement.style.backgroundSize = 'cover';
-        bodyElement.style.backgroundPosition = 'center';
     }
 
     skipForward() {
@@ -115,6 +106,7 @@ export class InboxComponent implements OnInit {
         if (this.refreshing) {
             return;
         }
+
         this.fetchConfig.skip -= 5;
         this.fetchPostcards();
     }
@@ -138,18 +130,18 @@ export class InboxComponent implements OnInit {
         this.fetchPostcards();
     }
 
-    flip(postcard) {
+    flipPostcard() {
         if (this.shownSide === 'front') {
             this.shownSide = 'back';
-            postcard.style.transform = 'rotateY(180deg)';
         } else {
             this.shownSide = 'front';
-            postcard.style.transform = 'rotateY(0deg)';
         }
+
+        this.postcardComponent.flip();
     }
 
     getSongSource() {
-        if (!this.activePostcard.spotifyLink) {
+        if (!this.activePostcard || !this.activePostcard.spotifyLink) {
             return null;
         }
 

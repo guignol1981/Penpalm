@@ -1,0 +1,25 @@
+.container {
+	align-self: self-start;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	overflow: scroll;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
+}
+
+.group {
+	color: var(--color-whitish);
+	margin-bottom: 1rem;
+
+	&__title {
+		font-size: 2rem;
+	}
+
+	&__list {
+		font-size: 1rem;
+	}
+}

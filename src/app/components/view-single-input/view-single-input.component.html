@@ -1,0 +1,126 @@
+<div [ngSwitch]="input.inputType" *ngFor="let input of inputs">
+    <div *ngSwitchCase="eSingleInput.DropDown" [class]="checkCondition(input) ? 'container' : ''">
+        <div *ngIf="checkCondition(input)" class="input">
+            <div class="input__group">
+                <div class="input__group__label">
+                    <label for="inputDrp">
+                        <span *ngIf="input.icon">
+                            <i [class]="input.icon"></i>&nbsp;
+                        </span>
+                        {{input.label}}
+                    </label>
+                </div>
+                <div class="input__group__input">
+                    <div class="input__group__input input__group__input--dropdown">
+                        <div class="input__group__input--dropdown__value">
+                            {{input.lovValue ? input.lovValue.label : ''}}
+                        </div>
+                        <div id="inputDrp" class="input__group__input--dropdown__option-box">
+                            <a (click)="setLovValue(input, item)" *ngFor="let item of input.lov"
+                               class="input__group__input--dropdown__option-box__item">
+                                {{item.label}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngSwitchCase="eSingleInput.Text" [class]="checkCondition(input) ? 'container' : ''">
+        <div *ngIf="checkCondition(input)" class="input">
+            <div class="input__group">
+                <div class="input__group__label">
+                    <label for="inputText">
+                         <span *ngIf="input.icon">
+                            <i [class]="input.icon"></i>&nbsp;
+                        </span>
+                        {{input.label}}
+                    </label>
+                </div>
+                <div class="input__group__input">
+                    <input #inputText class="form__group__input--text" id="inputText" type="text"
+                           [placeholder]="input.placeHolder"
+                           [value]="input.value ? input.value : ''"
+                           (change)="setValue(input, inputText.value)">
+                </div>
+                <div *ngIf="input.helperMsg" class="input__group__helper input__group__helper--error">
+                    <small>{{input.helperMsg}}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngSwitchCase="eSingleInput.Switch" [class]="checkCondition(input) ? 'container' : ''">
+        <div *ngIf="checkCondition(input)" class="input">
+            <div class="input__group">
+                <div class="input__group__label">
+                    <label for="inputSwitch">
+                         <span *ngIf="input.icon">
+                            <i [class]="input.icon"></i>&nbsp;
+                        </span>
+                        {{input.label}}
+                    </label>
+                </div>
+                <label class="switch">
+                    <input #inputSwitch type="checkbox" checked id="inputSwitch"
+                           [checked]="input.boolValue"
+                           (change)="setBoolValue(input, inputSwitch.checked)">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div *ngSwitchCase="eSingleInput.Upload" [class]="checkCondition(input) ? 'container' : ''">
+        <div *ngIf="showLoader" class="container">
+            <app-loader class="main" [type]="eLoader.Wheel" [load]="!user"></app-loader>
+        </div>
+        <div *ngIf="checkCondition(input)" class="input">
+            <div class="input__group">
+                <div class="input__group__label">
+                    <label for="inputUpload">
+                         <span *ngIf="input.icon">
+                            <i [class]="input.icon"></i>&nbsp;
+                        </span>
+                        {{input.label}}
+                    </label>
+                </div>
+                <div class="form__group__input">
+                    <image-upload id="inputUpload"
+                                  [class]="'image-uploader'"
+                                  [max]="1"
+                                  [buttonCaption]="'Select Image'"
+                                  [dropBoxMessage]="'Drop your image here!'"
+                                  [preview]="false"
+                                  [url]="'http://localhost:3000/api/images'"
+                                  [headers]="headers"
+                                  (removed)="onUploadRemoved(input)"
+                                  (uploadFinished)="onUploadFinished(input, $event)"
+                                  (uploadStateChanged)="onUploadStateChanged($event)">
+                    </image-upload>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngSwitchCase="eSingleInput.Location" [class]="checkCondition(input) ? 'container' : ''">
+        <div *ngIf="checkCondition(input)" class="input">
+            <div class="input__group">
+                <div class="input__group__label">
+                    <label for="inputLocation">
+                         <span *ngIf="input.icon">
+                            <i [class]="input.icon"></i>&nbsp;
+                        </span>
+                        {{input.label}}
+                    </label>
+                </div>
+                <div class="input__group__input">
+                    <input #inputText class="form__group__input--text" id="inputLocation" type="text"
+                           [placeholder]="input.placeHolder"
+                           [value]="input.value ? formattedAddress : ''"
+                           (change)="onLocationChange(input, inputText.value)">
+                </div>
+                <div *ngIf="input.helperMsg" class="input__group__helper input__group__helper--error">
+                    <small>{{input.helperMsg}}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

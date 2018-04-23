@@ -40,15 +40,33 @@ module.exports.sendUploadToGCS = function (req, res, next) {
 module.exports.upload = function (req, res, next) {
     let data = req.body;
 
-    // Was an image uploaded? If so, we'll use its public URL
-    // in cloud storage.
     if (req.file && req.file.cloudStoragePublicUrl) {
-        data.imageUrl = req.file.cloudStoragePublicUrl;
+        data.cloudStoragePublicUrl = req.file.cloudStoragePublicUrl;
+        data.cloudStorageObject = req.file.cloudStorageObject;
     }
 
     res.send({
-       msg: 'Image uploaded',
-       data: data
+        msg: 'Image uploaded',
+        data: data
+    });
+};
+
+module.exports.remove = function (req, res) {
+    let cloudstorageobject = req.params.cloudstorageobject;
+    console.log(cloudstorageobject);
+    let file = bucket.file(cloudstorageobject);
+    file.delete((err, apiResponse) => {
+        if (!err) {
+            res.send({
+               msg: 'Image removed',
+               data: true
+            });
+        } else {
+            res.status(500).send({
+               msg: err,
+               data: false
+            });
+        }
     });
 };
 

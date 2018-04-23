@@ -1,237 +1,34 @@
 <div *ngIf="user" class="container">
-    <div #postcard class="postcard">
-        <form [formGroup]="form" class="postcard--side">
-            <div #editor (focus)="compose()" #body class="postcard__body" id="body" contenteditable>
-                <div class="postcard__body__header">
-                    <p>From: {{user.name}}</p>
-                    <p>To: {{selectedRecipientName}}</p>
-                    <p>To: {{dateNow | date}}</p>
-                </div>
-            </div>
-        </form>
-        <div #back id="back" class="postcard--side postcard--back">
-            <youtube-player *ngIf="form.get('youtubeLink').value"
-                            [videoId]="getYoutubeLinkId()"
-                            [height]="'100%'"
-                            [width]="'100%'"
-            ></youtube-player>
-            <div *ngIf="imageUrl">
-                <div class="postcard__image-wrap">
-                    <img [class]="getImageClass()" [src]="imageUrl"
-                         alt="">
-                </div>
-            </div>
-            <agm-map *ngIf="form.get('location').value" [latitude]="geoData.lat" [longitude]="geoData.lng">
-                <agm-marker [latitude]="geoData.lat" [longitude]="geoData.lng"></agm-marker>
-            </agm-map>
-        </div>
-    </div>
+    <app-view-actions class="bottom" [actions]="actions" [disableActions]="transacting"></app-view-actions>
+    <app-view-single-input class="top" [inputs]="inputs"></app-view-single-input>
+    <app-view-options class="sub" [groups]="optionGroups" [disableOptions]="transacting"></app-view-options>
+    <app-post-card class="main" [postcard]="postcard" [mode]="ePostcardMode.Write"
+                   (composeModeEmitter)="onComposeMode($event)"></app-post-card>
 
-    <div class="options">
-        <div class="options__group">
-            <div class="options__group--title">
-                General
-            </div>
-            <div class="options__group--list">
-                <a (click)="selectOption('recipient')"
-                   class="btn btn--align-left btn--text-md btn"><i
-                        class="fas fa-user"></i>
-                    &nbsp;Recipient
-                </a>
-                <a (click)="form.get('spotifyLink').value ? removeOptionValue('spotifyLink') : selectOption('spotifyLink')"
-                   class="btn btn--align-left btn--text-md"><i
-                        class="fab fa-spotify"></i>
-                    &nbsp;
-                    {{form.get('spotifyLink').value ? 'Remove link' : 'Spotify song'}}
-                </a>
-                <a (click)="selectOption('allowShare')" class="btn btn--align-left btn--text-md"><i
-                        class="fas fa-share-alt"></i>&nbsp;Allow share</a>
-                <a (click)="form.get('template').value !== 'none' ? removeOptionValue('template') : selectOption('template')"
-                   class="btn btn--align-left btn--text-md"><i
-                        class="far fa-square"></i>
-                    &nbsp;
-                    {{form.get('template').value !== 'none' ? 'Remove template' : 'Template'}}
-                </a>
-            </div>
-        </div>
-        <div *ngIf="shownSide === 'back'" class="options__group">
-            <div class="options__group--title">
-                Back side
-            </div>
-            <div class="options__group--list">
-                <a class="btn btn--align-left btn--text-md btn--disabled"><i class="fas fa-video"></i>&nbsp;Record a
-                    video</a>
-                <a class="btn btn--align-left btn--text-md btn--disabled"><i class="fas fa-camera-retro"></i>&nbsp;Take
-                    a picture</a>
-                <a (click)="isBackSideOptionAvailable('youtubeLink') ? form.get('youtubeLink').value ? removeOptionValue('youtubeLink') : selectOption('youtubeLink') : ''"
-                   [class]="isBackSideOptionAvailable('youtubeLink') ? 'btn btn--align-left btn--text-md' : 'btn btn--align-left btn--text-md btn--disabled'">
-                    <i class="fab fa-youtube"></i>
-                    &nbsp;
-                    {{form.get('youtubeLink').value ? 'Remove youtube link' : 'Youtube video'}}
-                </a>
-                <a (click)="isBackSideOptionAvailable('imageUrl') ? form.get('imageUrl').value ? removeOptionValue('imageUrl') : selectOption('imageUrl') : ''"
-                   [class]="isBackSideOptionAvailable('imageUrl') ? 'btn btn--align-left btn--text-md' : 'btn btn--align-left btn--text-md btn--disabled'">
-                    <i class="fas fa-link"></i>
-                    &nbsp;
-                    {{form.get('imageUrl').value ? 'Remove image link' : 'Linked image'}}
-                </a>
-                <a (click)="isBackSideOptionAvailable('uploadedImage') ? form.get('uploadedImage').value ? removeOptionValue('uploadedImage') : selectOption('uploadedImage') : ''"
-                   [class]="isBackSideOptionAvailable('uploadedImage') ? 'btn btn--align-left btn--text-md' : 'btn btn--align-left btn--text-md btn--disabled'">
-                    <i class="fas fa-image"></i>
-                    &nbsp;
-                    {{form.get('uploadedImage').value ? 'Remove uploaded image' : 'Uploaded image'}}
-                </a>
-                <a (click)="isBackSideOptionAvailable('location') ? form.get('location').value ? removeOptionValue('location') : selectOption('location') : ''"
-                   [class]="isBackSideOptionAvailable('location') ? 'btn btn--align-left btn--text-md' : 'btn btn--align-left btn--text-md btn--disabled'">
-                    <i class="fas fa-map-marker"></i>
-                    &nbsp;
-                    {{form.get('location').value ? 'Remove location' : 'Location'}}
-                </a>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="form" [formGroup]="form">
-        <div *ngIf="selectedOption === 'spotifyLink'" class="form__group">
-            <div class="form__group--label">
-                <i class="fab fa-spotify"></i>
-                <label for="spotifyLink">Spotitfy song</label>
-            </div>
-            <div class="form__group--input">
-                <input formControlName="spotifyLink" class="form__group--input--text" id="spotifyLink" type="text"
-                       placeholder="spotify uri">
-            </div>
-        </div>
-
-        <div *ngIf="selectedOption === 'uploadedImage'" class="form__group">
-            <div class="form__group--label">
-                <i class="fas fa-image"></i>
-                <label for="uploadedImage">Uploaded image</label>
-            </div>
-            <div class="form__group--input">
-                <image-upload id="uploadedImage"
-                              [class]="'image-uploader'"
-                              [buttonCaption]="'Select Image'"
-                              [dropBoxMessage]="'Drop your image here!'"
-                              [preview]="false"
-                              (uploadFinished)="onImageUploadFinished($event)"
-                              (removed)="onImageRemoved()"
-                              [url]="'http://localhost:3000/api/images'"
-                              [headers]="headers">
-                </image-upload>
-            </div>
-        </div>
-
-        <div *ngIf="selectedOption === 'imageUrl'" class="form__group">
-            <div class="form__group--label">
-                <i class="fas fa-link"></i>
-                <label for="imageUrl">Image link</label>
-            </div>
-            <div class="form__group--input">
-                <input formControlName="imageUrl" class="form__group--input--text" id="imageUrl" type="text"
-                       placeholder="image url">
-            </div>
-        </div>
-
-        <div *ngIf="selectedOption === 'youtubeLink'" class="form__group">
-            <div class="form__group--label">
-                <i class="fab fa-youtube"></i>
-                <label for="imageUrl">Youtube link</label>
-            </div>
-            <div class="form__group--input">
-                <input formControlName="youtubeLink" class="form__group--input--text" id="youtubeLink" type="text"
-                       placeholder="youtube link">
-            </div>
-        </div>
-
-        <div *ngIf="selectedOption === 'location'" class="form__group">
-            <div class="form__group--label">
-                <i class="fas fa-map-marker"></i>
-                <label for="location">Location</label>
-            </div>
-            <div class="form__group--input">
-                <input (change)="onLocationChange($event.target.value)" class="form__group--input--text" id="location"
-                       type="text"
-                       placeholder="location information">
-            </div>
-        </div>
-
-        <div *ngIf="selectedOption === 'allowShare'" class="form__group">
-            <div class="form__group--label">
-                <i class="fas fa-share-alt"></i>
-                <label for="imageUrl">Allow share</label>
-            </div>
-            <label class="switch">
-                <input formControlName="allowShare" type="checkbox" checked>
-                <span class="slider round"></span>
-            </label>
-        </div>
-
+    <div class="wysiwyg-container top">
         <div *ngIf="selectedOption === 'compose'" onmousedown="event.preventDefault();"
-             class="form__group--inline wysiwyg">
-            <a (click)="selectWYSIWYGCommand('undo')"><i class='fas fa-undo'></i></a>
-            <a (click)="selectWYSIWYGCommand('redo')"><i class='fas fa-redo'></i></a>
-            <a (click)="selectWYSIWYGCommand('bold')"><i class='fa fa-bold'></i></a>
-            <a (click)="selectWYSIWYGCommand('italic')"><i class='fa fa-italic'></i></a>
-            <a (click)="selectWYSIWYGCommand('underline')"><i class='fa fa-underline'></i></a>
-            <a (click)="selectWYSIWYGCommand('strikeThrough')"><i class='fa fa-strikethrough'></i></a>
-            <a (click)="selectWYSIWYGCommand('justifyLeft')"><i class='fa fa-align-left'></i></a>
-            <a (click)="selectWYSIWYGCommand('justifyCenter')"><i class='fa fa-align-center'></i></a>
-            <a (click)="selectWYSIWYGCommand('justifyRight')"><i class='fa fa-align-right'></i></a>
-            <a (click)="selectWYSIWYGCommand('justifyFull')"><i class='fa fa-align-justify'></i></a>
-            <a (click)="selectWYSIWYGCommand('indent')"><i class='fa fa-indent'></i></a>
-            <a (click)="selectWYSIWYGCommand('outdent')"><i class='fa fa-outdent'></i></a>
-            <a (click)="selectWYSIWYGCommand('insertUnorderedList')"><i class='fa fa-list-ul'></i></a>
-            <a (click)="selectWYSIWYGCommand('insertOrderedList')"><i class='fa fa-list-ol'></i></a>
-            <a (click)="selectWYSIWYGCommand('h1')">H1</a>
-            <a (click)="selectWYSIWYGCommand('h2')">H2</a>
+             class="wysiwyg-container__group--inline wysiwyg">
+            <a class="btn" (click)="selectWYSIWYGCommand('undo')"><i class='fas fa-undo'></i></a>
+            <a class="btn" (click)="selectWYSIWYGCommand('redo')"><i class='fas fa-redo'></i></a>
+            <a class="btn" (click)="selectWYSIWYGCommand('bold')"><i class='fa fa-bold'></i></a>
+            <a class="btn" (click)="selectWYSIWYGCommand('italic')"><i class='fa fa-italic'></i></a>
+            <a class="btn" (click)="selectWYSIWYGCommand('underline')"><i class='fa fa-underline'></i></a>
+            <a class="btn" (click)="selectWYSIWYGCommand('strikeThrough')"><i class='fa fa-strikethrough'></i></a>
+            <a class="btn" (click)="selectWYSIWYGCommand('justifyLeft')"><i class='fa fa-align-left'></i></a>
+            <a class="btn" (click)="selectWYSIWYGCommand('justifyCenter')"><i class='fa fa-align-center'></i></a>
+            <a class="btn" (click)="selectWYSIWYGCommand('justifyRight')"><i class='fa fa-align-right'></i></a>
+            <a class="btn" (click)="selectWYSIWYGCommand('justifyFull')"><i class='fa fa-align-justify'></i></a>
+            <a class="btn" (click)="selectWYSIWYGCommand('indent')"><i class='fa fa-indent'></i></a>
+            <a class="btn" (click)="selectWYSIWYGCommand('outdent')"><i class='fa fa-outdent'></i></a>
+            <a class="btn" (click)="selectWYSIWYGCommand('insertUnorderedList')"><i class='fa fa-list-ul'></i></a>
+            <a class="btn" (click)="selectWYSIWYGCommand('insertOrderedList')"><i class='fa fa-list-ol'></i></a>
+            <a class="btn" (click)="selectWYSIWYGCommand('h1')">H1</a>
+            <a class="btn" (click)="selectWYSIWYGCommand('h2')">H2</a>
         </div>
-
-        <div *ngIf="selectedOption === 'template'" class="form__group">
-            <div class="form__group--label">
-                <i class="far fa-square"></i>
-                <label for="template">Template</label>
-            </div>
-            <div class="form__group--input">
-                <div class="form__group--input form__group--input--dropdown">
-                    <div class="form__group--input--dropdown__value">
-                        {{form.get('template').value}}
-                    </div>
-                    <div id="template" class="form__group--input--dropdown__option-box">
-                        <a (click)="setTemplate(template)" *ngFor="let template of templates"
-                           class="form__group--input--dropdown__option-box__item">
-                            {{template}}
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div *ngIf="selectedOption === 'recipient'" class="form__group">
-            <div class="form__group--label">
-                <i class="far fa-square"></i>
-                <label for="recipient">Recipient</label>
-            </div>
-            <div class="form__group--input">
-                <div class="form__group--input form__group--input--dropdown">
-                    <div class="form__group--input--dropdown__value">
-                        {{selectedRecipientName}}
-                    </div>
-                    <div id="recipient" class="form__group--input--dropdown__option-box">
-                        <a (click)="setRecipient(recipient)" *ngFor="let recipient of recipients"
-                           class="form__group--input--dropdown__option-box__item">
-                            {{recipient.name}}
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="actions">
-        <a (click)="flip(postcard)" class="btn">Flip</a>
-        <a *ngIf="form.valid" (click)="submit(editor)" [class]="sendWarning ? 'btn btn--primary': 'btn'">
-            {{sendWarning? 'Click again to send' : 'Send'}}
-        </a>
     </div>
 </div>
+<div *ngIf="!user" class="container">
+    <app-loader class="main" [load]="!user"></app-loader>
+</div>
+
+

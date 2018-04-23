@@ -1,7 +1,23 @@
-<div class="postcard">
-  <div class="postcard__body">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim incidunt iusto labore mollitia nam officia porro possimus quod sed soluta. Aliquam architecto est, iusto labore molestiae quo tempora temporibus voluptatum.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa est ipsam, iste provident voluptate voluptatem. At consequuntur, doloremque error harum, impedit inventore itaque obcaecati, omnis perferendis recusandae soluta ullam voluptas.</p>
-    <p>Vincent</p>
-  </div>
+<div id="postcard" class="postcard main">
+    <div class="postcard--side">
+        <div #editor (focus)="compose()" #body class="postcard__body" id="body" [attr.contenteditable]="mode === ePostcardMode.Write">
+        </div>
+    </div>
+    <div #back id="back" class="postcard--side postcard--back">
+        <youtube-player *ngIf="postcard && postcard.backSideOptionType === eBackSideOption.Youtube"
+                        [videoId]="postcard.backSideValue"
+                        [height]="'100%'"
+                        [width]="'100%'"
+        ></youtube-player>
+        <div *ngIf="imageUrl">
+            <div class="postcard__image-wrap">
+                <img class="postcard__image postcard__image--cover" [src]="imageUrl"
+                     alt="">
+            </div>
+        </div>
+        <agm-map *ngIf="postcard && postcard.backSideOptionType === eBackSideOption.Location" [latitude]="geoData.lat"
+                 [longitude]="geoData.lng">
+            <agm-marker [latitude]="geoData.lat" [longitude]="geoData.lng"></agm-marker>
+        </agm-map>
+    </div>
 </div>

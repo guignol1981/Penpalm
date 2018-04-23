@@ -1,0 +1,28 @@
+.container {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.notification {
+	font-size: 3rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 1rem;
+
+	&--success	{
+
+	}
+
+	&--danger {
+
+	}
+
+	&--warning {
+		color: var(--color-warning);
+	}
+
+}

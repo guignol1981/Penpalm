@@ -43,4 +43,21 @@ export class UtilService {
             });
     }
 
+
+    getCardTemplates(): Promise<any> {
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + this.authenticationService.getToken()
+        });
+
+        return this.http.get(this.apiEndPoint + '/templates', {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                return response.json().data;
+            })
+            .catch(() => {
+                return null;
+            });
+    }
+
 }

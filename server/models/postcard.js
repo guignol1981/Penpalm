@@ -5,14 +5,11 @@ let PostcardSchema = new Schema({
     author: {type: Schema.Types.ObjectId, ref: 'User', required: true},
     recipient: {type: Schema.Types.ObjectId, ref: 'User', required: true},
     body: {type: String, required: true},
-    imageUrl: {type: String},
-    uploadedImage: {type: String},
-    imageFitType: {type: String, default: 'contain'},
+    backSideOptionType: {type: Number, required: true},
+    backSideValue: {type: Schema.Types.Mixed, default: null},
     spotifyLink: {type: String, default: null},
-    youtubeId: {type: String, default: null},
     allowShare: {type: Boolean, default: false},
-    template: {type: String, default: 'none'},
-    location: {type: Object, default: null},
+    template: {type: String, default: null},
     seen: {type: Boolean, default: false},
     creationDate: {type: Date, require: true}
 });

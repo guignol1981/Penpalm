@@ -1,5 +1,9 @@
-<div *ngIf="activePostcard && postcards.length > 0" class="container">
-    <div class="paging">
+<div class="container">
+    <app-view-actions class="bottom" [actions]="actions" [disableActions]="transacting"></app-view-actions>
+    <app-view-single-input class="top" [inputs]="inputs"></app-view-single-input>
+    <app-view-options class="sub" [groups]="optionGroups" [disableOptions]="transacting"></app-view-options>
+    <app-post-card #postcard *ngIf="activePostcard" class="main" [mode]="ePostcardMode.Read"></app-post-card>
+    <div class="paging top">
         <div class="paging__handles">
             <a (click)="skipFirst()"
                [class]="fetchConfig.skip > 0 && !refreshing ? 'paging__handles__handle' : 'paging__handles__handle--disabled'">
@@ -27,8 +31,7 @@
             </a>
         </div>
     </div>
-
-    <div class="info">
+    <div *ngIf="activePostcard" class="info sub">
         <div class="info__item">
             {{activePostcard.creationDate | date}}
         </div>
@@ -46,57 +49,29 @@
             <iframe id="spoty" [src]="spotySrc" width="100%"
                     height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         </div>
-        <div class="info__item">
-            <a [class]="activePostcard.allowShare ? 'btn btn--align-left btn--text-md' : 'btn btn--align-left btn--text-md btn--disabled'"><i
-                    class="fas fa-share-alt"></i>&nbsp; Share</a>
-        </div>
-        <div class="info__item">
-            <a class="btn btn--align-left btn--text-md btn--disabled"><i class="fas fa-heart"></i>&nbsp; Add to favorite</a>
-        </div>
-        <div class="info__item">
-            <a class="btn btn--align-left btn--text-md btn--disabled"><i class="fas fa-reply"></i>&nbsp; Reply</a>
-        </div>
-        <div class="info__item">
-            <a class="btn btn--align-left btn--text-md"><i class="fas fa-flag"></i>&nbsp; Report</a>
+        <!--<div class="info__item">-->
+        <!--<a [class]="activePostcard.allowShare ? 'btn btn&#45;&#45;align-left btn&#45;&#45;text-md' : 'btn btn&#45;&#45;align-left btn&#45;&#45;text-md btn&#45;&#45;disabled'"><i-->
+        <!--class="fas fa-share-alt"></i>&nbsp; Share</a>-->
+        <!--</div>-->
+        <!--<div class="info__item">-->
+        <!--<a class="btn btn&#45;&#45;align-left btn&#45;&#45;text-md btn&#45;&#45;disabled"><i class="fas fa-heart"></i>&nbsp; Add to favorite</a>-->
+        <!--</div>-->
+        <!--<div class="info__item">-->
+        <!--<a class="btn btn&#45;&#45;align-left btn&#45;&#45;text-md btn&#45;&#45;disabled"><i class="fas fa-reply"></i>&nbsp; Reply</a>-->
+        <!--</div>-->
+        <!--<div class="info__item">-->
+        <!--<a class="btn btn&#45;&#45;align-left btn&#45;&#45;text-md"><i class="fas fa-flag"></i>&nbsp; Report</a>-->
+        <!--</div>-->
+    </div>
+    <div *ngIf="postcards && postcards.length === 0" class="main">
+        <div class="empty">
+            {{direction === 'in' ? 'You don\'t have any postcards yet' : 'You haven\'t sent any postcards yet'}}
         </div>
     </div>
-
-    <div #postcard class="postcard">
-        <div class="postcard--side">
-            <div id="postcardbody" class="postcard__body" [innerHTML]="activePostcard.body">
-            </div>
-        </div>
-        <div class="postcard--side postcard--back">
-            <youtube-player *ngIf="activePostcard.youtubeId"
-                            [videoId]="activePostcard.youtubeId"
-                            [height]="'100%'"
-                            [width]="'100%'"
-            ></youtube-player>
-
-            <div *ngIf="imageUrl" class="postcard__image-wrap">
-                <img [class]="getImageClass()" [src]="imageUrl"
-                     alt="postcard image">
-            </div>
-
-            <agm-map *ngIf="activePostcard.location" [latitude]="geoData.lat" [longitude]="geoData.lng">
-                <agm-marker [latitude]="geoData.lat" [longitude]="geoData.lng"></agm-marker>
-            </agm-map>
-
-        </div>
-    </div>
-    <div class="actions">
-        <a (click)="flip(postcard)" class="btn">Flip</a>
-    </div>
+    <app-loader class="main" [load]="!postcards"></app-loader>
 </div>
 
-<div *ngIf="!postcards" class="container">
-    <div class="loading-container">
-        <div class="loading loading"></div>
-    </div>
-</div>
 
-<div *ngIf="postcards && postcards.length === 0" class="container">
-    <div class="empty">
-        {{direction === 'in' ? 'You don\'t have any postcards yet' : 'You haven\'t sent any postcards yet'}}
-    </div>
-</div>
+
+
+

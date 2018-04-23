@@ -1,13 +1,12 @@
 <div *ngIf="user && form && countryList && languageList" class="container">
+    <div class="top title">{{user.name}}</div>
+    <app-view-options class="sub" [groups]="optionGroups" [disableOptions]="transacting"></app-view-options>
+    <app-view-actions class="bottom" [actions]="actions" [disableActions]="transacting"></app-view-actions>
 
-    <div class="title">
-        {{user.name}}
-    </div>
-
-    <div class="form" [formGroup]="form">
-        <div class="form__group--inline">
+    <div class="main form" [formGroup]="form">
+        <div class="form__row">
             <div class="form__group">
-                <div class="form__group--label">
+                <div class="form__group__label">
                     <label for="showPicture">Show my picture</label>
                 </div>
                 <label class="switch">
@@ -17,7 +16,7 @@
             </div>
 
             <div class="form__group">
-                <div class="form__group--label">
+                <div class="form__group__label">
                     <label for="showName">Show my first name</label>
                 </div>
                 <label class="switch">
@@ -27,7 +26,7 @@
             </div>
 
             <div class="form__group">
-                <div class="form__group--label">
+                <div class="form__group__label">
                     <label for="enableEmailNotifications">Enable email notifications</label>
                 </div>
                 <label class="switch">
@@ -38,18 +37,18 @@
             </div>
         </div>
 
-        <div class="form__group--inline">
+        <div class="form__row">
             <div class="form__group">
-                <div class="form__group--label">
+                <div class="form__group__label">
                     <label for="country">Country</label>
                 </div>
-                <div class="form__group--input form__group--input--dropdown">
-                    <div class="form__group--input--dropdown__value">
+                <div class="form__group__input form__group__input--dropdown">
+                    <div class="form__group__input--dropdown__value">
                         {{form.get('country').value}}
                     </div>
-                    <div id="country" class="form__group--input--dropdown__option-box">
+                    <div id="country" class="form__group__input--dropdown__option-box">
                         <a (click)="setCountry(country)" *ngFor="let country of countryList"
-                           class="form__group--input--dropdown__option-box__item">
+                           class="form__group__input--dropdown__option-box__item">
                             {{country}}
                         </a>
                     </div>
@@ -57,17 +56,17 @@
             </div>
 
             <div class="form__group">
-                <div class="form__group--label">
+                <div class="form__group__label">
                     <label for="language">Main language</label>
                 </div>
-                <div class="form__group--input form__group--input--dropdown">
-                    <div class="form__group--input--dropdown__value">
+                <div class="form__group__input form__group__input--dropdown">
+                    <div class="form__group__input--dropdown__value">
                         {{form.get('language').value}}
                     </div>
-                    <div id="language" class="form__group--input--dropdown__option-box">
+                    <div id="language" class="form__group__input--dropdown__option-box">
                         <a (click)="setLanguage(language)" *ngFor="let language of languageList"
-                           class="form__group--input--dropdown__option-box__item">
-                            {{language.name}}
+                           class="form__group__input--dropdown__option-box__item">
+                            {{language}}
                         </a>
                     </div>
                 </div>
@@ -75,37 +74,17 @@
         </div>
 
         <div class="form__group">
-            <div class="form__group--label">
+            <div class="form__group__label">
                 <label for="language">About you</label>
             </div>
-            <div class="form__group--input--textarea">
+            <div class="form__group__input--textarea">
                 <textarea formControlName="description" name="" id="description" cols="30" rows="5"
                           placeholder="Write something here..."></textarea>
             </div>
         </div>
 
     </div>
-
-    <div class="options">
-        <div class="options__group">
-            <div class="options__group--title">
-                Options
-            </div>
-            <div class="options__group--list">
-                <a (click)="logout()"
-                   class="btn btn--align-left btn--text-md">
-                    Logout
-                </a>
-                <a (click)="deleteAccount()"
-                   [class]="deleteWarning ? 'btn btn--align-left btn--text-md btn--warning' : 'btn btn--align-left btn--text-md'">
-                    {{deleteWarning ? 'Click again to close account' : 'Close account'}}
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div class="actions">
-        <a (click)="form.valid ? save() : '';" [class]="form.valid ? 'btn' : 'btn--disabled'">Save</a>
-    </div>
-
+</div>
+<div *ngIf="!user || !form || !countryList || !languageList" class="container">
+    <app-loader class="main" [load]="!user || !form || !countryList || !languageList"></app-loader>
 </div>

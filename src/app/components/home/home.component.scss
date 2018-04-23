@@ -91,32 +91,13 @@
 	width: 100%;
 }
 
+.notif {
+	grid-area: notif;
+}
+
 .footer {
 	grid-area: footer;
 	width: 100%;
-}
-
-.notif {
-	grid-area: notif;
-	font-size: 2rem;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-radius: 1rem;
-	margin: 1rem;
-
-	&--success	{
-		background-color: var(--color-primary);
-		color: var(--color-whitish);
-	}
-
-	&--warning {
-		color: #e17055;
-	}
-
-	&--failure {
-		color: #d63031;
-	}
 }
 
 

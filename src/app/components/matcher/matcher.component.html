@@ -1,160 +1,51 @@
 <div *ngIf="user && languageList && countryList" class="container">
+    <app-loader class="main" [load]="userList === null"></app-loader>
+    <app-view-actions class="bottom" [actions]="actions" [disableActions]="transacting"></app-view-actions>
+    <app-view-single-input class="top" [inputs]="inputs"></app-view-single-input>
+    <app-view-options class="sub" [groups]="optionGroups" [disableOptions]="transacting"></app-view-options>
 
-    <div *ngIf="view === 'discover'" class="input">
-        <div *ngIf="selectedOption === 'language-filter'" class="input__group">
-            <div class="input__group--label">
-                <label for="languagefilter">Language</label>
+    <div class="main">
+        <div *ngIf="userList && (view === 'discover' || view === 'pending-requests' || view === 'sent-requests' || view === 'pals')"
+             class="list">
+            <div *ngIf="userList.length === 0" class="list__empty">
+                This list is empty
             </div>
-            <div class="input__group--input">
-                <div class="input__group--input input__group--input--dropdown">
-                    <div class="input__group--input--dropdown__value">
-                        {{findFilter.language}}
-                    </div>
-                    <div id="languagefilter" class="input__group--input--dropdown__option-box">
-                        <a (click)="setLanguageFilter(language)" *ngFor="let language of languageList"
-                           class="input__group--input--dropdown__option-box__item">
-                            {{language.name}}
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div *ngIf="selectedOption === 'country-filter'" class="input__group">
-            <div class="input__group--label">
-                <label for="countryfilter">Country</label>
-            </div>
-            <div class="input__group--input">
-                <div class="input__group--input input__group--input--dropdown">
-                    <div class="input__group--input--dropdown__value">
-                        {{findFilter.country}}
-                    </div>
-                    <div id="countryfilter" class="input__group--input--dropdown__option-box">
-                        <a (click)="setCountryFilter(country)" *ngFor="let country of countryList"
-                           class="input__group--input--dropdown__option-box__item">
-                            {{country}}
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div *ngIf="userList && view === 'discover' || view === 'pending-requests' || view === 'sent-requests' || view === 'pals'"
-         class="list">
-        <div *ngIf="userList.length === 0" class="list__empty">
-            This list is empty
-        </div>
-        <div *ngIf="userList.length > 0">
-            <div *ngFor="let userList of userList" class="list__item">
-                <a (click)="selectUser(userList)" class="image-wrap">
-                    <img class="image" [src]="userList.photoUrl" alt="user picture">
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div *ngIf="view === 'details'" class="user-details">
-        <div class="user-details__photo">
-            <div class="image-wrap">
-                <img class="image" [src]="selectedUser.photoUrl" alt="user picture">
-            </div>
-        </div>
-        <div class="user-details__name">
-            {{selectedUser.name}}
-        </div>
-        <div class="user-details__info">
-            <p>Language: {{selectedUser.language || 'Undefined'}}</p>
-            <p>Country: {{selectedUser.country || 'Undefined'}}</p>
-        </div>
-        <div class="user-details__description">
-            {{selectedUser.description || 'No description'}}
-        </div>
-    </div>
-
-    <div class="options">
-
-        <div class="options__group">
-            <div class="options__group--title">
-                Pen pals
-            </div>
-            <div class="options__group--list">
-                <a (click)="viewList()"
-                   [class]="view === 'discover' ? 'btn btn--align-left btn--text-md btn--active' : 'btn btn--align-left btn--text-md'">
-                    Discover
-                </a>
-                <a (click)="viewPals()"
-                   [class]="view === 'pals' ? 'btn btn--align-left btn--text-md btn--active' : 'btn btn--align-left btn--text-md'">
-                    My pals
-                </a>
-                <a (click)="viewPendingRequests()"
-                   [class]="view === 'pending-requests' ? 'btn btn--align-left btn--text-md btn--active' : 'btn btn--align-left btn--text-md'">
-                    Pending requests
-                </a>
-                <a (click)="viewRequests()"
-                   [class]="view === 'sent-requests' ? 'btn btn--align-left btn--text-md btn--active' : 'btn btn--align-left btn--text-md'">
-                    Sent requests
-                </a>
-            </div>
-        </div>
-
-        <div *ngIf="selectedUser" class="options__group">
-            <div class="options__group--title">
-                Options
-            </div>
-            <div class="options__group--list">
-                <div *ngIf="user.isPal(selectedUser._id)">
-                    <a (click)="removePal()"
-                       [class]="transacting ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'">
-                        {{removeWarning ? 'Click again to remove' : 'Remove pal'}}
+            <div *ngIf="userList.length > 0">
+                <div *ngFor="let listedUser of userList" class="list__item">
+                    <a (click)="selectUser(listedUser)" class="image-wrap">
+                        <img class="image" [src]="listedUser.photoUrl" alt="user picture">
                     </a>
+                    <div class="list__item__info">
+                        <p>
+                            {{listedUser.name}}
+                        </p>
+                        <p>
+                            <i class="fas fa-flag"></i> {{listedUser.country}}
+                        </p>
+                        <p>
+                            <i class="fas fa-language"></i> {{listedUser.language}}
+                        </p>
+                    </div>
                 </div>
-                <div *ngIf="user.isRequestSent(selectedUser._id) && !user.isPal(selectedUser._id)">
-                    <a *ngIf="user.isRequestSent(selectedUser._id)"
-                       (click)="handleRequest(true)"
-                       [class]="transacting ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'">
-                        Accept request</a>
-                    <a *ngIf="user.isRequestSent(selectedUser._id)"
-                       (click)="handleRequest(false)"
-                       [class]="transacting ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'">
-                        Refuse request</a>
-                </div>
-                <a *ngIf="!user.isRequestSent(selectedUser._id) && !user.isPal(selectedUser._id)"
-                   (click)="selectedUser.isRequestSent(user._id) ? cancelRequest() : sendRequest()"
-                   [class]="transacting ? 'btn btn--align-left btn--text-md btn--disabled' : 'btn btn--align-left btn--text-md'">
-                    {{selectedUser.isRequestSent(user._id) ? 'Cancel request' : 'Send request'}}
-                </a>
-                <a (click)="report()"
-                   class="btn btn--align-left btn--text-md btn--disabled">
-                    Report
-                </a>
             </div>
         </div>
 
-        <div *ngIf="view === 'discover'" class="options__group">
-            <div class="options__group--title">
-                Filters
+        <div *ngIf="view === 'details'" class="user-details">
+            <div class="user-details__photo">
+                <div class="image-wrap">
+                    <img class="image" [src]="selectedUser.photoUrl" alt="user picture">
+                </div>
             </div>
-            <div class="options__group--list">
-                <a (click)="findFilter.country === 'none'? selectOption('country-filter') : setCountryFilter('none')"
-                   class="btn btn--align-left btn--text-md">
-                    &nbsp;{{findFilter.country === 'none'? 'Country' : 'Clear country filter'}}
-                </a>
-                <a (click)="findFilter.language  === 'none'? selectOption('language-filter') : setLanguageFilter({name: 'none'})"
-                   class="btn btn--align-left btn--text-md">
-                    &nbsp;{{findFilter.language === 'none' ? 'Language' : 'Clear language filter'}}
-                </a>
-                <a (click)="selectOption('interests-filter')"
-                   class="btn btn--align-left btn--text-md btn--disabled">
-                    &nbsp;Interests
-                </a>
+            <div class="user-details__name">
+                {{selectedUser.name}}
+            </div>
+            <div class="user-details__info">
+                <p><i class="fas fa-flag"></i> {{selectedUser.country || 'Undefined'}}</p>
+                <p><i class="fas fa-language"></i> {{selectedUser.language || 'Undefined'}}</p>
+            </div>
+            <div class="user-details__description">
+                {{selectedUser.description || 'No description'}}
             </div>
         </div>
     </div>
-
-    <div class="actions">
-        <a *ngIf="view === 'discover'" (click)="''" class="btn">Show more</a>
-    </div>
-
 </div>

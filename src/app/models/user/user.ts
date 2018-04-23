@@ -14,7 +14,7 @@ export class User {
                 public pals?: string[]) {
     }
 
-    isRequestSent(userId: string): boolean {
+    hasRequestFrom(userId: string): boolean {
         let isRequestSent = false;
 
         this.pendingRequests.forEach((item) => {

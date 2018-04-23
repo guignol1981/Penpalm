@@ -18,7 +18,6 @@ import {ComposeComponent} from './components/compose/compose.component';
 import {AccountComponent} from './components/account/account.component';
 import {NewsComponent} from './components/news/news.component';
 import {PostcardService} from './services/postcard.service';
-import {SimpleNotificationsModule} from 'angular2-notifications';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NewsService} from './services/news.service';
 import {YoutubePlayerModule} from 'ng2-youtube-player';
@@ -27,6 +26,13 @@ import {UtilService} from './services/util.service';
 import { AgmCoreModule } from '@agm/core';
 import {ImageUploadModule} from 'angular2-image-upload';
 import {GoogleMapService} from "./services/google-map.service";
+import { BaseViewComponent } from './components/base-view/base-view.component';
+import { ViewOptionsComponent } from './components/view-options/view-options.component';
+import { ViewActionsComponent } from './components/view-actions/view-actions.component';
+import { NotificationComponent } from './components/notification/notification.component';
+import { LoaderComponent } from './components/loader/loader.component';
+import { ViewSingleInputComponent } from './components/view-single-input/view-single-input.component';
+import {ImageService} from './services/image.service';
 
 
 let config = new AuthServiceConfig([
@@ -56,7 +62,13 @@ export function provideConfig() {
         ComposeComponent,
         AccountComponent,
         NewsComponent,
-        MatcherComponent
+        MatcherComponent,
+        BaseViewComponent,
+        ViewOptionsComponent,
+        ViewActionsComponent,
+        NotificationComponent,
+        LoaderComponent,
+        ViewSingleInputComponent
     ],
     imports: [
         BrowserAnimationsModule,
@@ -65,7 +77,6 @@ export function provideConfig() {
         ReactiveFormsModule,
         routing,
         SocialLoginModule,
-        SimpleNotificationsModule.forRoot(),
         YoutubePlayerModule,
         ImageUploadModule.forRoot(),
         AgmCoreModule.forRoot({
@@ -73,6 +84,7 @@ export function provideConfig() {
         })
     ],
     providers: [
+        ImageService,
         GoogleMapService,
         UtilService,
         UserService,

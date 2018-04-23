@@ -1,39 +1,53 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {User} from '../../models/user/user';
 import {UserService} from '../../services/user.service';
-import {NotificationsService} from 'angular2-notifications';
-import {Notif} from '../home/home.component';
 import {UtilService} from '../../services/util.service';
+import {BaseViewComponent} from '../base-view/base-view.component';
+import {Notification} from '../../models/notification/notification';
+import {ENotification} from '../../models/notification/e-notification.enum';
+import {ViewAction} from '../../models/actions/view-action';
+import {ViewOption} from '../../models/options/view-option';
+import {ViewOptionGroup} from '../../models/options/view-option-group';
+import {EViewAction} from '../../models/actions/e-view-action.enum';
+import {SingleInput} from '../../models/single-input/single-input';
+import {ESingleInput} from '../../models/single-input/e-single-input.enum';
+import {MatcherViewData} from '../../models/view-data/matcher-view-data';
 
 export interface FindFilter {
     country: string;
     language: string;
+    type: string;
 }
 
 @Component({
     selector: 'app-matcher',
     templateUrl: './matcher.component.html',
-    styleUrls: ['./matcher.component.scss']
+    styleUrls: ['./matcher.component.scss', '../base-view/base-view.component.scss']
 })
-export class MatcherComponent implements OnInit {
-    @Output() notifEvent: EventEmitter<Notif> = new EventEmitter<Notif>();
+export class MatcherComponent extends BaseViewComponent implements OnInit {
     user: User;
     userList: User[];
-    selectedOption = '';
-    selectedUser: User;
+    selectedUser: User = null;
     countryList;
     languageList;
+    filterDisplayed = null;
+
     findFilter = {
         country: 'none',
         language: 'none',
-        pals: false
+        type: 'discover'
     };
+
     transacting = false;
     view = 'discover';
-    removeWarning = false;
+
+    inputs: SingleInput[];
+    actions: ViewAction[];
+    optionGroups: ViewOptionGroup[];
 
     constructor(private userService: UserService,
                 private utilService: UtilService) {
+        super();
     }
 
     ngOnInit() {
@@ -47,13 +61,19 @@ export class MatcherComponent implements OnInit {
 
         this.userService.getCurrentUser().then((user: User) => {
             this.user = user;
+            this.actions = MatcherViewData.getActions(this);
+            this.optionGroups = MatcherViewData.getOptions(this);
+            this.inputs = MatcherViewData.getInputs(this);
             this.find();
         });
     }
 
     find(callback ?: any) {
+        this.transacting = true;
+
         this.userService.find(this.findFilter).then((users: User[]) => {
             this.userList = users;
+            this.transacting = false;
 
             if (callback) {
                 callback();
@@ -62,22 +82,19 @@ export class MatcherComponent implements OnInit {
     }
 
     selectUser(user: User) {
+        this.filterDisplayed = 'none';
         this.selectedUser = user;
         this.view = 'details';
     }
 
-    selectOption(option) {
-        this.selectedOption = option;
-    }
-
     setLanguageFilter(language) {
         let me = this;
-        let msg = language.name === 'none' ? 'Filter cleared' : 'Filter applied';
+        let msg = language === 'none' ? 'Filter cleared' : 'Filter applied';
 
-        this.findFilter.language = language.name;
+        this.findFilter.language = language;
 
         let displayMsg = function () {
-            me.notifEvent.emit({type: 'success', msg: msg});
+            me.notificationEmitter.emit(new Notification(ENotification.Success, msg));
         };
 
         this.find(displayMsg);
@@ -90,15 +107,24 @@ export class MatcherComponent implements OnInit {
         this.findFilter.country = country;
 
         let displayMsg = function () {
-            me.notifEvent.emit({type: 'success', msg: msg});
+            me.notificationEmitter.emit(new Notification(ENotification.Success, msg));
         };
         this.find(displayMsg);
     }
 
-    viewList() {
+    viewList(category) {
+        if (this.transacting) {
+            return;
+        }
+
+        if (category !== 'discover') {
+            this.filterDisplayed = 'none';
+        }
+
         this.selectedUser = null;
-        this.view = 'discover';
-        this.findFilter.pals = false;
+        this.view = category;
+        this.findFilter.type = category;
+
         this.find();
     }
 
@@ -109,7 +135,7 @@ export class MatcherComponent implements OnInit {
         this.transacting = true;
         this.userService.sendRequest(this.selectedUser).then((user: User) => {
             this.selectedUser = user;
-            this.notifEvent.emit({type: 'success', msg: 'Request sent'});
+            this.notificationEmitter.emit(new Notification(ENotification.Success, 'Request sent'));
             this.transacting = false;
         });
     }
@@ -122,7 +148,7 @@ export class MatcherComponent implements OnInit {
         this.transacting = true;
         this.userService.cancelRequest(this.selectedUser).then((user: User) => {
             this.selectedUser = user;
-            this.notifEvent.emit({type: 'success', msg: 'Request canceled'});
+            this.notificationEmitter.emit(new Notification(ENotification.Success, 'Request canceled'));
             this.transacting = false;
         });
     }
@@ -135,11 +161,11 @@ export class MatcherComponent implements OnInit {
         this.transacting = true;
         this.userService.handleRequest(this.selectedUser, accept).then((response: any) => {
             if (accept) {
-                this.notifEvent.emit({type: 'success', msg: 'Pal added'});
+                this.notificationEmitter.emit(new Notification(ENotification.Success, 'Pal added'));
                 this.selectedUser = response.targetUser;
                 this.user = response.sourceUser;
             } else {
-                this.notifEvent.emit({type: 'success', msg: 'Request rejected'});
+                this.notificationEmitter.emit(new Notification(ENotification.Success, 'Request rejected'));
             }
 
             this.transacting = false;
@@ -151,68 +177,13 @@ export class MatcherComponent implements OnInit {
             return;
         }
 
-        if (!this.removeWarning) {
-            this.removeWarning = true;
-            return;
-        }
-
         this.transacting = true;
         this.userService.removePal(this.selectedUser).then((response: any) => {
-            this.notifEvent.emit({type: 'success', msg: 'Pal removed'});
+            this.notificationEmitter.emit(new Notification(ENotification.Success, 'Request removed'));
             this.selectedUser = response.targetUser;
             this.user = response.sourceUser;
             this.transacting = false;
         });
     }
 
-    viewPals() {
-        if (this.transacting) {
-            return;
-        }
-
-        this.transacting = true;
-
-        this.view = 'pals';
-        this.userService.getPals().then((users: User[]) => {
-            this.userList = users;
-            this.transacting = false;
-        });
-    }
-
-    viewPendingRequests() {
-        if (this.transacting) {
-            return;
-        }
-
-        this.view = 'pending-requests';
-
-        this.transacting = true;
-        this.userService.getPendingRequests().then((users: User[]) => {
-            this.userList = users;
-            this.transacting = false;
-        });
-    }
-
-    viewRequests() {
-        if (this.transacting) {
-            return;
-        }
-
-        this.view = 'sent-requests';
-
-        this.transacting = true;
-        this.userService.getRequests().then((users: User[]) => {
-            this.userList = users;
-            this.transacting = false;
-        });
-    }
-
-
-    manage() {
-
-    }
-
-    report() {
-
-    }
 }

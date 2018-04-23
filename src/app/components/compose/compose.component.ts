@@ -1,129 +1,78 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Postcard} from '../../models/postcard/postcard';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {EBackSideOption, Postcard} from '../../models/postcard/postcard';
 import {PostcardService} from '../../services/postcard.service';
 import {UserService} from '../../services/user.service';
 import {User} from '../../models/user/user';
-import {Notif} from '../home/home.component';
-import {AuthenticationService} from '../../services/authentication.service';
-import {GoogleMapService} from '../../services/google-map.service';
+import {SingleInput} from '../../models/single-input/single-input';
+import {ViewOptionGroup} from '../../models/options/view-option-group';
+import {ViewAction} from '../../models/actions/view-action';
+import {BaseViewComponent} from '../base-view/base-view.component';
+import {UtilService} from '../../services/util.service';
+import {ComposeViewData} from '../../models/view-data/compose-view-data';
+import {EPostcardMode, PostcardComponent} from '../postcard/postcard.component';
+import {ENotification} from '../../models/notification/e-notification.enum';
+import {Notification} from '../../models/notification/notification';
+import {ImageService} from '../../services/image.service';
 
 @Component({
     selector: 'app-compose',
     templateUrl: './compose.component.html',
-    styleUrls: ['./compose.component.scss']
+    styleUrls: ['./compose.component.scss', '../base-view/base-view.component.scss']
 })
-export class ComposeComponent implements OnInit {
-    @Output() notifEvent: EventEmitter<Notif> = new EventEmitter<Notif>();
+export class ComposeComponent extends BaseViewComponent implements OnInit {
+    @ViewChild(PostcardComponent) postcardComponent: PostcardComponent;
     user: User;
     recipients: User[];
     transacting = false;
-    form: FormGroup;
-    composeMode = false;
+    selectedOption = 'compose';
+    templates: string[];
+    postcard = new Postcard();
+    ePostcardMode = EPostcardMode;
+    inputs: SingleInput[];
+    optionGroups: ViewOptionGroup[];
+    actions: ViewAction[];
     shownSide = 'front';
-    sendWarning = false;
-    selectedOption = '';
-    templates = ['none', 'bubble'];
 
     constructor(private postcardService: PostcardService,
-                private authenticationService: AuthenticationService,
                 private userService: UserService,
-                private googleMapService: GoogleMapService) {
+                public imageService: ImageService,
+                private utilService: UtilService) {
+        super();
     }
 
     ngOnInit() {
+        this.utilService.getCardTemplates().then((templates) => {
+            this.templates = templates;
+        });
+
         this.userService.getCurrentUser().then((user: User) => {
-            this.userService.getPals().then((pals: User[]) => {
+            this.userService.find({country: 'none', language: 'none', type: 'pals'}).then((pals: User[]) => {
                 this.user = user;
                 this.recipients = pals;
-
-                this.form = new FormGroup({
-                    body: new FormControl(null),
-                    imageUrl: new FormControl(null),
-                    imageFitType: new FormControl('contain'),
-                    spotifyLink: new FormControl(null),
-                    youtubeLink: new FormControl(null),
-                    uploadedImage: new FormControl(null),
-                    allowShare: new FormControl(false),
-                    template: new FormControl('none'),
-                    recipient: new FormControl(null, Validators.required),
-                    location: new FormControl(null)
-                });
+                this.optionGroups = ComposeViewData.getOptions(this);
+                this.inputs = ComposeViewData.getInputs(this);
+                this.actions = ComposeViewData.getActions(this);
             });
         });
+
     }
 
-    get selectedRecipientName() {
-        let recipientName = null;
-        let selectedRecipientId = this.form.get('recipient').value;
-
-        this.recipients.forEach((item) => {
-            if (item._id === selectedRecipientId) {
-                recipientName = item.name;
-                return false;
+    clearInput(inputName) {
+        this.inputs.forEach(item => {
+            if (item.label === inputName) {
+                item.value = null;
+                item.lovValue = null;
             }
         });
-
-        return recipientName;
     }
 
-    get imageUrl() {
-        return this.form.get('imageUrl').value || this.form.get('uploadedImage').value || null;
+    isBackSideOptionAvailable(backSideOptionType: EBackSideOption): boolean {
+        return this.postcard.backSideOptionType === backSideOptionType || this.postcard.backSideOptionType === EBackSideOption.None;
     }
 
-    get headers() {
-        return {'Authorization': 'Bearer ' + this.authenticationService.getToken()};
-    }
 
-    get dateNow() {
-        return Date.now();
-    }
-
-    get geoData() {
-        return {
-            lat: this.form.get('location').value.lat,
-            lng: this.form.get('location').value.lng
-        };
-    }
-
-    isBackSideOptionAvailable(option) {
-        let isAvailable = true;
-        let backSideOptions = [
-            'youtubeLink',
-            'imageUrl',
-            'uploadedImage',
-            'location'
-        ];
-
-        backSideOptions.forEach((item) => {
-            if (this.form.get(item).value && option !== item) {
-                isAvailable = false;
-                return false;
-            }
-        });
-
-        return isAvailable;
-    }
-
-    selectOption(option) {
-        this.selectedOption = option;
-    }
-
-    removeOptionValue(option) {
-        this.form.get(option).reset();
-
-        if (option === 'location') {
-            let input = document.getElementById('location') as HTMLInputElement;
-            input.value = null;
-        }
-
-        if (option === 'template') {
-            this.setTemplate('none');
-        }
-    }
-
-    getYoutubeLinkId() {
-        let link = this.form.get('youtubeLink').value;
+    getYoutubeLink(value) {
+        let link = value;
 
         if (!link) {
             return null;
@@ -138,80 +87,13 @@ export class ComposeComponent implements OnInit {
         return youtube_parser(link);
     }
 
-    onLocationChange(value) {
-        this.googleMapService.getGeoData(value).then((geo) => {
-            let location = geo.data[0].geometry.location;
-            this.form.get('location').setValue({lat: location.lat, lng: location.lng});
-        });
-    }
-
-    getImageClass() {
-        let cssClass = 'postcard__image';
-        switch (this.form.get('imageFitType').value) {
-            case 'contain':
-                return cssClass += ' postcard__image--contain';
-            case 'cover':
-                return cssClass += ' postcard__image--cover';
-            case 'fill':
-                return cssClass += ' postcard__image--fill';
-            default:
-                return cssClass += ' postcard__image--none';
+    onComposeMode(bool) {
+        if (bool) {
+            this.selectedOption = 'compose';
         }
-    }
-
-    setRecipient(recipient: User) {
-        this.form.get('recipient').setValue(recipient._id);
-    }
-
-    setTemplate(templateName, bodyElement = null, backElement = null) {
-        bodyElement = bodyElement || document.getElementById('body');
-        backElement = backElement || document.getElementById('back');
-
-        this.form.get('template').setValue(templateName);
-
-        if (templateName !== 'none') {
-
-            bodyElement.style.background = 'url(../../../assets/' + templateName + '-template_front.png)';
-            bodyElement.style.backgroundRepeat = 'no-repeat';
-            bodyElement.style.backgroundSize = 'cover';
-            bodyElement.style.backgroundPosition = 'center';
-
-            backElement.style.background = 'url(../../../assets/' + templateName + '-template_back.png)';
-            backElement.style.backgroundRepeat = 'no-repeat';
-            backElement.style.backgroundSize = 'cover';
-            backElement.style.backgroundPosition = 'center';
-        } else {
-            bodyElement.style.background = '';
-            backElement.style.background = '';
-        }
-    }
-
-    flip(postcard) {
-        if (this.shownSide === 'front') {
-            this.shownSide = 'back';
-            postcard.style.transform = 'rotateY(180deg)';
-        } else {
-            this.shownSide = 'front';
-            postcard.style.transform = 'rotateY(0deg)';
-        }
-    }
-
-    onImageUploadFinished(data) {
-        let imageData = JSON.parse(data.serverResponse._body).data;
-        let imageUrl = imageData.imageUrl;
-        this.form.get('uploadedImage').setValue(imageUrl);
-    }
-
-    onImageRemoved() {
-        this.form.get('uploadedImage').reset();
-    }
-
-    compose() {
-        this.selectedOption = 'compose';
     }
 
     selectWYSIWYGCommand(command) {
-
         if (command === 'h1' || command === 'h2' || command === 'p') {
             document.execCommand('formatBlock', false, command);
         } else if (command === 'forecolor' || command === 'backcolor') {
@@ -221,37 +103,30 @@ export class ComposeComponent implements OnInit {
         }
     }
 
-    submit(editor: HTMLElement) {
+    flipPostcard() {
+        if (this.shownSide === 'front') {
+            this.shownSide = 'back';
+        } else {
+            this.shownSide = 'front';
+        }
+
+        this.postcardComponent.flip();
+    }
+
+    submit(action: ViewAction) {
         if (this.transacting) {
             return;
         }
-
-        if (!this.sendWarning) {
-            this.sendWarning = true;
-            return;
-        }
-
-        let postcard = new Postcard(
-            null,
-            editor.innerHTML,
-            this.form.get('imageUrl').value,
-            this.form.get('uploadedImage').value,
-            this.form.get('imageFitType').value,
-            this.form.get('spotifyLink').value,
-            this.getYoutubeLinkId(),
-            this.form.get('allowShare').value,
-            this.form.get('template').value,
-            this.form.get('location').value,
-            this.form.get('recipient').value,
-        );
-
+        this.postcard.body = this.postcardComponent.getBody();
         this.transacting = true;
 
-        this.postcardService.create(postcard).then(() => {
-            this.form.reset();
-            this.composeMode = false;
+
+        this.postcardService.create(this.postcard).then(() => {
+            action.warned = false;
+            this.postcard = new Postcard();
+            this.postcardComponent.setPostcard(this.postcard);
+            this.notificationEmitter.emit(new Notification(ENotification.Success, 'Postcard sent'));
             this.transacting = false;
-            this.notifEvent.emit({type: 'success', msg: 'Postcard sent'});
         });
     }
 }
