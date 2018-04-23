@@ -13,7 +13,23 @@
 	width: 12rem;
 	height: 12rem;
 	-webkit-animation: spin 2s linear infinite; /* Safari */
-	animation: spin 2s linear infinite;
+	animation: spinRight 2s linear infinite;
+
+	&--small {
+		width: 6rem;
+		height: 6rem;
+	}
+}
+
+.loading-wheel-2 {
+	z-index: 2;
+	position: absolute;
+	border: 1.6rem solid transparent;
+	border-bottom: 1.6rem solid var(--color-secondary);
+	height: 12rem;
+	width: 12rem;
+	border-radius: 50%;
+	animation: spinLeft 1.5s infinite;
 
 	&--small {
 		width: 6rem;
