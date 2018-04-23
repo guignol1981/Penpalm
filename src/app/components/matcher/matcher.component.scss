@@ -40,7 +40,6 @@
 	flex-wrap: wrap;
 	justify-content: flex-start;
 	align-items: flex-start;
-	overflow-y: scroll;
 	padding: 2rem;
 	max-height: 100%;
 
@@ -57,7 +56,7 @@
 
 	&__item {
 		transition: all .4s ease;
-		width: 20rem;
+		width: 15rem;
 		margin: 1rem;
 		position: relative;
 		cursor: pointer;

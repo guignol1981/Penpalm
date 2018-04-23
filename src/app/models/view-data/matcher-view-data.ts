@@ -150,6 +150,18 @@ export class MatcherViewData {
                 () => {
                     return matcherComponent.view === 'discover';
                 }
+            ),
+            new ViewAction(
+                'Back',
+                () => {
+                    matcherComponent.view = 'discover';
+                },
+                EViewAction.Primary,
+                false,
+                () => {
+                    matcherComponent.selectedUser = null;
+                    return matcherComponent.view === 'details';
+                }
             )
         ];
     }

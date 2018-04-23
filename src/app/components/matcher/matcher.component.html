@@ -10,8 +10,8 @@
             <div *ngIf="userList.length === 0" class="list__empty">
                 This list is empty
             </div>
-            <div *ngFor="let listedUser of userList" class="list__item">
-                <a (click)="selectUser(listedUser)" class="image-wrap">
+            <div *ngFor="let listedUser of userList" (click)="selectUser(listedUser)" class="list__item">
+                <a class="image-wrap">
                     <img class="image" [src]="listedUser.photoUrl" alt="user picture">
                 </a>
                 <div class="list__item__info">
