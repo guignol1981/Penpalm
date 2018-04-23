@@ -85,3 +85,6 @@
 
     </div>
 </div>
+<div *ngIf="!user || !form || !countryList || !languageList" class="container">
+    <app-loader class="main" [load]="!user || !form || !countryList || !languageList"></app-loader>
+</div>

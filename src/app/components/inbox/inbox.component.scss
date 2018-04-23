@@ -88,15 +88,6 @@
 	}
 }
 
-.loading-container {
-	grid-area: postcard;
-	height: 100%;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
 .empty {
 	grid-area: postcard;
 	height: 100%;
@@ -105,14 +96,6 @@
 	align-items: center;
 	font-size: 3rem;
 	color: var(--color-whitish);
-}
-
-.actions {
-	justify-self: center;
-	grid-area: actions;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 }
 
 .image-wrap {
@@ -125,8 +108,4 @@
 	max-width: 50%;
 	max-height: 50%;
 	border-radius: 50%;
-}
-
-agm-map {
-	height: 100%;
 }

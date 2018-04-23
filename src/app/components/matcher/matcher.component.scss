@@ -42,6 +42,7 @@
 	align-items: flex-start;
 	overflow-y: scroll;
 	padding: 2rem;
+	max-height: 100%;
 
 	&::-webkit-scrollbar {
 		display: none;
@@ -57,17 +58,24 @@
 	&__item {
 		transition: all .4s ease;
 		width: 10rem;
-		height: 10rem;
 		margin: 1rem;
 		position: relative;
 		cursor: pointer;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 
 		&:hover {
 			transform: scale(1.2);
 		}
 
 		&__info {
-			display: none;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			font-size: 1.5rem;
+			color: var(--color-whitish);
+			line-height: 0;
 		}
 	}
 }

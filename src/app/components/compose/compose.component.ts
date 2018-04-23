@@ -12,6 +12,7 @@ import {ComposeViewData} from '../../models/view-data/compose-view-data';
 import {EPostcardMode, PostcardComponent} from '../postcard/postcard.component';
 import {ENotification} from '../../models/notification/e-notification.enum';
 import {Notification} from '../../models/notification/notification';
+import {ImageService} from '../../services/image.service';
 
 @Component({
     selector: 'app-compose',
@@ -34,6 +35,7 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
 
     constructor(private postcardService: PostcardService,
                 private userService: UserService,
+                public imageService: ImageService,
                 private utilService: UtilService) {
         super();
     }

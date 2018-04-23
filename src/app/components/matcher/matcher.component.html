@@ -11,10 +11,21 @@
                 This list is empty
             </div>
             <div *ngIf="userList.length > 0">
-                <div *ngFor="let userList of userList" class="list__item">
-                    <a (click)="selectUser(userList)" class="image-wrap">
-                        <img class="image" [src]="userList.photoUrl" alt="user picture">
+                <div *ngFor="let listedUser of userList" class="list__item">
+                    <a (click)="selectUser(listedUser)" class="image-wrap">
+                        <img class="image" [src]="listedUser.photoUrl" alt="user picture">
                     </a>
+                    <div class="list__item__info">
+                        <p>
+                            {{listedUser.name}}
+                        </p>
+                        <p>
+                            <i class="fas fa-flag"></i> {{listedUser.country}}
+                        </p>
+                        <p>
+                            <i class="fas fa-language"></i> {{listedUser.language}}
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -29,8 +40,8 @@
                 {{selectedUser.name}}
             </div>
             <div class="user-details__info">
-                <p>Language: {{selectedUser.language || 'Undefined'}}</p>
-                <p>Country: {{selectedUser.country || 'Undefined'}}</p>
+                <p><i class="fas fa-flag"></i> {{selectedUser.country || 'Undefined'}}</p>
+                <p><i class="fas fa-language"></i> {{selectedUser.language || 'Undefined'}}</p>
             </div>
             <div class="user-details__description">
                 {{selectedUser.description || 'No description'}}

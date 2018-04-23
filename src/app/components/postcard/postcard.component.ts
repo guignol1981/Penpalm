@@ -84,15 +84,19 @@ export class PostcardComponent implements OnInit {
     }
 
     get imageUrl() {
+        if (this.postcard) {
+            if (this.postcard.backSideOptionType === EBackSideOption.LinkImage) {
+                return this.postcard.backSideValue;
+            } else if (this.postcard.backSideOptionType === EBackSideOption.UploadImage) {
+                return this.postcard.backSideValue.cloudStoragePublicUrl;
+            }
+        }
+
         if (this.postcard && (this.postcard.backSideOptionType === EBackSideOption.LinkImage ||
                 this.postcard.backSideOptionType === EBackSideOption.UploadImage)) {
             return this.postcard.backSideValue;
         }
         return null;
-    }
-
-    get dateNow() {
-        return Date.now();
     }
 
     get geoData() {

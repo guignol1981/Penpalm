@@ -57,6 +57,7 @@ router.get('/util/languages', authenticate, utilController.getLanguages);
 router.get('/util/templates', authenticate, utilController.getTemplates);
 
 //images
+router.delete('/images/:cloudstorageobject', authenticate, imageController.remove);
 router.post('/images', authenticate, upload.single('image'),imageController.sendUploadToGCS, imageController.upload);
 
 //google map

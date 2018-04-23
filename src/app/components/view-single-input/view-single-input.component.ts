@@ -3,6 +3,7 @@ import {LovItem, SingleInput} from '../../models/single-input/single-input';
 import {ESingleInput} from '../../models/single-input/e-single-input.enum';
 import {AuthenticationService} from '../../services/authentication.service';
 import {GoogleMapService} from '../../services/google-map.service';
+import {ImageService} from '../../services/image.service';
 
 @Component({
     selector: 'app-view-single-input',
@@ -15,6 +16,7 @@ export class ViewSingleInputComponent implements OnInit {
     formattedAddress = '';
 
     constructor(private authenticationService: AuthenticationService,
+                private imageService: ImageService,
                 private googleMapService: GoogleMapService) {
     }
 
@@ -28,11 +30,13 @@ export class ViewSingleInputComponent implements OnInit {
 
     onUploadFinished(singleInput: SingleInput, data) {
         let imageData = JSON.parse(data.serverResponse._body).data;
-        let imageUrl = imageData.imageUrl;
-        this.setValue(singleInput, imageUrl);
+        this.setValue(singleInput, imageData);
     }
 
     onUploadRemoved(singleInput: SingleInput) {
+        this.imageService.remove(singleInput.value.cloudStorageObject).then(() => {
+
+        });
         this.setValue(singleInput, null);
     }
 

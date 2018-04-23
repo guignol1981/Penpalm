@@ -9,7 +9,8 @@ import {EViewAction} from '../actions/e-view-action.enum';
 
 export class ComposeViewData {
 
-    constructor() {}
+    constructor() {
+    }
 
     public static getOptions(composeComponent: ComposeComponent): ViewOptionGroup[] {
         return [
@@ -94,6 +95,8 @@ export class ComposeViewData {
                         return composeComponent.isBackSideOptionAvailable(EBackSideOption.UploadImage);
                     }),
                     new ViewOption('Remove uploaded image', () => {
+                        composeComponent.imageService.remove(composeComponent.postcard.backSideValue.cloudStorageObject).then(() => {
+                        });
                         composeComponent.postcard.backSideOptionType = EBackSideOption.None;
                         composeComponent.postcard.backSideValue = null;
                         composeComponent.selectedOption = null;

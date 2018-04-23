@@ -32,6 +32,7 @@ import { ViewActionsComponent } from './components/view-actions/view-actions.com
 import { NotificationComponent } from './components/notification/notification.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { ViewSingleInputComponent } from './components/view-single-input/view-single-input.component';
+import {ImageService} from './services/image.service';
 
 
 let config = new AuthServiceConfig([
@@ -83,6 +84,7 @@ export function provideConfig() {
         })
     ],
     providers: [
+        ImageService,
         GoogleMapService,
         UtilService,
         UserService,
