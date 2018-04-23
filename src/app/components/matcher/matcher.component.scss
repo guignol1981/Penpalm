@@ -1,3 +1,10 @@
+.list-container {
+	overflow-y: scroll;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+
 .user-details {
 	grid-area: list;
 	display: grid;

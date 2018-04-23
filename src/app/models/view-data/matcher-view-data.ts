@@ -154,12 +154,12 @@ export class MatcherViewData {
             new ViewAction(
                 'Back',
                 () => {
+                    matcherComponent.selectedUser = null;
                     matcherComponent.view = 'discover';
                 },
                 EViewAction.Primary,
                 false,
                 () => {
-                    matcherComponent.selectedUser = null;
                     return matcherComponent.view === 'details';
                 }
             )

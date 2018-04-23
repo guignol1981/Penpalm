@@ -9,9 +9,8 @@
 	grid-area: form;
 	color: var(--color-whitish);
 	display: flex;
-	justify-content: center;
 	align-items: center;
-	overflow-x: scroll;
+	flex-wrap: wrap;
 
 	&__group {
 		&--inline {

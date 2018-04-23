@@ -4,7 +4,7 @@
     <app-view-single-input class="top" [inputs]="inputs"></app-view-single-input>
     <app-view-options class="sub" [groups]="optionGroups" [disableOptions]="transacting"></app-view-options>
 
-    <div class="main">
+    <div class="main list-container">
         <div *ngIf="userList && (view === 'discover' || view === 'pending-requests' || view === 'sent-requests' || view === 'pals')"
              class="list">
             <div *ngIf="userList.length === 0" class="list__empty">
