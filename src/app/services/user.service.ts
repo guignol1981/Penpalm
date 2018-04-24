@@ -18,7 +18,7 @@ export class UserService {
             data['_id'],
             data['name'],
             data['email'],
-            data['photoUrl'],
+            data['photoData'],
             data['language'],
             data['country'],
             data['description'],

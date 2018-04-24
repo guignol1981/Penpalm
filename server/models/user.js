@@ -1,15 +1,15 @@
-
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let UserSchema = new Schema({
     name: {type: String, require: true},
     email: {
-        type: String, required: true,
+        type: String,
+        required: true,
         trim: true,
         match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     },
-    photoUrl: {type: String},
+    photoData: {type: Schema.Types.Mixed},
     provider: {
         type: {
             id: String,
@@ -18,11 +18,9 @@ let UserSchema = new Schema({
         },
         select: false
     },
-    language: {type: String, default: 'English'},
-    country: {type: String, default: ''},
+    language: {type: String, default: null},
+    country: {type: String, default: null},
     description: {type: String, default: ''},
-    showPicture: {type: Boolean, default: true},
-    showName: {type: Boolean, default: true},
     enableEmailNotifications: {type: Boolean, default: true},
     pendingRequests: [{type: Schema.Types.ObjectId, ref: 'User', default: []}],
     pals: [{type: Schema.Types.ObjectId, ref: 'User', default: []}]
@@ -38,7 +36,10 @@ UserSchema.statics.upsertSocialUser = function (accessToken, refreshToken, profi
             let newUser = new that({
                 name: profile.name.givenName,
                 email: profile.emails[0].value,
-                photoUrl: profile.photos ? profile.photos[0].value : profile._json.picture,
+                photoData: {
+                    cloudStorageObject: null,
+                    cloudStoragePublicUrl: profile.photos ? profile.photos[0].value : profile._json.picture
+                },
                 provider: {
                     id: profile.id,
                     token: accessToken,
@@ -71,7 +72,7 @@ UserSchema.methods.unmatch = function (userId, callback) {
     }
 };
 
-UserSchema.methods.removePendingRequest = function(userId, callback) {
+UserSchema.methods.removePendingRequest = function (userId, callback) {
     let index = this.pendingRequests.indexOf(userId);
 
     if (index > -1) {

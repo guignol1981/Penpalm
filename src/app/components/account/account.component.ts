@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {UserService} from '../../services/user.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {User} from '../../models/user/user';
@@ -10,6 +10,8 @@ import {ViewAction} from '../../models/actions/view-action';
 import {Notification} from '../../models/notification/notification';
 import {ENotification} from '../../models/notification/e-notification.enum';
 import {AccountViewData} from '../../models/view-data/account-view-data';
+import {SingleInput} from '../../models/single-input/single-input';
+import {ImageService} from '../../services/image.service';
 
 @Component({
     selector: 'app-account',
@@ -17,8 +19,10 @@ import {AccountViewData} from '../../models/view-data/account-view-data';
     styleUrls: ['./account.component.scss', '../base-view/base-view.component.scss']
 })
 export class AccountComponent extends BaseViewComponent implements OnInit {
-    user: User;
+    @Input() user: User;
     form: FormGroup;
+
+    showImageLoader: false;
 
     countryList;
     languageList;
@@ -30,6 +34,7 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
 
     constructor(private userService: UserService,
                 private utilService: UtilService,
+                private imageService: ImageService,
                 private authenticationService: AuthenticationService) {
         super();
     }
@@ -43,19 +48,33 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
             this.languageList = languages;
         });
 
-        this.userService.getCurrentUser().then((user: User) => {
-            this.user = user;
-            this.form = new FormGroup({
-                showPicture: new FormControl(this.user.showPicture),
-                showName: new FormControl(this.user.showName),
-                enableEmailNotifications: new FormControl(this.user.enableEmailNotifications),
-                language: new FormControl(this.user.language),
-                country: new FormControl(this.user.country),
-                description: new FormControl(this.user.description)
-            });
+        this.form = new FormGroup({
+            name: new FormControl(this.user.showName),
+            enableEmailNotifications: new FormControl(this.user.enableEmailNotifications),
+            language: new FormControl(this.user.language),
+            country: new FormControl(this.user.country),
+            description: new FormControl(this.user.description)
+        });
 
-            this.optionGroups = AccountViewData.getOptions(this);
-            this.actions = AccountViewData.getActions(this);
+        this.optionGroups = AccountViewData.getOptions(this);
+        this.actions = AccountViewData.getActions(this);
+    }
+
+    get headers() {
+        return {'Authorization': 'Bearer ' + this.authenticationService.getToken()};
+    }
+
+    onUploadStateChanged(event) {
+        this.showImageLoader = event;
+    }
+
+    onUploadFinished(singleInput: SingleInput, data) {
+        this.user.photoData = JSON.parse(data.serverResponse._body).data;
+    }
+
+    onUploadRemoved() {
+        this.imageService.remove(this.user.photoData.cloudStorageObject).then(() => {
+            this.user.photoData = null;
         });
     }
 
@@ -65,8 +84,7 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
         }
 
         this.transacting = true;
-        this.user.showPicture = this.form.get('showPicture').value;
-        this.user.showName = this.form.get('showName').value;
+        this.user.name = this.form.get('name').value;
         this.user.enableEmailNotifications = this.form.get('enableEmailNotifications').value;
         this.user.language = this.form.get('language').value;
         this.user.country = this.form.get('country').value;

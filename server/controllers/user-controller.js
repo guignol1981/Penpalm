@@ -146,11 +146,11 @@ module.exports.update = function (req, res) {
         .then(user => {
             let body = req.body;
 
+            user.name = body['name'];
+            user.photoData = body['photoData'];
             user.language = body['language'];
             user.country = body['country'];
             user.description = body['description'];
-            user.showPicture = body['showPicture'];
-            user.showName = body['showName'];
             user.enableEmailNotifications = body['enableEmailNotifications'];
 
             user.save().then((user) => {

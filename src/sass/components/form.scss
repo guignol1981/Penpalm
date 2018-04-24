@@ -1,11 +1,6 @@
 .form {
 	padding: 2rem;
 	color: var(--color-whitish);
-	overflow-y: scroll;
-
-	&::-webkit-scrollbar {
-		display: none;
-	}
 
 	& > .form__group--inline:not(:last-child) {
 		margin-bottom: 3rem;
@@ -44,8 +39,11 @@
 		&__input {
 			width: 100%;
 
-			&--text {
+			&--upload {
 				width: 100%;
+			}
+
+			&--text {
 				border: none;
 				outline: none;
 				padding: 1rem 3rem;
