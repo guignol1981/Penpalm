@@ -40,4 +40,8 @@ export class User {
         return isPal;
     }
 
+    getPictureUrl() {
+        return this.photoData ? this.photoData.cloudStoragePublicUrl : 'assets/default-user.png';
+    }
+
 }

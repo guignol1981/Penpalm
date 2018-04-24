@@ -2,7 +2,7 @@
     <ul class="nav">
         <li (click)="setTab('account')" [class]="activeTab === 'account' ? 'nav-item nav-item--active' : 'nav-item'">
             <a class="nav-item__image-wrap">
-                <img [src]="user.photoData.cloudStoragePublicUrl" alt="profile image" class="nav-item__image">
+                <img [src]="user.getPictureUrl()" alt="profile image" class="nav-item__image">
             </a>
         </li>
         <li (click)="setTab('matcher')" [class]="activeTab === 'matcher' ? 'nav-item nav-item--active' : 'nav-item'">

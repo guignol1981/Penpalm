@@ -49,7 +49,7 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
         });
 
         this.form = new FormGroup({
-            name: new FormControl(this.user.showName),
+            name: new FormControl(this.user.name),
             enableEmailNotifications: new FormControl(this.user.enableEmailNotifications),
             language: new FormControl(this.user.language),
             country: new FormControl(this.user.country),

@@ -12,7 +12,7 @@
             </div>
             <div *ngFor="let listedUser of userList" (click)="selectUser(listedUser)" class="list__item">
                 <a class="image-wrap">
-                    <img class="image" [src]="listedUser.photoData" alt="user picture">
+                    <img class="image" [src]="listedUser.getPictureUrl()" alt="user picture">
                 </a>
                 <div class="list__item__info">
                     <p>
