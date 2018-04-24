@@ -26,6 +26,8 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
     @ViewChild('cropper', undefined)
     cropper: ImageCropperComponent;
 
+    displayImageUploader = false;
+
     countryList;
     languageList;
 
@@ -78,6 +80,7 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
         let file: File = event.target.files[0];
         let myReader: FileReader = new FileReader();
         let me = this;
+
         myReader.onloadend = function (loadEvent: any) {
             image.src = loadEvent.target.result;
             me.cropper.setImage(image);
@@ -88,13 +91,17 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
     }
 
 
-    save() {
+    async save() {
         if (this.transacting) {
             return;
         }
 
         this.transacting = true;
+
+        let photoData = await this.imageService.upload(ImageService.dataURLtoFile(this.croppedImage.image, 'image'));
+
         this.user.name = this.form.get('name').value;
+        this.user.photoData = photoData;
         this.user.enableEmailNotifications = this.form.get('enableEmailNotifications').value;
         this.user.language = this.form.get('language').value;
         this.user.country = this.form.get('country').value;
