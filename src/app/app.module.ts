@@ -23,16 +23,17 @@ import {NewsService} from './services/news.service';
 import {YoutubePlayerModule} from 'ng2-youtube-player';
 import {MatcherComponent} from './components/matcher/matcher.component';
 import {UtilService} from './services/util.service';
-import { AgmCoreModule } from '@agm/core';
+import {AgmCoreModule} from '@agm/core';
 import {ImageUploadModule} from 'angular2-image-upload';
-import {GoogleMapService} from "./services/google-map.service";
-import { BaseViewComponent } from './components/base-view/base-view.component';
-import { ViewOptionsComponent } from './components/view-options/view-options.component';
-import { ViewActionsComponent } from './components/view-actions/view-actions.component';
-import { NotificationComponent } from './components/notification/notification.component';
-import { LoaderComponent } from './components/loader/loader.component';
-import { ViewSingleInputComponent } from './components/view-single-input/view-single-input.component';
+import {GoogleMapService} from './services/google-map.service';
+import {BaseViewComponent} from './components/base-view/base-view.component';
+import {ViewOptionsComponent} from './components/view-options/view-options.component';
+import {ViewActionsComponent} from './components/view-actions/view-actions.component';
+import {NotificationComponent} from './components/notification/notification.component';
+import {LoaderComponent} from './components/loader/loader.component';
+import {ViewSingleInputComponent} from './components/view-single-input/view-single-input.component';
 import {ImageService} from './services/image.service';
+import {ImageCropperModule} from 'ngx-img-cropper';
 
 
 let config = new AuthServiceConfig([
@@ -78,6 +79,7 @@ export function provideConfig() {
         routing,
         SocialLoginModule,
         YoutubePlayerModule,
+        ImageCropperModule,
         ImageUploadModule.forRoot(),
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyAy4grLuONSG-gN4UuAAi-5lWZPXWO5nbM'

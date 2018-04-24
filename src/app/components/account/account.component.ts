@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {UserService} from '../../services/user.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {User} from '../../models/user/user';
@@ -10,8 +10,9 @@ import {ViewAction} from '../../models/actions/view-action';
 import {Notification} from '../../models/notification/notification';
 import {ENotification} from '../../models/notification/e-notification.enum';
 import {AccountViewData} from '../../models/view-data/account-view-data';
-import {SingleInput} from '../../models/single-input/single-input';
 import {ImageService} from '../../services/image.service';
+import {ImageCropperComponent, CropperSettings} from 'ngx-img-cropper';
+
 
 @Component({
     selector: 'app-account',
@@ -22,7 +23,8 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
     @Input() user: User;
     form: FormGroup;
 
-    showImageLoader: false;
+    @ViewChild('cropper', undefined)
+    cropper: ImageCropperComponent;
 
     countryList;
     languageList;
@@ -32,6 +34,10 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
     optionGroups: ViewOptionGroup[];
     actions: ViewAction[];
 
+    croppedImage = null;
+
+    cropperSettings: CropperSettings;
+
     constructor(private userService: UserService,
                 private utilService: UtilService,
                 private imageService: ImageService,
@@ -40,6 +46,13 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.cropperSettings = new CropperSettings();
+        this.cropperSettings.width = 200;
+        this.cropperSettings.height = 200;
+        this.cropperSettings.croppedWidth = 300;
+        this.cropperSettings.croppedHeight = 300;
+        this.cropperSettings.noFileInput = true;
+
         this.utilService.getCountries().then((countries) => {
             this.countryList = countries;
         });
@@ -60,23 +73,20 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
         this.actions = AccountViewData.getActions(this);
     }
 
-    get headers() {
-        return {'Authorization': 'Bearer ' + this.authenticationService.getToken()};
+    fileChangeListener(event) {
+        let image: any = new Image();
+        let file: File = event.target.files[0];
+        let myReader: FileReader = new FileReader();
+        let me = this;
+        myReader.onloadend = function (loadEvent: any) {
+            image.src = loadEvent.target.result;
+            me.cropper.setImage(image);
+            me.croppedImage = image;
+        };
+
+        myReader.readAsDataURL(file);
     }
 
-    onUploadStateChanged(event) {
-        this.showImageLoader = event;
-    }
-
-    onUploadFinished(singleInput: SingleInput, data) {
-        this.user.photoData = JSON.parse(data.serverResponse._body).data;
-    }
-
-    onUploadRemoved() {
-        this.imageService.remove(this.user.photoData.cloudStorageObject).then(() => {
-            this.user.photoData = null;
-        });
-    }
 
     save() {
         if (this.transacting) {
