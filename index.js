@@ -9,6 +9,8 @@ let api = require('./server/routes/api');
 let passport = require('passport');
 require('./server/services/scheduled-job');
 
+app.set('view engine', 'pug');
+
 process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(__dirname, 'server/configs/google-api.json');
 
 setInterval(function () {
@@ -25,6 +27,7 @@ passport.deserializeUser(function(user, done) {
 
 require('./server/passport/facebook-strategy');
 require('./server/passport/google-strategy');
+require('./server/passport/local-strategy');
 
 if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'dev';

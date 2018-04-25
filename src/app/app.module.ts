@@ -37,6 +37,7 @@ import {ImageCropperModule} from 'ngx-img-cropper';
 import { UploaderModalComponent } from './components/uploader-modal/uploader-modal.component';
 import { RegisterModalComponent } from './components/register-modal/register-modal.component';
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
+import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.component';
 
 
 let config = new AuthServiceConfig([
@@ -75,7 +76,8 @@ export function provideConfig() {
         ViewSingleInputComponent,
         UploaderModalComponent,
         RegisterModalComponent,
-        LoginModalComponent
+        LoginModalComponent,
+        ConfirmEmailComponent
     ],
     imports: [
         BrowserAnimationsModule,

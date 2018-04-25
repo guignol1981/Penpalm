@@ -30,6 +30,34 @@ export class UserService {
         );
     }
 
+    register(registerData: any): Promise<boolean> {
+        let headers = new Headers({
+            'Content-Type': 'application/json'
+        });
+
+        return this.http.post(this.apiEndPoint + '/register', JSON.stringify(registerData), {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                let token = response.headers.get('x-auth-token');
+                this.authenticationService.saveToken(token);
+                return true;
+            })
+            .catch((response: Response) => {
+                return false;
+            });
+    }
+
+    verifyEmail(link: string): Promise<boolean> {
+        return this.http.put(this.apiEndPoint + '/verify-email/' + link, {})
+            .toPromise()
+            .then((response: Response) => {
+                return true;
+            })
+            .catch((response: Response) => {
+                return false;
+            });
+    }
+
     signIn(socialUser: SocialUser): Promise<boolean> {
         return this.http.post(`api/auth/${socialUser.provider.toLowerCase()}?access_token=${socialUser.authToken}`,
             {socialUser: socialUser})

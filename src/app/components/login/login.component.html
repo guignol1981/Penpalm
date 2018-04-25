@@ -16,8 +16,13 @@
             <i class="fas fa-user-plus"></i> &nbsp;Register
         </a>
     </div>
-    <div class="modal-container">
-        <app-login-modal #loginmodal class="modal-content"></app-login-modal>
+    <div *ngIf="showLogingModalComponent" class="modal-container">
+        <app-login-modal #loginmodal class="modal-content"
+                         (closeEvent)="onLoginModalComponentClose($event)"></app-login-modal>
+    </div>
+    <div *ngIf="showRegisterModalComponent" class="modal-container">
+        <app-register-modal #registermodal class="modal-content"
+                            (closeEvent)="onRegisterModalComponentClose($event)"></app-register-modal>
     </div>
 </div>
 

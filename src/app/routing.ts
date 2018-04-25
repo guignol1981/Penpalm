@@ -3,6 +3,7 @@ import {HomeComponent} from './components/home/home.component';
 import {LoginComponent} from './components/login/login.component';
 import {ModuleWithProviders} from '@angular/core';
 import {CanActivateViaAuthGuardService} from "./services/can-activate-via-auth-guard.service";
+import {ConfirmEmailComponent} from './components/confirm-email/confirm-email.component';
 
 
 const appRoutes: Routes = [
@@ -14,6 +15,10 @@ const appRoutes: Routes = [
     {
         path: 'login',
         component: LoginComponent
+    },
+    {
+        path: 'confirm-email/:link',
+        component: ConfirmEmailComponent
     },
     {
         path: '',

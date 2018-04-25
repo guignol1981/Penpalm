@@ -33,13 +33,13 @@ export class AuthenticationService {
         }
     }
 
-    signInWithGoogle(): Promise<SocialUser> {
+    authenticateWithGoogle(): Promise<SocialUser> {
         return this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((user: SocialUser) => {
             return user;
         });
     }
 
-    signInWithFB(): Promise<SocialUser> {
+    authenticateWithFB(): Promise<SocialUser> {
         return this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then((user: SocialUser) => {
             return user;
         });

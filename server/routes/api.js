@@ -29,6 +29,12 @@ router.post('/auth/google',
     authenticatorController.generateToken,
     authenticatorController.sendToken);
 
+router.post('/auth/local',
+    passport.authenticate('local'),
+    authenticatorController.prepareReqForToken,
+    authenticatorController.generateToken,
+    authenticatorController.sendToken);
+
 //users
 router.get('/users', authenticate, userController.get);
 router.get('/users/pals', authenticate, userController.getPals);
@@ -40,6 +46,8 @@ router.put('/users/request', authenticate, userController.request);
 router.put('/users/handle-request', authenticate, userController.handleRequest);
 router.put('/users/cancel-request', authenticate, userController.cancelRequest);
 router.put('/users/remove-pal', authenticate, userController.removePal);
+router.post('/users/register', userController.register);
+router.put('/users/verify-email/:link', userController.verifyEmail);
 router.delete('/users', authenticate, userController.remove);
 
 //postcards

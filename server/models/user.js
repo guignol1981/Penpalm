@@ -1,5 +1,6 @@
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
+let crypto = require('crypto');
 
 let UserSchema = new Schema({
     name: {type: String, require: true},
@@ -7,6 +8,7 @@ let UserSchema = new Schema({
         type: String,
         required: true,
         trim: true,
+        unique: true,
         match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     },
     photoData: {type: Schema.Types.Mixed},
@@ -23,8 +25,21 @@ let UserSchema = new Schema({
     description: {type: String, default: ''},
     enableEmailNotifications: {type: Boolean, default: true},
     pendingRequests: [{type: Schema.Types.ObjectId, ref: 'User', default: []}],
-    pals: [{type: Schema.Types.ObjectId, ref: 'User', default: []}]
+    pals: [{type: Schema.Types.ObjectId, ref: 'User', default: []}],
+    hash: {type: String, select: false},
+    salt: {type: String, select: false},
+    emailVerified: {type: Boolean, default: false}
 });
+
+UserSchema.methods.setPassword = function (password) {
+    this.salt = crypto.randomBytes(16).toString('hex');
+    this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
+};
+
+UserSchema.methods.validPassword = function (password) {
+    let hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
+    return this.hash === hash;
+};
 
 UserSchema.statics.upsertSocialUser = function (accessToken, refreshToken, profile, callback) {
     let that = this;

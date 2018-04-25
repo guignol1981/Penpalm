@@ -1,0 +1,7 @@
+div.message
+    p.font-weight-bold Hello #{data.name} !
+    p Please confirm your email address by clicking on the link bellow
+        | a(href='http://localhost:3000/confirm-email/' + data.id) link
+
+    p.font-italic Sincerly yours,
+    p The Penpalm team
