@@ -10,6 +10,8 @@ import {SocialUser} from 'angular4-social-login';
     styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+    showLoginForm = false;
+    showRegisterForm = false;
 
     constructor(private userService: UserService,
                 private authenticationService: AuthenticationService,
@@ -17,6 +19,10 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
+    }
+
+    loginWithLocal() {
+
     }
 
     loginWithFacebook() {

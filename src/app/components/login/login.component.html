@@ -1,12 +1,56 @@
 <div class="container">
-  <img class="logo" src="../../assets/penpalm.svg#logo">
-  <div class="social">
-    <a (click)="loginWithFacebook()" class="btn btn--social btn--social--fb">
-      <i class="fab fa-facebook-square"></i>
-    </a>
-    <a (click)="loginWithGoogle()" class="btn btn--social btn--social--google">
-      <i class="fab fa-google-plus-square"></i>
-    </a>
-  </div>
+    <div class="logo-container">
+        <img class="logo" src="../../assets/penpalm.svg#logo">
+    </div>
+    <div class="login-container">
+        <div class="social">
+            <a (click)="loginWithFacebook()" class="btn btn--social btn--social--fb">
+                <i class="fab fa-facebook-square"></i>
+            </a>
+            <a (click)="loginWithGoogle()" class="btn btn--social btn--social--google">
+                <i class="fab fa-google-plus-square"></i>
+            </a>
+            <a (click)="showLoginForm = !showLoginForm" class="btn btn--social">
+                <i class="fas fa-sign-in-alt"></i>
+            </a>
+            <a (click)="showRegisterForm = !showRegisterForm" class="btn btn--social">
+                <i class="fas fa-user-plus"></i>
+            </a>
+        </div>
+        <!--<div class="form">-->
+            <!--<div class="form__group">-->
+                <!--<div class="form__group__label">-->
+                    <!--<label for="name">Displayed name</label>-->
+                <!--</div>-->
+                <!--<div class="form__group__input">-->
+                    <!--<input class="form__group__input&#45;&#45;text" id="name" type="text">-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form__group">-->
+                <!--<div class="form__group__label">-->
+                    <!--<label for="email">Email</label>-->
+                <!--</div>-->
+                <!--<div class="form__group__input">-->
+                    <!--<input class="form__group__input&#45;&#45;text" id="email" type="email">-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form__group">-->
+                <!--<div class="form__group__label">-->
+                    <!--<label for="password">Password</label>-->
+                <!--</div>-->
+                <!--<div class="form__group__input">-->
+                    <!--<input class="form__group__input&#45;&#45;text" id="password" type="password">-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form__group">-->
+                <!--<div class="form__group__label">-->
+                    <!--<label for="passwordconfirm">Confirm password</label>-->
+                <!--</div>-->
+                <!--<div class="form__group__input">-->
+                    <!--<input class="form__group__input&#45;&#45;text" id="passwordconfirm" type="password">-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
 </div>
 
