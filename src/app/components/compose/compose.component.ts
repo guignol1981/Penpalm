@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {EBackSideOption, Postcard} from '../../models/postcard/postcard';
 import {PostcardService} from '../../services/postcard.service';
 import {UserService} from '../../services/user.service';
@@ -13,6 +13,7 @@ import {EPostcardMode, PostcardComponent} from '../postcard/postcard.component';
 import {ENotification} from '../../models/notification/e-notification.enum';
 import {Notification} from '../../models/notification/notification';
 import {ImageService} from '../../services/image.service';
+import {ImageUploadEvent} from '../uploader-modal/uploader-modal.component';
 
 @Component({
     selector: 'app-compose',
@@ -20,7 +21,10 @@ import {ImageService} from '../../services/image.service';
     styleUrls: ['./compose.component.scss', '../base-view/base-view.component.scss']
 })
 export class ComposeComponent extends BaseViewComponent implements OnInit {
-    @ViewChild(PostcardComponent) postcardComponent: PostcardComponent;
+    @ViewChild(PostcardComponent)
+    postcardComponent: PostcardComponent;
+    @Output() imageUploadEvent: EventEmitter<ImageUploadEvent> = new EventEmitter<ImageUploadEvent>();
+    uploadedImage = null;
     user: User;
     recipients: User[];
     transacting = false;
@@ -113,13 +117,18 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
         this.postcardComponent.flip();
     }
 
-    submit(action: ViewAction) {
+    async submit(action: ViewAction) {
         if (this.transacting) {
             return;
         }
+
+        if (this.uploadedImage) {
+            this.postcard.backSideValue = await this.imageService.upload(this.uploadedImage);
+            this.postcard.backSideOptionType = EBackSideOption.UploadImage;
+        }
+
         this.postcard.body = this.postcardComponent.getBody();
         this.transacting = true;
-
 
         this.postcardService.create(this.postcard).then(() => {
             action.warned = false;

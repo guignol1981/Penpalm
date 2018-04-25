@@ -2,7 +2,7 @@
     <ul class="nav">
         <li (click)="setTab('account')" [class]="activeTab === 'account' ? 'nav-item nav-item--active' : 'nav-item'">
             <a class="nav-item__image-wrap">
-                <img [src]="user.getPictureUrl()" alt="profile image" class="nav-item__image">
+                <img [src]="user.pictureUrl" alt="profile image" class="nav-item__image">
             </a>
         </li>
         <li (click)="setTab('matcher')" [class]="activeTab === 'matcher' ? 'nav-item nav-item--active' : 'nav-item'">
@@ -46,7 +46,8 @@
         <app-inbox [direction]="'out'"></app-inbox>
     </div>
     <div *ngIf="activeTab === 'compose'" class="main">
-        <app-compose (notificationEmitter)="onNotification($event)"></app-compose>
+        <app-compose (notificationEmitter)="onNotification($event)"
+                     (imageUploadEvent)="onImageUploadEvent($event)"></app-compose>
     </div>
     <div *ngIf="activeTab === 'account'" class="main">
         <app-account [(user)]="user" (notificationEmitter)="onNotification($event)"

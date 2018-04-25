@@ -85,23 +85,10 @@
                     </label>
                 </div>
                 <div class="form__group__input">
-                    <div class="file-upload">
-                        <input type="file" name="file" id="file" class="inputfile" (change)="fileChangeListener($event)"/>
-                        <label for="file">Choose a file</label>
-                    </div>
-                    <img-cropper #cropper [image]="profilePicture" [settings]="cropperSettings"></img-cropper>
-                    <!--<image-upload id="inputUpload"-->
-                                  <!--[class]="'image-uploader'"-->
-                                  <!--[max]="1"-->
-                                  <!--[buttonCaption]="'Select Image'"-->
-                                  <!--[dropBoxMessage]="'Drop your image here!'"-->
-                                  <!--[preview]="false"-->
-                                  <!--[url]="'http://localhost:3000/api/images'"-->
-                                  <!--[headers]="headers"-->
-                                  <!--(removed)="onUploadRemoved(input)"-->
-                                  <!--(uploadFinished)="onUploadFinished(input, $event)"-->
-                                  <!--(uploadStateChanged)="onUploadStateChanged($event)">-->
-                    <!--</image-upload>-->
+                    <a id="file" (click)="executeInput(input)"
+                       class="btn btn--secondary btn--large">
+                        Upload
+                    </a>
                 </div>
             </div>
         </div>

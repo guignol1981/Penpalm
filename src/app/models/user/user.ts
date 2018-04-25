@@ -18,6 +18,10 @@ export class User {
                 public pals?: string[]) {
     }
 
+    get pictureUrl() {
+        return this.photoData ? this.photoData.cloudStoragePublicUrl : 'assets/default-user.png';
+    }
+
     hasRequestFrom(userId: string): boolean {
         let isRequestSent = false;
 
@@ -44,8 +48,5 @@ export class User {
         return isPal;
     }
 
-    getPictureUrl() {
-        return this.photoData ? this.photoData.cloudStoragePublicUrl : 'assets/default-user.png';
-    }
 
 }

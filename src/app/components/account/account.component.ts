@@ -113,6 +113,7 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
         this.user.description = this.form.get('description').value;
 
         this.userService.update(this.user).then((user: User) => {
+            this.profilePicture = null;
             this.user = user;
             this.transacting = false;
             this.notificationEmitter.emit(new Notification(ENotification.Success, 'Profile saved'));

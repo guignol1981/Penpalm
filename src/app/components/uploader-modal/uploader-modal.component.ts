@@ -60,6 +60,7 @@ export class UploaderModalComponent implements OnInit {
         if (!this.image) {
             return;
         }
+
         this.event.callback(ImageService.dataURLtoFile(this.image.image, 'image'));
         this.closeEvent.emit(true);
     }

@@ -22,8 +22,6 @@ export class ViewSingleInputComponent implements OnInit {
     @ViewChild('cropper', undefined)
     cropper: ImageCropperComponent;
     cropperSettings: CropperSettings;
-    profilePicture: any;
-
 
     constructor(private authenticationService: AuthenticationService,
                 private imageService: ImageService,
@@ -37,41 +35,6 @@ export class ViewSingleInputComponent implements OnInit {
         this.cropperSettings.croppedWidth = 300;
         this.cropperSettings.croppedHeight = 300;
         this.cropperSettings.noFileInput = true;
-    }
-
-    get headers() {
-        return {'Authorization': 'Bearer ' + this.authenticationService.getToken()};
-    }
-
-    fileChangeListener(event) {
-        let image: any = new Image();
-        let file: File = event.target.files[0];
-        let myReader: FileReader = new FileReader();
-        let me = this;
-
-        myReader.onloadend = function (loadEvent: any) {
-            image.src = loadEvent.target.result;
-            me.cropper.setImage(image);
-            me.profilePicture = image;
-        };
-
-        myReader.readAsDataURL(file);
-    }
-
-    onUploadStateChanged(event) {
-        this.showLoader = event;
-    }
-
-    onUploadFinished(singleInput: SingleInput, data) {
-        let imageData = JSON.parse(data.serverResponse._body).data;
-        this.setValue(singleInput, imageData);
-    }
-
-    onUploadRemoved(singleInput: SingleInput) {
-        this.imageService.remove(singleInput.value.cloudStorageObject).then(() => {
-
-        });
-        this.setValue(singleInput, null);
     }
 
     onLocationChange(singleInput: SingleInput, value) {
