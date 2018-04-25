@@ -1,9 +1,9 @@
 .container {
 	height: 100vh;
 	display: flex;
-	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	position: relative;
 }
 
 .social {
@@ -15,8 +15,13 @@
 	}
 }
 
+.logo-container {
+	margin-right: 4rem;
+}
+
 .login-container {
 	display: flex;
+	flex-direction: column;
 	justify-content: space-evenly;
 	align-items: center;
 }

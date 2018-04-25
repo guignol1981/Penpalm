@@ -34,6 +34,9 @@
 		&__label {
 			font-size: 1.5rem;
 			margin-bottom: 1rem;
+			&--dark {
+				color: #333333;
+			}
 		}
 
 		&__input {

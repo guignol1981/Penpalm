@@ -65,3 +65,23 @@
 	background-color: var(--color-whitish);
 	color: #333333;
 }
+
+.modal-content {
+	z-index: 3000;
+	position: absolute;
+	height: 50rem;
+	width: 50rem;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.modal-container {
+	z-index: 2999;
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	background-color: transparentize(#333333, .5);
+	left: 0;
+	top: 0;
+}

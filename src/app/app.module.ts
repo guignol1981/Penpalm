@@ -35,6 +35,8 @@ import {ViewSingleInputComponent} from './components/view-single-input/view-sing
 import {ImageService} from './services/image.service';
 import {ImageCropperModule} from 'ngx-img-cropper';
 import { UploaderModalComponent } from './components/uploader-modal/uploader-modal.component';
+import { RegisterModalComponent } from './components/register-modal/register-modal.component';
+import { LoginModalComponent } from './components/login-modal/login-modal.component';
 
 
 let config = new AuthServiceConfig([
@@ -71,7 +73,9 @@ export function provideConfig() {
         NotificationComponent,
         LoaderComponent,
         ViewSingleInputComponent,
-        UploaderModalComponent
+        UploaderModalComponent,
+        RegisterModalComponent,
+        LoginModalComponent
     ],
     imports: [
         BrowserAnimationsModule,
