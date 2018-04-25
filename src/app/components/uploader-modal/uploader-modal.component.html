@@ -4,5 +4,8 @@
         <label for="file">Choose a file</label>
     </div>
     <img-cropper #cropper [image]="image" [settings]="cropperSettings"></img-cropper>
-    <a (click)="onClose()" class="btn btn--primary">Done</a>
+    <div class="action">
+        <a (click)="onCancel()" class="btn btn--secondary">Cancel</a>
+        <a (click)="onDone()" [class]="image ? 'btn btn--primary' : 'btn btn--disabled'">Done</a>
+    </div>
 </div>

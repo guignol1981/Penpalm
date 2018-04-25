@@ -8,3 +8,13 @@
 	align-items: center;
 	justify-content: space-evenly;
 }
+
+.action {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	& > a:not(:last-child) {
+		margin-right: 1rem;
+	}
+}
