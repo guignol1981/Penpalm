@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {LovItem, SingleInput} from '../../models/single-input/single-input';
 import {ESingleInput} from '../../models/single-input/e-single-input.enum';
 import {AuthenticationService} from '../../services/authentication.service';
 import {GoogleMapService} from '../../services/google-map.service';
 import {ImageService} from '../../services/image.service';
 import {ELoader} from '../loader/loader.component';
+import {CropperSettings, ImageCropperComponent} from 'ngx-img-cropper';
 
 @Component({
     selector: 'app-view-single-input',
@@ -18,16 +19,43 @@ export class ViewSingleInputComponent implements OnInit {
     showLoader = false;
     eLoader = ELoader;
 
+    @ViewChild('cropper', undefined)
+    cropper: ImageCropperComponent;
+    cropperSettings: CropperSettings;
+    profilePicture: any;
+
+
     constructor(private authenticationService: AuthenticationService,
                 private imageService: ImageService,
                 private googleMapService: GoogleMapService) {
     }
 
     ngOnInit() {
+        this.cropperSettings = new CropperSettings();
+        this.cropperSettings.width = 200;
+        this.cropperSettings.height = 200;
+        this.cropperSettings.croppedWidth = 300;
+        this.cropperSettings.croppedHeight = 300;
+        this.cropperSettings.noFileInput = true;
     }
 
     get headers() {
         return {'Authorization': 'Bearer ' + this.authenticationService.getToken()};
+    }
+
+    fileChangeListener(event) {
+        let image: any = new Image();
+        let file: File = event.target.files[0];
+        let myReader: FileReader = new FileReader();
+        let me = this;
+
+        myReader.onloadend = function (loadEvent: any) {
+            image.src = loadEvent.target.result;
+            me.cropper.setImage(image);
+            me.profilePicture = image;
+        };
+
+        myReader.readAsDataURL(file);
     }
 
     onUploadStateChanged(event) {

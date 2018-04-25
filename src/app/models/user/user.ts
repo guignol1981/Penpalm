@@ -1,9 +1,13 @@
+export interface PhotoData {
+    cloudStorageObject: string;
+    cloudStoragePublicUrl: string;
+}
 export class User {
 
     constructor(public _id?: string,
                 public name?: string,
                 public email?: string,
-                public photoData?: any,
+                public photoData?: PhotoData,
                 public language?: string,
                 public country?: string,
                 public description?: string,

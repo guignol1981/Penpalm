@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {UserService} from '../../services/user.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {User} from '../../models/user/user';
@@ -12,7 +12,7 @@ import {ENotification} from '../../models/notification/e-notification.enum';
 import {AccountViewData} from '../../models/view-data/account-view-data';
 import {ImageService} from '../../services/image.service';
 import {ImageCropperComponent, CropperSettings} from 'ngx-img-cropper';
-
+import {ImageUploadEvent} from '../uploader-modal/uploader-modal.component';
 
 @Component({
     selector: 'app-account',
@@ -21,12 +21,11 @@ import {ImageCropperComponent, CropperSettings} from 'ngx-img-cropper';
 })
 export class AccountComponent extends BaseViewComponent implements OnInit {
     @Input() user: User;
+    @Output() imageUploadEvent: EventEmitter<ImageUploadEvent> = new EventEmitter<ImageUploadEvent>();
     form: FormGroup;
 
     @ViewChild('cropper', undefined)
     cropper: ImageCropperComponent;
-
-    displayImageUploader = false;
 
     countryList;
     languageList;
@@ -36,7 +35,7 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
     optionGroups: ViewOptionGroup[];
     actions: ViewAction[];
 
-    croppedImage = null;
+    profilePicture = null;
 
     cropperSettings: CropperSettings;
 
@@ -75,19 +74,19 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
         this.actions = AccountViewData.getActions(this);
     }
 
-    fileChangeListener(event) {
-        let image: any = new Image();
-        let file: File = event.target.files[0];
-        let myReader: FileReader = new FileReader();
+    uploadImage() {
         let me = this;
-
-        myReader.onloadend = function (loadEvent: any) {
-            image.src = loadEvent.target.result;
-            me.cropper.setImage(image);
-            me.croppedImage = image;
+        let event: ImageUploadEvent = {
+            callback: file => {
+                me.profilePicture = file;
+            }
         };
 
-        myReader.readAsDataURL(file);
+        this.imageUploadEvent.emit(event);
+    }
+
+    removeImage() {
+        this.profilePicture = null;
     }
 
 
@@ -98,10 +97,16 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
 
         this.transacting = true;
 
-        let photoData = await this.imageService.upload(ImageService.dataURLtoFile(this.croppedImage.image, 'image'));
+        if (this.user.photoData.cloudStorageObject) {
+            await this.imageService.remove(this.user.photoData.cloudStorageObject);
+            this.user.photoData = null;
+        }
+
+        if (this.profilePicture) {
+            this.user.photoData = await this.imageService.upload(this.profilePicture);
+        }
 
         this.user.name = this.form.get('name').value;
-        this.user.photoData = photoData;
         this.user.enableEmailNotifications = this.form.get('enableEmailNotifications').value;
         this.user.language = this.form.get('language').value;
         this.user.country = this.form.get('country').value;

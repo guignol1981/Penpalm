@@ -51,16 +51,10 @@
 
 
         <div class="form__group">
-            <a (click)="displayImageUploader = !displayImageUploader" class="btn">
-                {{displayImageUploader ?  'Cancel' : 'Change profile picture'}}
+            <a (click)="profilePicture ? removeImage(): uploadImage()"
+               [class]="profilePicture ? 'btn btn--warning' : 'btn btn--secondary'">
+                {{profilePicture ? 'Cancel profile picture changes' : 'Change profile picture'}}
             </a>
-            <div *ngIf="displayImageUploader">
-                <div class="file-upload">
-                    <input type="file" name="file" id="file" class="inputfile" (change)="fileChangeListener($event)"/>
-                    <label for="file">Choose a file</label>
-                </div>
-                <img-cropper #cropper [image]="croppedImage" [settings]="cropperSettings"></img-cropper>
-            </div>
         </div>
 
         <div class="form__group">
