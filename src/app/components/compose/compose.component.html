@@ -2,7 +2,7 @@
     <app-view-actions class="bottom" [actions]="actions" [disableActions]="transacting"></app-view-actions>
     <app-view-single-input class="top" [inputs]="inputs"></app-view-single-input>
     <app-view-options class="sub" [groups]="optionGroups" [disableOptions]="transacting"></app-view-options>
-    <app-post-card class="main" [postcard]="postcard" [mode]="ePostcardMode.Write"
+    <app-post-card class="main" [postcard]="postcard" [mode]="ePostcardMode.Write" [imageUploadPreview]="imageUploadPreview"
                    (composeModeEmitter)="onComposeMode($event)"></app-post-card>
 
     <div *ngIf="selectedOption === 'compose'" class="wysiwyg-container top">

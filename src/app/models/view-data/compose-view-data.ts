@@ -218,8 +218,9 @@ export class ComposeViewData {
                 ESingleInput.Upload,
                 (singleInput: SingleInput) => {
                     composeComponent.imageUploadEvent.emit({
-                       callback: file => {
+                       callback: (file: File, preview: any) => {
                             composeComponent.uploadedImage = file;
+                            composeComponent.imageUploadPreview = preview;
                        }
                     });
                 },

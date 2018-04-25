@@ -3,7 +3,7 @@ import {ImageCropperComponent, CropperSettings} from 'ngx-img-cropper';
 import {ImageService} from '../../services/image.service';
 
 export interface ImageUploadEvent {
-    callback: (file: File) => any;
+    callback: (file: File, preview: any) => any;
 }
 
 @Component({
@@ -25,7 +25,7 @@ export class UploaderModalComponent implements OnInit {
 
     ngOnInit() {
         this.cropperSettings = new CropperSettings();
-        this.cropperSettings.width = 200;
+        this.cropperSettings.width = 500;
         this.cropperSettings.height = 200;
         this.cropperSettings.croppedWidth = 300;
         this.cropperSettings.croppedHeight = 300;
@@ -61,7 +61,7 @@ export class UploaderModalComponent implements OnInit {
             return;
         }
 
-        this.event.callback(ImageService.dataURLtoFile(this.image.image, 'image'));
+        this.event.callback(ImageService.dataURLtoFile(this.image.image, 'image'), this.image.image);
         this.closeEvent.emit(true);
     }
 

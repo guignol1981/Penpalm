@@ -25,6 +25,7 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
     postcardComponent: PostcardComponent;
     @Output() imageUploadEvent: EventEmitter<ImageUploadEvent> = new EventEmitter<ImageUploadEvent>();
     uploadedImage = null;
+    imageUploadPreview = null;
     user: User;
     recipients: User[];
     transacting = false;
