@@ -26,8 +26,8 @@ let UserSchema = new Schema({
     enableEmailNotifications: {type: Boolean, default: true},
     pendingRequests: [{type: Schema.Types.ObjectId, ref: 'User', default: []}],
     pals: [{type: Schema.Types.ObjectId, ref: 'User', default: []}],
-    hash: {type: String, select: false},
-    salt: {type: String, select: false},
+    hash: {type: String},
+    salt: {type: String},
     emailVerified: {type: Boolean, default: false}
 });
 

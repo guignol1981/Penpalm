@@ -13,13 +13,19 @@ passport.use(new LocalStrategy({
 
             if (!user) {
                 return done(null, false, {
-                    message: 'User not found'
+                    msg: 'User not found'
+                });
+            }
+
+            if (!user.emailVerified) {
+                return done(null, false, {
+                    msg: 'Account not activated'
                 });
             }
 
             if (!user.validPassword(password)) {
                 return done(null, false, {
-                    message: 'Password is wrong'
+                    msg: 'Password is wrong'
                 });
             }
 

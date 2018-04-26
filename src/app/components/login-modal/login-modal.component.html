@@ -1,19 +1,11 @@
 <div class="container">
-    <div class="form login-form">
-        <div class="form__group">
-            <div class="form__group__label form__group__label--dark">
-                <label for="name">Displayed name</label>
-            </div>
-            <div class="form__group__input">
-                <input class="form__group__input--text" id="name" type="text">
-            </div>
-        </div>
+    <div [formGroup]="form" class="form login-form">
         <div class="form__group">
             <div class="form__group__label form__group__label--dark">
                 <label for="email">Email</label>
             </div>
             <div class="form__group__input">
-                <input class="form__group__input--text" id="email" type="email">
+                <input formControlName="email" class="form__group__input--text form__group__input--text--large" id="email" type="email">
             </div>
         </div>
         <div class="form__group">
@@ -21,15 +13,7 @@
                 <label for="password">Password</label>
             </div>
             <div class="form__group__input">
-                <input class="form__group__input--text" id="password" type="password">
-            </div>
-        </div>
-        <div class="form__group">
-            <div class="form__group__label form__group__label--dark">
-                <label for="passwordconfirm">Confirm password</label>
-            </div>
-            <div class="form__group__input">
-                <input class="form__group__input--text" id="passwordconfirm" type="password">
+                <input formControlName="password" class="form__group__input--text form__group__input--text--large" id="password" type="password">
             </div>
         </div>
     </div>

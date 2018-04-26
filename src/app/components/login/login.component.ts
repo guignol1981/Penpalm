@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     loginWithFacebook() {
         this.authenticationService.authenticateWithFB()
             .then((user: SocialUser) => {
-                this.userService.signIn(user).then(success => {
+                this.userService.socialSignIn(user).then(success => {
                     if (success) {
                         this.router.navigate(['/home']);
                     }
@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     loginWithGoogle() {
         this.authenticationService.authenticateWithGoogle()
             .then((user: SocialUser) => {
-                this.userService.signIn(user).then(success => {
+                this.userService.socialSignIn(user).then(success => {
                     if (success) {
                         this.router.navigate(['/home']);
                     }

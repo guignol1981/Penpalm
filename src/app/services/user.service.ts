@@ -4,6 +4,7 @@ import {AuthenticationService} from './authentication.service';
 import {User} from '../models/user/user';
 import {SocialUser} from 'angular4-social-login';
 import {FindFilter} from '../components/matcher/matcher.component';
+import {Credential} from '../components/login-modal/login-modal.component';
 
 @Injectable()
 export class UserService {
@@ -73,9 +74,28 @@ export class UserService {
             });
     }
 
-    signIn(socialUser: SocialUser): Promise<boolean> {
+    socialSignIn(socialUser: SocialUser): Promise<boolean> {
         return this.http.post(`api/auth/${socialUser.provider.toLowerCase()}?access_token=${socialUser.authToken}`,
             {socialUser: socialUser})
+            .toPromise()
+            .then((response: Response) => {
+                let token = response.headers.get('x-auth-token');
+                if (token) {
+                    this.authenticationService.saveToken(token);
+                    return true;
+                }
+            })
+            .catch(() => {
+                return false;
+            });
+    }
+
+    localSignIn(credential: Credential): Promise<boolean> {
+        let headers = new Headers({
+            'Content-Type': 'application/json'
+        });
+
+        return this.http.post('api/auth/local', JSON.stringify(credential), {headers: headers})
             .toPromise()
             .then((response: Response) => {
                 let token = response.headers.get('x-auth-token');
