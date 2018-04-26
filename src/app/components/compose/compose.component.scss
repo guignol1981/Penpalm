@@ -11,7 +11,7 @@
 	display: flex;
 	align-items: center;
 	flex-wrap: wrap;
-	overflow-x: scroll;
+	overflow-x: auto;
 
 	&__group {
 		&--inline {

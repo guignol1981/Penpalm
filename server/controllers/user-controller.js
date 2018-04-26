@@ -274,7 +274,7 @@ module.exports.update = function (req, res) {
             let body = req.body;
 
             user.name = body['name'];
-            user.photoData = body['photoData'];
+            user.photoData = body['photoData'] || {cloudStorageObject: null, cloudStoragePublicUrl: null};
             user.language = body['language'];
             user.country = body['country'];
             user.description = body['description'];

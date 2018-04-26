@@ -19,7 +19,7 @@ export class User {
     }
 
     get pictureUrl() {
-        return this.photoData ? this.photoData.cloudStoragePublicUrl : 'assets/default-user.png';
+        return this.photoData.cloudStoragePublicUrl || 'assets/default-user.png';
     }
 
     hasRequestFrom(userId: string): boolean {

@@ -11,7 +11,7 @@ let UserSchema = new Schema({
         unique: true,
         match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     },
-    photoData: {type: Schema.Types.Mixed},
+    photoData: {type: Schema.Types.Mixed, default: {cloudStorageObject: null, cloudStoragePublicUrl: null}},
     provider: {
         type: {
             id: String,

@@ -97,7 +97,7 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
 
         this.transacting = true;
 
-        if (this.user.photoData.cloudStorageObject) {
+        if (this.user.photoData.cloudStorageObject && this.profilePicture) {
             await this.imageService.remove(this.user.photoData.cloudStorageObject);
             this.user.photoData = null;
         }
