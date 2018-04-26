@@ -11,7 +11,8 @@ import {PasswordValidator} from '../../validators/password-validator';
 export class RegisterModalComponent implements OnInit {
     @Output() closeEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
     form: FormGroup;
-    success;
+    view = 'form';
+    transacting = false;
 
     constructor(private userService: UserService) {
     }
@@ -34,8 +35,13 @@ export class RegisterModalComponent implements OnInit {
             return;
         }
 
+        this.transacting = true;
+
         this.userService.register(this.form.value).then((success) => {
-            this.success = success;
+            this.transacting = false;
+            if (success) {
+                this.view = 'success';
+            }
         });
     }
 

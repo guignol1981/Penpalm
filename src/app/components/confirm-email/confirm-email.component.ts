@@ -8,23 +8,33 @@ import {UserService} from '../../services/user.service';
     styleUrls: ['./confirm-email.component.scss']
 })
 export class ConfirmEmailComponent implements OnInit {
-    success;
+    transacting = false;
+    emailVerified = null;
+
     constructor(private activatedRoute: ActivatedRoute,
                 private router: Router,
                 private userService: UserService) {
     }
 
     ngOnInit() {
-        this.activatedRoute.params.subscribe( params => {
+        this.transacting = true;
+
+        this.activatedRoute.params.subscribe(params => {
             let link = params['link'];
+
             this.userService.verifyEmail(link).then((success) => {
-                this.success = success;
+                this.transacting = false;
+                this.emailVerified = success;
             });
         });
     }
 
     goToLogin() {
         this.router.navigate(['/login']);
+    }
+
+    sendVerificationEmail() {
+
     }
 
 }

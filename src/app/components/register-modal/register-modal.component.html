@@ -1,5 +1,5 @@
 <div class="container">
-    <div *ngIf="!success" [formGroup]="form" class="form register-form">
+    <div *ngIf="view === 'form' && !transacting" [formGroup]="form" class="form register-form">
         <div class="form__group">
             <div class="form__group__label form__group__label--dark">
                 <label for="username">Username</label>
@@ -38,11 +38,14 @@
             </div>
         </div>
     </div>
-    <div *ngIf="success" class="success-msg">
+    <div *ngIf="view === 'success'" class="success-msg">
         Great, now check your email to confirm your account!
     </div>
-    <div class="actions">
+    <div *ngIf="!transacting" class="actions">
         <a (click)="close()" class="btn btn--secondary">Close</a>
-        <a *ngIf="!success" (click)="register()" [class]="form.valid ? 'btn btn--primary' : 'btn btn--disabled'">Register</a>
+        <a *ngIf="view === 'form'" (click)="register()" [class]="form.valid ? 'btn btn--primary' : 'btn btn--disabled'">Register</a>
+    </div>
+    <div *ngIf="transacting" class="container">
+        <app-loader class="main" [load]="transacting"></app-loader>
     </div>
 </div>

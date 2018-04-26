@@ -1,4 +1,22 @@
 <div class="container">
-  {{success ? 'Email has been verifier' : 'This link does not exist anymore'}}
-  <a (click)="goToLogin()" class="btn">Go to login page</a>
+    <div *ngIf="!transacting && emailVerified !== null">
+        {{emailVerified ? 'Email address verified!' : 'This link does not exist anymore'}}
+    </div>
+    <div *ngIf="transacting" class="container">
+        <app-loader class="main" [load]="transacting"></app-loader>
+    </div>
+    <div *ngIf="emailVerified === false">
+        <div class="form">
+            <div class="form__group">
+                <div class="form__group__label">
+                    Email
+                </div>
+                <div class="form__group__input">
+                    <input class="form__group__input--text form__group__input--text--large" type="text">
+                </div>
+            </div>
+        </div>
+        <a *ngIf="emailVerified !== null" (click)="sendVerificationEmail()" class="btn">Send again</a>
+    </div>
+    <a *ngIf="!transacting" (click)="goToLogin()" class="btn">Go to login page</a>
 </div>
