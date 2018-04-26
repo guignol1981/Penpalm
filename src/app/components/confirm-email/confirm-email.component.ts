@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../services/user.service';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
     selector: 'app-confirm-email',
@@ -10,6 +11,8 @@ import {UserService} from '../../services/user.service';
 export class ConfirmEmailComponent implements OnInit {
     transacting = false;
     emailVerified = null;
+    verificationEmailSent = false;
+    form: FormGroup;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private router: Router,
@@ -17,6 +20,10 @@ export class ConfirmEmailComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.form = new FormGroup({
+            email: new FormControl(null, [Validators.required, Validators.email])
+        });
+
         this.transacting = true;
 
         this.activatedRoute.params.subscribe(params => {
@@ -34,7 +41,16 @@ export class ConfirmEmailComponent implements OnInit {
     }
 
     sendVerificationEmail() {
+        if (!this.form.valid) {
+            return;
+        }
 
+        this.transacting = true;
+
+        this.userService.sendVerificationEmail(this.form.get('email').value).then(success => {
+            this.transacting = false;
+            this.verificationEmailSent = true;
+        });
     }
 
 }

@@ -78,12 +78,55 @@ module.exports.verifyEmail = function (req, res) {
                     });
             } else {
                 res.status(400).json({
-                   msg: 'Link not found',
-                   data: false
+                    msg: 'Link not found',
+                    data: false
                 });
             }
         });
-}
+};
+
+module.exports.sendVerificationEmail = function (req, res) {
+    let email = req.body.email;
+
+    User.findOne({email: email})
+        .exec()
+        .then(user => {
+            if (!user) {
+                res.send({
+                    msg: 'No user with this email address',
+                    data: false
+                });
+
+                return;
+            }
+
+            let emailVerificationLink = new EmailVerificationLink();
+            emailVerificationLink.generateLink();
+            emailVerificationLink.user = user;
+
+            emailVerificationLink.save().then(emailVerificationLink => {
+
+                res.render('confirm-email', {
+                    data: {
+                        id: emailVerificationLink.link
+                    },
+                }, (err, html) => {
+                    mailer.sendMail({
+                        from: '"Penpalm" <info@penpalm.com>',
+                        to: user.email,
+                        subject: 'Confirm your email',
+                        text: 'Hello ' + user.name + '! Please click the link to confirm email address.',
+                        html: html
+                    });
+
+                    res.send({
+                        msg: 'Link sent to email address',
+                        data: true
+                    });
+                });
+            });
+        });
+};
 
 module.exports.get = function (req, res) {
     let url_parts = url.parse(req.url, true);

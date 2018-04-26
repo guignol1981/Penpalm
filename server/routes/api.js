@@ -48,6 +48,7 @@ router.put('/users/cancel-request', authenticate, userController.cancelRequest);
 router.put('/users/remove-pal', authenticate, userController.removePal);
 router.post('/users/register', userController.register);
 router.put('/users/verify-email/:link', userController.verifyEmail);
+router.put('/users/send-verification-email', userController.sendVerificationEmail);
 router.delete('/users', authenticate, userController.remove);
 
 //postcards

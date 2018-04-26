@@ -58,6 +58,21 @@ export class UserService {
             });
     }
 
+    sendVerificationEmail(email: string): Promise<boolean> {
+        let headers = new Headers({
+            'Content-Type': 'application/json'
+        });
+
+        return this.http.put(this.apiEndPoint + '/send-verification-email', JSON.stringify({email: email}), {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                return true;
+            })
+            .catch((response: Response) => {
+                return false;
+            });
+    }
+
     signIn(socialUser: SocialUser): Promise<boolean> {
         return this.http.post(`api/auth/${socialUser.provider.toLowerCase()}?access_token=${socialUser.authToken}`,
             {socialUser: socialUser})

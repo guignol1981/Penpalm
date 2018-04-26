@@ -1,22 +1,24 @@
 <div class="container">
-    <div *ngIf="!transacting && emailVerified !== null">
+    <div *ngIf="!transacting && (emailVerified !== null) ">
         {{emailVerified ? 'Email address verified!' : 'This link does not exist anymore'}}
     </div>
     <div *ngIf="transacting" class="container">
         <app-loader class="main" [load]="transacting"></app-loader>
     </div>
-    <div *ngIf="emailVerified === false">
-        <div class="form">
+    <div *ngIf="emailVerified === false && !transacting" class="mb-1">
+        <div class="form" [formGroup]="form">
             <div class="form__group">
                 <div class="form__group__label">
                     Email
                 </div>
                 <div class="form__group__input">
-                    <input class="form__group__input--text form__group__input--text--large" type="text">
+                    <input formControlName="email" class="form__group__input--text form__group__input--text--large" type="text">
                 </div>
             </div>
         </div>
-        <a *ngIf="emailVerified !== null" (click)="sendVerificationEmail()" class="btn">Send again</a>
     </div>
-    <a *ngIf="!transacting" (click)="goToLogin()" class="btn">Go to login page</a>
+    <div *ngIf="!transacting" class="actions">
+        <a (click)="goToLogin()" class="btn btn--secondary">Go to login page</a>
+        <a *ngIf="emailVerified !== null" (click)="sendVerificationEmail()" [class]="form.valid ? 'btn btn--primary' : 'btn btn--disabled'">Send again</a>
+    </div>
 </div>
