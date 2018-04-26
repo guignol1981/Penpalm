@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthService, SocialUser} from 'angular4-social-login';
-import { FacebookLoginProvider, GoogleLoginProvider } from "angular4-social-login";
+import {FacebookLoginProvider, GoogleLoginProvider} from 'angular4-social-login';
 
 @Injectable()
 export class AuthenticationService {
+    isSocialUser = false;
 
     constructor(private router: Router,
                 private authService: AuthService) {
@@ -35,18 +36,25 @@ export class AuthenticationService {
 
     authenticateWithGoogle(): Promise<SocialUser> {
         return this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((user: SocialUser) => {
+            this.isSocialUser = true;
             return user;
         });
     }
 
     authenticateWithFB(): Promise<SocialUser> {
         return this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then((user: SocialUser) => {
+            this.isSocialUser = true;
             return user;
         });
     }
 
     signOut(): void {
         localStorage.removeItem('id_token');
-        this.authService.signOut().then(() => this.router.navigate(['/login']));
+        if (this.isSocialUser) {
+            this.isSocialUser = false;
+            this.authService.signOut().then(() => this.router.navigate(['/login']));
+        } else {
+            this.router.navigate(['/login']);
+        }
     }
 }
