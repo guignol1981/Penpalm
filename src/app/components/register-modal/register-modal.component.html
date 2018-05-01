@@ -38,6 +38,9 @@
             </div>
         </div>
     </div>
+    <div *ngIf="errorMsg">
+        <small class="form-msg form-msg--warning">{{errorMsg}}</small>
+    </div>
     <div *ngIf="view === 'success'" class="success-msg">
         Great, now check your email to confirm your account!
     </div>

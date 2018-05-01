@@ -13,6 +13,7 @@ export class RegisterModalComponent implements OnInit {
     form: FormGroup;
     view = 'form';
     transacting = false;
+    errorMsg: string;
 
     constructor(private userService: UserService) {
     }
@@ -37,12 +38,18 @@ export class RegisterModalComponent implements OnInit {
 
         this.transacting = true;
 
-        this.userService.register(this.form.value).then((success) => {
-            this.transacting = false;
-            if (success) {
-                this.view = 'success';
-            }
-        });
+        this.userService.register(this.form.value)
+            .then(result => {
+                console.log(result);
+                this.transacting = false;
+                if (result === true) {
+                    this.view = 'success';
+                }
+            })
+            .catch(reason => {
+                this.transacting = false;
+                this.errorMsg = reason;
+            });
     }
 
 }

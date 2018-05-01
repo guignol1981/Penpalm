@@ -31,7 +31,7 @@ export class UserService {
         );
     }
 
-    register(registerData: any): Promise<boolean> {
+    register(registerData: any): Promise<any> {
         let headers = new Headers({
             'Content-Type': 'application/json'
         });
@@ -44,7 +44,7 @@ export class UserService {
                 return true;
             })
             .catch((response: Response) => {
-                return false;
+                return Promise.reject(response.json().msg);
             });
     }
 

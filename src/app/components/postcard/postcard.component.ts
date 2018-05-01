@@ -92,6 +92,9 @@ export class PostcardComponent implements OnInit {
             if (this.postcard.backSideOptionType === EBackSideOption.LinkImage) {
                 return this.postcard.backSideValue;
             }
+            if (this.postcard.backSideOptionType === EBackSideOption.UploadImage) {
+                return this.postcard.backSideValue.cloudStoragePublicUrl;
+            }
         }
 
         return null;

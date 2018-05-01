@@ -1,7 +1,8 @@
 <div class="container">
     <div class="file-upload">
-        <input type="file" name="file" id="file" class="inputfile" (change)="fileChangeListener($event)"/>
-        <label for="file">Choose a file</label>
+        <input type="file" name="file" id="file" class="" (change)="fileChangeListener($event)"/>
+        <!--<input type="file" name="file" id="file" class="inputfile" (change)="fileChangeListener($event)"/>-->
+        <!--<label for="file">Choose a file</label>-->
     </div>
     <img-cropper #cropper [image]="image" [settings]="cropperSettings"></img-cropper>
     <div class="action">

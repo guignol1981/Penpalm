@@ -155,3 +155,12 @@
 		}
 	}
 }
+
+
+.form-msg {
+	font-size: 1rem;
+
+	&--warning {
+		color: var(--color-warning);
+	}
+}
