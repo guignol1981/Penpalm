@@ -12,21 +12,15 @@ passport.use(new LocalStrategy({
             }
 
             if (!user) {
-                return done(null, false, {
-                    msg: 'User not found'
-                });
+                return done(new Error('User not found'));
             }
 
             if (!user.emailVerified) {
-                return done(null, false, {
-                    msg: 'Account not activated'
-                });
+                return done(new Error('Account not activated'));
             }
 
             if (!user.validPassword(password)) {
-                return done(null, false, {
-                    msg: 'Password is wrong'
-                });
+                return done(new Error('Password is wrong'));
             }
 
             return done(null, user);

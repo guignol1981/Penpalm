@@ -17,6 +17,7 @@ export class LoginModalComponent implements OnInit {
     @Output() closeEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
     form: FormGroup;
     transacting = false;
+    errorMsg: string;
 
     constructor(private userService: UserService,
                 private router: Router) {
@@ -40,13 +41,17 @@ export class LoginModalComponent implements OnInit {
 
         this.transacting = true;
 
-        this.userService.localSignIn(this.form.value).then(success => {
-            this.transacting = false;
+        this.userService.localSignIn(this.form.value)
+            .then(success => {
+                this.transacting = false;
 
-            if (success) {
-                this.router.navigate(['/home']);
-            }
-        });
+                if (success) {
+                    this.router.navigate(['/home']);
+                }
+            })
+            .catch(msg => {
+                this.errorMsg = msg;
+            });
     }
 
 }

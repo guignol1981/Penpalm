@@ -60,7 +60,20 @@ router.post('/auth/google',
 	authenticatorController.sendToken);
 
 router.post('/auth/local',
-	passport.authenticate('local'),
+	(req, res, next) => {
+		passport.authenticate('local', (err, user) => {
+			if (err) {
+				res.status(500).json({
+					msg: err.message,
+					data: false
+				});
+				return;
+			}
+
+			req.user = user;
+			next();
+		})(req, res, next);
+	},
 	authenticatorController.prepareReqForToken,
 	authenticatorController.generateToken,
 	authenticatorController.sendToken);

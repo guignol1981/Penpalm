@@ -104,8 +104,8 @@ export class UserService {
                     return true;
                 }
             })
-            .catch(() => {
-                return false;
+            .catch((response: Response) => {
+                return Promise.reject(response.json().msg);
             });
     }
 

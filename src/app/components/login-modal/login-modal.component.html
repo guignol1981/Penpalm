@@ -5,7 +5,8 @@
                 <label for="email">Email</label>
             </div>
             <div class="form__group__input">
-                <input formControlName="email" class="form__group__input--text form__group__input--text--large" id="email" type="email">
+                <input formControlName="email" class="form__group__input--text form__group__input--text--large"
+                       id="email" type="email">
             </div>
         </div>
         <div class="form__group">
@@ -13,9 +14,16 @@
                 <label for="password">Password</label>
             </div>
             <div class="form__group__input">
-                <input formControlName="password" class="form__group__input--text form__group__input--text--large" id="password" type="password">
+                <input formControlName="password" class="form__group__input--text form__group__input--text--large"
+                       id="password" type="password">
             </div>
         </div>
+    </div>
+    <div class="">
+        <a href=showForgotPassword()>forgot password</a>
+    </div>
+    <div *ngIf="errorMsg">
+        <small class="form-msg form-msg--warning">{{errorMsg}}</small>
     </div>
     <div class="actions">
         <a (click)="cancel()" class="btn btn--secondary">Cancel</a>
