@@ -85,8 +85,8 @@ export class UserService {
                     return true;
                 }
             })
-            .catch(() => {
-                return false;
+            .catch((response: Response) => {
+                return Promise.reject(response.json().msg);
             });
     }
 
@@ -132,7 +132,10 @@ export class UserService {
             Authorization: 'Bearer ' + this.authenticationService.getToken()
         });
 
-        return this.http.put(this.apiEndPoint + '/handle-request', JSON.stringify(user), {headers: headers, params: {accept: accept}})
+        return this.http.put(this.apiEndPoint + '/handle-request', JSON.stringify(user), {
+            headers: headers,
+            params: {accept: accept}
+        })
             .toPromise()
             .then((response: Response) => {
                 if (accept) {

@@ -38,6 +38,7 @@ import { UploaderModalComponent } from './components/uploader-modal/uploader-mod
 import { RegisterModalComponent } from './components/register-modal/register-modal.component';
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
 import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.component';
+import { AlertModalComponent } from './components/alert-modal/alert-modal.component';
 
 
 let config = new AuthServiceConfig([
@@ -77,7 +78,8 @@ export function provideConfig() {
         UploaderModalComponent,
         RegisterModalComponent,
         LoginModalComponent,
-        ConfirmEmailComponent
+        ConfirmEmailComponent,
+        AlertModalComponent
     ],
     imports: [
         BrowserAnimationsModule,

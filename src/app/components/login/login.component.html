@@ -24,5 +24,10 @@
         <app-register-modal #registermodal class="modal-content modal-content--big"
                             (closeEvent)="onRegisterModalComponentClose($event)"></app-register-modal>
     </div>
+    <div *ngIf="showAlertModalComponent" class="modal-container">
+        <app-alert-modal #alertmodal class="modal-content"
+                         [message]="alertMessage"
+                         (closeEvent)="onAlertModalComponentClose($event)"></app-alert-modal>
+    </div>
 </div>
 
