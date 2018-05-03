@@ -72,6 +72,7 @@ export class LoginModalComponent implements OnInit {
                 }
             })
             .catch(msg => {
+                this.transacting = false;
                 this.errorMsg = msg;
             });
     }
