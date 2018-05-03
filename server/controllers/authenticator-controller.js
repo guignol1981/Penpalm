@@ -1,4 +1,5 @@
 let jwt = require('jsonwebtoken');
+let passport = require('passport');
 
 let createToken = function (auth) {
     return jwt.sign({
@@ -19,7 +20,7 @@ module.exports.sendToken = function (req, res) {
     res.status(200).send(req.auth);
 };
 
-module.exports.prepareReqForToken = function(req, res, next) {
+module.exports.prepareReqForToken = function (req, res, next) {
     if (!req.user) {
         return res.send(401, 'User Not Authenticated');
     }

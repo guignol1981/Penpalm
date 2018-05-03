@@ -2,7 +2,7 @@
     <ul class="nav">
         <li (click)="setTab('account')" [class]="activeTab === 'account' ? 'nav-item nav-item--active' : 'nav-item'">
             <a class="nav-item__image-wrap">
-                <img [src]="user.photoUrl" alt="profile image" class="nav-item__image">
+                <img [src]="user.pictureUrl" alt="profile image" class="nav-item__image">
             </a>
         </li>
         <li (click)="setTab('matcher')" [class]="activeTab === 'matcher' ? 'nav-item nav-item--active' : 'nav-item'">
@@ -46,10 +46,12 @@
         <app-inbox [direction]="'out'"></app-inbox>
     </div>
     <div *ngIf="activeTab === 'compose'" class="main">
-        <app-compose (notificationEmitter)="onNotification($event)"></app-compose>
+        <app-compose (notificationEmitter)="onNotification($event)"
+                     (imageUploadEvent)="onImageUploadEvent($event)"></app-compose>
     </div>
     <div *ngIf="activeTab === 'account'" class="main">
-        <app-account (notificationEmitter)="onNotification($event)"></app-account>
+        <app-account [(user)]="user" (notificationEmitter)="onNotification($event)"
+                     (imageUploadEvent)="onImageUploadEvent($event)"></app-account>
     </div>
     <div *ngIf="activeTab === 'matcher'" class="main">
         <app-matcher (notificationEmitter)="onNotification($event)"></app-matcher>
@@ -59,4 +61,10 @@
     </div>
 
     <app-notification class="notif"></app-notification>
+    <div *ngIf="showImageUploadModal" class="modal-container">
+        <app-uploader-modal #uploadermodal
+                            (closeEvent)="onImageModalCloseEvent()"
+                            class="modal-content"></app-uploader-modal>
+    </div>
 </div>
+

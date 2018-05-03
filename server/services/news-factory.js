@@ -21,7 +21,7 @@ module.exports.newPostcard = function(penpal, callback) {
 	let news = new News({
 		title: 'You have a new postcard from ' + penpal.name + '!',
 		body: 'Go ahead and read the postcard',
-		imageUrl: penpal.photoUrl
+		imageUrl: penpal.photoData
 	});
 	news.save().then(news => callback(news));
 };

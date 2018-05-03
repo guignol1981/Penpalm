@@ -1,0 +1,75 @@
+<div class="container">
+    <div *ngIf="view === 'form' && !transacting" [formGroup]="form" class="form register-form">
+        <div class="form__group">
+            <div class="form__group__label form__group__label--dark">
+                <label for="username">Username</label>
+            </div>
+            <div class="form__group__input">
+                <input formControlName="username" class="form__group__input--text form__group__input--text--large"
+                       id="username" type="text">
+            </div>
+            <div class="form-msg form-msg--warning" *ngIf="!username.pristine && username?.errors && username?.errors['required']">
+                Username is required.
+            </div>
+            <div class="form-msg form-msg--warning" *ngIf="!username.pristine && username?.errors && username?.errors['minlength']">
+                Minimum 5 characters
+            </div>
+        </div>
+        <div class="form__group">
+            <div class="form__group__label form__group__label--dark">
+                <label for="email">Email</label>
+            </div>
+            <div class="form__group__input">
+                <input formControlName="email" class="form__group__input--text form__group__input--text--large"
+                       id="email" type="email">
+            </div>
+            <div class="form-msg form-msg--warning" *ngIf="!email.pristine && email?.errors && email?.errors['required']">
+                Email is required.
+            </div>
+            <div class="form-msg form-msg--warning" *ngIf="!email.pristine && email?.errors && email?.errors['email']">
+                Must be a valid email
+            </div>
+        </div>
+        <div class="form__group">
+            <div class="form__group__label form__group__label--dark">
+                <label for="password">Password</label>
+            </div>
+            <div class="form__group__input">
+                <input formControlName="password" class="form__group__input--text form__group__input--text--large"
+                       id="password" type="password">
+            </div>
+            <div class="form-msg form-msg--warning" *ngIf="!password.pristine && password?.errors && password?.errors['required']">
+                Password is required.
+            </div>
+            <div class="form-msg form-msg--warning" *ngIf="!password.pristine && password?.errors && password?.errors['minlength']">
+                Minimum 5 characters
+            </div>
+        </div>
+        <div class="form__group">
+            <div class="form__group__label form__group__label--dark">
+                <label for="passwordconfirm">Confirm password</label>
+            </div>
+            <div class="form__group__input">
+                <input formControlName="passwordConfirm"
+                       class="form__group__input--text form__group__input--text--large" id="passwordconfirm"
+                       type="password">
+            </div>
+            <div class="form-msg form-msg--warning" *ngIf="!passwordConfirm.pristine && passwordConfirm.hasError('MatchPassword')">
+                Passwords must match.
+            </div>
+        </div>
+    </div>
+    <div *ngIf="errorMsg">
+        <small class="form-msg form-msg--warning">{{errorMsg}}</small>
+    </div>
+    <div *ngIf="view === 'success'" class="success-msg">
+        Great, now check your email to confirm your account!
+    </div>
+    <div *ngIf="!transacting" class="actions">
+        <a (click)="close()" class="btn btn--secondary">Close</a>
+        <a *ngIf="view === 'form'" (click)="register()" [class]="form.valid ? 'btn btn--primary' : 'btn btn--disabled'">Register</a>
+    </div>
+    <div *ngIf="transacting" class="container">
+        <app-loader class="main" [load]="transacting"></app-loader>
+    </div>
+</div>

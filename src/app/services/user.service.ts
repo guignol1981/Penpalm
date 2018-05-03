@@ -4,6 +4,7 @@ import {AuthenticationService} from './authentication.service';
 import {User} from '../models/user/user';
 import {SocialUser} from 'angular4-social-login';
 import {FindFilter} from '../components/matcher/matcher.component';
+import {Credential} from '../components/login-modal/login-modal.component';
 
 @Injectable()
 export class UserService {
@@ -18,7 +19,7 @@ export class UserService {
             data['_id'],
             data['name'],
             data['email'],
-            data['photoUrl'],
+            data['photoData'],
             data['language'],
             data['country'],
             data['description'],
@@ -30,7 +31,80 @@ export class UserService {
         );
     }
 
-    signIn(socialUser: SocialUser): Promise<boolean> {
+    register(registerData: any): Promise<any> {
+        let headers = new Headers({
+            'Content-Type': 'application/json'
+        });
+
+        return this.http.post(this.apiEndPoint + '/register', JSON.stringify(registerData), {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                let token = response.headers.get('x-auth-token');
+                this.authenticationService.saveToken(token);
+                return true;
+            })
+            .catch((response: Response) => {
+                return Promise.reject(response.json().msg);
+            });
+    }
+
+    verifyEmail(link: string): Promise<boolean> {
+        return this.http.put(this.apiEndPoint + '/verify-email/' + link, {})
+            .toPromise()
+            .then((response: Response) => {
+                return true;
+            })
+            .catch((response: Response) => {
+                return false;
+            });
+    }
+
+    resetPassword(password: string, link: string): Promise<boolean> {
+        let headers = new Headers({
+            'Content-Type': 'application/json'
+        });
+
+        return this.http.put(this.apiEndPoint + '/reset-password/' + link, JSON.stringify({password: password}), {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                return true;
+            })
+            .catch((response: Response) => {
+                return false;
+            });
+    }
+
+    sendVerificationEmail(email: string): Promise<boolean> {
+        let headers = new Headers({
+            'Content-Type': 'application/json'
+        });
+
+        return this.http.put(this.apiEndPoint + '/send-verification-email', JSON.stringify({email: email}), {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                return true;
+            })
+            .catch((response: Response) => {
+                return false;
+            });
+    }
+
+    sendRecoveryPasswordEmail(email: string): Promise<boolean> {
+        let headers = new Headers({
+            'Content-Type': 'application/json'
+        });
+
+        return this.http.put(this.apiEndPoint + '/send-password-recovery-email', JSON.stringify({email: email}), {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                return true;
+            })
+            .catch((response: Response) => {
+                return false;
+            });
+    }
+
+    socialSignIn(socialUser: SocialUser): Promise<boolean> {
         return this.http.post(`api/auth/${socialUser.provider.toLowerCase()}?access_token=${socialUser.authToken}`,
             {socialUser: socialUser})
             .toPromise()
@@ -41,8 +115,27 @@ export class UserService {
                     return true;
                 }
             })
-            .catch(() => {
-                return false;
+            .catch((response: Response) => {
+                return Promise.reject(response.json().msg);
+            });
+    }
+
+    localSignIn(credential: Credential): Promise<boolean> {
+        let headers = new Headers({
+            'Content-Type': 'application/json'
+        });
+
+        return this.http.post('api/auth/local', JSON.stringify(credential), {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                let token = response.headers.get('x-auth-token');
+                if (token) {
+                    this.authenticationService.saveToken(token);
+                    return true;
+                }
+            })
+            .catch((response: Response) => {
+                return Promise.reject(response.json().msg);
             });
     }
 
@@ -69,7 +162,10 @@ export class UserService {
             Authorization: 'Bearer ' + this.authenticationService.getToken()
         });
 
-        return this.http.put(this.apiEndPoint + '/handle-request', JSON.stringify(user), {headers: headers, params: {accept: accept}})
+        return this.http.put(this.apiEndPoint + '/handle-request', JSON.stringify(user), {
+            headers: headers,
+            params: {accept: accept}
+        })
             .toPromise()
             .then((response: Response) => {
                 if (accept) {

@@ -16,6 +16,7 @@ export enum EPostcardMode {
 export class PostcardComponent implements OnInit {
     @Input() postcard: Postcard;
     @Input() mode: EPostcardMode;
+    @Input() imageUploadPreview: any;
     @Output() composeModeEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     public shownSide = 'front';
@@ -85,17 +86,17 @@ export class PostcardComponent implements OnInit {
 
     get imageUrl() {
         if (this.postcard) {
+            if (this.imageUploadPreview) {
+                return this.imageUploadPreview;
+            }
             if (this.postcard.backSideOptionType === EBackSideOption.LinkImage) {
                 return this.postcard.backSideValue;
-            } else if (this.postcard.backSideOptionType === EBackSideOption.UploadImage) {
+            }
+            if (this.postcard.backSideOptionType === EBackSideOption.UploadImage) {
                 return this.postcard.backSideValue.cloudStoragePublicUrl;
             }
         }
 
-        if (this.postcard && (this.postcard.backSideOptionType === EBackSideOption.LinkImage ||
-                this.postcard.backSideOptionType === EBackSideOption.UploadImage)) {
-            return this.postcard.backSideValue;
-        }
         return null;
     }
 

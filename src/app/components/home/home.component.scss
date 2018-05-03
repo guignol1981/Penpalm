@@ -1,4 +1,5 @@
 .container {
+	position: relative;
 	height: 100vh;
 	display: grid;
 	grid-template-rows: 1fr 6fr 1fr;
@@ -99,5 +100,4 @@
 	grid-area: footer;
 	width: 100%;
 }
-
 

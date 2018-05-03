@@ -1,0 +1,18 @@
+.container {
+	height: 100vh;
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	font-size: 3rem;
+}
+
+.actions {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	& > a:not(:last-child) {
+		margin-right: 1rem;
+	}
+}

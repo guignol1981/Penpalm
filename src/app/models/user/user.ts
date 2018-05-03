@@ -1,9 +1,13 @@
+export interface PhotoData {
+    cloudStorageObject: string;
+    cloudStoragePublicUrl: string;
+}
 export class User {
 
     constructor(public _id?: string,
                 public name?: string,
                 public email?: string,
-                public photoUrl?: string,
+                public photoData?: PhotoData,
                 public language?: string,
                 public country?: string,
                 public description?: string,
@@ -12,6 +16,10 @@ export class User {
                 public enableEmailNotifications?: boolean,
                 public pendingRequests?: string[],
                 public pals?: string[]) {
+    }
+
+    get pictureUrl() {
+        return this.photoData.cloudStoragePublicUrl || 'assets/default-user.png';
     }
 
     hasRequestFrom(userId: string): boolean {
@@ -39,5 +47,6 @@ export class User {
 
         return isPal;
     }
+
 
 }

@@ -1,0 +1,53 @@
+<div class="container">
+    <div [formGroup]="form" class="form login-form" *ngIf="!showPasswordRecoveryForm && !transacting">
+        <div class="form__group">
+            <div class="form__group__label form__group__label--dark">
+                <label for="email">Email</label>
+            </div>
+            <div class="form__group__input">
+                <input formControlName="email" class="form__group__input--text form__group__input--text--large"
+                       id="email" type="email">
+            </div>
+        </div>
+        <div class="form__group">
+            <div class="form__group__label form__group__label--dark">
+                <label for="password">Password</label>
+            </div>
+            <div class="form__group__input">
+                <input formControlName="password" class="form__group__input--text form__group__input--text--large"
+                       id="password" type="password">
+            </div>
+        </div>
+    </div>
+    <div [formGroup]="passwordRecoveryForm" class="form login-form" *ngIf="showPasswordRecoveryForm && !transacting">
+        <div class="form__group">
+            <div class="form__group__label form__group__label--dark">
+                <label for="emailrecovery">Email</label>
+            </div>
+            <div class="form__group__input">
+                <input formControlName="email" class="form__group__input--text form__group__input--text--large"
+                       id="emailrecovery" type="email">
+            </div>
+            <div *ngIf="sendRecoveryPasswordEmailSuccess" class="mt-1">
+                <small class="form-msg form-msg--success">Recovery password email sent!</small>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!transacting" class="">
+        <a href="javascript:void(0)" (click)="showPasswordRecoveryForm = !showPasswordRecoveryForm">{{showPasswordRecoveryForm
+            ? 'Back to login form' : 'I forgot my password'}}</a>
+    </div>
+    <div *ngIf="errorMsg && !transitiveModule">
+        <small class="form-msg form-msg--warning">{{errorMsg}}</small>
+    </div>
+    <div *ngIf="!transacting" class="actions">
+        <a (click)="cancel()" class="btn btn--secondary">Cancel</a>
+        <a *ngIf="!showPasswordRecoveryForm" (click)="signIn()"
+           [class]="form.valid ? 'btn btn--primary' : 'btn btn--disabled'">Sign in</a>
+        <a *ngIf="showPasswordRecoveryForm" (click)="sendPasswordRecoverMail()"
+           [class]="passwordRecoveryForm.valid ? 'btn btn--primary' : 'btn btn--disabled'">Recover</a>
+    </div>
+    <div *ngIf="transacting" class="container">
+        <app-loader class="main" [load]="transacting"></app-loader>
+    </div>
+</div>

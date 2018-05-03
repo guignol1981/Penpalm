@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {LovItem, SingleInput} from '../../models/single-input/single-input';
 import {ESingleInput} from '../../models/single-input/e-single-input.enum';
 import {AuthenticationService} from '../../services/authentication.service';
 import {GoogleMapService} from '../../services/google-map.service';
 import {ImageService} from '../../services/image.service';
 import {ELoader} from '../loader/loader.component';
+import {CropperSettings, ImageCropperComponent} from 'ngx-img-cropper';
 
 @Component({
     selector: 'app-view-single-input',
@@ -18,32 +19,22 @@ export class ViewSingleInputComponent implements OnInit {
     showLoader = false;
     eLoader = ELoader;
 
+    @ViewChild('cropper', undefined)
+    cropper: ImageCropperComponent;
+    cropperSettings: CropperSettings;
+
     constructor(private authenticationService: AuthenticationService,
                 private imageService: ImageService,
                 private googleMapService: GoogleMapService) {
     }
 
     ngOnInit() {
-    }
-
-    get headers() {
-        return {'Authorization': 'Bearer ' + this.authenticationService.getToken()};
-    }
-
-    onUploadStateChanged(event) {
-        this.showLoader = event;
-    }
-
-    onUploadFinished(singleInput: SingleInput, data) {
-        let imageData = JSON.parse(data.serverResponse._body).data;
-        this.setValue(singleInput, imageData);
-    }
-
-    onUploadRemoved(singleInput: SingleInput) {
-        this.imageService.remove(singleInput.value.cloudStorageObject).then(() => {
-
-        });
-        this.setValue(singleInput, null);
+        this.cropperSettings = new CropperSettings();
+        this.cropperSettings.width = 200;
+        this.cropperSettings.height = 200;
+        this.cropperSettings.croppedWidth = 300;
+        this.cropperSettings.croppedHeight = 300;
+        this.cropperSettings.noFileInput = true;
     }
 
     onLocationChange(singleInput: SingleInput, value) {

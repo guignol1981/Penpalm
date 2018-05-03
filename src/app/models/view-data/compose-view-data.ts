@@ -98,8 +98,7 @@ export class ComposeViewData {
                         composeComponent.imageService.remove(composeComponent.postcard.backSideValue.cloudStorageObject).then(() => {
                         });
                         composeComponent.postcard.backSideOptionType = EBackSideOption.None;
-                        composeComponent.postcard.backSideValue = null;
-                        composeComponent.selectedOption = null;
+                        composeComponent.uploadedImage = null;
                         composeComponent.clearInput('Upload image');
                     }, false, false, () => {
                         return composeComponent.postcard.backSideOptionType === EBackSideOption.UploadImage;
@@ -218,8 +217,12 @@ export class ComposeViewData {
                 'Upload image',
                 ESingleInput.Upload,
                 (singleInput: SingleInput) => {
-                    composeComponent.postcard.backSideOptionType = EBackSideOption.UploadImage;
-                    composeComponent.postcard.backSideValue = singleInput.value;
+                    composeComponent.imageUploadEvent.emit({
+                       callback: (file: File, preview: any) => {
+                            composeComponent.uploadedImage = file;
+                            composeComponent.imageUploadPreview = preview;
+                       }
+                    });
                 },
                 () => {
                     return composeComponent.selectedOption === 'upload';

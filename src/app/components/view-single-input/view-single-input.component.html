@@ -38,7 +38,8 @@
                     </label>
                 </div>
                 <div class="input__group__input">
-                    <input #inputText class="form__group__input--text" id="inputText" type="text"
+                    <input #inputText class="form__group__input--text form__group__input--text--large" id="inputText"
+                           type="text"
                            [placeholder]="input.placeHolder"
                            [value]="input.value ? input.value : ''"
                            (change)="setValue(input, inputText.value)">
@@ -76,7 +77,7 @@
         <div *ngIf="checkCondition(input)" class="input">
             <div class="input__group">
                 <div class="input__group__label">
-                    <label for="inputUpload">
+                    <label for="file">
                          <span *ngIf="input.icon">
                             <i [class]="input.icon"></i>&nbsp;
                         </span>
@@ -84,18 +85,10 @@
                     </label>
                 </div>
                 <div class="form__group__input">
-                    <image-upload id="inputUpload"
-                                  [class]="'image-uploader'"
-                                  [max]="1"
-                                  [buttonCaption]="'Select Image'"
-                                  [dropBoxMessage]="'Drop your image here!'"
-                                  [preview]="false"
-                                  [url]="'http://localhost:3000/api/images'"
-                                  [headers]="headers"
-                                  (removed)="onUploadRemoved(input)"
-                                  (uploadFinished)="onUploadFinished(input, $event)"
-                                  (uploadStateChanged)="onUploadStateChanged($event)">
-                    </image-upload>
+                    <a id="file" (click)="executeInput(input)"
+                       class="btn btn--secondary btn--large">
+                        Upload
+                    </a>
                 </div>
             </div>
         </div>
@@ -112,7 +105,8 @@
                     </label>
                 </div>
                 <div class="input__group__input">
-                    <input #inputText class="form__group__input--text" id="inputLocation" type="text"
+                    <input #inputText class="form__group__input--text form__group__input--text--large"
+                           id="inputLocation" type="text"
                            [placeholder]="input.placeHolder"
                            [value]="input.value ? formattedAddress : ''"
                            (change)="onLocationChange(input, inputText.value)">

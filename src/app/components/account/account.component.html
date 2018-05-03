@@ -3,40 +3,7 @@
     <app-view-options class="sub" [groups]="optionGroups" [disableOptions]="transacting"></app-view-options>
     <app-view-actions class="bottom" [actions]="actions" [disableActions]="transacting"></app-view-actions>
 
-    <div class="main form" [formGroup]="form">
-        <div class="form__row">
-            <div class="form__group">
-                <div class="form__group__label">
-                    <label for="showPicture">Show my picture</label>
-                </div>
-                <label class="switch">
-                    <input formControlName="showPicture" id="showPicture" type="checkbox" checked>
-                    <span class="slider round"></span>
-                </label>
-            </div>
-
-            <div class="form__group">
-                <div class="form__group__label">
-                    <label for="showName">Show my first name</label>
-                </div>
-                <label class="switch">
-                    <input formControlName="showName" id="showName" type="checkbox" checked>
-                    <span class="slider round"></span>
-                </label>
-            </div>
-
-            <div class="form__group">
-                <div class="form__group__label">
-                    <label for="enableEmailNotifications">Enable email notifications</label>
-                </div>
-                <label class="switch">
-                    <input formControlName="enableEmailNotifications" id="enableEmailNotifications" type="checkbox"
-                           checked>
-                    <span class="slider round"></span>
-                </label>
-            </div>
-        </div>
-
+    <div class="main form form-container" [formGroup]="form">
         <div class="form__row">
             <div class="form__group">
                 <div class="form__group__label">
@@ -75,12 +42,40 @@
 
         <div class="form__group">
             <div class="form__group__label">
+                <label for="language">Displayed name</label>
+            </div>
+            <div class="form__group__input--text">
+                <input class="form__group__input--text" type="text" formControlName="name" [placeholder]="user.name">
+            </div>
+        </div>
+
+
+        <div class="form__group">
+            <a (click)="profilePicture ? removeImage(): uploadImage()"
+               [class]="profilePicture ? 'btn btn--warning' : 'btn btn--secondary'">
+                {{profilePicture ? 'Cancel profile picture changes' : 'Change profile picture'}}
+            </a>
+        </div>
+
+        <div class="form__group">
+            <div class="form__group__label">
                 <label for="language">About you</label>
             </div>
             <div class="form__group__input--textarea">
                 <textarea formControlName="description" name="" id="description" cols="30" rows="5"
                           placeholder="Write something here..."></textarea>
             </div>
+        </div>
+
+        <div class="form__group">
+            <div class="form__group__label">
+                <label for="enableEmailNotifications">Enable email notifications</label>
+            </div>
+            <label class="switch">
+                <input formControlName="enableEmailNotifications" id="enableEmailNotifications" type="checkbox"
+                       checked>
+                <span class="slider round"></span>
+            </label>
         </div>
 
     </div>

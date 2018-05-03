@@ -22,7 +22,7 @@ module.exports.fetch = function(req, res) {
 				.then(postcards => {
 					User.populate(user.penPal, {path: 'preferences'}).then(penPal => {
 						let penPalName = penPal.preferences.displayName ? penPal.name : 'your pen pal';
-						let penPalPhotoUrl = penPal.preferences.displayPicture ? penPal.photoUrl : null;
+						let penPalPhotoUrl = penPal.preferences.displayPicture ? penPal.photoData : null;
 
 						res.send({
 							msg: 'News fetched',

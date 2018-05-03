@@ -1,0 +1,25 @@
+.container {
+	height: 100%;
+	width: 100%;
+	background-color: var(--color-whitish);
+	border-radius: 1rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+}
+
+.message {
+	font-size: 3rem;
+	color: #333333;
+}
+
+.actions {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	& > a:not(:last-child) {
+		margin-right: 1rem;
+	}
+}
