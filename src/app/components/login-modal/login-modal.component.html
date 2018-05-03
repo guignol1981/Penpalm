@@ -37,7 +37,7 @@
         <a href="javascript:void(0)" (click)="showPasswordRecoveryForm = !showPasswordRecoveryForm">{{showPasswordRecoveryForm
             ? 'Back to login form' : 'I forgot my password'}}</a>
     </div>
-    <div *ngIf="errorMsg && !transitiveModule">
+    <div *ngIf="errorMsg && !transacting">
         <small class="form-msg form-msg--warning">{{errorMsg}}</small>
     </div>
     <div *ngIf="!transacting" class="actions">
