@@ -3,6 +3,7 @@ import {UserService} from '../../services/user.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {PasswordValidator} from '../../validators/password-validator';
 
+
 @Component({
     selector: 'app-register-modal',
     templateUrl: './register-modal.component.html',
@@ -26,6 +27,23 @@ export class RegisterModalComponent implements OnInit {
             passwordConfirm: new FormControl(null)
         }, PasswordValidator.MatchPassword);
     }
+
+    get username() {
+        return this.form.get('username');
+    }
+
+    get email() {
+        return this.form.get('email');
+    }
+
+    get password() {
+        return this.form.get('password');
+    }
+
+    get passwordConfirm() {
+        return this.form.get('passwordConfirm');
+    }
+
 
     close() {
         this.closeEvent.emit(true);

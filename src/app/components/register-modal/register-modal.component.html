@@ -8,6 +8,12 @@
                 <input formControlName="username" class="form__group__input--text form__group__input--text--large"
                        id="username" type="text">
             </div>
+            <div class="form-msg form-msg--warning" *ngIf="!username.pristine && username?.errors && username?.errors['required']">
+                Username is required.
+            </div>
+            <div class="form-msg form-msg--warning" *ngIf="!username.pristine && username?.errors && username?.errors['minlength']">
+                Minimum 5 characters
+            </div>
         </div>
         <div class="form__group">
             <div class="form__group__label form__group__label--dark">
@@ -16,6 +22,12 @@
             <div class="form__group__input">
                 <input formControlName="email" class="form__group__input--text form__group__input--text--large"
                        id="email" type="email">
+            </div>
+            <div class="form-msg form-msg--warning" *ngIf="!email.pristine && email?.errors && email?.errors['required']">
+                Email is required.
+            </div>
+            <div class="form-msg form-msg--warning" *ngIf="!email.pristine && email?.errors && email?.errors['email']">
+                Must be a valid email
             </div>
         </div>
         <div class="form__group">
@@ -26,6 +38,12 @@
                 <input formControlName="password" class="form__group__input--text form__group__input--text--large"
                        id="password" type="password">
             </div>
+            <div class="form-msg form-msg--warning" *ngIf="!password.pristine && password?.errors && password?.errors['required']">
+                Password is required.
+            </div>
+            <div class="form-msg form-msg--warning" *ngIf="!password.pristine && password?.errors && password?.errors['minlength']">
+                Minimum 5 characters
+            </div>
         </div>
         <div class="form__group">
             <div class="form__group__label form__group__label--dark">
@@ -35,6 +53,9 @@
                 <input formControlName="passwordConfirm"
                        class="form__group__input--text form__group__input--text--large" id="passwordconfirm"
                        type="password">
+            </div>
+            <div class="form-msg form-msg--warning" *ngIf="!passwordConfirm.pristine && passwordConfirm.hasError('MatchPassword')">
+                Passwords must match.
             </div>
         </div>
     </div>
