@@ -40,6 +40,7 @@ import { LoginModalComponent } from './components/login-modal/login-modal.compon
 import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.component';
 import { AlertModalComponent } from './components/alert-modal/alert-modal.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { environment } from '../environments/environment';
 
 
 let config = new AuthServiceConfig([
@@ -49,7 +50,7 @@ let config = new AuthServiceConfig([
     },
     {
         id: FacebookLoginProvider.PROVIDER_ID,
-        provider: new FacebookLoginProvider('1055819054566173')
+        provider: new FacebookLoginProvider(environment.facebookAppId)
     }
 ]);
 
