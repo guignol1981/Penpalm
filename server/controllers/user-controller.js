@@ -2,6 +2,7 @@ let User = require('../models/user');
 let url = require('url');
 let mailer = require('../services/mailer');
 let EmailVerificationLink = require('../models/email-verification-link');
+let ResetPasswordLink = require('../models/reset-password-link');
 
 module.exports.register = function (req, res) {
     if (!req.body['username'] || !req.body['email'] || !req.body['password']) {
@@ -85,6 +86,37 @@ module.exports.verifyEmail = function (req, res) {
         });
 };
 
+module.exports.resetPassword = function (req, res) {
+    let link = req.params.link;
+    let password = req.body.password;
+
+    ResetPasswordLink.findOne({
+        link: link
+    })
+        .exec()
+        .then((link) => {
+            if (link) {
+                link.remove();
+                User.findById(link.user)
+                    .exec()
+                    .then((user) => {
+                        user.setPassword(password);
+                        user.save().then(() => {
+                            res.send({
+                                msg: 'Password updated!',
+                                data: true
+                            });
+                        });
+                    });
+            } else {
+                res.status(400).json({
+                    msg: 'Link not found',
+                    data: false
+                });
+            }
+        });
+};
+
 module.exports.sendVerificationEmail = function (req, res) {
     let email = req.body.email;
 
@@ -126,6 +158,44 @@ module.exports.sendVerificationEmail = function (req, res) {
                 });
             });
         });
+};
+
+module.exports.sendPasswordRecoveryEmail = function (req, res) {
+    let email = req.body.email;
+
+    User.findOne({email: email})
+        .exec()
+        .then(user => {
+            if (!user) {
+                return;
+            }
+
+            let resetPasswordLink = new ResetPasswordLink();
+            resetPasswordLink.generateLink();
+            resetPasswordLink.user = user;
+
+            resetPasswordLink.save().then(resetPasswordLink => {
+
+                res.render('reset-password-email', {
+                    data: {
+                        id: resetPasswordLink.link
+                    },
+                }, (err, html) => {
+                    mailer.sendMail({
+                        from: '"Penpalm" <info@penpalm.com>',
+                        to: user.email,
+                        subject: 'Recover your password',
+                        text: 'Hello ' + user.name + '! Please click the link to recover your password.',
+                        html: html
+                    });
+                });
+            });
+        });
+
+    res.send({
+        msg: 'Link sent to email address',
+        data: true
+    });
 };
 
 module.exports.get = function (req, res) {

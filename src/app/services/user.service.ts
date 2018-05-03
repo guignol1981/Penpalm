@@ -59,12 +59,42 @@ export class UserService {
             });
     }
 
+    resetPassword(password: string, link: string): Promise<boolean> {
+        let headers = new Headers({
+            'Content-Type': 'application/json'
+        });
+
+        return this.http.put(this.apiEndPoint + '/reset-password/' + link, JSON.stringify({password: password}), {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                return true;
+            })
+            .catch((response: Response) => {
+                return false;
+            });
+    }
+
     sendVerificationEmail(email: string): Promise<boolean> {
         let headers = new Headers({
             'Content-Type': 'application/json'
         });
 
         return this.http.put(this.apiEndPoint + '/send-verification-email', JSON.stringify({email: email}), {headers: headers})
+            .toPromise()
+            .then((response: Response) => {
+                return true;
+            })
+            .catch((response: Response) => {
+                return false;
+            });
+    }
+
+    sendRecoveryPasswordEmail(email: string): Promise<boolean> {
+        let headers = new Headers({
+            'Content-Type': 'application/json'
+        });
+
+        return this.http.put(this.apiEndPoint + '/send-password-recovery-email', JSON.stringify({email: email}), {headers: headers})
             .toPromise()
             .then((response: Response) => {
                 return true;

@@ -16,8 +16,11 @@ export interface Credential {
 export class LoginModalComponent implements OnInit {
     @Output() closeEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
     form: FormGroup;
+    passwordRecoveryForm: FormGroup;
+    showPasswordRecoveryForm = false;
     transacting = false;
     errorMsg: string;
+    sendRecoveryPasswordEmailSuccess = false;
 
     constructor(private userService: UserService,
                 private router: Router) {
@@ -25,13 +28,32 @@ export class LoginModalComponent implements OnInit {
 
     ngOnInit() {
         this.form = new FormGroup({
-            email: new FormControl(null, Validators.required),
+            email: new FormControl(null, [Validators.required, Validators.email]),
             password: new FormControl(null, Validators.required)
+        });
+
+        this.passwordRecoveryForm = new FormGroup({
+            email: new FormControl(null, [Validators.required, Validators.email])
         });
     }
 
     cancel() {
         this.closeEvent.emit(true);
+    }
+
+    sendPasswordRecoverMail() {
+        if (!this.passwordRecoveryForm.valid) {
+            return;
+        }
+
+        this.transacting = true;
+
+        this.userService.sendRecoveryPasswordEmail(this.passwordRecoveryForm.get('email').value)
+            .then((success) => {
+                this.transacting = false;
+                this.sendRecoveryPasswordEmailSuccess = success;
+            })
+            .catch();
     }
 
     signIn() {

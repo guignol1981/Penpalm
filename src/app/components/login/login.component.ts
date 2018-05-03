@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     showLogingModalComponent = false;
     showRegisterModalComponent = false;
     showAlertModalComponent = false;
+    
     alertMessage: string;
     @ViewChildren('loginmodal')
     loginModalComponents: QueryList<LoginModalComponent>;

@@ -39,6 +39,7 @@ import { RegisterModalComponent } from './components/register-modal/register-mod
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
 import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.component';
 import { AlertModalComponent } from './components/alert-modal/alert-modal.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 
 let config = new AuthServiceConfig([
@@ -79,7 +80,8 @@ export function provideConfig() {
         RegisterModalComponent,
         LoginModalComponent,
         ConfirmEmailComponent,
-        AlertModalComponent
+        AlertModalComponent,
+        ResetPasswordComponent
     ],
     imports: [
         BrowserAnimationsModule,
