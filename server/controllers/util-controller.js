@@ -22,7 +22,7 @@ module.exports.getCountries = function (req, res) {
 module.exports.getTemplates = function (req, res) {
     res.send({
         msg: 'Templates found',
-        data: ['Bubble']
+        data: ['winter']
     });
 };
 

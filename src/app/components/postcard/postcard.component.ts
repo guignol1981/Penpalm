@@ -60,12 +60,12 @@ export class PostcardComponent implements OnInit {
         let backElement = document.getElementById('back');
 
         if (templateName) {
-            bodyElement.style.background = 'url(../../../assets/' + templateName + '-template_front.png)';
+            bodyElement.style.background = 'url(https://storage.googleapis.com/penpalm-image/' + templateName + '-template_front.png)';
             bodyElement.style.backgroundRepeat = 'no-repeat';
             bodyElement.style.backgroundSize = 'cover';
             bodyElement.style.backgroundPosition = 'center';
 
-            backElement.style.background = 'url(../../../assets/' + templateName + '-template_back.png)';
+            backElement.style.background = 'url(https://storage.googleapis.com/penpalm-image/' + templateName + '-template_back.png)';
             backElement.style.backgroundRepeat = 'no-repeat';
             backElement.style.backgroundSize = 'cover';
             backElement.style.backgroundPosition = 'center';

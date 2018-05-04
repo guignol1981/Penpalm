@@ -44,10 +44,7 @@ export class ComposeViewData {
                         composeComponent.clearInput('Template');
                     }, false, false, () => {
                         return !!composeComponent.postcard.template;
-                    }, null, 'far fa-square'),
-                    new ViewOption('Allow share', () => {
-                        composeComponent.selectedOption = 'allow-share';
-                    }, false, false, null, null, 'fas fa-share-alt')
+                    }, null, 'far fa-square')
                 ]
             ),
             new ViewOptionGroup(
