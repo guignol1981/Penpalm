@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, SecurityContext} from '@angular/core';
 import {EBackSideOption, Postcard} from '../../models/postcard/postcard';
 import {DomSanitizer} from '@angular/platform-browser';
-import { ChangeDetectorRef } from '@angular/core';
+import {ChangeDetectorRef} from '@angular/core';
 
 export enum EPostcardMode {
     Write,
