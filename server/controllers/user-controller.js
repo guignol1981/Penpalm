@@ -35,7 +35,7 @@ module.exports.register = function (req, res) {
 
             res.render('confirm-email', {
                 data: {
-                    id: emailVerificationLink.link
+                    id: emailVerificationLink.link,
                     baseUrl: process.env.BASE_URL || 'http://localhost:3000'
                 },
             }, (err, html) => {

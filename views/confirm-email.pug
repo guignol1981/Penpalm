@@ -1,6 +1,7 @@
 div.message
     p.font-weight-bold Hello #{data.name} !
     p Please confirm your email address by clicking on the link bellow
+    br
         a(href= data.baseUrl + '/confirm-email/' + data.id) link
 
     p.font-italic Sincerly yours,
