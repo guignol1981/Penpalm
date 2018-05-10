@@ -41,6 +41,8 @@ import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.
 import { AlertModalComponent } from './components/alert-modal/alert-modal.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { environment } from '../environments/environment';
+import { ProfileCardComponent } from './components/profile-card/profile-card.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 let config = new AuthServiceConfig([
@@ -82,7 +84,9 @@ export function provideConfig() {
         LoginModalComponent,
         ConfirmEmailComponent,
         AlertModalComponent,
-        ResetPasswordComponent
+        ResetPasswordComponent,
+        ProfileCardComponent,
+        ProfileComponent
     ],
     imports: [
         BrowserAnimationsModule,

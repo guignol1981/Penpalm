@@ -27,7 +27,6 @@ export interface FindFilter {
 export class MatcherComponent extends BaseViewComponent implements OnInit {
     user: User;
     userList: User[];
-    selectedUser: User = null;
     countryList;
     languageList;
     filterDisplayed = null;
@@ -81,12 +80,6 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
         });
     }
 
-    selectUser(user: User) {
-        this.filterDisplayed = 'none';
-        this.selectedUser = user;
-        this.view = 'details';
-    }
-
     setLanguageFilter(language) {
         let me = this;
         let msg = language === 'none' ? 'Filter cleared' : 'Filter applied';
@@ -121,68 +114,67 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
             this.filterDisplayed = 'none';
         }
 
-        this.selectedUser = null;
         this.view = category;
         this.findFilter.type = category;
 
         this.find();
     }
 
-    sendRequest() {
+    sendRequest(user: User) {
         if (this.transacting) {
             return;
         }
         this.transacting = true;
-        this.userService.sendRequest(this.selectedUser).then((user: User) => {
-            this.selectedUser = user;
+        this.userService.sendRequest(user).then((savedUser: User) => {
             this.notificationEmitter.emit(new Notification(ENotification.Success, 'Request sent'));
             this.transacting = false;
+            this.find();
         });
     }
 
-    cancelRequest() {
+    cancelRequest(user: User) {
         if (this.transacting) {
             return;
         }
 
         this.transacting = true;
-        this.userService.cancelRequest(this.selectedUser).then((user: User) => {
-            this.selectedUser = user;
+        this.userService.cancelRequest(user).then((savedUser: User) => {
             this.notificationEmitter.emit(new Notification(ENotification.Success, 'Request canceled'));
             this.transacting = false;
+            this.find();
         });
     }
 
-    handleRequest(accept: boolean) {
+    handleRequest(eventData: any) {
         if (this.transacting) {
             return;
         }
 
         this.transacting = true;
-        this.userService.handleRequest(this.selectedUser, accept).then((response: any) => {
-            if (accept) {
+        this.userService.handleRequest(eventData.user, eventData.accept).then((response: any) => {
+            if (eventData.accept) {
                 this.notificationEmitter.emit(new Notification(ENotification.Success, 'Pal added'));
-                this.selectedUser = response.targetUser;
                 this.user = response.sourceUser;
             } else {
                 this.notificationEmitter.emit(new Notification(ENotification.Success, 'Request rejected'));
             }
 
             this.transacting = false;
+            this.find();
         });
     }
 
-    removePal() {
+    removePal(user: User) {
         if (this.transacting) {
             return;
         }
 
         this.transacting = true;
-        this.userService.removePal(this.selectedUser).then((response: any) => {
+        this.userService.removePal(user).then((response: any) => {
             this.notificationEmitter.emit(new Notification(ENotification.Success, 'Request removed'));
-            this.selectedUser = response.targetUser;
             this.user = response.sourceUser;
             this.transacting = false;
+            this.find();
         });
     }
 

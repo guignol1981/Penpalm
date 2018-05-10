@@ -33,44 +33,6 @@ export class MatcherViewData {
                 ]
             ),
             new ViewOptionGroup(
-                'Options',
-                [
-                    new ViewOption('Remove pal', () => {
-                        matcherComponent.removePal();
-                    }, true, false, () => {
-                        return matcherComponent.user.isPal(matcherComponent.selectedUser._id);
-                    }, 'Click again to remove pal'),
-                    new ViewOption('Accept request', () => {
-                        matcherComponent.handleRequest(true);
-                    }, false, false, () => {
-                        return matcherComponent.user.hasRequestFrom(matcherComponent.selectedUser._id) &&
-                            !matcherComponent.user.isPal(matcherComponent.selectedUser._id);
-                    }),
-                    new ViewOption('Refuse request', () => {
-                        matcherComponent.handleRequest(false);
-                    }, false, false, () => {
-                        return matcherComponent.user.hasRequestFrom(matcherComponent.selectedUser._id) &&
-                            !matcherComponent.user.isPal(matcherComponent.selectedUser._id);
-                    }),
-                    new ViewOption('Cancel request', () => {
-                        matcherComponent.cancelRequest();
-                    }, false, false, () => {
-                        return matcherComponent.selectedUser.hasRequestFrom(matcherComponent.user._id) &&
-                            !matcherComponent.user.isPal(matcherComponent.selectedUser._id);
-                    }),
-                    new ViewOption('Send request', () => {
-                        matcherComponent.sendRequest();
-                    }, false, false, () => {
-                        return !matcherComponent.user.hasRequestFrom(matcherComponent.selectedUser._id) &&
-                            !matcherComponent.user.isPal(matcherComponent.selectedUser._id) &&
-                            !matcherComponent.selectedUser.hasRequestFrom(matcherComponent.user._id);
-                    })
-                ],
-                () => {
-                    return matcherComponent.selectedUser !== null;
-                }
-            ),
-            new ViewOptionGroup(
                 'Filters',
                 [
                     new ViewOption('Country', () => {
@@ -149,18 +111,6 @@ export class MatcherViewData {
                 false,
                 () => {
                     return matcherComponent.view === 'discover';
-                }
-            ),
-            new ViewAction(
-                'Back',
-                () => {
-                    matcherComponent.selectedUser = null;
-                    matcherComponent.view = 'discover';
-                },
-                EViewAction.Primary,
-                false,
-                () => {
-                    return matcherComponent.view === 'details';
                 }
             )
         ];
