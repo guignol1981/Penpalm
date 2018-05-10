@@ -48,6 +48,7 @@ export class PostcardComponent implements OnInit {
         if (this.shownSide === 'front') {
             this.shownSide = 'back';
             postcard.style.transform = 'rotateY(180deg)';
+            this.composeModeEmitter.emit(false);
         } else {
             this.shownSide = 'front';
             postcard.style.transform = 'rotateY(0deg)';
@@ -111,7 +112,7 @@ export class PostcardComponent implements OnInit {
     }
 
     compose() {
-        if (this.mode === EPostcardMode.Read) {
+        if (this.mode === EPostcardMode.Read && this.shownSide !== 'front') {
             return;
         }
         this.composeModeEmitter.emit(true);

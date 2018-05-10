@@ -95,6 +95,8 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
     onComposeMode(bool) {
         if (bool) {
             this.selectedOption = 'compose';
+        } else {
+            this.selectedOption = null;
         }
     }
 
