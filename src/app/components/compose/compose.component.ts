@@ -92,8 +92,8 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
         return youtube_parser(link);
     }
 
-    onComposeMode(bool) {
-        if (bool) {
+    onComposeMode(compose: boolean) {
+        if (compose) {
             this.selectedOption = 'compose';
         } else {
             this.selectedOption = null;
