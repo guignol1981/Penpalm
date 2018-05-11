@@ -24,8 +24,7 @@ module.exports.getTemplates = function(req, res) {
 		msg: 'Templates found',
 		data: [
 			'fall',
-			'love',
-			'winter',
+			'winter'
 		]
 	});
 };
