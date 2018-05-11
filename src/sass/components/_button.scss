@@ -11,6 +11,10 @@
 	background-color: transparent;
 	color: var(--color-whitish);
 
+	&--small {
+		font-size: .5rem;
+	}
+
 	&--large {
 		width: 100%;
 	}
