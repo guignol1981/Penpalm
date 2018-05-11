@@ -2,25 +2,31 @@
     <a class="image-wrap">
         <img class="image" [src]="cardUser.pictureUrl" alt="user picture">
     </a>
-    <div class="card__body">
-        <p class="card__body__info">
-            {{cardUser.name}}
-        </p>
-        <p class="card__body__info">
-            <i class="fas fa-flag"></i> {{cardUser.country}}
-        </p>
-        <p class="card__body__info">
-            <i class="fas fa-language"></i> {{cardUser.language}}
-        </p>
-        <p class="card__body__info">
-            {{cardUser.description}}
-        </p>
-    </div>
-    <div class="card__footer">
-        <a *ngIf="!user.isPal(cardUser._id) && !user.hasRequestFrom(cardUser._id) && !cardUser.hasRequestFrom(user._id)" (click)="sendRequest()" class="btn btn--primary">Add</a>
-        <a *ngIf="!user.isPal(cardUser._id) && cardUser.hasRequestFrom(user._id)" (click)="cancelRequest()" class="btn btn--warning">Cancel request</a>
-        <a *ngIf="user.isPal(cardUser._id)" (click)="removePal()" class="btn btn--warning">Remove</a>
-        <a *ngIf="user.hasRequestFrom(cardUser._id)" (click)="handleRequest(true)" class="btn btn--primary">Accept</a>
-        <a *ngIf="user.hasRequestFrom(cardUser._id)" (click)="handleRequest(false)" class="btn btn--secondary">Refuse</a>
+    <div class="tooltiptext">
+        <div class="">
+            <p class="">
+                {{cardUser.name}}
+            </p>
+            <p *ngIf="cardUser.country" class="">
+                <i class="fas fa-flag"></i> {{cardUser.country}}
+            </p>
+            <p *ngIf="cardUser.language" class="">
+                <i class="fas fa-language"></i> {{cardUser.language}}
+            </p>
+            <p *ngIf="cardUser.description" class="">
+                {{cardUser.description}}
+            </p>
+        </div>
+        <div class="card__footer">
+            <a *ngIf="!user.isPal(cardUser._id) && !user.hasRequestFrom(cardUser._id) && !cardUser.hasRequestFrom(user._id)"
+               (click)="sendRequest()" class="btn btn--primary btn--small">Add</a>
+            <a *ngIf="!user.isPal(cardUser._id) && cardUser.hasRequestFrom(user._id)" (click)="cancelRequest()"
+               class="btn btn--warning btn--small">Cancel request</a>
+            <a *ngIf="user.isPal(cardUser._id)" (click)="removePal()" class="btn btn--warning btn--small">Remove</a>
+            <a *ngIf="user.hasRequestFrom(cardUser._id)" (click)="handleRequest(true)"
+               class="btn btn--primary btn--small">Accept</a>
+            <a *ngIf="user.hasRequestFrom(cardUser._id)" (click)="handleRequest(false)"
+               class="btn btn--secondary btn--small">Refuse</a>
+        </div>
     </div>
 </div>
