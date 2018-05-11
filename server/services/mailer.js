@@ -1,5 +1,6 @@
 'use strict';
 let nodemailer = require('nodemailer');
+
 let transporter = nodemailer.createTransport({
     service: process.env.NODE_ENV === 'prod' ? 'gmail' : null,
     host: process.env.NODE_ENV === 'prod' ? 'smtp.gmail.com' : 'smtp.ethereal.email',

@@ -40,7 +40,7 @@ module.exports.register = function (req, res) {
                 },
             }, (err, html) => {
                 mailer.sendMail({
-                    from: '"Penpalm" <info@penpalm.com>',
+                    from: '"Penpalms" <info@penpalms.com>',
                     to: user.email,
                     subject: 'Confirm your email',
                     text: 'Hello ' + user.name + '! Please click the link to confirm email address.',
@@ -146,7 +146,7 @@ module.exports.sendVerificationEmail = function (req, res) {
                     },
                 }, (err, html) => {
                     mailer.sendMail({
-                        from: '"Penpalm" <info@penpalm.com>',
+                        from: '"Penpalms" <info@penpalms.com>',
                         to: user.email,
                         subject: 'Confirm your email',
                         text: 'Hello ' + user.name + '! Please click the link to confirm email address.',
@@ -185,7 +185,7 @@ module.exports.sendPasswordRecoveryEmail = function (req, res) {
                     },
                 }, (err, html) => {
                     mailer.sendMail({
-                        from: '"Penpalm" <info@penpalm.com>',
+                        from: '"Penpalm" <info@penpalms.com>',
                         to: user.email,
                         subject: 'Recover your password',
                         text: 'Hello ' + user.name + '! Please click the link to recover your password.',
