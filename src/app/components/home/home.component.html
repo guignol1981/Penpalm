@@ -33,9 +33,14 @@
                 </li>
             </ul>
         </li>
-        <li (click)="setTab('about')" [class]="activeTab === 'about' ? 'nav-item nav-item--active' : 'nav-item'">
+        <!--<li (click)="setTab('about')" [class]="activeTab === 'about' ? 'nav-item nav-item&#45;&#45;active' : 'nav-item'">-->
+            <!--<a>-->
+                <!--<i class="far fa-question-circle"></i>-->
+            <!--</a>-->
+        <!--</li>-->
+        <li (click)="logout()" class="nav-item">
             <a>
-                <i class="far fa-question-circle"></i>
+                <i class="fas fa-sign-out-alt"></i>
             </a>
         </li>
     </ul>

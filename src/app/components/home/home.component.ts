@@ -4,6 +4,7 @@ import {User} from '../../models/user/user';
 import {Notification} from '../../models/notification/notification';
 import {NotificationComponent} from '../notification/notification.component';
 import {ImageUploadEvent, UploaderModalComponent} from '../uploader-modal/uploader-modal.component';
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
     selector: 'app-home',
@@ -23,7 +24,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     uploaderModalComponent: UploaderModalComponent;
     imageUploadEvent: ImageUploadEvent;
 
-    constructor(private userService: UserService) {
+    constructor(private userService: UserService,
+                private authenticationService: AuthenticationService) {
     }
 
     ngOnInit() {
@@ -57,6 +59,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
     onImageModalCloseEvent() {
         this.showImageUploadModal = false;
         this.imageUploadEvent = null;
+    }
+
+    logout() {
+        this.authenticationService.signOut();
     }
 
 }
