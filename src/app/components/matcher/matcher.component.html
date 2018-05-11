@@ -1,5 +1,5 @@
 <div *ngIf="user && languageList && countryList" class="container">
-    <app-loader class="main" [load]="userList === null"></app-loader>
+    <app-loader class="main" [load]="transacting"></app-loader>
     <app-view-actions class="bottom" [actions]="actions" [disableActions]="transacting"></app-view-actions>
     <app-view-single-input class="top" [inputs]="inputs"></app-view-single-input>
     <app-view-options class="sub" [groups]="optionGroups" [disableOptions]="transacting"></app-view-options>

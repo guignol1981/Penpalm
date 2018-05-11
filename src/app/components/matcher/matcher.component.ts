@@ -6,11 +6,8 @@ import {BaseViewComponent} from '../base-view/base-view.component';
 import {Notification} from '../../models/notification/notification';
 import {ENotification} from '../../models/notification/e-notification.enum';
 import {ViewAction} from '../../models/actions/view-action';
-import {ViewOption} from '../../models/options/view-option';
 import {ViewOptionGroup} from '../../models/options/view-option-group';
-import {EViewAction} from '../../models/actions/e-view-action.enum';
 import {SingleInput} from '../../models/single-input/single-input';
-import {ESingleInput} from '../../models/single-input/e-single-input.enum';
 import {MatcherViewData} from '../../models/view-data/matcher-view-data';
 
 export interface FindFilter {
