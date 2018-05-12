@@ -1,8 +1,9 @@
-<div *ngIf="user" class="container">
+<div *ngIf="user && user.hasPals()" class="container">
     <app-view-actions class="bottom" [actions]="actions" [disableActions]="transacting"></app-view-actions>
     <app-view-single-input class="top" [inputs]="inputs"></app-view-single-input>
     <app-view-options class="sub" [groups]="optionGroups" [disableOptions]="transacting"></app-view-options>
-    <app-post-card class="main" [postcard]="postcard" [mode]="ePostcardMode.Write" [imageUploadPreview]="imageUploadPreview"
+    <app-post-card class="main" [postcard]="postcard" [mode]="ePostcardMode.Write"
+                   [imageUploadPreview]="imageUploadPreview"
                    (composeModeEmitter)="onComposeMode($event)"></app-post-card>
 
     <div *ngIf="selectedOption === 'compose'" class="wysiwyg-container top">
@@ -25,6 +26,11 @@
             <a class="btn" (click)="selectWYSIWYGCommand('h1')">H1</a>
             <a class="btn" (click)="selectWYSIWYGCommand('h2')">H2</a>
         </div>
+    </div>
+</div>
+<div *ngIf="user && !user.hasPals()" class="container">
+    <div class="main main-message">
+        You first need to find a pal to write to!
     </div>
 </div>
 <div *ngIf="!user" class="container">

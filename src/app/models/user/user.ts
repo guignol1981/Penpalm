@@ -48,5 +48,8 @@ export class User {
         return isPal;
     }
 
+    hasPals() {
+        return this.pals.length > 0;
+    }
 
 }
