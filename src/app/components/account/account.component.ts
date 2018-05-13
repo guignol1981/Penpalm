@@ -10,7 +10,6 @@ import {ViewAction} from '../../models/actions/view-action';
 import {Notification} from '../../models/notification/notification';
 import {ENotification} from '../../models/notification/e-notification.enum';
 import {AccountViewData} from '../../models/view-data/account-view-data';
-import {ImageService} from '../../services/image.service';
 import {ImageCropperComponent, CropperSettings} from 'ngx-img-cropper';
 import {ImageUploadEvent} from '../uploader-modal/uploader-modal.component';
 
@@ -71,22 +70,6 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
         this.actions = AccountViewData.getActions(this);
     }
 
-    uploadImage() {
-        let me = this;
-        let event: ImageUploadEvent = {
-            callback: file => {
-                me.profilePicture = file;
-            }
-        };
-
-        this.imageUploadEvent.emit(event);
-    }
-
-    removeImage() {
-        this.profilePicture = null;
-    }
-
-
     async save() {
         if (this.transacting) {
             return;
@@ -135,6 +118,5 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
             }
         });
     }
-
 
 }
