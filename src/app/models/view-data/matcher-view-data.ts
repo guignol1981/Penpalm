@@ -21,10 +21,10 @@ export class MatcherViewData {
                     new ViewOption('Discover', () => {
                         matcherComponent.viewList('discover');
                     }, false, true, null, null, null, null, true),
-                    new ViewOption('My pals', () => {
+                    new ViewOption('My pals (' + matcherComponent.user.pals.length + ')', () => {
                         matcherComponent.viewList('pals');
                     }, false, true),
-                    new ViewOption('Pending requests', () => {
+                    new ViewOption('Pending requests (' + matcherComponent.user.pendingRequests.length + ')', () => {
                         matcherComponent.viewList('pending-requests');
                     }, false, true),
                     new ViewOption('Sent requests', () => {

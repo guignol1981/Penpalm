@@ -125,6 +125,7 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
         this.userService.sendRequest(user).then((savedUser: User) => {
             this.notificationEmitter.emit(new Notification(ENotification.Success, 'Request sent'));
             this.transacting = false;
+            this.optionGroups = MatcherViewData.getOptions(this);
             this.find();
         });
     }
@@ -138,6 +139,7 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
         this.userService.cancelRequest(user).then((savedUser: User) => {
             this.notificationEmitter.emit(new Notification(ENotification.Success, 'Request canceled'));
             this.transacting = false;
+            this.optionGroups = MatcherViewData.getOptions(this);
             this.find();
         });
     }
@@ -155,8 +157,9 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
             } else {
                 this.notificationEmitter.emit(new Notification(ENotification.Success, 'Request rejected'));
             }
-
+            this.optionGroups = MatcherViewData.getOptions(this);
             this.transacting = false;
+            this.optionGroups = MatcherViewData.getOptions(this);
             this.find();
         });
     }
@@ -171,6 +174,7 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
             this.notificationEmitter.emit(new Notification(ENotification.Success, 'Request removed'));
             this.user = response.sourceUser;
             this.transacting = false;
+            this.optionGroups = MatcherViewData.getOptions(this);
             this.find();
         });
     }
