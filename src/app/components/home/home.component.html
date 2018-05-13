@@ -5,16 +5,16 @@
                 <img [src]="user.pictureUrl" alt="profile image" class="nav-item__image">
             </a>
             <ul>
-                <li (click)="changeProfilePicture()"
-                    class="nav-item nav-item--small">
-                    <a>
-                        picture
-                    </a>
-                </li>
                 <li (click)="setTab('account')"
                     [class]="activeTab === 'account' ? 'nav-item nav-item--small nav-item--active' : 'nav-item nav-item--small'">
                     <a>
                         account
+                    </a>
+                </li>
+                <li (click)="changeProfilePicture()"
+                    class="nav-item nav-item--small">
+                    <a>
+                        picture
                     </a>
                 </li>
             </ul>

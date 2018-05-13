@@ -1,11 +1,8 @@
-import {ComposeComponent} from '../../components/compose/compose.component';
 import {ViewOptionGroup} from '../options/view-option-group';
 import {ViewOption} from '../options/view-option';
-import {EBackSideOption} from '../postcard/postcard';
 import {SingleInput} from '../single-input/single-input';
 import {ESingleInput} from '../single-input/e-single-input.enum';
 import {ViewAction} from '../actions/view-action';
-import {EViewAction} from '../actions/e-view-action.enum';
 import {MatcherComponent} from '../../components/matcher/matcher.component';
 
 export class MatcherViewData {
@@ -40,7 +37,7 @@ export class MatcherViewData {
                     }, false, false, () => {
                         return matcherComponent.findFilter.country === 'none';
                     }),
-                    new ViewOption('Remove country filter', () => {
+                    new ViewOption(matcherComponent.findFilter.country + ' (click to remove)', () => {
                         matcherComponent.filterDisplayed = 'none';
                         matcherComponent.setCountryFilter('none');
                     }, false, false, () => {
@@ -51,7 +48,7 @@ export class MatcherViewData {
                     }, false, false, () => {
                         return matcherComponent.findFilter.language === 'none';
                     }),
-                    new ViewOption('Remove language filter', () => {
+                    new ViewOption(matcherComponent.findFilter.language + ' (click to remove)', () => {
                         matcherComponent.filterDisplayed = 'none';
                         matcherComponent.setLanguageFilter('none');
                     }, false, false, () => {
@@ -71,7 +68,7 @@ export class MatcherViewData {
                 'Country filter',
                 ESingleInput.DropDown,
                 (singleInput: SingleInput) => {
-                    matcherComponent.setCountryFilter(singleInput.value);
+                    matcherComponent.setCountryFilter(singleInput.lovValue.id);
                 },
                 () => {
                     return matcherComponent.filterDisplayed === 'country' && matcherComponent.countryList;
@@ -79,14 +76,14 @@ export class MatcherViewData {
                 null,
                 matcherComponent.countryList.map(a => a = {
                     label: a,
-                    value: a
+                    id: a
                 })
             ),
             new SingleInput(
                 'Language filter',
                 ESingleInput.DropDown,
                 (singleInput: SingleInput) => {
-                    matcherComponent.setLanguageFilter(singleInput.value);
+                    matcherComponent.setLanguageFilter(singleInput.lovValue.id);
                 },
                 () => {
                     return matcherComponent.filterDisplayed === 'language' && matcherComponent.languageList;
@@ -94,7 +91,7 @@ export class MatcherViewData {
                 null,
                 matcherComponent.languageList.map(a => a = {
                     label: a,
-                    value: a
+                    id: a
                 })
             )
         ];

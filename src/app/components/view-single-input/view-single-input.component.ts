@@ -23,9 +23,7 @@ export class ViewSingleInputComponent implements OnInit {
     cropper: ImageCropperComponent;
     cropperSettings: CropperSettings;
 
-    constructor(private authenticationService: AuthenticationService,
-                private imageService: ImageService,
-                private googleMapService: GoogleMapService) {
+    constructor(private googleMapService: GoogleMapService) {
     }
 
     ngOnInit() {
@@ -54,6 +52,7 @@ export class ViewSingleInputComponent implements OnInit {
     }
 
     setLovValue(singleInput: SingleInput, value: LovItem) {
+        console.log(value);
         singleInput.lovValue = value;
         this.executeInput(singleInput);
     }

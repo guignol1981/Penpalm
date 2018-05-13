@@ -87,6 +87,8 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
             me.notificationEmitter.emit(new Notification(ENotification.Success, msg));
         };
 
+        this.optionGroups = MatcherViewData.getOptions(this);
+        this.filterDisplayed = null;
         this.find(displayMsg);
     }
 
@@ -99,6 +101,9 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
         let displayMsg = function () {
             me.notificationEmitter.emit(new Notification(ENotification.Success, msg));
         };
+
+        this.optionGroups = MatcherViewData.getOptions(this);
+        this.filterDisplayed = null;
         this.find(displayMsg);
     }
 
