@@ -7,9 +7,6 @@
     <div class="main list-container">
         <div *ngIf="userList && (view === 'discover' || view === 'pending-requests' || view === 'sent-requests' || view === 'pals')"
              class="list">
-            <div *ngIf="userList.length === 0" class="list__empty">
-                This list is empty
-            </div>
             <app-profile-card *ngFor="let listedUser of userList"
                               (sendRequestEmitter)="sendRequest($event)"
                               (handleRequestEmitter)="handleRequest($event)"
@@ -18,5 +15,8 @@
                               [cardUser]="listedUser"
                               [user]="user"></app-profile-card>
         </div>
+    </div>
+    <div *ngIf="userList && userList.length === 0 && !transacting" class="main main__message">
+        This list is empty
     </div>
 </div>

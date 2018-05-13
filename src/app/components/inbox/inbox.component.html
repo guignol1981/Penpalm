@@ -49,24 +49,9 @@
             <iframe id="spoty" [src]="spotySrc" width="100%"
                     height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         </div>
-        <!--<div class="info__item">-->
-        <!--<a [class]="activePostcard.allowShare ? 'btn btn&#45;&#45;align-left btn&#45;&#45;text-md' : 'btn btn&#45;&#45;align-left btn&#45;&#45;text-md btn&#45;&#45;disabled'"><i-->
-        <!--class="fas fa-share-alt"></i>&nbsp; Share</a>-->
-        <!--</div>-->
-        <!--<div class="info__item">-->
-        <!--<a class="btn btn&#45;&#45;align-left btn&#45;&#45;text-md btn&#45;&#45;disabled"><i class="fas fa-heart"></i>&nbsp; Add to favorite</a>-->
-        <!--</div>-->
-        <!--<div class="info__item">-->
-        <!--<a class="btn btn&#45;&#45;align-left btn&#45;&#45;text-md btn&#45;&#45;disabled"><i class="fas fa-reply"></i>&nbsp; Reply</a>-->
-        <!--</div>-->
-        <!--<div class="info__item">-->
-        <!--<a class="btn btn&#45;&#45;align-left btn&#45;&#45;text-md"><i class="fas fa-flag"></i>&nbsp; Report</a>-->
-        <!--</div>-->
     </div>
-    <div *ngIf="postcards && postcards.length === 0" class="main">
-        <div class="empty">
+    <div *ngIf="postcards && postcards.length === 0" class="main main__message">
             {{direction === 'in' ? 'You don\'t have any postcards yet' : 'You haven\'t sent any postcards yet'}}
-        </div>
     </div>
     <app-loader class="main" [load]="!postcards"></app-loader>
 </div>

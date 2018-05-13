@@ -19,6 +19,14 @@
 .main {
 	grid-area: main;
 	margin: 5rem;
+
+	&__message {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 3rem;
+		color: var(--color-whitish);
+	}
 }
 
 .sub {
