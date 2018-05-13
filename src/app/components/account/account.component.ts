@@ -35,13 +35,10 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
     optionGroups: ViewOptionGroup[];
     actions: ViewAction[];
 
-    profilePicture = null;
-
     cropperSettings: CropperSettings;
 
     constructor(private userService: UserService,
                 private utilService: UtilService,
-                private imageService: ImageService,
                 private authenticationService: AuthenticationService) {
         super();
     }
@@ -97,15 +94,6 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
 
         this.transacting = true;
 
-        if (this.user.photoData.cloudStorageObject && this.profilePicture) {
-            await this.imageService.remove(this.user.photoData.cloudStorageObject);
-            this.user.photoData = null;
-        }
-
-        if (this.profilePicture) {
-            this.user.photoData = await this.imageService.upload(this.profilePicture);
-        }
-
         this.user.name = this.form.get('name').value;
         this.user.enableEmailNotifications = this.form.get('enableEmailNotifications').value;
         this.user.language = this.form.get('language').value;
@@ -113,7 +101,6 @@ export class AccountComponent extends BaseViewComponent implements OnInit {
         this.user.description = this.form.get('description').value;
 
         this.userService.update(this.user).then((user: User) => {
-            this.profilePicture = null;
             this.user = user;
             this.transacting = false;
             this.notificationEmitter.emit(new Notification(ENotification.Success, 'Profile saved'));

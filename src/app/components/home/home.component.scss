@@ -37,6 +37,10 @@
 	z-index: 1000;
 	background-color: #333333;
 
+	&--small {
+		font-size: 2rem;
+	}
+
 	&--group {
 		position: relative;
 

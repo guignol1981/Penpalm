@@ -1,9 +1,23 @@
 <div *ngIf="user" class="container">
     <ul class="nav">
-        <li (click)="setTab('account')" [class]="activeTab === 'account' ? 'nav-item nav-item--active' : 'nav-item'">
+        <li [class]="activeTab === 'account' ? 'nav-item nav-item--active nav-item--group' : 'nav-item nav-item--group'">
             <a class="nav-item__image-wrap">
                 <img [src]="user.pictureUrl" alt="profile image" class="nav-item__image">
             </a>
+            <ul>
+                <li (click)="changeProfilePicture()"
+                    class="nav-item nav-item--small">
+                    <a>
+                        picture
+                    </a>
+                </li>
+                <li (click)="setTab('account')"
+                    [class]="activeTab === 'account' ? 'nav-item nav-item--small nav-item--active' : 'nav-item nav-item--small'">
+                    <a>
+                        account
+                    </a>
+                </li>
+            </ul>
         </li>
         <li (click)="setTab('matcher')" [class]="activeTab === 'matcher' ? 'nav-item nav-item--active' : 'nav-item'">
             <a>
@@ -34,9 +48,9 @@
             </ul>
         </li>
         <!--<li (click)="setTab('about')" [class]="activeTab === 'about' ? 'nav-item nav-item&#45;&#45;active' : 'nav-item'">-->
-            <!--<a>-->
-                <!--<i class="far fa-question-circle"></i>-->
-            <!--</a>-->
+        <!--<a>-->
+        <!--<i class="far fa-question-circle"></i>-->
+        <!--</a>-->
         <!--</li>-->
         <li (click)="logout()" class="nav-item">
             <a>

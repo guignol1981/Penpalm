@@ -5,6 +5,7 @@ import {Notification} from '../../models/notification/notification';
 import {NotificationComponent} from '../notification/notification.component';
 import {ImageUploadEvent, UploaderModalComponent} from '../uploader-modal/uploader-modal.component';
 import {AuthenticationService} from "../../services/authentication.service";
+import {ImageService} from "../../services/image.service";
 
 @Component({
     selector: 'app-home',
@@ -25,7 +26,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     imageUploadEvent: ImageUploadEvent;
 
     constructor(private userService: UserService,
-                private authenticationService: AuthenticationService) {
+                private authenticationService: AuthenticationService,
+                private imageService: ImageService) {
     }
 
     ngOnInit() {
@@ -49,6 +51,26 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     onNotification(notification: Notification) {
         this.notificationComponent.setNotif(notification);
+    }
+
+    changeProfilePicture() {
+        let me = this;
+        let event: ImageUploadEvent = {
+            callback: async file => {
+                if (file && this.user.photoData && this.user.photoData.cloudStorageObject) {
+                    await me.imageService.remove(this.user.photoData.cloudStorageObject);
+                    this.user.photoData = null;
+                }
+
+                this.user.photoData = await this.imageService.upload(file);
+
+                this.userService.update(this.user).then((user: User) => {
+                    this.user = user;
+                });
+            }
+        };
+
+        this.onImageUploadEvent(event);
     }
 
     onImageUploadEvent(event: ImageUploadEvent) {
