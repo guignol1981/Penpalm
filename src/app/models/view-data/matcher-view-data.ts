@@ -20,7 +20,7 @@ export class MatcherViewData {
                 [
                     new ViewOption('Discover', () => {
                         matcherComponent.viewList('discover');
-                    }, false, true),
+                    }, false, true, null, null, null, null, true),
                     new ViewOption('My pals', () => {
                         matcherComponent.viewList('pals');
                     }, false, true),
@@ -102,17 +102,17 @@ export class MatcherViewData {
 
     public static getActions(matcherComponent: MatcherComponent): ViewAction[] {
         return [
-            // new ViewAction(
-            //     'Show more',
-            //     () => {
-            //         matcherComponent.find();
-            //     },
-            //     EViewAction.Primary,
-            //     false,
-            //     () => {
-            //         return matcherComponent.view === 'discover';
-            //     }
-            // )
+            new ViewAction(
+                'Show more',
+                () => {
+                    matcherComponent.find();
+                },
+                EViewAction.Primary,
+                false,
+                () => {
+                    return matcherComponent.view === 'discover';
+                }
+            )
         ];
     }
 }

@@ -16,6 +16,14 @@ export class ViewOptionsComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.groups.forEach(group => {
+            group.options.forEach(option => {
+                if (option.executeOnAwake) {
+                    this.selectedOption = option;
+                    option.callback();
+                }
+            });
+        });
     }
 
     getOptionClass(option: ViewOption) {
@@ -67,6 +75,7 @@ export class ViewOptionsComponent implements OnInit {
         if (this.disableOptions || !this.checkOptionActiveCondition(option)) {
             return;
         }
+
 
         if (option.shouldWarn && !option.warned) {
             option.warned = true;

@@ -9,6 +9,7 @@ export class ViewOption {
         public condition: () => boolean = null,
         public warnMsg?: string,
         public icon?: string,
-        public activeCondition?: () => boolean
-    ) {}
+        public activeCondition?: () => boolean,
+        public executeOnAwake: boolean = false
+) {}
 }
