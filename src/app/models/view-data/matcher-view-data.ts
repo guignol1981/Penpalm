@@ -102,17 +102,17 @@ export class MatcherViewData {
 
     public static getActions(matcherComponent: MatcherComponent): ViewAction[] {
         return [
-            new ViewAction(
-                'Show more',
-                () => {
-                    matcherComponent.find();
-                },
-                EViewAction.Primary,
-                false,
-                () => {
-                    return matcherComponent.view === 'discover';
-                }
-            )
+            // new ViewAction(
+            //     'Show more',
+            //     () => {
+            //         matcherComponent.find();
+            //     },
+            //     EViewAction.Primary,
+            //     false,
+            //     () => {
+            //         return matcherComponent.view === 'discover';
+            //     }
+            // )
         ];
     }
 }
