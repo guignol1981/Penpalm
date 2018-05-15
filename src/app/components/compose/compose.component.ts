@@ -51,9 +51,9 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
         });
 
         this.userService.getCurrentUser().then((user: User) => {
-            this.userService.find({country: 'none', language: 'none', type: 'pals'}).then((pals: User[]) => {
+            this.userService.find({country: 'none', language: 'none', type: 'pals'}).then((data: any) => {
                 this.user = user;
-                this.recipients = pals;
+                this.recipients = data.users;
                 this.optionGroups = ComposeViewData.getOptions(this);
                 this.inputs = ComposeViewData.getInputs(this);
                 this.actions = ComposeViewData.getActions(this);
