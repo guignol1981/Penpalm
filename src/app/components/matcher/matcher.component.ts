@@ -35,7 +35,7 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
         language: 'none',
         type: 'discover',
         skip: 0,
-        limit: 1
+        limit: 10
     };
 
     transacting = false;
