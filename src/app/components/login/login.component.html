@@ -1,20 +1,25 @@
 <div class="container">
-    <div class="logo-container">
-        <img class="logo" src="../../assets/penpalm.svg#logo">
+    <div class="top">
+        <div class="logo-container">
+            <img class="logo" src="../../assets/penpalm.svg#logo">
+        </div>
+        <div class="login-container">
+            <a (click)="loginWithFacebook()" class="btn btn--align-left btn--large">
+                <i class="fab fa-facebook-square"></i> &nbsp;Login with Facebook
+            </a>
+            <a (click)="loginWithGoogle()" class="btn btn--align-left btn--large">
+                <i class="fab fa-google-plus-square"></i> &nbsp;Login wih Google
+            </a>
+            <a (click)="showSignInModal()" class="btn btn--align-left btn--large">
+                <i class="fas fa-sign-in-alt"></i> &nbsp;Sign in
+            </a>
+            <a (click)="showRegisterModal()" class="btn btn--align-left btn--large">
+                <i class="fas fa-user-plus"></i> &nbsp;Register
+            </a>
+        </div>
     </div>
-    <div class="login-container">
-        <a (click)="loginWithFacebook()" class="btn btn--align-left btn--large">
-            <i class="fab fa-facebook-square"></i> &nbsp;Login with Facebook
-        </a>
-        <a (click)="loginWithGoogle()" class="btn btn--align-left btn--large">
-            <i class="fab fa-google-plus-square"></i> &nbsp;Login wih Google
-        </a>
-        <a (click)="showSignInModal()" class="btn btn--align-left btn--large">
-            <i class="fas fa-sign-in-alt"></i> &nbsp;Sign in
-        </a>
-        <a (click)="showRegisterModal()" class="btn btn--align-left btn--large">
-            <i class="fas fa-user-plus"></i> &nbsp;Register
-        </a>
+    <div *ngIf="totalPostcardCount && totalPostcardCount > 20" class="bottom count-message">
+        Number of postcards sent: {{totalPostcardCount}}
     </div>
     <div *ngIf="showLogingModalComponent" class="modal-container">
         <app-login-modal #loginmodal class="modal-content"
@@ -30,4 +35,3 @@
                          (closeEvent)="onAlertModalComponentClose($event)"></app-alert-modal>
     </div>
 </div>
-

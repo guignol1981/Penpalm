@@ -78,5 +78,14 @@ export class PostcardService {
             .catch(() => null);
     }
 
+    getTotalCount(): Promise<number> {
+        return this.http.get(this.apiEndPoint + '/total-count')
+            .toPromise()
+            .then((response: Response) => {
+                return response.json().data;
+            })
+            .catch(() => null);
+    }
+
 
 }

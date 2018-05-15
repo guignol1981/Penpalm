@@ -43,6 +43,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { environment } from '../environments/environment';
 import { ProfileCardComponent } from './components/profile-card/profile-card.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { PagerComponent } from './components/pager/pager.component';
 
 
 let config = new AuthServiceConfig([
@@ -86,7 +87,8 @@ export function provideConfig() {
         AlertModalComponent,
         ResetPasswordComponent,
         ProfileCardComponent,
-        ProfileComponent
+        ProfileComponent,
+        PagerComponent
     ],
     imports: [
         BrowserAnimationsModule,

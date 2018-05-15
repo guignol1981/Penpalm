@@ -156,7 +156,6 @@ export class UserService {
     }
 
     handleRequest(user: User, accept: boolean): Promise<any> {
-
         let headers = new Headers({
             'Content-Type': 'application/json',
             Authorization: 'Bearer ' + this.authenticationService.getToken()
@@ -210,7 +209,7 @@ export class UserService {
             });
     }
 
-    find(findFitler: FindFilter): Promise<User[]> {
+    find(findFitler: FindFilter): Promise<any> {
         let headers = new Headers({
             'Content-Type': 'application/json',
             Authorization: 'Bearer ' + this.authenticationService.getToken()
@@ -222,11 +221,14 @@ export class UserService {
                 let data = response.json().data;
                 let users = [];
 
-                data.forEach((userData) => {
+                data.users.forEach((userData) => {
                     users.push(UserService.deserializeUser(userData));
                 });
 
-                return users;
+                return {
+                    users: users,
+                    count: data.count
+                };
             })
             .catch(() => {
                 return null;

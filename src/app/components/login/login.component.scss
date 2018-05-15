@@ -1,9 +1,28 @@
 .container {
 	height: 100vh;
 	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+}
+
+.top {
+	display: flex;
 	justify-content: center;
 	align-items: center;
 	position: relative;
+}
+
+.bottom {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.count-message {
+	font-size: 2rem;
+	color: var(--color-whitish);
 }
 
 .social {

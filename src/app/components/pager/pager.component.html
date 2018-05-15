@@ -1,0 +1,28 @@
+<div class="paging">
+    <div class="paging__handles">
+        <a (click)="skipFirst()"
+           [class]="canSkipBackward ? 'paging__handles__handle' : 'paging__handles__handle--disabled'">
+            <i class="fas fa-angle-double-left"></i>
+        </a>
+        <a (click)="skipBackward()"
+           [class]="canSkipBackward? 'paging__handles__handle' : 'paging__handles__handle--disabled'">
+            <i class="fas fa-angle-left"></i>
+        </a>
+    </div>
+    <div class="paging__indexes">
+        <a (click)="navTo(i)" *ngFor="let page of pages; let i = index"
+           [class]="navIndex === i ? 'paging__indexes__index paging__indexes__index--selected' : 'paging__indexes__index'">
+            {{i + 1 + skipValue}}
+        </a>
+    </div>
+    <div class="paging__handles">
+        <a (click)="skipForward()"
+           [class]="canSkipForward ? 'paging__handles__handle' : 'paging__handles__handle--disabled'">
+            <i class="fas fa-angle-right"></i>
+        </a>
+        <a (click)="skipLast()"
+           [class]="canSkipForward ? 'paging__handles__handle' : 'paging__handles__handle--disabled'">
+            <i class="fas fa-angle-double-right"></i>
+        </a>
+    </div>
+</div>

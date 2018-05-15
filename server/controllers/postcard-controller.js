@@ -18,8 +18,8 @@ module.exports.create = function(req, res) {
 				author: user.id,
 				recipient: req.body.recipient,
 				body: req.body.body,
-                backSideOptionType: req.body.backSideOptionType,
-                backSideValue: req.body.backSideValue,
+				backSideOptionType: req.body.backSideOptionType,
+				backSideValue: req.body.backSideValue,
 				spotifyLink: req.body.spotifyLink,
 				allowShare: req.body.allowShare,
 				template: req.body.template,
@@ -74,7 +74,6 @@ module.exports.getInbox = function(req, res) {
 	});
 };
 
-
 module.exports.getOutbox = function(req, res) {
 	let url = require('url');
 	let url_parts = url.parse(req.url, true);
@@ -95,5 +94,14 @@ module.exports.getOutbox = function(req, res) {
 					}
 				});
 			});
+	});
+};
+
+module.exports.getTotalCount = function(req, res) {
+	Postcard.count().then(count => {
+		res.send({
+			msg: 'count found',
+			data: count
+		});
 	});
 };

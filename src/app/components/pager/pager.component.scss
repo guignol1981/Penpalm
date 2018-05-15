@@ -1,0 +1,49 @@
+.paging {
+	color: var(--color-whitish);
+	font-size: 2rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 3rem;
+
+	&__handles {
+		&__handle {
+			margin: 1rem;
+			cursor: pointer;
+			transition: all .2s;
+
+			&--disabled {
+				cursor: auto;
+				color: #333333;
+			}
+		}
+	}
+
+	&__indexes {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		&__index {
+			cursor: pointer;
+			padding: .5rem;
+			margin: 1rem;
+			border-radius: 50%;
+			text-align: center;
+			width: 4rem;
+			height: 4rem;
+
+			transition: all .3s;
+
+			&:hover {
+				background-color: var(--color-whitish);
+				color: #000;
+			}
+
+			&--selected {
+				background-color: var(--color-whitish);
+				color: #000;
+			}
+		}
+	}
+}

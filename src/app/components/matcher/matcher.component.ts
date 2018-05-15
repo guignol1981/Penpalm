@@ -9,6 +9,7 @@ import {ViewAction} from '../../models/actions/view-action';
 import {ViewOptionGroup} from '../../models/options/view-option-group';
 import {SingleInput} from '../../models/single-input/single-input';
 import {MatcherViewData} from '../../models/view-data/matcher-view-data';
+import {PagerEvent} from "../pager/pager.component";
 
 export interface FindFilter {
     country: string;
@@ -24,6 +25,7 @@ export interface FindFilter {
 export class MatcherComponent extends BaseViewComponent implements OnInit {
     user: User;
     userList: User[];
+    totalCount: 0;
     countryList;
     languageList;
     filterDisplayed = null;
@@ -31,7 +33,9 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
     findFilter = {
         country: 'none',
         language: 'none',
-        type: 'discover'
+        type: 'discover',
+        skip: 0,
+        limit: 1
     };
 
     transacting = false;
@@ -67,8 +71,9 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
     find(callback ?: any) {
         this.transacting = true;
 
-        this.userService.find(this.findFilter).then((users: User[]) => {
-            this.userList = users;
+        this.userService.find(this.findFilter).then((data: any) => {
+            this.userList = data.users;
+            this.totalCount = data.count;
             this.transacting = false;
 
             if (callback) {
@@ -182,6 +187,11 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
             this.optionGroups = MatcherViewData.getOptions(this);
             this.find();
         });
+    }
+
+    onPagerEvent(pagerEvent: PagerEvent) {
+        this.findFilter.skip = pagerEvent.navIndex * this.findFilter.limit;
+        this.find();
     }
 
 }

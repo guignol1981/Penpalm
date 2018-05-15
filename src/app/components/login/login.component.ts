@@ -6,6 +6,7 @@ import {SocialUser} from 'angular4-social-login';
 import {LoginModalComponent} from '../login-modal/login-modal.component';
 import {RegisterModalComponent} from '../register-modal/register-modal.component';
 import {AlertModalComponent} from "../alert-modal/alert-modal.component";
+import {PostcardService} from "../../services/postcard.service";
 
 @Component({
     selector: 'app-login',
@@ -30,12 +31,18 @@ export class LoginComponent implements OnInit, AfterViewInit {
     alertModalComponents: QueryList<AlertModalComponent>;
     alertModalComponent: AlertModalComponent;
 
+    totalPostcardCount: number;
+
     constructor(private userService: UserService,
+                private postcardService: PostcardService,
                 private authenticationService: AuthenticationService,
                 private router: Router) {
     }
 
     ngOnInit() {
+        this.postcardService.getTotalCount().then(count => {
+            this.totalPostcardCount = count;
+        });
     }
 
     ngAfterViewInit() {

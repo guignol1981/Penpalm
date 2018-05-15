@@ -53,7 +53,6 @@ module.exports.register = function(req, res) {
 				msg: 'User created',
 				data: true
 			});
-
 		});
 	});
 };
@@ -224,7 +223,10 @@ module.exports.getPendingRequests = function(req, res) {
 		.then((user) => {
 			res.send({
 				msg: 'Pending requests found',
-				data: user.pendingRequests
+				data: {
+					users: user.pendingRequests,
+					count: user.pendingRequests.length
+				}
 			});
 		});
 };
@@ -235,7 +237,10 @@ module.exports.getRequests = function(req, res) {
 		.then((users) => {
 			res.send({
 				msg: 'Requests found',
-				data: users
+				data: {
+					users: users,
+					count: users.length
+				}
 			});
 		});
 };
@@ -305,11 +310,15 @@ module.exports.removePal = function(req, res) {
 module.exports.getPals = function(req, res) {
 	User.findById(req.auth.id)
 		.populate('pals')
+		.limit(5)
 		.exec()
 		.then((user) => {
 			res.send({
 				msg: 'Pals found',
-				data: user.pals
+				data: {
+					users: user.pals,
+					count: user.pals.length
+				}
 			});
 			return;
 		});
@@ -318,27 +327,43 @@ module.exports.getPals = function(req, res) {
 module.exports.find = function(req, res) {
 	let url_parts = url.parse(req.url, true);
 	let query = url_parts.query;
-	let mongooseQuery = User.find();
+	let findQuery = User.find();
+	let countQuery = User.count();
 
-	mongooseQuery.where('_id').ne(req.auth.id);
-	mongooseQuery.where('pals').ne(req.auth.id);
-	mongooseQuery.where('pendingRequests').ne(req.auth.id);
+	findQuery.limit(Number(query.limit));
+
+	findQuery.where('_id').ne(req.auth.id);
+	findQuery.where('pals').ne(req.auth.id);
+	findQuery.where('pendingRequests').ne(req.auth.id);
+
+	countQuery.where('_id').ne(req.auth.id);
+	countQuery.where('pals').ne(req.auth.id);
+	countQuery.where('pendingRequests').ne(req.auth.id);
 
 	if (query.language !== 'none') {
-		mongooseQuery.where('language').eq(query.language);
+		findQuery.where('language').eq(query.language);
+		countQuery.where('language').eq(query.language);
 	}
 
 	if (query.country !== 'none') {
-		mongooseQuery.where('country').eq(query.country);
+		findQuery.where('country').eq(query.country);
+		countQuery.where('country').eq(query.country);
 	}
 
-	mongooseQuery.exec()
-		.then(users => {
-			res.send({
-				msg: 'Users found',
-				data: users
+	findQuery.skip(Number(query.skip));
+
+	countQuery.exec().then(count => {
+		findQuery.exec()
+			.then(users => {
+				res.send({
+					msg: 'Users found',
+					data: {
+						users: users,
+						count: count
+					}
+				});
 			});
-		});
+	});
 };
 
 module.exports.update = function(req, res) {
@@ -373,20 +398,22 @@ module.exports.request = function(req, res) {
 					targetUser.pendingRequests.push(req.auth.id);
 					targetUser.save().then((savedTargetUser) => {
 
-						pug.renderFile('views/new-pal-request.pug', {
-							data: {
-								palName: sourceUser.name,
-								baseUrl: process.env.BASE_URL || 'http://localhost:3000'
-							}
-						}, function(err, html) {
-							mailer.sendMail({
-								from: '"Penpalms" <info@penpalms.com>',
-								to: savedTargetUser.email,
-								subject: 'You have a new pal request!',
-								text: '',
-								html: html
+						if (savedTargetUser.enableEmailNotifications) {
+							pug.renderFile('views/new-pal-request.pug', {
+								data: {
+									palName: sourceUser.name,
+									baseUrl: process.env.BASE_URL || 'http://localhost:3000'
+								}
+							}, function(err, html) {
+								mailer.sendMail({
+									from: '"Penpalms" <info@penpalms.com>',
+									to: savedTargetUser.email,
+									subject: 'You have a new pal request!',
+									text: '',
+									html: html
+								});
 							});
-						});
+						}
 
 						res.send({
 							msg: 'Pal request done',
