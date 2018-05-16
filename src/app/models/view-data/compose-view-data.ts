@@ -227,6 +227,7 @@ export class ComposeViewData {
                         callback: (file: File, preview: any) => {
                             composeComponent.uploadedImage = file;
                             composeComponent.imageUploadPreview = preview;
+                            composeComponent.postcard.backSideOptionType = EBackSideOption.UploadImage;
                         }
                     });
                 },
