@@ -272,6 +272,23 @@ module.exports.handleRequest = function(req, res) {
 								sourceUser.pals.push(targetUser._id);
 								targetUser.pals.push(sourceUser._id);
 
+								if (targetUser.enableEmailNotifications) {
+									pug.renderFile('views/request-accepted.pug', {
+										data: {
+											palName: targetUser.name,
+											baseUrl: process.env.BASE_URL || 'http://localhost:3000'
+										}
+									}, function(err, html) {
+										mailer.sendMail({
+											from: '"Penpalms" <info@penpalms.com>',
+											to: targetUser.email,
+											subject: 'You have a new pal!',
+											text: '',
+											html: html
+										});
+									});
+								}
+
 								res.send({
 									msg: 'Request accepted',
 									data: {
