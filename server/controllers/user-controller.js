@@ -275,7 +275,7 @@ module.exports.handleRequest = function(req, res) {
 								if (targetUser.enableEmailNotifications) {
 									pug.renderFile('views/request-accepted.pug', {
 										data: {
-											palName: targetUser.name,
+											palName: sourceUser.name,
 											baseUrl: process.env.BASE_URL || 'http://localhost:3000'
 										}
 									}, function(err, html) {
