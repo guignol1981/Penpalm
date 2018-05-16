@@ -53,7 +53,6 @@ module.exports.upload = function (req, res, next) {
 
 module.exports.remove = function (req, res) {
     let cloudstorageobject = req.params.cloudstorageobject;
-    console.log(cloudstorageobject);
     let file = bucket.file(cloudstorageobject);
     file.delete((err, apiResponse) => {
         if (!err) {

@@ -93,9 +93,8 @@ export class ComposeViewData {
                         return composeComponent.isBackSideOptionAvailable(EBackSideOption.UploadImage);
                     }),
                     new ViewOption('Remove uploaded image', () => {
-                        composeComponent.imageService.remove(composeComponent.postcard.backSideValue.cloudStorageObject).then(() => {
-                        });
                         composeComponent.postcard.backSideOptionType = EBackSideOption.None;
+                        composeComponent.imageUploadPreview = null;
                         composeComponent.uploadedImage = null;
                         composeComponent.clearInput('Upload image');
                     }, false, false, () => {

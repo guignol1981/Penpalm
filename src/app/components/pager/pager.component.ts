@@ -86,8 +86,6 @@ export class PagerComponent implements OnInit {
 
     navTo(index: number) {
         this.navIndex = index;
-        console.log('nav index ' + this.navIndex);
-        console.log('skip value ' + this.skipValue);
         this.pagerEventEmitter.emit({navIndex: (this.navIndex) + this.skipValue});
     }
 }

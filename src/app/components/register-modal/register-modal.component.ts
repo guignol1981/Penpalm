@@ -58,7 +58,6 @@ export class RegisterModalComponent implements OnInit {
 
         this.userService.register(this.form.value)
             .then(result => {
-                console.log(result);
                 this.transacting = false;
                 if (result === true) {
                     this.view = 'success';

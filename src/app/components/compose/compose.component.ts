@@ -141,6 +141,8 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
             this.postcard = new Postcard();
             this.postcardComponent.setPostcard(this.postcard);
             this.notificationEmitter.emit(new Notification(ENotification.Success, 'Postcard sent'));
+            this.uploadedImage = null;
+            this.imageUploadPreview = null;
             this.transacting = false;
         });
     }

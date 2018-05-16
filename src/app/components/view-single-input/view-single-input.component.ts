@@ -52,7 +52,6 @@ export class ViewSingleInputComponent implements OnInit {
     }
 
     setLovValue(singleInput: SingleInput, value: LovItem) {
-        console.log(value);
         singleInput.lovValue = value;
         this.executeInput(singleInput);
     }
