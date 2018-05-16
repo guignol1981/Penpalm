@@ -14,7 +14,7 @@ export class Postcard {
                 public body?: string,
                 public backSideOptionType: EBackSideOption = EBackSideOption.None,
                 public backSideValue?: any,
-                public spotifyLink?: string,
+                public spotifyLink?: any,
                 public allowShare?: boolean,
                 public template?: string,
                 public recipient?: string,

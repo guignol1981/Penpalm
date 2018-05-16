@@ -14,6 +14,7 @@ import {ENotification} from '../../models/notification/e-notification.enum';
 import {Notification} from '../../models/notification/notification';
 import {ImageService} from '../../services/image.service';
 import {ImageUploadEvent} from '../uploader-modal/uploader-modal.component';
+import * as spoty from 'spotify-uri';
 
 @Component({
     selector: 'app-compose',
@@ -59,7 +60,6 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
                 this.actions = ComposeViewData.getActions(this);
             });
         });
-
     }
 
     clearInput(inputName) {
@@ -75,6 +75,9 @@ export class ComposeComponent extends BaseViewComponent implements OnInit {
         return this.postcard.backSideOptionType === backSideOptionType || this.postcard.backSideOptionType === EBackSideOption.None;
     }
 
+    parseSpotifyUri(value) {
+        return spoty.parse(value);
+    }
 
     getYoutubeLink(value) {
         let link = value;

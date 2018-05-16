@@ -6,6 +6,7 @@ import {SingleInput} from '../single-input/single-input';
 import {ESingleInput} from '../single-input/e-single-input.enum';
 import {ViewAction} from '../actions/view-action';
 import {EViewAction} from '../actions/e-view-action.enum';
+import {type} from "os";
 
 export class ComposeViewData {
 
@@ -149,7 +150,15 @@ export class ComposeViewData {
                 'Spotify song',
                 ESingleInput.Text,
                 (singleInput: SingleInput) => {
-                    composeComponent.postcard.spotifyLink = singleInput.value;
+                    let parsed = composeComponent.parseSpotifyUri(singleInput.value);
+
+                    if (typeof parsed.id === 'undefined') {
+                        singleInput.helperMsg = 'Invalid link';
+                        return;
+                    }
+
+                    singleInput.helperMsg = null;
+                    composeComponent.postcard.spotifyLink = parsed;
                 },
                 () => {
                     return composeComponent.selectedOption === 'spotify';
@@ -215,10 +224,10 @@ export class ComposeViewData {
                 ESingleInput.Upload,
                 (singleInput: SingleInput) => {
                     composeComponent.imageUploadEvent.emit({
-                       callback: (file: File, preview: any) => {
+                        callback: (file: File, preview: any) => {
                             composeComponent.uploadedImage = file;
                             composeComponent.imageUploadPreview = preview;
-                       }
+                        }
                     });
                 },
                 () => {

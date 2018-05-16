@@ -9,6 +9,7 @@ import {ViewOptionGroup} from '../../models/options/view-option-group';
 import {InboxViewData} from '../../models/view-data/inbox-view-data';
 import {EPostcardMode, PostcardComponent} from '../postcard/postcard.component';
 import {ChangeDetectorRef} from '@angular/core';
+import * as spoty from 'spotify-uri';
 
 @Component({
     selector: 'app-inbox',
@@ -146,7 +147,7 @@ export class InboxComponent extends BaseViewComponent implements OnInit, AfterVi
         }
 
         return this.domSanitizer.bypassSecurityTrustResourceUrl(
-            'https://open.spotify.com/embed?uri=' + this.activePostcard.spotifyLink + '&view=coverart'
+            spoty.formatEmbedURL(this.activePostcard.spotifyLink.uri)
         );
     }
 
