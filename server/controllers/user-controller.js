@@ -217,6 +217,11 @@ module.exports.get = function(req, res) {
 };
 
 module.exports.getPendingRequests = function(req, res) {
+	let url_parts = url.parse(req.url, true);
+	let query = url_parts.query;
+	let limit = Number(query.limit);
+	let skip = Number(query.skip);
+
 	User.findById(req.auth.id)
 		.populate('pendingRequests')
 		.exec()
@@ -224,7 +229,7 @@ module.exports.getPendingRequests = function(req, res) {
 			res.send({
 				msg: 'Pending requests found',
 				data: {
-					users: user.pendingRequests,
+					users: user.pendingRequests.slice(skip, limit + skip),
 					count: user.pendingRequests.length
 				}
 			});
@@ -232,13 +237,18 @@ module.exports.getPendingRequests = function(req, res) {
 };
 
 module.exports.getRequests = function(req, res) {
+	let url_parts = url.parse(req.url, true);
+	let query = url_parts.query;
+	let limit = Number(query.limit);
+	let skip = Number(query.skip);
+
 	User.find({'pendingRequests': req.auth.id})
 		.exec()
 		.then((users) => {
 			res.send({
 				msg: 'Requests found',
 				data: {
-					users: users,
+					users: users.slice(skip, limit + skip),
 					count: users.length
 				}
 			});
@@ -308,19 +318,22 @@ module.exports.removePal = function(req, res) {
 };
 
 module.exports.getPals = function(req, res) {
+	let url_parts = url.parse(req.url, true);
+	let query = url_parts.query;
+	let limit = Number(query.limit);
+	let skip = Number(query.skip);
+
 	User.findById(req.auth.id)
 		.populate('pals')
-		.limit(5)
 		.exec()
 		.then((user) => {
 			res.send({
 				msg: 'Pals found',
 				data: {
-					users: user.pals,
+					users: skip && limit ? user.pals.slice(skip, limit + skip): user.pals,
 					count: user.pals.length
 				}
 			});
-			return;
 		});
 };
 

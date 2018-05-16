@@ -6,6 +6,14 @@ import {SocialUser} from 'angular4-social-login';
 import {FindFilter} from '../components/matcher/matcher.component';
 import {Credential} from '../components/login-modal/login-modal.component';
 
+export interface FindFilter {
+    country: string;
+    language: string;
+    type: string;
+    skip: number;
+    limit: number;
+}
+
 @Injectable()
 export class UserService {
     apiEndPoint = 'api/users';
@@ -209,13 +217,13 @@ export class UserService {
             });
     }
 
-    find(findFitler: FindFilter): Promise<any> {
+    find(findFilter: FindFilter): Promise<any> {
         let headers = new Headers({
             'Content-Type': 'application/json',
             Authorization: 'Bearer ' + this.authenticationService.getToken()
         });
 
-        return this.http.get(this.apiEndPoint + '/' + findFitler.type, {headers: headers, params: findFitler})
+        return this.http.get(this.apiEndPoint + '/' + findFilter.type, {headers: headers, params: findFilter})
             .toPromise()
             .then((response: Response) => {
                 let data = response.json().data;
