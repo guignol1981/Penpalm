@@ -28,7 +28,7 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
     totalCount: 0;
     countryList;
     languageList;
-    filterDisplayed = null;
+    filterDisplayed = 'none';
 
     findFilter = {
         country: 'none',
@@ -93,7 +93,7 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
         };
 
         this.optionGroups = MatcherViewData.getOptions(this);
-        this.filterDisplayed = null;
+        this.filterDisplayed = 'none';
         this.find(displayMsg);
     }
 
@@ -108,7 +108,7 @@ export class MatcherComponent extends BaseViewComponent implements OnInit {
         };
 
         this.optionGroups = MatcherViewData.getOptions(this);
-        this.filterDisplayed = null;
+        this.filterDisplayed = 'none';
         this.find(displayMsg);
     }
 

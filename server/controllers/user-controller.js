@@ -330,7 +330,7 @@ module.exports.getPals = function(req, res) {
 			res.send({
 				msg: 'Pals found',
 				data: {
-					users: skip && limit ? user.pals.slice(skip, limit + skip): user.pals,
+					users: skip && limit ? user.pals.slice(skip, limit + skip) : user.pals,
 					count: user.pals.length
 				}
 			});
@@ -457,8 +457,17 @@ module.exports.cancelRequest = function(req, res) {
 
 module.exports.remove = function(req, res) {
 	User.findById(req.auth.id)
+		.populate('pals')
 		.exec()
 		.then(user => {
+			console.log(user._id);
+			user.pals.forEach(pal => {
+				pal.pals = pal.pals.filter(item => {
+					console.log(item);
+					return item !== user._id;
+				});
+				pal.save();
+			});
 			user.remove().then(() => {
 				res.send({
 					msg: 'account deleted',

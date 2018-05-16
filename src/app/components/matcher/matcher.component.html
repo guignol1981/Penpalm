@@ -3,7 +3,7 @@
     <app-view-actions class="bottom" [actions]="actions" [disableActions]="transacting"></app-view-actions>
     <app-view-single-input class="top" [inputs]="inputs"></app-view-single-input>
     <app-view-options class="sub" [groups]="optionGroups" [disableOptions]="transacting"></app-view-options>
-    <app-pager *ngIf="userList" class="top" [totalCount]="totalCount" [skipStep]="findFilter.limit" (pagerEventEmitter)="onPagerEvent($event)"></app-pager>
+    <app-pager *ngIf="userList && filterDisplayed === 'none'" class="top" [totalCount]="totalCount" [skipStep]="findFilter.limit" (pagerEventEmitter)="onPagerEvent($event)"></app-pager>
 
     <div class="main list-container">
         <div *ngIf="userList && (view === 'discover' || view === 'pending-requests' || view === 'sent-requests' || view === 'pals')"
