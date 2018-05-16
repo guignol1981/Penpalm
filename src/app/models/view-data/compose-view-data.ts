@@ -6,7 +6,6 @@ import {SingleInput} from '../single-input/single-input';
 import {ESingleInput} from '../single-input/e-single-input.enum';
 import {ViewAction} from '../actions/view-action';
 import {EViewAction} from '../actions/e-view-action.enum';
-import {type} from "os";
 
 export class ComposeViewData {
 
